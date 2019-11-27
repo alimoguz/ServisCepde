@@ -1,0 +1,555 @@
+package serviscepde.com.tr.Fragment;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.MultiAutoCompleteTextView;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.bumptech.glide.Glide;
+import com.esafirm.imagepicker.features.ImagePicker;
+import com.esafirm.imagepicker.features.ReturnMode;
+import serviscepde.com.tr.App;
+import serviscepde.com.tr.Models.City;
+import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
+import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
+import serviscepde.com.tr.Models.Sehirler.SehirResponse;
+import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
+import serviscepde.com.tr.R;
+import serviscepde.com.tr.Utils.Utils;
+import com.google.android.material.textfield.TextInputEditText;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
+public class SoforeIsFragment extends Fragment {
+
+
+    View generalView;
+
+    private LinearLayout linSoforeIsIptal;
+
+    private RelativeLayout relSoforeIsFirstPhoto,relSoforeIsSecondPhoto,relSoforeIsLastPhoto;
+
+    private ImageView imgSoforeIsFirstPhoto,imgSoforeIsFirstPhotoChange,imgSoforeIsSecondPhoto,imgSoforeIsSecondPhotoChange,imgSoforeIsLastPhoto,imgSoforeIsLastChange;
+
+    private TextInputEditText edtSoforeIsBaslik,edtSoforeIsFiyat,edtSoforeIsAciklama,edtSoforeIsTecrube,edtSoforeIsServisBaslamaSaati,edtSoforeIsYas,edtSoforeIsBelgeler;
+
+    private AutoCompleteTextView autoCompleteSoforeIsil,autoCompleteSoforeIsilce,autoCompleteSoforeIsServisBaslamaili,autoCompleteSoforeIsServiseBaslamailce;
+
+    private MultiAutoCompleteTextView autoCompleteSoforeIsKapasite,autoCompleteSoforeIsEhliyet;
+
+    private Switch switchSoforeIsSrc;
+    private String switchState = "0";
+
+    private TextView txtSoforeIsGonder;
+
+    private ArrayList<String> photos = new ArrayList<>();
+
+    private String baslik,fiyat,aciklama,tecrube,serviseBaslamaSaati,yas,belgeler,imagesString;
+    private String actvil,actvilce,actvServiseBaslamail,actvServiseBaslamailce,actvKapasite,actvEhliyet;
+
+    private List<City> tmpCity = new ArrayList<>();
+    private List<String> sehirListesi = new ArrayList<>();
+
+    private SweetAlertDialog emptyDialog;
+
+    private String userToken;
+
+    private Context ctx;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.sofore_is_fragment, container, false);
+
+        photos = getArguments().getStringArrayList("photoList");
+
+        generalView = rootView;
+
+        ctx = generalView.getContext();
+
+        SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
+        userToken = sharedPref.getString("userToken" , "0");
+
+        edtSoforeIsBaslik = generalView.findViewById(R.id.edtSoforeIsBaslik);
+        edtSoforeIsFiyat = generalView.findViewById(R.id.edtSoforeIsFiyat);
+        edtSoforeIsAciklama = generalView.findViewById(R.id.edtSoforeIsAciklama);
+        edtSoforeIsTecrube = generalView.findViewById(R.id.edtSoforeIsTecrube);
+        edtSoforeIsServisBaslamaSaati = generalView.findViewById(R.id.edtSoforeIsServisBaslamaSaati);
+        edtSoforeIsYas = generalView.findViewById(R.id.edtSoforeIsYas);
+        edtSoforeIsBelgeler = generalView.findViewById(R.id.edtSoforeIsBelgeler);
+
+
+        autoCompleteSoforeIsil = generalView.findViewById(R.id.autoCompleteSoforeIsil);
+        autoCompleteSoforeIsilce = generalView.findViewById(R.id.autoCompleteSoforeIsilce);
+        autoCompleteSoforeIsKapasite = generalView.findViewById(R.id.autoCompleteSoforeIsKapasite);
+        autoCompleteSoforeIsServisBaslamaili = generalView.findViewById(R.id.autoCompleteSoforeIsServisBaslamaili);
+        autoCompleteSoforeIsServiseBaslamailce = generalView.findViewById(R.id.autoCompleteSoforeIsServiseBaslamailce);
+        autoCompleteSoforeIsEhliyet = generalView.findViewById(R.id.autoCompleteSoforeIsEhliyet);
+
+
+        relSoforeIsFirstPhoto = generalView.findViewById(R.id.relSoforeIsFirstPhoto);
+        relSoforeIsSecondPhoto = generalView.findViewById(R.id.relSoforeIsSecondPhoto);
+        relSoforeIsLastPhoto = generalView.findViewById(R.id.relSoforeIsLastPhoto);
+
+
+        imgSoforeIsFirstPhoto = generalView.findViewById(R.id.imgSoforeIsFirstPhoto);
+        imgSoforeIsFirstPhotoChange = generalView.findViewById(R.id.imgSoforeIsFirstPhotoChange);
+        imgSoforeIsSecondPhoto = generalView.findViewById(R.id.imgSoforeIsSecondPhoto);
+        imgSoforeIsSecondPhotoChange = generalView.findViewById(R.id.imgSoforeIsSecondPhotoChange);
+        imgSoforeIsLastPhoto = generalView.findViewById(R.id.imgSoforeIsLastPhoto);
+        imgSoforeIsLastChange = generalView.findViewById(R.id.imgSoforeIsLastChange);
+
+        linSoforeIsIptal = generalView.findViewById(R.id.linSoforeIsIptal);
+        switchSoforeIsSrc = generalView.findViewById(R.id.switchSoforeIsSrc);
+        txtSoforeIsGonder = generalView.findViewById(R.id.txtSoforeIsGonder);
+
+        if(photos.size() == 1)
+        {
+            String img1 = photos.get(0);
+            Glide.with(ctx).load(img1).into(imgSoforeIsFirstPhoto);
+            imgSoforeIsFirstPhotoChange.setVisibility(View.INVISIBLE);
+
+        }
+
+        if(photos.size() == 2)
+        {
+            String img2 = photos.get(0);
+            String img3 = photos.get(1);
+
+            Glide.with(ctx).load(img2).into(imgSoforeIsFirstPhoto);
+            Glide.with(ctx).load(img3).into(imgSoforeIsSecondPhoto);
+            imgSoforeIsSecondPhotoChange.setVisibility(View.INVISIBLE);
+            imgSoforeIsFirstPhotoChange.setVisibility(View.INVISIBLE);
+
+        }
+
+        if(photos.size() == 3)
+        {
+            String img4 = photos.get(0);
+            String img5 = photos.get(1);
+            String img6 = photos.get(2);
+
+            Glide.with(ctx).load(img4).into(imgSoforeIsFirstPhoto);
+            Glide.with(ctx).load(img5).into(imgSoforeIsSecondPhoto);
+            Glide.with(ctx).load(img6).into(imgSoforeIsLastPhoto);
+
+            imgSoforeIsFirstPhotoChange.setVisibility(View.INVISIBLE);
+            imgSoforeIsLastChange.setVisibility(View.INVISIBLE);
+            imgSoforeIsSecondPhotoChange.setVisibility(View.INVISIBLE);
+        }
+
+        relSoforeIsFirstPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SweetAlertDialog firstPhoto;
+
+                firstPhoto = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                firstPhoto.setTitle("Düzenle");
+                firstPhoto.setConfirmButton("Değiştir", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        ImagePicker.create(getActivity())
+                                .returnMode(ReturnMode.GALLERY_ONLY)
+                                .returnMode(ReturnMode.CAMERA_ONLY)
+                                .folderMode(true)
+                                .toolbarFolderTitle("Folder")
+                                .includeVideo(false)
+                                .multi()
+                                .limit(1)
+                                .start();
+
+                        firstPhoto.dismiss();
+
+                    }
+                });
+                firstPhoto.setCancelButton("Sil", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        Glide.with(ctx).load(R.drawable.empty_image).into(imgSoforeIsFirstPhoto);
+                        firstPhoto.dismiss();
+                    }
+                });
+                firstPhoto.setNeutralButton("İptal", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        firstPhoto.dismiss();
+                    }
+                });
+                firstPhoto.show();
+
+            }
+        });
+
+        relSoforeIsSecondPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SweetAlertDialog secondPhoto;
+
+                secondPhoto = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                secondPhoto.setTitle("Düzenle");
+                secondPhoto.setConfirmButton("Değiştir", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        ImagePicker.create(getActivity())
+                                .returnMode(ReturnMode.GALLERY_ONLY)
+                                .returnMode(ReturnMode.CAMERA_ONLY)
+                                .folderMode(true)
+                                .toolbarFolderTitle("Folder")
+                                .includeVideo(false)
+                                .multi()
+                                .limit(1)
+                                .start();
+
+                        secondPhoto.dismiss();
+
+                    }
+                });
+                secondPhoto.setCancelButton("Sil", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        Glide.with(ctx).load(R.drawable.empty_image).into(imgSoforeIsSecondPhoto);
+                        secondPhoto.dismiss();
+                    }
+                });
+                secondPhoto.setNeutralButton("İptal", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        secondPhoto.dismiss();
+                    }
+                });
+                secondPhoto.show();
+            }
+        });
+
+        relSoforeIsLastPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SweetAlertDialog lastPhoto;
+
+                lastPhoto = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                lastPhoto.setTitle("Düzenle");
+                lastPhoto.setConfirmButton("Değiştir", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        ImagePicker.create(getActivity())
+                                .returnMode(ReturnMode.GALLERY_ONLY)
+                                .returnMode(ReturnMode.CAMERA_ONLY)
+                                .folderMode(true)
+                                .toolbarFolderTitle("Folder")
+                                .includeVideo(false)
+                                .multi()
+                                .limit(1)
+                                .start();
+
+                        lastPhoto.dismiss();
+
+                    }
+                });
+                lastPhoto.setCancelButton("Sil", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        Glide.with(ctx).load(R.drawable.empty_image).into(imgSoforeIsLastPhoto);
+                        lastPhoto.dismiss();
+                    }
+                });
+                lastPhoto.setNeutralButton("İptal", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        lastPhoto.dismiss();
+                    }
+                });
+                lastPhoto.show();
+
+            }
+        });
+
+        Call<SehirResponse> sehirResponseCall = App.getApiService().getSehirler();
+        sehirResponseCall.enqueue(new Callback<SehirResponse>() {
+            @Override
+            public void onResponse(Call<SehirResponse> call, Response<SehirResponse> response) {
+
+
+                SehirResponseDetail sehirResponseDetail = response.body().getSehirResponseDetail();
+                String token = sehirResponseDetail.getResult();
+                JSONObject jsonObjectIl = Utils.jwtToJsonObject(token);
+
+                try {
+
+                    for(int i = 1; i <= jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").length(); i++)
+                    {
+                        String ID = String.valueOf(i);
+                        String cityName = jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").getString(String.valueOf(i));
+
+                        City city = new City(ID,cityName);
+                        tmpCity.add(city);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                for (int i = 0;  i < tmpCity.size(); i++)
+                {
+                    String tmp = tmpCity.get(i).getCityName();
+                    sehirListesi.add(tmp);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SehirResponse> call, Throwable t) {
+
+            }
+        });
+
+        Utils.setAutoCompleteAdapter(autoCompleteSoforeIsil , sehirListesi , ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteSoforeIsServisBaslamaili , sehirListesi , ctx);
+
+
+        autoCompleteSoforeIsil.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                actvil = String.valueOf(position + 1);
+            }
+        });
+        autoCompleteSoforeIsServisBaslamaili.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                actvServiseBaslamail = String.valueOf(position + 1);
+            }
+        });
+
+
+
+        ArrayAdapter<String> ehliyet = new ArrayAdapter<>(ctx, R.layout.dropdown_item, App.getEhliyet());
+        autoCompleteSoforeIsEhliyet.setAdapter(ehliyet);
+        autoCompleteSoforeIsEhliyet.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        actvEhliyet = "";
+        autoCompleteSoforeIsEhliyet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String tmp = String.valueOf(position + 1).concat(",");
+                actvEhliyet = actvEhliyet.concat(tmp);
+                Log.i("Kapasite" , actvEhliyet);
+
+            }
+        });
+
+
+
+
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(ctx, R.layout.dropdown_item, App.getKapasite());
+
+        autoCompleteSoforeIsKapasite.setAdapter(adapter);
+        autoCompleteSoforeIsKapasite.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+        actvKapasite = "";
+        autoCompleteSoforeIsKapasite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                String tmp = String.valueOf(position + 1).concat(",");
+                actvKapasite = actvKapasite.concat(tmp);
+                Log.i("Kapasite" , actvKapasite);
+
+            }
+        });
+
+
+        edtSoforeIsServisBaslamaSaati.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Utils.openTimeDialog(edtSoforeIsServisBaslamaSaati , ctx);
+            }
+        });
+
+        txtSoforeIsGonder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                baslik = edtSoforeIsBaslik.getText().toString();
+                fiyat = edtSoforeIsFiyat.getText().toString();
+                aciklama = edtSoforeIsAciklama.getText().toString();
+                tecrube = edtSoforeIsTecrube.getText().toString();
+                serviseBaslamaSaati = edtSoforeIsServisBaslamaSaati.getText().toString();
+                yas = edtSoforeIsYas.getText().toString();
+                belgeler = edtSoforeIsBelgeler.getText().toString();
+
+
+                if( baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || tecrube.isEmpty() || serviseBaslamaSaati.isEmpty() ||
+                        actvEhliyet.isEmpty() || yas.isEmpty() || belgeler.isEmpty() ||actvil.isEmpty() || actvilce.isEmpty()
+                        || actvServiseBaslamail.isEmpty() || actvServiseBaslamailce.isEmpty() || actvKapasite.isEmpty() )
+                {
+                    emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
+                    emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
+                    emptyDialog.show();
+                }
+
+                else
+                {
+                    if(switchSoforeIsSrc.isChecked())
+                    {
+                        switchState = "1";
+                    }
+
+                    ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                    imagesString = Utils.imageToString(base64Photo);
+                    imagesString = Utils.trimmer(imagesString);
+                    actvKapasite = Utils.trimmer(actvKapasite);
+                    actvEhliyet = Utils.trimmer(actvEhliyet);
+
+                    HashMap<String , Object> hashMap = new HashMap<>();
+                    HashMap<String , String> hashMap1 = new HashMap<>();
+
+                    hashMap1.put("Tipi" , "4");
+                    hashMap1.put("Baslik" , baslik);
+                    hashMap1.put("ilanCity" , actvil);
+                    hashMap1.put("ilanSemtleri" , "10");
+                    hashMap1.put("KullanabildiginizKapasiteler" , actvKapasite);
+                    hashMap1.put("ServiseBaslamaCity" , actvil);
+                    hashMap1.put("ServiseBaslamaSemtleri" , "10");
+                    hashMap1.put("ServiseBaslamaSaati" , serviseBaslamaSaati);
+                    hashMap1.put("Ucret" , fiyat);
+                    hashMap1.put("ilanAciklamasi" , aciklama);
+                    hashMap1.put("file" , imagesString);
+                    hashMap1.put("Tecrube" , tecrube);
+                    hashMap1.put("Ehliyetiniz" , actvEhliyet);
+                    hashMap1.put("Yasiniz" , yas);
+                    hashMap1.put("Belgeler" , belgeler);
+
+                    hashMap.put("Token" , userToken);
+                    hashMap.put("param" , hashMap1);
+
+                    Log.i("hashMap" , hashMap.toString());
+
+                    Call<EkleResponse> ilanEkle = App.getApiService().ilanEkle(hashMap);
+
+                    ilanEkle.enqueue(new Callback<EkleResponse>() {
+
+                        @Override
+                        public void onResponse(Call<EkleResponse> call, Response<EkleResponse> response) {
+
+                            EkleResponseDetail detail = response.body().getDetail();
+
+                            Log.i("Response" , detail.toString());
+
+                            String token = detail.getResult();
+
+                            JSONObject ekleResponse = Utils.jwtToJsonObject(token);
+                            SweetAlertDialog ilanHata;
+                            SweetAlertDialog ilanOnay;
+
+
+                            photos.clear();
+
+                            try {
+
+                                if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
+                                {
+                                    ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                                    ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
+                                    ilanOnay.show();
+
+                                }
+
+                                if(ekleResponse.getJSONObject("errorEmpty") != null)
+                                {
+
+                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
+                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorEmpty").toString());
+                                    ilanHata.show();
+                                }
+                                if(ekleResponse.getJSONObject("errorOther") !=null)
+                                {
+                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
+                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorOther").toString());
+                                    ilanHata.show();
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<EkleResponse> call, Throwable t) {
+
+                            Log.i("Failure" , t.getMessage());
+
+                        }
+                    });
+
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return rootView;
+    }
+}

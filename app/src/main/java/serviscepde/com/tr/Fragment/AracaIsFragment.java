@@ -1,0 +1,669 @@
+package serviscepde.com.tr.Fragment;
+
+import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.TimePicker;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.bumptech.glide.Glide;
+import com.esafirm.imagepicker.features.ImagePicker;
+import com.esafirm.imagepicker.features.ReturnMode;
+import serviscepde.com.tr.App;
+import serviscepde.com.tr.MainActivity;
+import serviscepde.com.tr.Models.City;
+import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
+import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
+import serviscepde.com.tr.Models.Sehirler.SehirResponse;
+import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
+import serviscepde.com.tr.R;
+import serviscepde.com.tr.Utils.Utils;
+import com.google.android.material.textfield.TextInputEditText;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
+public class AracaIsFragment extends Fragment {
+
+
+    View generalView;
+
+    private Switch switchAracaIsOkulTasiti,switchAracaIsTurizmPaketi,switchAracaIsKlima,switchAracaIsDeriDoseme,switchAracaIsTribunTavan,switchAracaIsYatarKoltuk;
+
+    private TextInputEditText edtAracaIsBaslik,edtAracaIsFiyat,edtAracaIsAciklama,edtAracaIsYil,edtAracaIsServisBaslamaSaati,edtAracaIsServisBitisSaati,
+            edtAracaIsTecrube,edtAracaIsPlaka,edtAracaIsReferans,edtAracaIsToplamKM,edtAracaIsCalisilacakGunSayisi;
+
+
+    private AutoCompleteTextView autoCompleteAracaIsil,autoCompleteAracaIsilce,autoCompleteAracaIsMarka,autoCompleteAracaIsModel,autoCompleteAracaIsKapasite,autoCompleteAracaIsServisBaslamaili,
+            autoCompleteAracaIsServiseBaslamailce,autoCompleteAracaIsAracDurumu;
+
+    private RelativeLayout relAracaIsFirstPhoto,relAracaIsSecondPhoto,relAracaIsLastPhoto;
+
+    private ImageView imgAracaIsFirstPhoto,imgAracaIsFirstPhotoChange,imgAracaIsSecondPhoto,imgAracaIsSecondPhotoChange,imgAracaIsLastPhoto,imgAracaIsLastChange;
+
+    private LinearLayout linAracaIsIptal;
+
+    private ArrayList<String> photos = new ArrayList<>();
+
+    private String baslik,fiyat,aciklama,yil,servisBaslamaSaati,servisBitisSaati, tecrube,plaka,referans,toplamKM,gunSayisi,imagesString;
+
+    private String actvil,actvilce,actvMarka,actvModel,actvKapasite,actvServisBaslamail,actvServisBaslamailce,actvAracDurumu;
+
+    private TextView txtAracaIsGonder;
+
+    private Context ctx;
+
+    private SweetAlertDialog emptyDialog;
+
+    private String [] s = new String[6];
+
+    private String switchStates = "";
+
+    private List<City> tmpCity = new ArrayList<>();
+    private List<String> sehirListesi = new ArrayList<>();
+    private List<String> aracDurumu = new ArrayList<>();
+
+    final static Calendar takvim = Calendar.getInstance();
+    private int saat = takvim.get(Calendar.HOUR_OF_DAY);
+    private int dakika = takvim.get(Calendar.MINUTE);
+
+    private String userToken;
+
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.araca_is_fragment, container, false);
+
+        photos = getArguments().getStringArrayList("photoList");
+
+        generalView = rootView;
+
+        ctx = generalView.getContext();
+
+        SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
+        userToken = sharedPref.getString("userToken" , "0");
+        Log.i("userToken" ,userToken);
+
+        edtAracaIsBaslik = generalView.findViewById(R.id.edtAracaIsBaslik);
+        edtAracaIsFiyat = generalView.findViewById(R.id.edtAracaIsFiyat);
+        edtAracaIsAciklama = generalView.findViewById(R.id.edtAracaIsAciklama);
+        edtAracaIsYil = generalView.findViewById(R.id.edtAracaIsYil);
+        edtAracaIsServisBaslamaSaati = generalView.findViewById(R.id.edtAracaIsServisBaslamaSaati);
+        edtAracaIsServisBitisSaati = generalView.findViewById(R.id.edtAracaIsServisBitisSaati);
+        edtAracaIsTecrube = generalView.findViewById(R.id.edtAracaIsTecrube);
+        edtAracaIsPlaka = generalView.findViewById(R.id.edtAracaIsPlaka);
+        edtAracaIsReferans = generalView.findViewById(R.id.edtAracaIsReferans);
+        edtAracaIsToplamKM = generalView.findViewById(R.id.edtAracaIsToplamKM);
+        edtAracaIsCalisilacakGunSayisi = generalView.findViewById(R.id.edtAracaIsCalisilacakGunSayisi);
+
+
+        autoCompleteAracaIsil = generalView.findViewById(R.id.autoCompleteAracaIsil);
+        autoCompleteAracaIsilce = generalView.findViewById(R.id.autoCompleteAracaIsilce);
+        autoCompleteAracaIsMarka = generalView.findViewById(R.id.autoCompleteAracaIsMarka);
+        autoCompleteAracaIsModel = generalView.findViewById(R.id.autoCompleteAracaIsModel);
+        autoCompleteAracaIsKapasite = generalView.findViewById(R.id.autoCompleteAracaIsKapasite);
+        autoCompleteAracaIsServisBaslamaili = generalView.findViewById(R.id.autoCompleteAracaIsServisBaslamaili);
+        autoCompleteAracaIsServiseBaslamailce = generalView.findViewById(R.id.autoCompleteAracaIsServiseBaslamailce);
+        autoCompleteAracaIsAracDurumu = generalView.findViewById(R.id.autoCompleteAracaIsAracDurumu);
+
+
+        switchAracaIsOkulTasiti = generalView.findViewById(R.id.switchAracaIsOkulTasiti);
+        switchAracaIsTurizmPaketi = generalView.findViewById(R.id.switchAracaIsTurizmPaketi);
+        switchAracaIsKlima = generalView.findViewById(R.id.switchAracaIsKlima);
+        switchAracaIsDeriDoseme = generalView.findViewById(R.id.switchAracaIsDeriDoseme);
+        switchAracaIsTribunTavan = generalView.findViewById(R.id.switchAracaIsTribunTavan);
+        switchAracaIsYatarKoltuk = generalView.findViewById(R.id.switchAracaIsYatarKoltuk);
+
+
+        relAracaIsFirstPhoto = generalView.findViewById(R.id.relAracaIsFirstPhoto);
+        relAracaIsSecondPhoto = generalView.findViewById(R.id.relAracaIsSecondPhoto);
+        relAracaIsLastPhoto = generalView.findViewById(R.id.relAracaIsLastPhoto);
+
+
+        imgAracaIsFirstPhoto = generalView.findViewById(R.id.imgAracaIsFirstPhoto);
+        imgAracaIsFirstPhotoChange = generalView.findViewById(R.id.imgAracaIsFirstPhotoChange);
+        imgAracaIsSecondPhoto = generalView.findViewById(R.id.imgAracaIsSecondPhoto);
+        imgAracaIsSecondPhotoChange = generalView.findViewById(R.id.imgAracaIsSecondPhotoChange);
+        imgAracaIsLastPhoto = generalView.findViewById(R.id.imgAracaIsLastPhoto);
+        imgAracaIsLastChange = generalView.findViewById(R.id.imgAracaIsLastChange);
+
+
+        linAracaIsIptal = generalView.findViewById(R.id.linAracaIsIptal);
+        txtAracaIsGonder = generalView.findViewById(R.id.txtAracaIsGonder);
+
+
+        aracDurumu.add("Aracım Tamamen Boşta");
+        aracDurumu.add("Aracıma Ek İş Arıyorum");
+
+
+        if(photos.size() == 1)
+        {
+            String img1 = photos.get(0);
+            Glide.with(ctx).load(img1).into(imgAracaIsFirstPhoto);
+            imgAracaIsFirstPhotoChange.setVisibility(View.INVISIBLE);
+
+        }
+
+        if(photos.size() == 2)
+        {
+            String img2 = photos.get(0);
+            String img3 = photos.get(1);
+
+            Glide.with(ctx).load(img2).into(imgAracaIsFirstPhoto);
+            Glide.with(ctx).load(img3).into(imgAracaIsSecondPhoto);
+            imgAracaIsFirstPhotoChange.setVisibility(View.INVISIBLE);
+            imgAracaIsSecondPhotoChange.setVisibility(View.INVISIBLE);
+
+        }
+
+        if(photos.size() == 3)
+        {
+            String img4 = photos.get(0);
+            String img5 = photos.get(1);
+            String img6 = photos.get(2);
+
+            Glide.with(ctx).load(img4).into(imgAracaIsFirstPhoto);
+            Glide.with(ctx).load(img5).into(imgAracaIsSecondPhoto);
+            Glide.with(ctx).load(img6).into(imgAracaIsLastPhoto);
+
+            imgAracaIsFirstPhotoChange.setVisibility(View.INVISIBLE);
+            imgAracaIsSecondPhotoChange.setVisibility(View.INVISIBLE);
+            imgAracaIsLastChange.setVisibility(View.INVISIBLE);
+        }
+
+
+        linAracaIsIptal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ctx , MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+
+
+
+        relAracaIsFirstPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SweetAlertDialog firstPhoto;
+
+                firstPhoto = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                firstPhoto.setTitle("Düzenle");
+                firstPhoto.setConfirmButton("Değiştir", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        ImagePicker.create(AracaIsFragment.this)
+                                .returnMode(ReturnMode.GALLERY_ONLY)
+                                .returnMode(ReturnMode.CAMERA_ONLY)
+                                .folderMode(true)
+                                .toolbarFolderTitle("Folder")
+                                .includeVideo(false)
+                                .single()
+                                .limit(1)
+                                .start();
+
+                        firstPhoto.dismiss();
+
+                    }
+                });
+                firstPhoto.setCancelButton("Sil", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        Glide.with(ctx).load(R.drawable.empty_image).into(imgAracaIsFirstPhoto);
+                        firstPhoto.dismiss();
+                    }
+                });
+                firstPhoto.setNeutralButton("İptal", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        firstPhoto.dismiss();
+                    }
+                });
+                firstPhoto.show();
+
+            }
+        });
+
+        relAracaIsSecondPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SweetAlertDialog secondPhoto;
+
+                secondPhoto = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                secondPhoto.setTitle("Düzenle");
+                secondPhoto.setConfirmButton("Değiştir", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        ImagePicker.create(getActivity())
+                                .returnMode(ReturnMode.GALLERY_ONLY)
+                                .returnMode(ReturnMode.CAMERA_ONLY)
+                                .folderMode(true)
+                                .toolbarFolderTitle("Folder")
+                                .includeVideo(false)
+                                .multi()
+                                .limit(1)
+                                .start();
+
+                        secondPhoto.dismiss();
+
+                    }
+                });
+                secondPhoto.setCancelButton("Sil", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        Glide.with(ctx).load(R.drawable.empty_image).into(imgAracaIsSecondPhoto);
+                        secondPhoto.dismiss();
+                    }
+                });
+                secondPhoto.setNeutralButton("İptal", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        secondPhoto.dismiss();
+                    }
+                });
+                secondPhoto.show();
+
+            }
+        });
+
+        relAracaIsLastPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SweetAlertDialog lastPhoto;
+
+                lastPhoto = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                lastPhoto.setTitle("Düzenle");
+                lastPhoto.setConfirmButton("Değiştir", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        ImagePicker.create(getActivity())
+                                .returnMode(ReturnMode.GALLERY_ONLY)
+                                .returnMode(ReturnMode.CAMERA_ONLY)
+                                .folderMode(true)
+                                .toolbarFolderTitle("Folder")
+                                .includeVideo(false)
+                                .multi()
+                                .limit(1)
+                                .start();
+
+                        lastPhoto.dismiss();
+
+                    }
+                });
+                lastPhoto.setCancelButton("Sil", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        Glide.with(ctx).load(R.drawable.empty_image).into(imgAracaIsLastPhoto);
+                        lastPhoto.dismiss();
+                    }
+                });
+                lastPhoto.setNeutralButton("İptal", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        lastPhoto.dismiss();
+                    }
+                });
+                lastPhoto.show();
+            }
+        });
+
+        Call<SehirResponse> sehirResponseCall = App.getApiService().getSehirler();
+        sehirResponseCall.enqueue(new Callback<SehirResponse>() {
+            @Override
+            public void onResponse(Call<SehirResponse> call, Response<SehirResponse> response) {
+
+
+                SehirResponseDetail sehirResponseDetail = response.body().getSehirResponseDetail();
+                String token = sehirResponseDetail.getResult();
+                JSONObject jsonObjectIl = Utils.jwtToJsonObject(token);
+
+                try {
+
+                    for(int i = 1; i <= jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").length(); i++)
+                    {
+                        String ID = String.valueOf(i);
+                        String cityName = jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").getString(String.valueOf(i));
+
+                        City city = new City(ID,cityName);
+                        tmpCity.add(city);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                for (int i = 0;  i < tmpCity.size(); i++)
+                {
+                    String tmp = tmpCity.get(i).getCityName();
+                    sehirListesi.add(tmp);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SehirResponse> call, Throwable t) {
+
+            }
+        });
+
+        Utils.setAutoCompleteAdapter(autoCompleteAracaIsil , sehirListesi ,ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteAracaIsServisBaslamaili , sehirListesi ,ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteAracaIsKapasite , App.getKapasite() , ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteAracaIsAracDurumu , aracDurumu , ctx);
+
+        autoCompleteAracaIsil.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                actvil = String.valueOf(position + 1);
+                Log.i("SelectedCity" , actvil);
+            }
+        });
+
+        autoCompleteAracaIsServisBaslamaili.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                actvServisBaslamail = String.valueOf(position +1);
+                Log.i("SelectedCity" , actvServisBaslamail);
+            }
+        });
+
+        autoCompleteAracaIsKapasite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                actvKapasite = String.valueOf(position + 1);
+                Log.i("SelectedKapasite" , actvKapasite);
+            }
+        });
+
+        autoCompleteAracaIsAracDurumu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                actvAracDurumu = String.valueOf(position + 1);
+                Log.i("SelectedDurum" , actvAracDurumu);
+
+            }
+        });
+
+        edtAracaIsServisBaslamaSaati.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TimePickerDialog tpd = new TimePickerDialog(ctx, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                        edtAracaIsServisBaslamaSaati.setText(hourOfDay + ":" + minute);
+
+                    }
+                },saat,dakika,true);
+
+                tpd.setButton(TimePickerDialog.BUTTON_POSITIVE , "Seç" , tpd);
+                tpd.setButton(TimePickerDialog.BUTTON_NEGATIVE , "İptal" , tpd);
+                tpd.show();
+
+            }
+        });
+
+        edtAracaIsServisBitisSaati.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TimePickerDialog tpd = new TimePickerDialog(ctx, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                        edtAracaIsServisBitisSaati.setText(hourOfDay + ":" + minute);
+
+                    }
+                },saat,dakika,true);
+
+                tpd.setButton(TimePickerDialog.BUTTON_POSITIVE , "Seç" , tpd);
+                tpd.setButton(TimePickerDialog.BUTTON_NEGATIVE , "İptal" , tpd);
+                tpd.show();
+
+            }
+        });
+
+
+        txtAracaIsGonder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                baslik = edtAracaIsBaslik.getText().toString();
+                fiyat = edtAracaIsFiyat.getText().toString();
+                aciklama = edtAracaIsAciklama.getText().toString();
+                yil = edtAracaIsYil.getText().toString();
+                servisBaslamaSaati = edtAracaIsServisBaslamaSaati.getText().toString();
+                servisBitisSaati = edtAracaIsServisBitisSaati.getText().toString();
+                tecrube = edtAracaIsTecrube.getText().toString();
+                plaka = edtAracaIsPlaka.getText().toString();
+                referans = edtAracaIsPlaka.getText().toString();
+                toplamKM = edtAracaIsToplamKM.getText().toString();
+                gunSayisi = edtAracaIsCalisilacakGunSayisi.getText().toString();
+
+
+                if(baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || tecrube.isEmpty() ||
+                        plaka.isEmpty() || referans.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || actvil.isEmpty() || actvilce.isEmpty() || actvMarka.isEmpty() ||
+                        actvModel.isEmpty() || actvKapasite.isEmpty() || actvServisBaslamail.isEmpty() || actvServisBaslamailce.isEmpty() || actvAracDurumu.isEmpty())
+                {
+                    emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
+                    emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
+                    emptyDialog.show();
+                }
+
+                else
+                {
+                    Log.i("YouMadeIt" , "Here");
+                    if(switchAracaIsOkulTasiti.isChecked())
+                    {
+                        switchStates = "1,";
+                    }
+                    if(switchAracaIsTurizmPaketi.isChecked())
+                    {
+                        switchStates = switchStates.concat("2,");
+                    }
+                    if(switchAracaIsKlima.isChecked())
+                    {
+                        switchStates = switchStates.concat("3,");
+                    }
+                    if(switchAracaIsDeriDoseme.isChecked())
+                    {
+                        switchStates = switchStates.concat("4,");
+                    }
+                    if(switchAracaIsTribunTavan.isChecked())
+                    {
+                        switchStates = switchStates.concat("5,");
+                    }
+                    if(switchAracaIsYatarKoltuk.isChecked())
+                    {
+                        switchStates = switchStates.concat("6");
+                    }
+
+                    switchStates = Utils.trimmer(switchStates);
+
+                    ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                    imagesString = Utils.imageToString(base64Photo);
+                    imagesString = Utils.trimmer(imagesString);
+
+
+                    Log.i("İmages" , imagesString);
+                    Log.i("SwitchStates" , switchStates);
+
+                    HashMap<String , Object> hashMap = new HashMap<>();
+                    HashMap<String , String> hashMap1 = new HashMap<>();
+
+                    hashMap1.put("Tipi" , "1");
+                    hashMap1.put("Baslik" , baslik);
+                    hashMap1.put("ilanCity" , actvil);
+                    hashMap1.put("ilanSemtleri" , "10");
+                    hashMap1.put("AracMarkasi" , "3");
+                    hashMap1.put("AracModeli" , "4");
+                    hashMap1.put("AracYili" , yil);
+                    hashMap1.put("AracKapasitesi" , actvKapasite);
+                    hashMap1.put("AracOzellikleri" , switchStates);
+                    hashMap1.put("ServiseBaslamaCity" , actvServisBaslamail);
+                    hashMap1.put("ServiseBaslamaSemtleri" , "10");
+                    hashMap1.put("ServiseBaslamaSaati" , servisBaslamaSaati);
+                    hashMap1.put("ServisBitisSaati" , servisBitisSaati);
+                    hashMap1.put("ToplamKM" , toplamKM);
+                    hashMap1.put("CalisilacakGunSayisi" , gunSayisi);
+                    hashMap1.put("Ucret" , fiyat);
+                    hashMap1.put("ilanAciklamasi" , aciklama);
+                    hashMap1.put("file" , imagesString);
+                    hashMap1.put("Tecrube" , tecrube);
+                    hashMap1.put("Plaka" , plaka);
+                    hashMap1.put("Referanslar" , referans);
+                    hashMap1.put("AracDurumu" , actvAracDurumu);
+
+                    hashMap.put("Token" , userToken);
+                    hashMap.put("param" , hashMap1);
+
+                    Log.i("hashMap" , hashMap.toString());
+
+
+                    Call<EkleResponse> ilanEkle = App.getApiService().ilanEkle(hashMap);
+
+                    ilanEkle.enqueue(new Callback<EkleResponse>() {
+
+                        @Override
+                        public void onResponse(Call<EkleResponse> call, Response<EkleResponse> response) {
+
+                            EkleResponseDetail detail = response.body().getDetail();
+
+                            Log.i("Response" , detail.toString());
+
+                            String token = detail.getResult();
+
+                            JSONObject ekleResponse = Utils.jwtToJsonObject(token);
+                            SweetAlertDialog ilanHata;
+                            SweetAlertDialog ilanOnay;
+
+
+
+                            try {
+
+                                if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
+                                {
+                                    ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                                    ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
+                                    ilanOnay.show();
+
+                                }
+
+                                if(ekleResponse.getJSONObject("errorEmpty") != null)
+                                {
+
+                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
+                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorEmpty").toString());
+                                    ilanHata.show();
+                                }
+                                if(ekleResponse.getJSONObject("errorOther") !=null)
+                                {
+                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
+                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorOther").toString());
+                                    ilanHata.show();
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<EkleResponse> call, Throwable t) {
+
+                            Log.i("Failure" , t.getMessage());
+
+                        }
+                    });
+
+
+                    switchStates = "";
+                    photos.clear();
+
+
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+        return rootView;
+    }
+}

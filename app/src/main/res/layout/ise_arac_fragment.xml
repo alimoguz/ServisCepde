@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/appColor">
+
+        <LinearLayout
+            android:id="@+id/linIseAracIptal"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingStart="@dimen/_20sdp"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/_13sdp"
+                android:layout_height="@dimen/_13sdp"
+                android:src="@drawable/icon_exit"
+                android:layout_gravity="center"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/İptal"
+                android:fontFamily="@font/myriadpro_regular"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14ssp"
+                android:layout_marginStart="@dimen/_8sdp"
+                />
+
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/txtIseAracGonder"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="İleri"
+            android:fontFamily="@font/myriadpro_regular"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorWhite"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingEnd="@dimen/_15sdp"
+            android:paddingStart="0dp"
+            />
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+
+
+                <RelativeLayout
+                    android:id="@+id/relIseAracFirstPhoto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_image_holder">
+
+
+                    <ImageView
+                        android:id="@+id/imgIseAracFirstPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/_8sdp"/>
+
+
+                    <ImageView
+                        android:id="@+id/imgIseAracFirstPhotoChange"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:src="@drawable/icon_add_photo"
+                        android:layout_centerInParent="true"
+                        />
+
+
+
+
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="1dp" />
+
+                <RelativeLayout
+                    android:id="@+id/relIseAracSecondPhoto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_image_holder">
+
+
+                    <ImageView
+                        android:id="@+id/imgIseAracSecondPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/_8sdp"/>
+
+
+                    <ImageView
+                        android:id="@+id/imgIseAracSecondPhotoChange"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:src="@drawable/icon_add_photo"
+                        android:layout_centerInParent="true"
+                        />
+
+
+
+
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="1dp" />
+
+                <RelativeLayout
+                    android:id="@+id/relIseAracLastPhoto"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_image_holder">
+
+
+                    <ImageView
+                        android:id="@+id/imgIseAracLastPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/_8sdp"/>
+
+
+                    <ImageView
+                        android:id="@+id/imgIseAracLastChange"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:src="@drawable/icon_add_photo"
+                        android:layout_centerInParent="true"
+                        />
+
+
+
+
+
+
+                </RelativeLayout>
+
+
+
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/İpucu"
+                android:fontFamily="@font/myriadpro_regular"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_10ssp"
+                android:layout_marginTop="@dimen/_8sdp"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_header"
+                    android:text="@string/GenelBilgiler"
+                    android:fontFamily="@font/myriadpro_regular"
+                    android:textColor="@color/colorWhite"
+                    android:gravity="center"
+                    android:textSize="@dimen/_12ssp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/Başlık">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtIseAracBaslik"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/Fiyat">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtIseAracFiyat"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/Açıklama">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtIseAracAciklama"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteIseAracil"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/İl" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteIseAracilce"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/İlçe" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_header"
+                    android:text="@string/İlanBilgileri"
+                    android:fontFamily="@font/myriadpro_regular"
+                    android:textColor="@color/colorWhite"
+                    android:gravity="center"
+                    android:textSize="@dimen/_12ssp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteIseAracMarka"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/Marka" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteIseAracModel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/Model" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/AraçYılı">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtIseAracYil"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteIseAracKapasite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/Kapasite" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteIseAracServisBaslamaili"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ServisBaşlamaİli" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteIseAracServiseBaslamailce"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ServisBaşlamaİlçe" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/ServisBaşlamaSaati">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtIseAracServisBaslamaSaati"
+                        android:focusable="false"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/ServisBitişSaati">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtIseAracServisBitisSaati"
+                        android:focusable="false"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/FirmaGirişSaati">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtIseAracFirmaGirisSaati"
+                        android:focusable="false"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/FirmadanÇıkışSaati">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtIseAracFirmadanCikisSaati"
+                        android:focusable="false"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteIseAracServisBitisili"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ServisBitişİli" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteIseAracServisBitisilce"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/ServisBitişİlçe" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/ToplamKM">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtIseAracToplamKM"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/ÇalışılacakGün">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtIseAracCalisilacakGunSayisi"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_header"
+                    android:text="@string/AraçÖzellikleri"
+                    android:fontFamily="@font/myriadpro_regular"
+                    android:textColor="@color/colorWhite"
+                    android:gravity="center"
+                    android:textSize="@dimen/_14ssp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    />
+
+
+                <Switch
+                    android:id="@+id/switchIseAracOkulTasiti"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/OkulTaşıtı"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    />
+
+                <Switch
+                    android:id="@+id/switchIseAracTurizmPaketi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/TurizmPaketi"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    />
+
+                <Switch
+                    android:id="@+id/switchIseAracKlima"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Klima"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    />
+
+                <Switch
+                    android:id="@+id/switchIseAracDeriDoseme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DeriDöşeme"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    />
+
+                <Switch
+                    android:id="@+id/switchIseAracTribunTavan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/TribünTavan"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    />
+
+                <Switch
+                    android:id="@+id/switchIseAracYatarKoltuk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/YatarKoltuk"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    />
+
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>

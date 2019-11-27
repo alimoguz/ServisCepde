@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>-->
+
+
+    <color name="colorPrimary">#f1a400</color>
+    <color name="colorPrimaryDark">#f1a400</color>
+    <color name="colorAccent">#f1a400</color>
+
+
+    <color name="colorYellow">#f1a400</color>
+    <color name="appColor">#1d1f24</color>
+    <color name="colorBlue">#3c5a9a</color>
+    <color name="colorWhite">#fff</color>
+    <color name="colorBlack">#000</color>
+    <color name="colorDarkGray">#6b717e</color>
+    <color name="colorGray">#808080 </color>
+
+
+</resources>

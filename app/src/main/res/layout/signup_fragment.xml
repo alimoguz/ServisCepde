@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appColor">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Kayıt"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_18ssp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_15sdp" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kullanıcı Türü"
+                android:fontFamily="@font/myriadpro_regular"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_13ssp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                app:hintTextColor="@color/colorWhite"
+                android:textColor="@color/colorWhite"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteKullaniciTuru"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appColor"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Ad"
+                        android:textColor="@color/colorWhite"
+                        android:fontFamily="@font/myriadpro_regular"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textSize="@dimen/_13ssp"
+                        />
+
+                    <EditText
+                        android:id="@+id/edtKayitAd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="0dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Soyad"
+                        android:textColor="@color/colorWhite"
+                        android:fontFamily="@font/myriadpro_regular"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textSize="@dimen/_13ssp"
+                        />
+
+                    <EditText
+                        android:id="@+id/edtKayitSoyad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        />
+
+
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="İl"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_13ssp"
+                />
+
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteIl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_minus5sdp"
+                android:textColor="@color/colorWhite" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="İlçe"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_13ssp"
+                />
+
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteIlce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_minus5sdp"
+                android:textColor="@color/colorWhite" />
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Eposta"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_13ssp"
+                />
+
+            <EditText
+                android:id="@+id/edtKayitEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/colorWhite"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CepTelefonu"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_13ssp"
+                />
+
+            <EditText
+                android:id="@+id/edtKayitTelefon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:inputType="number"
+                android:maxLength="10"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Şifre"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_13ssp"
+                />
+
+            <EditText
+                android:id="@+id/edtKayitSifre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:inputType="textPassword"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ŞifreTekrar"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_13ssp"
+                />
+
+            <EditText
+                android:id="@+id/edtKayitSifreTekrar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:inputType="textPassword"
+                />
+
+
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp" />
+
+
+
+
+
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/NumaraDoğrula"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_light"
+                android:gravity="center"
+                android:textSize="@dimen/_14ssp"
+                />
+
+            <TextView
+                android:id="@+id/txtKayitOlSon"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:text="@string/Kayıt"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:textSize="@dimen/_14ssp"
+                android:gravity="center"
+                android:background="@drawable/background_login"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                />
+
+
+
+
+        </LinearLayout>
+
+
+
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>

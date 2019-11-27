@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/_10sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgBildirimDurum"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:src="@drawable/icon_notification_unread" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtBildirimBaslik"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bildirim Başlığı"
+                android:textColor="@color/colorBlack"
+                android:fontFamily="@font/myriadpro_bold"
+                android:textSize="@dimen/_10ssp"
+                android:maxLines="1"
+                />
+
+            <TextView
+                android:id="@+id/txtBildirimMetin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bildirim metni burada yer alacak"
+                android:maxLines="1"
+                android:textSize="@dimen/_9ssp"
+                android:fontFamily="@font/myriadpro_regular" />
+
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtBildirimZaman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15 saat önce"
+            android:textSize="@dimen/_9ssp"
+            />
+
+
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/appColor"
+        android:layout_marginTop="@dimen/_10sdp"/>
+
+
+
+
+
+</LinearLayout>

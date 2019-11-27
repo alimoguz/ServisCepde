@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "440456678485",
+    "firebase_url": "https://serviscepde-18a33.firebaseio.com",
+    "project_id": "serviscepde-18a33",
+    "storage_bucket": "serviscepde-18a33.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440456678485:android:fc0b5fa0fdda6ae0da98dc",
+        "android_client_info": {
+          "package_name": "serviscepde.com.tr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440456678485-gdss2imgs6eer8d6en16sk0tin9ij43c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0kBYFVCWlCJdv65ppIMA6kRxhPuqi1P4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440456678485-gdss2imgs6eer8d6en16sk0tin9ij43c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "440456678485-jcqf1h4rct7vptv41das0cubkgq3aj5t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.serviscepde"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

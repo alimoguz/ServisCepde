@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/appColor"
+    android:layout_height="match_parent">
+    
+    <ImageView
+        android:id="@+id/imgBanner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_90sdp"
+        android:src="@drawable/servis"
+        android:scaleType="centerCrop"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:background="@drawable/background_header">
+
+        <TextView
+            android:id="@+id/txtUyeOlmadanDevam"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ÜyeOlmadanDevamEt"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/myriadpro_regular"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/CepTelefonu"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorDarkGray"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/myriadpro_regular"/>
+
+        <EditText
+            android:id="@+id/edtCepTelefonu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/CepTelefonu"
+            android:text="5065081651"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:maxLength="10"
+            android:inputType="number"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Şifre"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorDarkGray"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/myriadpro_regular"
+            />
+
+
+        <EditText
+            android:id="@+id/edtSifre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/Şifre"
+            android:text="123456"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/colorWhite"
+            android:inputType="textPassword"
+            android:textColorHint="@color/colorWhite"/>
+
+
+        <TextView
+            android:id="@+id/txtGirisYap"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/Giriş"
+            android:background="@drawable/background_login"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/myriadpro_regular"
+            android:textSize="@dimen/_16ssp"
+            android:layout_marginTop="@dimen/_30sdp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Veya"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/myriadpro_regular"
+            android:textSize="@dimen/_14ssp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_15sdp"/>
+
+
+        <TextView
+            android:id="@+id/txtKayitOl"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/Kayıt"
+            android:background="@drawable/background_register"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/myriadpro_regular"
+            android:textSize="@dimen/_16ssp"
+            android:layout_marginTop="@dimen/_15sdp" />
+
+
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relSifremiUnuttum"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:background="@drawable/background_sifremi_unuttum"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_sifremi_unuttum"
+                android:text="@string/ŞifremiUnuttum"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:textSize="@dimen/_12ssp"
+                android:fontFamily="@font/myriadpro_regular"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/HemenSıfırla"
+                android:textColor="@color/colorYellow"
+                android:textSize="@dimen/_12ssp"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginStart="@dimen/_3sdp"
+                />
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>

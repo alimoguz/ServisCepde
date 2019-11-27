@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="serviscepde.com.tr">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/applogo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/applogo"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MaterialComponents"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:icon">
+
+        <service android:name=".Firebase.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
+        <activity android:name="serviscepde.com.tr.TestActivity"></activity>
+        <activity
+            android:name="serviscepde.com.tr.SplashActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="serviscepde.com.tr.MainActivity"
+            android:label="MainActivity"
+            android:parentActivityName="serviscepde.com.tr.SplashActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="serviscepde.com.tr.SplashActivity" />
+        </activity>
+        <activity
+            android:name="serviscepde.com.tr.AddingActivity"
+            android:label="AddingActivity"
+            android:parentActivityName="serviscepde.com.tr.MainActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="serviscepde.com.tr.MainActivity" />
+        </activity>
+    </application>
+
+</manifest>

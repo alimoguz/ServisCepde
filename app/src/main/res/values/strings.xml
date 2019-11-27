@@ -1,0 +1,158 @@
+<resources>
+    <string name="app_name">ServisCepde</string>
+    <string name="Eposta">E-posta</string>
+    <string name="Şifre">Şifre</string>
+    <string name="Giriş">Giriş Yap</string>
+    <string name="Kayıt">Kayıt Ol</string>
+    <string name="Veya">Veya</string>
+    <string name="ÜyeOlmadanDevamEt">Üye Olmadan Devam Et</string>
+    <string name="ŞifremiUnuttum">Şifreni mi unuttun ?</string>
+    <string name="HemenSıfırla">Hemen Sıfırla</string>
+    <string name="Ad">Ad</string>
+    <string name="Soyad">Soyad</string>
+    <string name="ŞifreTekrar">Şifre Tekrar</string>
+    <string name="NumaraDoğrula">Kayıt ol düğmesine tıkladıktan sonra numaranıza doğrulama kodu gönderilecek</string>
+    <string name="CepTelefonu">Cep Telefonu</string>
+    <string name="NumarayaKodGönder">Doğrulama kodu göndermek için lütfen 10 haneli olarak telefon numaranızı girin</string>
+    <string name="ŞifremiSıfırla">Şifremi Sıfırla</string>
+    <string name="İlan">İlanlar</string>
+    <string name="Mesaj">Mesajlar</string>
+    <string name="Anasayfa">Anasayfa</string>
+    <string name="Ara">Ara</string>
+    <string name="Ekle">Ekle</string>
+    <string name="Bildirim">Bildirim</string>
+    <string name="Profil">Profil</string>
+    <string name="SearchHint">Aramak için kelime veya ilan no girin</string>
+    <string name="Filtre">Filtrele</string>
+    <string name="Sırala">Sırala</string>
+
+
+    <string name="İşimeAraç">İşime araç arıyorum</string>
+    <string name="İşimeAraçDetay">İşiniz için en uygun araç ilanları</string>
+
+    <string name="Aracımaİş">Aracıma iş arıyorum</string>
+    <string name="AracımaİşDetay">Aracınız için en uygun iş ilanları</string>
+
+    <string name="AracımaŞoför">Aracım var şoför arıyorum</string>
+    <string name="AracımaŞoförDetay">Aracınız için en uygun şoför ilanları</string>
+
+    <string name="Şoförİş">Şoförüm iş arıyorum</string>
+    <string name="ŞoförİşDetay">Kendiniz için en uygun iş ilanları</string>
+
+    <string name="SatılıkAraç">Satılık araç</string>
+    <string name="SatılıkAraçDetay">En uygun satılık servis ilanları</string>
+
+    <string name="KiralıkAraç">Kiralık araç</string>
+    <string name="KiralıkAraçDetay">En uygun kiralık servis ilanları</string>
+
+    <string name="YedekParça">Yedek Parça</string>
+    <string name="YedekParçaDetay">Aracınız için en uygun yedek parça ilanları</string>
+
+    <string name="EnGüncelİlan">EN GÜNCEL İLANLAR</string>
+    <string name="Tümİlanlar">TÜM İLANLARI GÖR</string>
+    <string name="EnSonİncelenen">EN SON İNCELENEN İLANLAR</string>
+
+    <string name="KategoriSeciniz">Kategori Seçiniz</string>
+    <string name="Galeri">Galeri</string>
+    <string name="Kamera">Kamera</string>
+
+    <string name="İptal">İptal</string>
+
+    <string name="GenelBilgiler">Genel Bilgiler</string>
+    <string name="MarkaBilgileri">Marka Bilgileri</string>
+    <string name="Başlık">Başlık*</string>
+    <string name="Fiyat">Fiyat*</string>
+    <string name="Açıklama">Açıklama*</string>
+    <string name="İl">İl*</string>
+    <string name="İlçe">İlçe*</string>
+    <string name="İlanBilgileri">İlan Bilgileri</string>
+    <string name="Marka">Marka*</string>
+    <string name="Model">Model*</string>
+    <string name="AraçYılı">Araç Yılı*</string>
+    <string name="Kapasite">Kapasite*</string>
+    <string name="ServisBaşlamaİli">Servise başlama ili*</string>
+    <string name="ServisBaşlamaİlçe">Servise başlama ilçesi*</string>
+    <string name="ServisBaşlamaSaati">Servise başlama saati*</string>
+    <string name="FirmaGirişSaati">Firmaya giriş saati*</string>
+    <string name="FirmadanÇıkışSaati">Firmadan çıkış saati*</string>
+    <string name="ServisBitişİli">Servis bitiş ili*</string>
+    <string name="ServisBitişİlçe">Servis bitiş ilçesi*</string>
+    <string name="ServisBitişSaati">Servis bitiş saati*</string>
+    <string name="ToplamKM">Toplam KM*</string>
+    <string name="ÇalışılacakGün">Çalışılacak gün sayısı*</string>
+    <string name="AraçÖzellikleri">Araç Özellikler</string>
+    <string name="OkulTaşıtı">Okul Taşıtı</string>
+    <string name="TurizmPaketi">Turizm Paketi</string>
+    <string name="Klima">Klima</string>
+    <string name="DeriDöşeme">Deri Döşeme</string>
+    <string name="TribünTavan">Tribün Tavan</string>
+    <string name="YatarKoltuk">Yatar Koltuk</string>
+    <string name="Tecrübe">Tecrübe*</string>
+    <string name="AraçDurumu">Araç Durumu*</string>
+    <string name="Plaka">Plaka*</string>
+    <string name="Referanslar">Referanslar*</string>
+    <string name="KullabildiğinizKapasite">Kullanabildiğiniz Kapasiteler*</string>
+    <string name="Ehliyetleriniz">Ehliyetleriniz*</string>
+    <string name="Yaşınız">Yaşınız*</string>
+    <string name="Belgeler">Belgeler*</string>
+    <string name="Src">Src*</string>
+    <string name="AltModel">Alt Model*</string>
+    <string name="KM">KM*</string>
+    <string name="MotorHacmi">Motor hacmi*</string>
+    <string name="MotorGücü">Motor gücü*</string>
+    <string name="Kimden">Kimden*</string>
+    <string name="HaftalıkFiyat">Haftalık Fiyat</string>
+    <string name="AylıkFiyat">Aylık Fiyat</string>
+    <string name="VitesTipi">Vites Tipi*</string>
+    <string name="YakıtTipi">Yakıt Tipi*</string>
+    <string name="Kasko">Kasko*</string>
+    <string name="Durumu">Durumu*</string>
+    <string name="ÇıkmaYedek">Çıkma yedek parça</string>
+    <string name="İpucu">İpucu: Fotoğraflı ilanlar her zaman daha çok ilgi çeker</string>
+
+    <string name="OkunmamışBildirim">okunmamış bildirim</string>
+    <string name="Arama">Arama</string>
+    <string name="İlanDetay">İlan Detayı</string>
+    <string name="İlanBilgi">İlan Bilgileri</string>
+    <string name="İlanNo">İlan No</string>
+    <string name="İlanTarihi">İlan Tarihi</string>
+    <string name="AraçMarkası">Araç Markası</string>
+    <string name="AraçModeli">Araç Modeli</string>
+    <string name="AraçYıl">Araç Yılı</string>
+    <string name="AraçKapasite">Kapasite</string>
+    <string name="ServisBaşlama">Servise başlama semti</string>
+    <string name="ServisBaşlamaSaat">Servise başlama saati</string>
+    <string name="FirmaGirişSaat">Firmaya giriş saati</string>
+    <string name="FirmadanÇıkışSaat">Firmadan çıkış saati</string>
+    <string name="ServisBitiş">Servis bitiş semti</string>
+    <string name="ServisBitişSaat">Servis bitiş saati</string>
+    <string name="ToplamMesafe">Toplam KM</string>
+    <string name="GünSayısı">Çalışılacak gün sayısı</string>
+    <string name="MotorHacim">Motor hacmi</string>
+    <string name="MotorGüç">Motor gücü</string>
+    <string name="Kimdenn">Kimden</string>
+    <string name="AraçDurum">Araç durumu</string>
+    <string name="AraçSubModel">Araç alt modeli</string>
+    <string name="Tecrübee">Tecrübe</string>
+    <string name="Plakaa">Plaka</string>
+    <string name="Referans">Referanslar</string>
+    <string name="ÜcretBeklenti">Ücret beklentisi</string>
+    <string name="AraçKapasiteler">Kullanabildiğiniz kapasiteler</string>
+    <string name="Yaş">Yaşınız</string>
+    <string name="Ehliyet">Ehliyetiniz</string>
+    <string name="Srcc">Src</string>
+    <string name="AylıkFiyatı">Aylık fiyat</string>
+    <string name="HaftalıkFiyatı">Haftalık fiyat</string>
+    <string name="VitesTip">Vites tipi</string>
+    <string name="YakıtTip">Yakıt tipi</string>
+    <string name="KaskoDurumu">Kasko</string>
+    <string name="ParçaMarkası">Parça markası</string>
+    <string name="ÇıkmaYedekParça">Çıkma yedek parça</string>
+    <string name="YedekParçaDurum">Yedek parça durum</string>
+
+
+
+
+
+
+</resources>

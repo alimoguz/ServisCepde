@@ -1,0 +1,493 @@
+package serviscepde.com.tr.Fragment;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.esafirm.imagepicker.features.ImagePicker;
+import com.esafirm.imagepicker.features.ReturnMode;
+import serviscepde.com.tr.App;
+import serviscepde.com.tr.MainActivity;
+import serviscepde.com.tr.Models.City;
+import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
+import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
+import serviscepde.com.tr.Models.Sehirler.SehirResponse;
+import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
+import serviscepde.com.tr.R;
+import serviscepde.com.tr.Utils.Utils;
+import com.google.android.material.textfield.TextInputEditText;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
+public class YedekParcaFragment extends Fragment {
+
+
+    View generalView;
+
+    private LinearLayout linYedekParcaIptal;
+
+    private RelativeLayout relYedekParcaFirstPhoto,relYedekParcaSecondPhoto,relYedekParcaLastPhoto;
+
+    private ImageView imgYedekParcaFirstPhoto,imgYedekParcaFirstPhotoChange,imgYedekParcaSecondPhoto,imgYedekParcaSecondPhotoChange,imgYedekParcaLastPhoto,imgYedekParcaLastChange;
+
+    private TextInputEditText edtYedekParcaBaslik,edtYedekParcaFiyat,edtYedekParcaAciklama,edtYedekParcaMarka;
+
+    private AutoCompleteTextView autoCompleteYedekParcail,autoCompleteYedekParcailce,autoCompleteYedekParcaDurumu;
+
+    private Switch switchYedekParcaCikmaParca;
+    private TextView txtYedekParcaGonder;
+
+    private ArrayList<String> photos = new ArrayList<>();
+    private String imageString,userToken;
+    private String baslik,fiyat,aciklama,marka;
+    private String actvil,actvilce,actvDurum;
+    private String s = "0";
+
+    private SweetAlertDialog emptyDialog;
+    private List<City> tmpCity = new ArrayList<>();
+    private List<String> sehirListesi = new ArrayList<>();
+
+    private Context ctx;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.yedek_parca_fragment, container, false);
+
+        photos = getArguments().getStringArrayList("photoList");
+
+        generalView = rootView;
+
+        ctx = generalView.getContext();
+
+        SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
+        userToken = sharedPref.getString("userToken" , "0");
+        Log.i("userToken" ,userToken);
+
+        autoCompleteYedekParcail = generalView.findViewById(R.id.autoCompleteYedekParcail);
+        autoCompleteYedekParcailce = generalView.findViewById(R.id.autoCompleteYedekParcailce);
+        autoCompleteYedekParcaDurumu = generalView.findViewById(R.id.autoCompleteYedekParcaDurumu);
+
+
+        edtYedekParcaBaslik = generalView.findViewById(R.id.edtYedekParcaBaslik);
+        edtYedekParcaFiyat = generalView.findViewById(R.id.edtYedekParcaFiyat);
+        edtYedekParcaAciklama = generalView.findViewById(R.id.edtYedekParcaAciklama);
+        edtYedekParcaMarka = generalView.findViewById(R.id.edtYedekParcaMarka);
+
+
+        imgYedekParcaFirstPhoto = generalView.findViewById(R.id.imgYedekParcaFirstPhoto);
+        imgYedekParcaFirstPhotoChange = generalView.findViewById(R.id.imgYedekParcaFirstPhotoChange);
+        imgYedekParcaSecondPhoto = generalView.findViewById(R.id.imgYedekParcaSecondPhoto);
+        imgYedekParcaSecondPhotoChange = generalView.findViewById(R.id.imgYedekParcaSecondPhotoChange);
+        imgYedekParcaLastPhoto = generalView.findViewById(R.id.imgYedekParcaLastPhoto);
+        imgYedekParcaLastChange = generalView.findViewById(R.id.imgYedekParcaLastChange);
+
+
+        relYedekParcaFirstPhoto = generalView.findViewById(R.id.relYedekParcaFirstPhoto);
+        relYedekParcaSecondPhoto = generalView.findViewById(R.id.relYedekParcaSecondPhoto);
+        relYedekParcaLastPhoto = generalView.findViewById(R.id.relYedekParcaLastPhoto);
+
+        switchYedekParcaCikmaParca = generalView.findViewById(R.id.switchYedekParcaCikmaParca);
+        linYedekParcaIptal = generalView.findViewById(R.id.linYedekParcaIptal);
+        txtYedekParcaGonder = generalView.findViewById(R.id.txtYedekParcaGonder);
+
+        if(photos.size() == 1)
+        {
+            String img1 = photos.get(0);
+            Glide.with(ctx).load(img1).into(imgYedekParcaFirstPhoto);
+            imgYedekParcaFirstPhotoChange.setVisibility(View.INVISIBLE);
+
+        }
+
+        if(photos.size() == 2)
+        {
+            String img2 = photos.get(0);
+            String img3 = photos.get(1);
+
+            Glide.with(ctx).load(img2).into(imgYedekParcaFirstPhoto);
+            Glide.with(ctx).load(img3).into(imgYedekParcaSecondPhoto);
+            imgYedekParcaFirstPhotoChange.setVisibility(View.INVISIBLE);
+            imgYedekParcaSecondPhotoChange.setVisibility(View.INVISIBLE);
+
+        }
+
+        if(photos.size() == 3)
+        {
+            String img4 = photos.get(0);
+            String img5 = photos.get(1);
+            String img6 = photos.get(2);
+
+            Glide.with(ctx).load(img4).into(imgYedekParcaFirstPhoto);
+            Glide.with(ctx).load(img5).into(imgYedekParcaSecondPhoto);
+            Glide.with(ctx).load(img6).into(imgYedekParcaLastPhoto);
+
+            imgYedekParcaFirstPhotoChange.setVisibility(View.INVISIBLE);
+            imgYedekParcaSecondPhotoChange.setVisibility(View.INVISIBLE);
+            imgYedekParcaLastChange.setVisibility(View.INVISIBLE);
+        }
+
+        linYedekParcaIptal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ctx , MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        relYedekParcaFirstPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Log.i("RelPhoto" , "onSuccess");
+
+                SweetAlertDialog firstPhoto;
+
+                firstPhoto = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                firstPhoto.setTitle("Düzenle");
+                firstPhoto.setConfirmButton("Değiştir", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        ImagePicker.create(getActivity())
+                                .returnMode(ReturnMode.GALLERY_ONLY)
+                                .returnMode(ReturnMode.CAMERA_ONLY)
+                                .folderMode(true)
+                                .toolbarFolderTitle("Folder")
+                                .includeVideo(false)
+                                .multi()
+                                .limit(1)
+                                .start();
+
+                        firstPhoto.dismiss();
+
+                    }
+                });
+                firstPhoto.setCancelButton("Sil", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        Glide.with(ctx).load(R.drawable.empty_image).into(imgYedekParcaFirstPhoto);
+                        firstPhoto.dismiss();
+                    }
+                });
+                firstPhoto.setNeutralButton("İptal", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        firstPhoto.dismiss();
+                    }
+                });
+                firstPhoto.show();
+
+            }
+        });
+
+        relYedekParcaSecondPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SweetAlertDialog secondPhoto;
+
+                secondPhoto = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                secondPhoto.setTitle("Düzenle");
+                secondPhoto.setConfirmButton("Değiştir", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        ImagePicker.create(getActivity())
+                                .returnMode(ReturnMode.GALLERY_ONLY)
+                                .returnMode(ReturnMode.CAMERA_ONLY)
+                                .folderMode(true)
+                                .toolbarFolderTitle("Folder")
+                                .includeVideo(false)
+                                .multi()
+                                .limit(1)
+                                .start();
+
+                        secondPhoto.dismiss();
+
+                    }
+                });
+                secondPhoto.setCancelButton("Sil", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        Glide.with(ctx).load(R.drawable.empty_image).into(imgYedekParcaSecondPhoto);
+                        secondPhoto.dismiss();
+                    }
+                });
+                secondPhoto.setNeutralButton("İptal", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        secondPhoto.dismiss();
+                    }
+                });
+                secondPhoto.show();
+
+
+            }
+        });
+
+        relYedekParcaLastPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SweetAlertDialog lastPhoto;
+
+                lastPhoto = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                lastPhoto.setTitle("Düzenle");
+                lastPhoto.setConfirmButton("Değiştir", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        ImagePicker.create(getActivity())
+                                .returnMode(ReturnMode.GALLERY_ONLY)
+                                .returnMode(ReturnMode.CAMERA_ONLY)
+                                .folderMode(true)
+                                .toolbarFolderTitle("Folder")
+                                .includeVideo(false)
+                                .multi()
+                                .limit(1)
+                                .start();
+
+                        lastPhoto.dismiss();
+
+                    }
+                });
+                lastPhoto.setCancelButton("Sil", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        Glide.with(ctx).load(R.drawable.empty_image).into(imgYedekParcaLastPhoto);
+                        lastPhoto.dismiss();
+                    }
+                });
+                lastPhoto.setNeutralButton("İptal", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                        lastPhoto.dismiss();
+                    }
+                });
+                lastPhoto.show();
+
+
+            }
+        });
+
+        Call<SehirResponse> sehirResponseCall = App.getApiService().getSehirler();
+        sehirResponseCall.enqueue(new Callback<SehirResponse>() {
+            @Override
+            public void onResponse(Call<SehirResponse> call, Response<SehirResponse> response) {
+
+
+                SehirResponseDetail sehirResponseDetail = response.body().getSehirResponseDetail();
+                String token = sehirResponseDetail.getResult();
+                JSONObject jsonObjectIl = Utils.jwtToJsonObject(token);
+
+                try {
+
+                    for(int i = 1; i <= jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").length(); i++)
+                    {
+                        String ID = String.valueOf(i);
+                        String cityName = jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").getString(String.valueOf(i));
+
+                        City city = new City(ID,cityName);
+                        tmpCity.add(city);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                for (int i = 0;  i < tmpCity.size(); i++)
+                {
+                    String tmp = tmpCity.get(i).getCityName();
+                    sehirListesi.add(tmp);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SehirResponse> call, Throwable t) {
+
+            }
+        });
+
+        Utils.setAutoCompleteAdapter(autoCompleteYedekParcail, sehirListesi , ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteYedekParcaDurumu , App.getDurumu() , ctx);
+
+        autoCompleteYedekParcail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                actvil = String.valueOf(position + 1);
+            }
+        });
+
+        autoCompleteYedekParcaDurumu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                actvDurum = String.valueOf(position + 1);
+            }
+        });
+
+
+        txtYedekParcaGonder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                baslik = edtYedekParcaBaslik.getText().toString();
+                fiyat = edtYedekParcaFiyat.getText().toString();
+                aciklama = edtYedekParcaAciklama.getText().toString();
+                marka = edtYedekParcaMarka.getText().toString();
+
+                ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                imageString = Utils.imageToString(base64Photo);
+                imageString = Utils.trimmer(imageString);
+
+
+                if(switchYedekParcaCikmaParca.isChecked())
+                {
+                    s = "1";
+                }
+
+
+                if (baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || marka.isEmpty()
+                        || actvil.isEmpty() || actvilce.isEmpty() || actvDurum.isEmpty())
+                {
+                    emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
+                    emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
+                    emptyDialog.show();
+                }
+
+                else
+                {
+                    HashMap<String , Object> hashMap = new HashMap<>();
+                    HashMap<String , String> hashMap1 = new HashMap<>();
+
+
+                    hashMap1.put("Tipi" , "7");
+                    hashMap1.put("Baslik" , baslik);
+                    hashMap1.put("ilanCity" , actvil);
+                    hashMap1.put("ilanSemtleri" , "10");
+                    hashMap1.put("ParcaMarkasi" , marka);
+                    hashMap1.put("Ucret" , fiyat);
+                    hashMap1.put("file" , imageString);
+                    hashMap1.put("ilanAciklamasi" , aciklama);
+                    hashMap1.put("YedekParcaDurum" , actvDurum);
+
+                    hashMap.put("Token" , userToken);
+                    hashMap.put("param" , hashMap1);
+
+
+                    Call<EkleResponse> ilanEkle = App.getApiService().ilanEkle(hashMap);
+
+                    ilanEkle.enqueue(new Callback<EkleResponse>() {
+
+                        @Override
+                        public void onResponse(Call<EkleResponse> call, Response<EkleResponse> response) {
+
+                            EkleResponseDetail detail = response.body().getDetail();
+
+                            Log.i("Response" , detail.toString());
+
+                            String token = detail.getResult();
+
+                            JSONObject ekleResponse = Utils.jwtToJsonObject(token);
+                            SweetAlertDialog ilanHata;
+                            SweetAlertDialog ilanOnay;
+
+
+                            photos.clear();
+
+                            try {
+
+                                if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
+                                {
+                                    ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                                    ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
+                                    ilanOnay.show();
+
+                                }
+
+                                if(ekleResponse.getJSONObject("errorEmpty") != null)
+                                {
+
+                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
+                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorEmpty").toString());
+                                    ilanHata.show();
+                                }
+                                if(ekleResponse.getJSONObject("errorOther") !=null)
+                                {
+                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
+                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorOther").toString());
+                                    ilanHata.show();
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<EkleResponse> call, Throwable t) {
+
+                            Log.i("Failure" , t.getMessage());
+
+                        }
+                    });
+
+                }
+
+            }
+        });
+
+
+
+
+
+
+
+
+        return rootView;
+    }
+}
