@@ -11,9 +11,8 @@
 
     <style name="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense" tools:override = "true"  >
 
-
         <item name="boxBackgroundColor">@color/colorWhite</item>
-
+        <item name="boxStrokeColor">@color/colorYellow</item>
 
     </style>
 

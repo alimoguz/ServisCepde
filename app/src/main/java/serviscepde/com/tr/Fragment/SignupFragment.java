@@ -18,6 +18,9 @@ import androidx.fragment.app.Fragment;
 
 
 import serviscepde.com.tr.App;
+import serviscepde.com.tr.DownloadClass;
+import serviscepde.com.tr.Models.City;
+import serviscepde.com.tr.Models.Ilce;
 import serviscepde.com.tr.Models.Ilceler.IlceResponse;
 import serviscepde.com.tr.Models.Ilceler.IlceResponseDetail;
 import serviscepde.com.tr.Models.Sehirler.SehirResponse;
@@ -58,7 +61,8 @@ public class SignupFragment extends Fragment {
     private String ad,soyad,email,telefon,sifre,sifreTekrar,il,ilçe,kullanıcıType;
     private  boolean isEmailValid,isPasswordMatch;
 
-    List<String> sehirler = new ArrayList<>();
+    List<City> sehirler = new ArrayList<>();
+    List<String > cityNames = new ArrayList<>();
     List<String> ilceler= new ArrayList<>();
 
     JSONObject jsonObjectIl;
@@ -66,6 +70,9 @@ public class SignupFragment extends Fragment {
 
     int ilCount = 1;
     int ilçeCount = 1;
+
+    String SelectedCityId = "";
+    String SelectedTownId = "";
 
     private Context ctx;
 
@@ -94,48 +101,14 @@ public class SignupFragment extends Fragment {
 
         ctx = generalView.getContext();
 
-        Call<SehirResponse> sehirResponseCall = App.getApiService().getSehirler();
-
-        sehirResponseCall.enqueue(new Callback<SehirResponse>() {
-            @Override
-            public void onResponse(Call<SehirResponse> call, Response<SehirResponse> response) {
-
-                SehirResponseDetail sehirResponseDetail = response.body().getSehirResponseDetail();
-
-                String token = sehirResponseDetail.getResult();
-
-                jsonObjectIl = Utils.jwtToJsonObject(token);
-
-                try {
-
-                    for(int i = 1; i <= jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").length(); i++)
-                    {
-                        Log.i("JSONObject" , jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").get("1").toString() );
-                        String sehir = jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").getString(String.valueOf(i));
-                        sehirler.add(sehir);
-                    }
-
-                    //Log.i(App.TAG, jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").getString("1"));
-
-                    Log.i(App.TAG, String.valueOf(sehirler.size()));
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<SehirResponse> call, Throwable t) {
-
-            }
-        });
+        sehirler = DownloadClass.getCities();
+        cityNames = DownloadClass.getCityNames();
 
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(
                         ctx,
                         R.layout.dropdown_item,
-                        sehirler);
+                        cityNames);
 
         autoCompleteIl.setAdapter(adapter);
 
@@ -164,79 +137,18 @@ public class SignupFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                il = parent.getItemAtPosition(position).toString();
+                String tempCityName = parent.getItemAtPosition(position).toString();
 
-                Log.i("SelectedIl", parent.getItemAtPosition(position).toString());
+                SelectedCityId = DownloadClass.getCityIdWithName(tempCityName);
+                ArrayList<String> cityTownNames = DownloadClass.getTownNames(SelectedCityId);
 
-                try {
+                ArrayAdapter<String> ilceAdapter =
+                        new ArrayAdapter<>(
+                                ctx,
+                                R.layout.dropdown_item,
+                                cityTownNames);
 
-                    for(int i = 1; i < jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").length(); i++)
-                    {
-                        if( parent.getItemAtPosition(position).toString().equals(jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").getString(String.valueOf(i))))
-                        {
-                            break;
-                        }
-
-                        ++ilCount;
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-                Log.i("Şehir Id" ,  " " + ilCount);
-
-                Call<IlceResponse> ilceResponseCall = App.getApiService().getIlceler();
-
-                ilceResponseCall.enqueue(new Callback<IlceResponse>() {
-                    @Override
-                    public void onResponse(Call<IlceResponse> call, Response<IlceResponse> response) {
-
-
-                        IlceResponseDetail ilceResponseDetail = response.body().getIlceResponseDetail();
-
-                        String token2 = ilceResponseDetail.getResult();
-
-                        jsonObjectIlce = Utils.jwtToJsonObject(token2);
-
-                        try {
-
-                            Log.i("İlçeler" ,jsonObjectIlce.getJSONObject("OutPutMessage").getJSONObject("Data").getJSONObject(String.valueOf(ilCount)).toString() );
-
-                            Iterator<String> keys = jsonObjectIlce.getJSONObject("OutPutMessage").getJSONObject("Data").getJSONObject(String.valueOf(ilCount)).keys();
-
-                            while(keys.hasNext())
-
-                            {
-                                String key = keys.next();
-                                String ilce = jsonObjectIlce.getJSONObject("OutPutMessage").getJSONObject("Data").getJSONObject(String.valueOf(ilCount)).getString(String.valueOf(key));
-                                Log.i("İlçe" , ilce);
-                                ilceler.add(ilce);
-                            }
-
-                            ArrayAdapter<String> ilceAdapter =
-                                    new ArrayAdapter<>(
-                                            ctx,
-                                            R.layout.dropdown_item,
-                                            ilceler);
-
-                            autoCompleteIlce.setAdapter(ilceAdapter);
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<IlceResponse> call, Throwable t) {
-
-                    }
-                });
-
+                autoCompleteIlce.setAdapter(ilceAdapter);
             }
         });
 
@@ -244,33 +156,8 @@ public class SignupFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                ilçe = parent.getItemAtPosition(position).toString();
-
-                Log.i("SelectedIlçe" , ilçe);
-
-
-                try {
-                    Iterator<String> keysilce = jsonObjectIlce.getJSONObject("OutPutMessage").getJSONObject("Data").getJSONObject(String.valueOf(ilCount)).keys();
-
-                    while(keysilce.hasNext())
-
-                    {
-                        String key = keysilce.next();
-                        Log.i("Key" , " " + key);
-
-                        if( parent.getItemAtPosition(position).toString().equals(jsonObjectIlce.getJSONObject("OutPutMessage").getJSONObject("Data").getJSONObject(String.valueOf(ilCount)).getString(key)))
-                        {
-                            ilçeCount = Integer.parseInt(key);
-                            break;
-                        }
-
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                Log.i("IDLer" , " " + ilCount + " " + ilçeCount );
+                String tempTownName = parent.getItemAtPosition(position).toString();
+                SelectedTownId = DownloadClass.getTownIdWithTownName(tempTownName, SelectedCityId);
 
             }
         });
@@ -287,7 +174,76 @@ public class SignupFragment extends Fragment {
                 sifre = edtKayitSifre.getText().toString();
                 sifreTekrar = edtKayitSifreTekrar.getText().toString();
 
-                if(ad.isEmpty())
+                HashMap<String , HashMap<String , String>> node = new HashMap<>();
+                HashMap<String , String> body = new HashMap<>();
+
+                body.put("MeType" , kullanıcıType);
+                body.put("UserName" , ad);
+                body.put("SurName" , soyad);
+                body.put("Email" , email);
+                body.put("Password" , sifre);
+                body.put("GSM" , telefon);
+                body.put("CityID" , SelectedCityId);
+                body.put("TownID" , SelectedTownId);
+
+
+                node.put("param" , body);
+                Call<UserRegisterResponse> userRegisterResponseCall = App.getApiService().getRegister(node);
+                userRegisterResponseCall.enqueue(new Callback<UserRegisterResponse>() {
+                    @Override
+                    public void onResponse(Call<UserRegisterResponse> call, Response<UserRegisterResponse> response) {
+
+                        UserRegisterResponseDetail userRegisterResponseDetail = response.body().getUserRegisterResponseDetail();
+                        String token = userRegisterResponseDetail.getResult();
+
+                        Log.i(TAG, "onResponse: " + token);
+
+                        JSONObject jsonObject = Utils.jwtToJsonObject(token);
+                        Log.i(TAG, "onResponse: " + jsonObject.toString());
+
+                        try {
+                            Log.i(TAG, "onResponse: " + jsonObject.getJSONArray("errorOther"));
+
+
+                            if(jsonObject.get("OutPutMessage") instanceof  JSONObject)
+                            {
+
+                                int status = jsonObject.getJSONObject("OutPutMessage").getInt("Status");
+                                if(status == 200)
+                                {
+                                    servisAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.NORMAL_TYPE);
+                                    servisAlert.setTitleText(jsonObject.getJSONObject("OutPutMessage").getString("SuccessMessage"));
+                                    servisAlert.show();
+                                }
+                            }
+
+                            if(jsonObject.get("OutPutMessage") instanceof JSONArray)
+                            {
+
+                                if(jsonObject.getJSONArray("errorOther") != null)
+                                {
+                                    servisAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
+                                    servisAlert.setTitleText(jsonObject.getJSONArray("errorOther").getString(0));
+                                    servisAlert.show();
+                                }
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserRegisterResponse> call, Throwable t) {
+
+                    }
+                });
+
+                /*if(ad.isEmpty())
                 {
                     adAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
                     adAlert.setTitleText("Ad boş bırakılamaz");
@@ -339,81 +295,14 @@ public class SignupFragment extends Fragment {
                     sifreAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
                     sifreAlert.setTitleText("Şifreler eşleşmiyor");
                     sifreAlert.show();
-                }
+                }*/
 
 
-                if(!ad.isEmpty() &&  !soyad.isEmpty() && !telefon.isEmpty() && !sifre.isEmpty() && isEmailValid && isPasswordMatch && sifre.length() > 6)
+               /* if(!ad.isEmpty() &&  !soyad.isEmpty() && !telefon.isEmpty() && !sifre.isEmpty() && isEmailValid && isPasswordMatch && sifre.length() > 6)
                 {
-                    HashMap<String , HashMap<String , String>> node = new HashMap<>();
-                    HashMap<String , String> body = new HashMap<>();
-
-                    body.put("MeType" , kullanıcıType);
-                    body.put("UserName" , ad);
-                    body.put("SurName" , soyad);
-                    body.put("Email" , email);
-                    body.put("Password" , sifre);
-                    body.put("GSM" , telefon);
-                    body.put("CityID" , String.valueOf(ilCount));
-                    body.put("TownID" , String.valueOf(ilçeCount));
 
 
-                    node.put("param" , body);
-                    Call<UserRegisterResponse> userRegisterResponseCall = App.getApiService().getRegister(node);
-                    userRegisterResponseCall.enqueue(new Callback<UserRegisterResponse>() {
-                        @Override
-                        public void onResponse(Call<UserRegisterResponse> call, Response<UserRegisterResponse> response) {
-
-                            UserRegisterResponseDetail userRegisterResponseDetail = response.body().getUserRegisterResponseDetail();
-                            String token = userRegisterResponseDetail.getResult();
-
-                            Log.i(TAG, "onResponse: " + token);
-
-                            JSONObject jsonObject = Utils.jwtToJsonObject(token);
-                            Log.i(TAG, "onResponse: " + jsonObject.toString());
-
-                            try {
-                                Log.i(TAG, "onResponse: " + jsonObject.getJSONArray("errorOther"));
-
-
-                                if(jsonObject.get("OutPutMessage") instanceof  JSONObject)
-                                {
-
-                                    int status = jsonObject.getJSONObject("OutPutMessage").getInt("Status");
-                                    if(status == 200)
-                                    {
-                                        servisAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.NORMAL_TYPE);
-                                        servisAlert.setTitleText(jsonObject.getJSONObject("OutPutMessage").getString("SuccessMessage"));
-                                        servisAlert.show();
-                                    }
-                                }
-
-                                if(jsonObject.get("OutPutMessage") instanceof JSONArray)
-                                {
-
-                                    if(jsonObject.getJSONArray("errorOther") != null)
-                                    {
-                                        servisAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
-                                        servisAlert.setTitleText(jsonObject.getJSONArray("errorOther").getString(0));
-                                        servisAlert.show();
-                                    }
-
-                                }
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<UserRegisterResponse> call, Throwable t) {
-
-                        }
-                    });
-
-                }
+                }*/
 
 
 

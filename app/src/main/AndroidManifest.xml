@@ -11,8 +11,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/applogo"
@@ -22,6 +20,7 @@
         android:theme="@style/Theme.MaterialComponents"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
+        <activity android:name=".GalleryActivity"></activity>
 
         <service android:name=".Firebase.MyFirebaseMessagingService">
             <intent-filter>
@@ -29,10 +28,9 @@
             </intent-filter>
         </service>
 
-
-        <activity android:name="serviscepde.com.tr.TestActivity"></activity>
+        <activity android:name=".TestActivity" />
         <activity
-            android:name="serviscepde.com.tr.SplashActivity"
+            android:name=".SplashActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,18 +39,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="serviscepde.com.tr.MainActivity"
+            android:name=".MainActivity"
             android:label="MainActivity"
-            android:parentActivityName="serviscepde.com.tr.SplashActivity"
+            android:parentActivityName=".SplashActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="serviscepde.com.tr.SplashActivity" />
         </activity>
         <activity
-            android:name="serviscepde.com.tr.AddingActivity"
+            android:name=".AddingActivity"
             android:label="AddingActivity"
-            android:parentActivityName="serviscepde.com.tr.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

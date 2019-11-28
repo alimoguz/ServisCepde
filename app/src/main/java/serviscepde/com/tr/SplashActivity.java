@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import retrofit2.Retrofit;
 import serviscepde.com.tr.Fragment.IseAracFragment;
 import serviscepde.com.tr.Fragment.VideoFragment;
 import serviscepde.com.tr.Models.Ilce;
@@ -45,6 +46,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
 
+        DownloadClass.downloadAllVariables();
+
         fragSplash = findViewById(R.id.fragSplash);
 
         sharedPref = getBaseContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
@@ -53,55 +56,6 @@ public class SplashActivity extends AppCompatActivity {
         ilces = new ArrayList<>();
 
         setNotification();
-
-
-
-        /*Call<IlceResponse> ilceResponseCall = App.getApiService().getIlceler();
-        ilceResponseCall.enqueue(new Callback<IlceResponse>() {
-            @Override
-            public void onResponse(Call<IlceResponse> call, Response<IlceResponse> response) {
-                IlceResponseDetail ilceResponseDetail = response.body().getIlceResponseDetail();
-                String token2 = ilceResponseDetail.getResult();
-                JSONObject jsonObjectIlce = Utils.jwtToJsonObject(token2);
-
-                try {
-                    JSONObject withCityId = jsonObjectIlce.getJSONObject("OutPutMessage").getJSONObject("Data");
-
-                    Iterator<String> keys = withCityId.keys();
-
-                    while (keys.hasNext())
-                    {
-                        String cityId = keys.next();
-
-                        JSONObject ilceler = withCityId.getJSONObject(cityId);
-
-                        Iterator<String> keyilceler = ilceler.keys();
-
-                        while (keyilceler.hasNext())
-                        {
-                            String ilceId = keyilceler.next();
-                            String ilceName = ilceler.getString(ilceId);
-
-                            Ilce ilce = new Ilce(cityId , ilceId , ilceName);
-                            ilces.add(ilce);
-                        }
-
-
-                    }
-
-                    setilceler();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<IlceResponse> call, Throwable t) {
-
-            }
-        });*/
 
 
         if(isTesting)

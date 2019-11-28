@@ -143,7 +143,7 @@ public class AddFragment extends Fragment {
 
     private void choosePhoto()
     {
-        ImagePicker.create(this)
+        /*ImagePicker.create(this)
                 .returnMode(ReturnMode.GALLERY_ONLY)
                 .returnMode(ReturnMode.CAMERA_ONLY)
                 .folderMode(true)
@@ -151,13 +151,17 @@ public class AddFragment extends Fragment {
                 .includeVideo(false)
                 .multi()
                 .limit(3)
-                .start();
+                .start();*/
+
+        bundle.putStringArrayList("imageList" , imagesPath);
+        addingActivity.putExtras(bundle);
+        startActivity(addingActivity);
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
+        Log.i("%%%%", "onActivityResult: %%%%"+requestCode+"----"+resultCode);
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
             // Get a list of picked images
             List<Image> images = ImagePicker.getImages(data);

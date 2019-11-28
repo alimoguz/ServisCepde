@@ -1069,6 +1069,7 @@ public class IlanDetayFragment extends Fragment {
         txtIlanTamKonum.setText(Konum);
         txtYedekParcaDurumu.setText(YedekParcaDurumu);
         txtParcaMarkasi.setText(ParcaMarkasi);
+        txtCikmaYedekParca.setText(CikmaYedekParca);
 
         linMarka.setVisibility(View.GONE);
         linModel.setVisibility(View.GONE);

@@ -134,12 +134,31 @@
                 />
 
 
-            <AutoCompleteTextView
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:background="@color/appColor"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteIl"
+                    android:textColor="@color/colorWhite"
+                    android:layout_width="match_parent"
+                    android:background="@color/appColor"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:backgroundTint="@color/appColor"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!--<AutoCompleteTextView
                 android:id="@+id/autoCompleteIl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_minus5sdp"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite" />-->
 
 
             <TextView
@@ -152,13 +171,31 @@
                 android:textSize="@dimen/_13ssp"
                 />
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:background="@color/appColor"
+                android:layout_height="wrap_content">
 
-            <AutoCompleteTextView
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteIlce"
+                    android:background="@color/appColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:backgroundTint="@color/appColor"
+                    android:layout_marginTop="@dimen/_minus5sdp"
+                    android:textColor="@color/colorWhite" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!--<AutoCompleteTextView
                 android:id="@+id/autoCompleteIlce"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_minus5sdp"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite" />-->
 
 
 
