@@ -25,6 +25,8 @@ import com.bumptech.glide.Glide;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 import serviscepde.com.tr.App;
+import serviscepde.com.tr.DownloadClass;
+import serviscepde.com.tr.GalleryActivity;
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
@@ -69,12 +71,16 @@ public class YedekParcaFragment extends Fragment {
     private ArrayList<String> photos = new ArrayList<>();
     private String imageString,userToken;
     private String baslik,fiyat,aciklama,marka;
-    private String actvil,actvilce,actvDurum;
-    private String s = "0";
+    private String actvDurum;
 
     private SweetAlertDialog emptyDialog;
-    private List<City> tmpCity = new ArrayList<>();
-    private List<String> sehirListesi = new ArrayList<>();
+
+    private List<City> sehirler = new ArrayList<>();
+    private List<String> cityNames = new ArrayList<>();
+    private String cityId;
+    private String townId;
+    private ArrayList<String> townNames  = new ArrayList<>();
+
 
     private Context ctx;
 
@@ -179,15 +185,9 @@ public class YedekParcaFragment extends Fragment {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                        ImagePicker.create(getActivity())
-                                .returnMode(ReturnMode.GALLERY_ONLY)
-                                .returnMode(ReturnMode.CAMERA_ONLY)
-                                .folderMode(true)
-                                .toolbarFolderTitle("Folder")
-                                .includeVideo(false)
-                                .multi()
-                                .limit(1)
-                                .start();
+                        Intent intent = new Intent(getContext(), GalleryActivity.class);
+                        intent.putExtra("position",1);
+                        startActivityForResult(intent, 6614);
 
                         firstPhoto.dismiss();
 
@@ -225,15 +225,9 @@ public class YedekParcaFragment extends Fragment {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                        ImagePicker.create(getActivity())
-                                .returnMode(ReturnMode.GALLERY_ONLY)
-                                .returnMode(ReturnMode.CAMERA_ONLY)
-                                .folderMode(true)
-                                .toolbarFolderTitle("Folder")
-                                .includeVideo(false)
-                                .multi()
-                                .limit(1)
-                                .start();
+                        Intent intent = new Intent(getContext(), GalleryActivity.class);
+                        intent.putExtra("position",2);
+                        startActivityForResult(intent, 6614);
 
                         secondPhoto.dismiss();
 
@@ -272,15 +266,9 @@ public class YedekParcaFragment extends Fragment {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                        ImagePicker.create(getActivity())
-                                .returnMode(ReturnMode.GALLERY_ONLY)
-                                .returnMode(ReturnMode.CAMERA_ONLY)
-                                .folderMode(true)
-                                .toolbarFolderTitle("Folder")
-                                .includeVideo(false)
-                                .multi()
-                                .limit(1)
-                                .start();
+                        Intent intent = new Intent(getContext(), GalleryActivity.class);
+                        intent.putExtra("position",3);
+                        startActivityForResult(intent, 6614);
 
                         lastPhoto.dismiss();
 
@@ -307,55 +295,34 @@ public class YedekParcaFragment extends Fragment {
             }
         });
 
-        Call<SehirResponse> sehirResponseCall = App.getApiService().getSehirler();
-        sehirResponseCall.enqueue(new Callback<SehirResponse>() {
-            @Override
-            public void onResponse(Call<SehirResponse> call, Response<SehirResponse> response) {
-
-
-                SehirResponseDetail sehirResponseDetail = response.body().getSehirResponseDetail();
-                String token = sehirResponseDetail.getResult();
-                JSONObject jsonObjectIl = Utils.jwtToJsonObject(token);
-
-                try {
-
-                    for(int i = 1; i <= jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").length(); i++)
-                    {
-                        String ID = String.valueOf(i);
-                        String cityName = jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").getString(String.valueOf(i));
-
-                        City city = new City(ID,cityName);
-                        tmpCity.add(city);
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        sehirler = DownloadClass.getCities();
+        cityNames = DownloadClass.getCityNames();
 
 
 
-                for (int i = 0;  i < tmpCity.size(); i++)
-                {
-                    String tmp = tmpCity.get(i).getCityName();
-                    sehirListesi.add(tmp);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<SehirResponse> call, Throwable t) {
-
-            }
-        });
-
-        Utils.setAutoCompleteAdapter(autoCompleteYedekParcail, sehirListesi , ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteYedekParcail, cityNames , ctx);
         Utils.setAutoCompleteAdapter(autoCompleteYedekParcaDurumu , App.getDurumu() , ctx);
 
         autoCompleteYedekParcail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                actvil = String.valueOf(position + 1);
+                cityId = parent.getItemAtPosition(position).toString();
+                cityId = DownloadClass.getCityIdWithName(cityId);
+                Log.i("SelectedIlId" , cityId);
+
+                townNames = DownloadClass.getTownNames(cityId);
+                Utils.setAutoCompleteAdapter(autoCompleteYedekParcailce , townNames , ctx);
+            }
+        });
+
+        autoCompleteYedekParcailce.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                townId = parent.getItemAtPosition(position).toString();
+                townId = DownloadClass.getTownIdWithTownName(townId , cityId);
+                Log.i("SelectedIlceId" , townId);
             }
         });
 
@@ -381,15 +348,15 @@ public class YedekParcaFragment extends Fragment {
                 imageString = Utils.imageToString(base64Photo);
                 imageString = Utils.trimmer(imageString);
 
+                String s = "0";
 
                 if(switchYedekParcaCikmaParca.isChecked())
                 {
-                    s = "1";
+                   s = "1";
                 }
 
-
                 if (baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || marka.isEmpty()
-                        || actvil.isEmpty() || actvilce.isEmpty() || actvDurum.isEmpty())
+                        || cityId.isEmpty() || townId.isEmpty() || actvDurum.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -401,23 +368,22 @@ public class YedekParcaFragment extends Fragment {
                     HashMap<String , Object> hashMap = new HashMap<>();
                     HashMap<String , String> hashMap1 = new HashMap<>();
 
-
                     hashMap1.put("Tipi" , "7");
                     hashMap1.put("Baslik" , baslik);
-                    hashMap1.put("ilanCity" , actvil);
-                    hashMap1.put("ilanSemtleri" , "10");
+                    hashMap1.put("ilanCity" , cityId);
+                    hashMap1.put("ilanSemtleri" , townId);
                     hashMap1.put("ParcaMarkasi" , marka);
                     hashMap1.put("Ucret" , fiyat);
                     hashMap1.put("file" , imageString);
                     hashMap1.put("ilanAciklamasi" , aciklama);
                     hashMap1.put("YedekParcaDurum" , actvDurum);
+                    hashMap1.put("CikmaYedekParca" , s);
 
                     hashMap.put("Token" , userToken);
                     hashMap.put("param" , hashMap1);
 
 
                     Call<EkleResponse> ilanEkle = App.getApiService().ilanEkle(hashMap);
-
                     ilanEkle.enqueue(new Callback<EkleResponse>() {
 
                         @Override
@@ -481,13 +447,28 @@ public class YedekParcaFragment extends Fragment {
             }
         });
 
-
-
-
-
-
-
-
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode == 6614){
+            ArrayList<String> imageList = data.getStringArrayListExtra("imageList");
+            if(resultCode == 100){
+                Glide.with(ctx).load(imageList.get(0)).into(imgYedekParcaFirstPhoto);
+                imgYedekParcaFirstPhotoChange.setVisibility(View.INVISIBLE);
+            }
+            else if(resultCode == 200){
+                Glide.with(ctx).load(imageList.get(0)).into(imgYedekParcaSecondPhoto);
+                imgYedekParcaSecondPhotoChange.setVisibility(View.INVISIBLE);
+            }
+            else if(resultCode == 300){
+                Glide.with(ctx).load(imageList.get(0)).into(imgYedekParcaLastPhoto);
+                imgYedekParcaLastChange.setVisibility(View.INVISIBLE);
+            }
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

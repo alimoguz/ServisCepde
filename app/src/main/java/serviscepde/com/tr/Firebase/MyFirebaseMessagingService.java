@@ -10,6 +10,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
 
+        String topic = remoteMessage.getData().get("topic");
         String title = remoteMessage.getData().get("title");
         String message = remoteMessage.getData().get("body");
 

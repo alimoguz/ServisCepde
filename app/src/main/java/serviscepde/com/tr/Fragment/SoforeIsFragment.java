@@ -1,6 +1,7 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -23,14 +24,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.esafirm.imagepicker.features.ImagePicker;
-import com.esafirm.imagepicker.features.ReturnMode;
 import serviscepde.com.tr.App;
+import serviscepde.com.tr.DownloadClass;
+import serviscepde.com.tr.GalleryActivity;
 import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
-import serviscepde.com.tr.Models.Sehirler.SehirResponse;
-import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.R;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
@@ -73,16 +72,19 @@ public class SoforeIsFragment extends Fragment {
     private ArrayList<String> photos = new ArrayList<>();
 
     private String baslik,fiyat,aciklama,tecrube,serviseBaslamaSaati,yas,belgeler,imagesString;
-    private String actvil,actvilce,actvServiseBaslamail,actvServiseBaslamailce,actvKapasite,actvEhliyet;
-
-    private List<City> tmpCity = new ArrayList<>();
-    private List<String> sehirListesi = new ArrayList<>();
+    private String actvKapasite,actvEhliyet;
 
     private SweetAlertDialog emptyDialog;
 
     private String userToken;
 
     private Context ctx;
+
+    private List<City> sehirler = new ArrayList<>();
+    private List<String> cityNames = new ArrayList<>();
+    private String cityId,baslamaCityId;
+    private String townId,baslamaTownId;
+    private ArrayList<String> townNames , baslamaTownNames  = new ArrayList<>();
 
     @Nullable
     @Override
@@ -179,16 +181,9 @@ public class SoforeIsFragment extends Fragment {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                        ImagePicker.create(getActivity())
-                                .returnMode(ReturnMode.GALLERY_ONLY)
-                                .returnMode(ReturnMode.CAMERA_ONLY)
-                                .folderMode(true)
-                                .toolbarFolderTitle("Folder")
-                                .includeVideo(false)
-                                .multi()
-                                .limit(1)
-                                .start();
-
+                        Intent intent = new Intent(getContext(), GalleryActivity.class);
+                        intent.putExtra("position",1);
+                        startActivityForResult(intent, 6614);
                         firstPhoto.dismiss();
 
                     }
@@ -225,15 +220,9 @@ public class SoforeIsFragment extends Fragment {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                        ImagePicker.create(getActivity())
-                                .returnMode(ReturnMode.GALLERY_ONLY)
-                                .returnMode(ReturnMode.CAMERA_ONLY)
-                                .folderMode(true)
-                                .toolbarFolderTitle("Folder")
-                                .includeVideo(false)
-                                .multi()
-                                .limit(1)
-                                .start();
+                        Intent intent = new Intent(getContext(), GalleryActivity.class);
+                        intent.putExtra("position",2);
+                        startActivityForResult(intent, 6614);
 
                         secondPhoto.dismiss();
 
@@ -270,15 +259,9 @@ public class SoforeIsFragment extends Fragment {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                        ImagePicker.create(getActivity())
-                                .returnMode(ReturnMode.GALLERY_ONLY)
-                                .returnMode(ReturnMode.CAMERA_ONLY)
-                                .folderMode(true)
-                                .toolbarFolderTitle("Folder")
-                                .includeVideo(false)
-                                .multi()
-                                .limit(1)
-                                .start();
+                        Intent intent = new Intent(getContext(), GalleryActivity.class);
+                        intent.putExtra("position",3);
+                        startActivityForResult(intent, 6614);
 
                         lastPhoto.dismiss();
 
@@ -304,63 +287,59 @@ public class SoforeIsFragment extends Fragment {
             }
         });
 
-        Call<SehirResponse> sehirResponseCall = App.getApiService().getSehirler();
-        sehirResponseCall.enqueue(new Callback<SehirResponse>() {
-            @Override
-            public void onResponse(Call<SehirResponse> call, Response<SehirResponse> response) {
-
-
-                SehirResponseDetail sehirResponseDetail = response.body().getSehirResponseDetail();
-                String token = sehirResponseDetail.getResult();
-                JSONObject jsonObjectIl = Utils.jwtToJsonObject(token);
-
-                try {
-
-                    for(int i = 1; i <= jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").length(); i++)
-                    {
-                        String ID = String.valueOf(i);
-                        String cityName = jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").getString(String.valueOf(i));
-
-                        City city = new City(ID,cityName);
-                        tmpCity.add(city);
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        sehirler = DownloadClass.getCities();
+        cityNames = DownloadClass.getCityNames();
 
 
 
-                for (int i = 0;  i < tmpCity.size(); i++)
-                {
-                    String tmp = tmpCity.get(i).getCityName();
-                    sehirListesi.add(tmp);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<SehirResponse> call, Throwable t) {
-
-            }
-        });
-
-        Utils.setAutoCompleteAdapter(autoCompleteSoforeIsil , sehirListesi , ctx);
-        Utils.setAutoCompleteAdapter(autoCompleteSoforeIsServisBaslamaili , sehirListesi , ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteSoforeIsil , cityNames , ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteSoforeIsServisBaslamaili , cityNames , ctx);
 
 
         autoCompleteSoforeIsil.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                actvil = String.valueOf(position + 1);
+                cityId = parent.getItemAtPosition(position).toString();
+                cityId = DownloadClass.getCityIdWithName(cityId);
+                Log.i("SelectedIlId" , cityId);
+
+                townNames = DownloadClass.getTownNames(cityId);
+                Utils.setAutoCompleteAdapter(autoCompleteSoforeIsilce , townNames , ctx);
+            }
+        });
+
+        autoCompleteSoforeIsilce.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                townId = parent.getItemAtPosition(position).toString();
+                townId = DownloadClass.getTownIdWithTownName(townId , cityId);
+                Log.i("SelectedIlceId" , townId);
+
             }
         });
         autoCompleteSoforeIsServisBaslamaili.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                actvServiseBaslamail = String.valueOf(position + 1);
+                baslamaCityId = parent.getItemAtPosition(position).toString();
+                baslamaCityId = DownloadClass.getCityIdWithName(baslamaCityId);
+                Log.i("ServisBaslamaId" , baslamaCityId);
+
+                baslamaTownNames = DownloadClass.getTownNames(baslamaCityId);
+                Utils.setAutoCompleteAdapter(autoCompleteSoforeIsServiseBaslamailce , baslamaTownNames , ctx);
+            }
+        });
+
+        autoCompleteSoforeIsServiseBaslamailce.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                baslamaTownId = parent.getItemAtPosition(position).toString();
+                baslamaTownId = DownloadClass.getTownIdWithTownName(baslamaTownId , baslamaCityId);
+                Log.i("ServisBaslamaIlceId" , baslamaTownId);
+
             }
         });
 
@@ -427,8 +406,8 @@ public class SoforeIsFragment extends Fragment {
 
 
                 if( baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || tecrube.isEmpty() || serviseBaslamaSaati.isEmpty() ||
-                        actvEhliyet.isEmpty() || yas.isEmpty() || belgeler.isEmpty() ||actvil.isEmpty() || actvilce.isEmpty()
-                        || actvServiseBaslamail.isEmpty() || actvServiseBaslamailce.isEmpty() || actvKapasite.isEmpty() )
+                        actvEhliyet.isEmpty() || yas.isEmpty() || belgeler.isEmpty() || cityId.isEmpty() || townId.isEmpty()
+                        || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || actvKapasite.isEmpty() )
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -453,11 +432,11 @@ public class SoforeIsFragment extends Fragment {
 
                     hashMap1.put("Tipi" , "4");
                     hashMap1.put("Baslik" , baslik);
-                    hashMap1.put("ilanCity" , actvil);
-                    hashMap1.put("ilanSemtleri" , "10");
+                    hashMap1.put("ilanCity" , cityId);
+                    hashMap1.put("ilanSemtleri" , townId);
                     hashMap1.put("KullanabildiginizKapasiteler" , actvKapasite);
-                    hashMap1.put("ServiseBaslamaCity" , actvil);
-                    hashMap1.put("ServiseBaslamaSemtleri" , "10");
+                    hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
+                    hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
                     hashMap1.put("ServiseBaslamaSaati" , serviseBaslamaSaati);
                     hashMap1.put("Ucret" , fiyat);
                     hashMap1.put("ilanAciklamasi" , aciklama);

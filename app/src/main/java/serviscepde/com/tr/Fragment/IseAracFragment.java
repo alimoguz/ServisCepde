@@ -64,7 +64,6 @@ public class IseAracFragment extends Fragment {
     private  TextInputEditText edtIseAracBaslik,edtIseAracFiyat,edtIseAracAciklama,edtIseAracYil,edtIseAracServisBaslamaSaati,edtIseAracServisBitisSaati,
             edtIseAracFirmaGirisSaati,edtIseAracFirmadanCikisSaati,edtIseAracToplamKM,edtIseAracCalisilacakGunSayisi;
 
-
     private  AutoCompleteTextView autoCompleteIseAracil,autoCompleteIseAracilce,autoCompleteIseAracMarka,autoCompleteIseAracModel,autoCompleteIseAracKapasite,autoCompleteIseAracServisBaslamaili,
             autoCompleteIseAracServiseBaslamailce,autoCompleteIseAracServisBitisili,autoCompleteIseAracServisBitisilce;
 
@@ -84,34 +83,26 @@ public class IseAracFragment extends Fragment {
 
     private String switchStates = "";
     private String baslik,fiyat,aciklama,yil,servisBaslamaSaati,servisBitisSaati,firmaGirisSaati,firmaCikisSaati,toplamKM,gunSayisi, imageString;
-    private String actvIseAracil,actvIseAracilce,actvIseAracMarka,actvIseAracModel,actvIseAracKapasite,actvIseAracServisBaslamaili,
-            actvIseAracServiseBaslamailce,actvIseAracServisBitisili,actvIseAracServisBitisilce;
+    private String actvIseAracMarka,actvIseAracModel,actvIseAracKapasite;
 
     private SweetAlertDialog emptyDialog;
-
-    private List<City> tmpCity = new ArrayList<>();
-    private List<String> sehirListesi = new ArrayList<>();
 
 
     final static  Calendar takvim = Calendar.getInstance();
     private int saat = takvim.get(Calendar.HOUR_OF_DAY);
     private int dakika = takvim.get(Calendar.MINUTE);
 
-    List<City> sehirler = new ArrayList<>();
-    List<String> cityNames = new ArrayList<>();
-    List<String> marka = new ArrayList<>();
-    List<String> model = new ArrayList<>();
-
-
-    private String userToken;
-
+    private List<City> sehirler = new ArrayList<>();
+    private List<String> cityNames = new ArrayList<>();
+    private List<String> marka = new ArrayList<>();
+    private List<String> model = new ArrayList<>();
     private String cityId,baslamaCityId,bitisCityId;
     private String townId,baslamaTownId,bitisTownId;
     private ArrayList<String> townNames , baslamaTownNames , bitisTownNames = new ArrayList<>();
 
+    private String userToken;
 
     public static Activity act;
-
 
     @Nullable
     @Override
@@ -263,7 +254,6 @@ public class IseAracFragment extends Fragment {
 
             }
         });
-
         relIseAracSecondPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -303,7 +293,6 @@ public class IseAracFragment extends Fragment {
 
             }
         });
-
         relIseAracLastPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -598,8 +587,8 @@ public class IseAracFragment extends Fragment {
 
                 if(baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty()
                         || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() || firmaCikisSaati.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() ||
-                        actvIseAracil.isEmpty() || actvIseAracilce.isEmpty() || actvIseAracKapasite.isEmpty() || actvIseAracMarka.isEmpty() || actvIseAracModel.isEmpty()
-                        || actvIseAracServisBaslamaili.isEmpty() || actvIseAracServisBitisilce.isEmpty() || actvIseAracServisBitisili.isEmpty() || actvIseAracServiseBaslamailce.isEmpty())
+                        cityId.isEmpty() || townId.isEmpty() || actvIseAracKapasite.isEmpty() || actvIseAracMarka.isEmpty() || actvIseAracModel.isEmpty()
+                        || baslamaCityId.isEmpty() || bitisTownId.isEmpty() || bitisCityId.isEmpty() || baslamaTownId.isEmpty())
                 {
 
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);

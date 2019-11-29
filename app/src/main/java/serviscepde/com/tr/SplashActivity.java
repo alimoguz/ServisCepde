@@ -91,16 +91,13 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    private void setilceler() {
-        for(Ilce tmp : ilces)
-        {
-            Log.i("ılceler" , tmp.getCityID() + ""  + tmp.getIlceID() + " " + tmp.getIlceName());
-        }
-    }
+
 
 
     private void setNotification() {
-        FirebaseMessaging.getInstance().subscribeToTopic("serviscepde-adnroid1-app");
+        //FirebaseMessaging.getInstance().subscribeToTopic("serviscepde-adnroid1-app");
+
+        FirebaseMessaging.getInstance().subscribeToTopic("/topics/serviscepde_android_app_new");
 
 
         Bundle bundle = getIntent().getExtras();

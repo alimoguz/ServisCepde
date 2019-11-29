@@ -26,6 +26,8 @@ import com.bumptech.glide.Glide;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 import serviscepde.com.tr.App;
+import serviscepde.com.tr.DownloadClass;
+import serviscepde.com.tr.GalleryActivity;
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
@@ -74,28 +76,29 @@ public class AracaIsFragment extends Fragment {
 
     private String baslik,fiyat,aciklama,yil,servisBaslamaSaati,servisBitisSaati, tecrube,plaka,referans,toplamKM,gunSayisi,imagesString;
 
-    private String actvil,actvilce,actvMarka,actvModel,actvKapasite,actvServisBaslamail,actvServisBaslamailce,actvAracDurumu;
+    private String actvMarka,actvModel,actvKapasite,actvAracDurumu;
 
     private TextView txtAracaIsGonder;
-
     private Context ctx;
-
     private SweetAlertDialog emptyDialog;
 
-    private String [] s = new String[6];
-
     private String switchStates = "";
-
-    private List<City> tmpCity = new ArrayList<>();
-    private List<String> sehirListesi = new ArrayList<>();
     private List<String> aracDurumu = new ArrayList<>();
 
-    final static Calendar takvim = Calendar.getInstance();
+    private final static Calendar takvim = Calendar.getInstance();
     private int saat = takvim.get(Calendar.HOUR_OF_DAY);
     private int dakika = takvim.get(Calendar.MINUTE);
 
     private String userToken;
 
+    private List<City> sehirler = new ArrayList<>();
+    private List<String> cityNames = new ArrayList<>();
+    private List<String> marka = new ArrayList<>();
+    private List<String> model = new ArrayList<>();
+    private ArrayList<String> townNames , baslamaTownNames  = new ArrayList<>();
+
+    private String cityId,baslamaCityId;
+    private String townId,baslamaTownId;
 
 
     @Nullable
@@ -227,16 +230,9 @@ public class AracaIsFragment extends Fragment {
                 firstPhoto.setConfirmButton("Değiştir", new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
-
-                        ImagePicker.create(AracaIsFragment.this)
-                                .returnMode(ReturnMode.GALLERY_ONLY)
-                                .returnMode(ReturnMode.CAMERA_ONLY)
-                                .folderMode(true)
-                                .toolbarFolderTitle("Folder")
-                                .includeVideo(false)
-                                .single()
-                                .limit(1)
-                                .start();
+                        Intent intent = new Intent(getContext(), GalleryActivity.class);
+                        intent.putExtra("position",1);
+                        startActivityForResult(intent, 6614);
 
                         firstPhoto.dismiss();
 
@@ -274,16 +270,9 @@ public class AracaIsFragment extends Fragment {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                        ImagePicker.create(getActivity())
-                                .returnMode(ReturnMode.GALLERY_ONLY)
-                                .returnMode(ReturnMode.CAMERA_ONLY)
-                                .folderMode(true)
-                                .toolbarFolderTitle("Folder")
-                                .includeVideo(false)
-                                .multi()
-                                .limit(1)
-                                .start();
-
+                        Intent intent = new Intent(getContext(), GalleryActivity.class);
+                        intent.putExtra("position",2);
+                        startActivityForResult(intent, 6614);
                         secondPhoto.dismiss();
 
                     }
@@ -320,15 +309,9 @@ public class AracaIsFragment extends Fragment {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                        ImagePicker.create(getActivity())
-                                .returnMode(ReturnMode.GALLERY_ONLY)
-                                .returnMode(ReturnMode.CAMERA_ONLY)
-                                .folderMode(true)
-                                .toolbarFolderTitle("Folder")
-                                .includeVideo(false)
-                                .multi()
-                                .limit(1)
-                                .start();
+                        Intent intent = new Intent(getContext(), GalleryActivity.class);
+                        intent.putExtra("position",3);
+                        startActivityForResult(intent, 6614);
 
                         lastPhoto.dismiss();
 
@@ -353,58 +336,64 @@ public class AracaIsFragment extends Fragment {
             }
         });
 
-        Call<SehirResponse> sehirResponseCall = App.getApiService().getSehirler();
-        sehirResponseCall.enqueue(new Callback<SehirResponse>() {
+
+        sehirler = DownloadClass.getCities();
+        cityNames = DownloadClass.getCityNames();
+        marka = DownloadClass.getMarkaNames();
+
+
+
+        Utils.setAutoCompleteAdapter(autoCompleteAracaIsil , cityNames ,ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteAracaIsServisBaslamaili , cityNames  ,ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteAracaIsKapasite , App.getKapasite() , ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteAracaIsAracDurumu , aracDurumu , ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteAracaIsMarka , marka , ctx);
+
+
+        autoCompleteAracaIsMarka.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onResponse(Call<SehirResponse> call, Response<SehirResponse> response) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                actvMarka = parent.getItemAtPosition(position).toString();
+                actvMarka = DownloadClass.getMarkaIdWithName(actvMarka);
+                Log.i("SelectedMarkaId" , actvMarka);
 
-                SehirResponseDetail sehirResponseDetail = response.body().getSehirResponseDetail();
-                String token = sehirResponseDetail.getResult();
-                JSONObject jsonObjectIl = Utils.jwtToJsonObject(token);
-
-                try {
-
-                    for(int i = 1; i <= jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").length(); i++)
-                    {
-                        String ID = String.valueOf(i);
-                        String cityName = jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").getString(String.valueOf(i));
-
-                        City city = new City(ID,cityName);
-                        tmpCity.add(city);
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-
-                for (int i = 0;  i < tmpCity.size(); i++)
-                {
-                    String tmp = tmpCity.get(i).getCityName();
-                    sehirListesi.add(tmp);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<SehirResponse> call, Throwable t) {
+                model = DownloadClass.getModelNames(actvMarka);
+                Utils.setAutoCompleteAdapter(autoCompleteAracaIsModel , model , ctx);
 
             }
         });
 
-        Utils.setAutoCompleteAdapter(autoCompleteAracaIsil , sehirListesi ,ctx);
-        Utils.setAutoCompleteAdapter(autoCompleteAracaIsServisBaslamaili , sehirListesi ,ctx);
-        Utils.setAutoCompleteAdapter(autoCompleteAracaIsKapasite , App.getKapasite() , ctx);
-        Utils.setAutoCompleteAdapter(autoCompleteAracaIsAracDurumu , aracDurumu , ctx);
+        autoCompleteAracaIsModel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                actvModel = parent.getItemAtPosition(position).toString();
+                actvModel = DownloadClass.getModelIdWithName(actvModel);
+
+            }
+        });
 
         autoCompleteAracaIsil.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                actvil = String.valueOf(position + 1);
-                Log.i("SelectedCity" , actvil);
+                cityId = parent.getItemAtPosition(position).toString();
+                cityId = DownloadClass.getCityIdWithName(cityId);
+                Log.i("SelectedCity" , cityId);
+
+                townNames = DownloadClass.getTownNames(cityId);
+                Utils.setAutoCompleteAdapter(autoCompleteAracaIsilce , townNames ,ctx);
+            }
+        });
+
+        autoCompleteAracaIsilce.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                townId = parent.getItemAtPosition(position).toString();
+                townId = DownloadClass.getTownIdWithTownName(townId , cityId);
+                Log.i("SelectedIlceId" , townId);
             }
         });
 
@@ -412,8 +401,24 @@ public class AracaIsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                actvServisBaslamail = String.valueOf(position +1);
-                Log.i("SelectedCity" , actvServisBaslamail);
+                baslamaCityId = parent.getItemAtPosition(position).toString();
+                baslamaCityId = DownloadClass.getCityIdWithName(baslamaCityId);
+                Log.i("BaslamaCityId" , baslamaCityId);
+
+                baslamaTownNames = DownloadClass.getTownNames(baslamaCityId);
+                Utils.setAutoCompleteAdapter(autoCompleteAracaIsServiseBaslamailce , baslamaTownNames , ctx);
+            }
+        });
+
+        autoCompleteAracaIsServiseBaslamailce.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                baslamaTownId = parent.getItemAtPosition(position).toString();
+                baslamaTownId = DownloadClass.getTownIdWithTownName(baslamaTownId , baslamaCityId);
+
+                Log.i("SelectedBaslamaIlce" , baslamaTownId);
+
             }
         });
 
@@ -497,8 +502,8 @@ public class AracaIsFragment extends Fragment {
 
 
                 if(baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || tecrube.isEmpty() ||
-                        plaka.isEmpty() || referans.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || actvil.isEmpty() || actvilce.isEmpty() || actvMarka.isEmpty() ||
-                        actvModel.isEmpty() || actvKapasite.isEmpty() || actvServisBaslamail.isEmpty() || actvServisBaslamailce.isEmpty() || actvAracDurumu.isEmpty())
+                        plaka.isEmpty() || referans.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvMarka.isEmpty() ||
+                        actvModel.isEmpty() || actvKapasite.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || actvAracDurumu.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -548,15 +553,15 @@ public class AracaIsFragment extends Fragment {
 
                     hashMap1.put("Tipi" , "1");
                     hashMap1.put("Baslik" , baslik);
-                    hashMap1.put("ilanCity" , actvil);
-                    hashMap1.put("ilanSemtleri" , "10");
-                    hashMap1.put("AracMarkasi" , "3");
-                    hashMap1.put("AracModeli" , "4");
+                    hashMap1.put("ilanCity" , cityId);
+                    hashMap1.put("ilanSemtleri" , townId);
+                    hashMap1.put("AracMarkasi" , actvMarka);
+                    hashMap1.put("AracModeli" , actvModel);
                     hashMap1.put("AracYili" , yil);
                     hashMap1.put("AracKapasitesi" , actvKapasite);
                     hashMap1.put("AracOzellikleri" , switchStates);
-                    hashMap1.put("ServiseBaslamaCity" , actvServisBaslamail);
-                    hashMap1.put("ServiseBaslamaSemtleri" , "10");
+                    hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
+                    hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
                     hashMap1.put("ServiseBaslamaSaati" , servisBaslamaSaati);
                     hashMap1.put("ServisBitisSaati" , servisBitisSaati);
                     hashMap1.put("ToplamKM" , toplamKM);
@@ -644,26 +649,34 @@ public class AracaIsFragment extends Fragment {
 
                 }
 
-
-
-
-
-
-
-
-
-
             }
         });
 
 
-
-
-
-
-
-
-
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode == 6614){
+            ArrayList<String> imageList = data.getStringArrayListExtra("imageList");
+            if(resultCode == 100){
+                Glide.with(ctx).load(imageList.get(0)).into(imgAracaIsFirstPhoto);
+                imgAracaIsFirstPhotoChange.setVisibility(View.INVISIBLE);
+            }
+            else if(resultCode == 200){
+                Glide.with(ctx).load(imageList.get(0)).into(imgAracaIsSecondPhoto);
+                imgAracaIsSecondPhotoChange.setVisibility(View.INVISIBLE);
+            }
+            else if(resultCode == 300){
+                Glide.with(ctx).load(imageList.get(0)).into(imgAracaIsLastPhoto);
+                imgAracaIsLastChange.setVisibility(View.INVISIBLE);
+            }
+
+        }
+
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
