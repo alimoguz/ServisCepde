@@ -59,7 +59,8 @@ public class SignupFragment extends Fragment {
 
     private  SweetAlertDialog adAlert, soyadAlert,emailAlert,telefonAlert,sifreAlert,servisAlert;
     private String ad,soyad,email,telefon,sifre,sifreTekrar,il,ilçe,kullanıcıType;
-    private  boolean isEmailValid,isPasswordMatch;
+    private boolean isEmailValid = true;
+    private boolean isPasswordMatch;
 
     List<City> sehirler = new ArrayList<>();
     List<String > cityNames = new ArrayList<>();
@@ -101,23 +102,9 @@ public class SignupFragment extends Fragment {
 
         ctx = generalView.getContext();
 
-        sehirler = DownloadClass.getCities();
-        cityNames = DownloadClass.getCityNames();
 
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(
-                        ctx,
-                        R.layout.dropdown_item,
-                        cityNames);
 
-        autoCompleteIl.setAdapter(adapter);
-
-        ArrayAdapter<String> Turadapter =
-                new ArrayAdapter<>(
-                        ctx,
-                        R.layout.dropdown_item,
-                        tür);
-
+        ArrayAdapter<String> Turadapter = new ArrayAdapter<>(ctx, R.layout.dropdown_item, tür);
         autoCompleteKullaniciTuru.setAdapter(Turadapter);
 
 
@@ -131,6 +118,13 @@ public class SignupFragment extends Fragment {
 
 
 
+        sehirler = DownloadClass.getCities();
+        cityNames = DownloadClass.getCityNames();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(ctx, R.layout.dropdown_item, cityNames);
+
+        autoCompleteIl.setAdapter(adapter);
+
 
 
         autoCompleteIl.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -142,11 +136,7 @@ public class SignupFragment extends Fragment {
                 SelectedCityId = DownloadClass.getCityIdWithName(tempCityName);
                 ArrayList<String> cityTownNames = DownloadClass.getTownNames(SelectedCityId);
 
-                ArrayAdapter<String> ilceAdapter =
-                        new ArrayAdapter<>(
-                                ctx,
-                                R.layout.dropdown_item,
-                                cityTownNames);
+                ArrayAdapter<String> ilceAdapter = new ArrayAdapter<>(ctx, R.layout.dropdown_item, cityTownNames);
 
                 autoCompleteIlce.setAdapter(ilceAdapter);
             }
@@ -174,76 +164,7 @@ public class SignupFragment extends Fragment {
                 sifre = edtKayitSifre.getText().toString();
                 sifreTekrar = edtKayitSifreTekrar.getText().toString();
 
-                HashMap<String , HashMap<String , String>> node = new HashMap<>();
-                HashMap<String , String> body = new HashMap<>();
-
-                body.put("MeType" , kullanıcıType);
-                body.put("UserName" , ad);
-                body.put("SurName" , soyad);
-                body.put("Email" , email);
-                body.put("Password" , sifre);
-                body.put("GSM" , telefon);
-                body.put("CityID" , SelectedCityId);
-                body.put("TownID" , SelectedTownId);
-
-
-                node.put("param" , body);
-                Call<UserRegisterResponse> userRegisterResponseCall = App.getApiService().getRegister(node);
-                userRegisterResponseCall.enqueue(new Callback<UserRegisterResponse>() {
-                    @Override
-                    public void onResponse(Call<UserRegisterResponse> call, Response<UserRegisterResponse> response) {
-
-                        UserRegisterResponseDetail userRegisterResponseDetail = response.body().getUserRegisterResponseDetail();
-                        String token = userRegisterResponseDetail.getResult();
-
-                        Log.i(TAG, "onResponse: " + token);
-
-                        JSONObject jsonObject = Utils.jwtToJsonObject(token);
-                        Log.i(TAG, "onResponse: " + jsonObject.toString());
-
-                        try {
-                            Log.i(TAG, "onResponse: " + jsonObject.getJSONArray("errorOther"));
-
-
-                            if(jsonObject.get("OutPutMessage") instanceof  JSONObject)
-                            {
-
-                                int status = jsonObject.getJSONObject("OutPutMessage").getInt("Status");
-                                if(status == 200)
-                                {
-                                    servisAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.NORMAL_TYPE);
-                                    servisAlert.setTitleText(jsonObject.getJSONObject("OutPutMessage").getString("SuccessMessage"));
-                                    servisAlert.show();
-                                }
-                            }
-
-                            if(jsonObject.get("OutPutMessage") instanceof JSONArray)
-                            {
-
-                                if(jsonObject.getJSONArray("errorOther") != null)
-                                {
-                                    servisAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
-                                    servisAlert.setTitleText(jsonObject.getJSONArray("errorOther").getString(0));
-                                    servisAlert.show();
-                                }
-
-                            }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserRegisterResponse> call, Throwable t) {
-
-                    }
-                });
-
-                /*if(ad.isEmpty())
+                if(ad.isEmpty())
                 {
                     adAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
                     adAlert.setTitleText("Ad boş bırakılamaz");
@@ -279,30 +200,100 @@ public class SignupFragment extends Fragment {
                     sifreAlert.show();
                 }
 
-                isEmailValid = Utils.isValidEmailAddress(email);
-
-                if (!isEmailValid)
+                if(!email.isEmpty())
                 {
-                    emailAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
-                    emailAlert.setTitleText("Lütfen geçerli bir e-mail adresi girin");
-                    emailAlert.show();
+                    isEmailValid = Utils.isValidEmailAddress(email);
+                    if (!isEmailValid)
+                    {
+                        emailAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
+                        emailAlert.setTitleText("Lütfen geçerli bir e-mail adresi girin");
+                        emailAlert.show();
+                    }
                 }
 
                 isPasswordMatch = sifre.equals(sifreTekrar);
-
                 if(!isPasswordMatch)
                 {
                     sifreAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
                     sifreAlert.setTitleText("Şifreler eşleşmiyor");
                     sifreAlert.show();
-                }*/
+                }
 
 
-               /* if(!ad.isEmpty() &&  !soyad.isEmpty() && !telefon.isEmpty() && !sifre.isEmpty() && isEmailValid && isPasswordMatch && sifre.length() > 6)
+                if(!ad.isEmpty() &&  !soyad.isEmpty() && !telefon.isEmpty() && !sifre.isEmpty() && isEmailValid && isPasswordMatch && sifre.length() >= 6)
                 {
 
+                    HashMap<String , HashMap<String , String>> node = new HashMap<>();
+                    HashMap<String , String> body = new HashMap<>();
 
-                }*/
+                    body.put("MeType" , kullanıcıType);
+                    body.put("UserName" , ad);
+                    body.put("SurName" , soyad);
+                    body.put("Email" , email);
+                    body.put("Password" , sifre);
+                    body.put("GSM" , telefon);
+                    body.put("CityID" , SelectedCityId);
+                    body.put("TownID" , SelectedTownId);
+
+
+                    node.put("param" , body);
+                    Call<UserRegisterResponse> userRegisterResponseCall = App.getApiService().getRegister(node);
+                    userRegisterResponseCall.enqueue(new Callback<UserRegisterResponse>() {
+                        @Override
+                        public void onResponse(Call<UserRegisterResponse> call, Response<UserRegisterResponse> response) {
+
+                            UserRegisterResponseDetail userRegisterResponseDetail = response.body().getUserRegisterResponseDetail();
+                            String token = userRegisterResponseDetail.getResult();
+
+                            Log.i(TAG, "onResponse: " + token);
+
+                            JSONObject jsonObject = Utils.jwtToJsonObject(token);
+                            Log.i(TAG, "onResponse: " + jsonObject.toString());
+
+                            try {
+                                Log.i(TAG, "onResponse: " + jsonObject.getJSONArray("errorOther"));
+
+
+                                if(jsonObject.get("OutPutMessage") instanceof  JSONObject)
+                                {
+
+                                    int status = jsonObject.getJSONObject("OutPutMessage").getInt("Status");
+                                    if(status == 200)
+                                    {
+                                        servisAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.NORMAL_TYPE);
+                                        servisAlert.setTitleText(jsonObject.getJSONObject("OutPutMessage").getString("SuccessMessage"));
+                                        servisAlert.show();
+                                    }
+                                }
+
+                                if(jsonObject.get("OutPutMessage") instanceof JSONArray)
+                                {
+
+                                    if(jsonObject.getJSONArray("errorOther") != null)
+                                    {
+                                        servisAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
+                                        servisAlert.setTitleText(jsonObject.getJSONArray("errorOther").getString(0));
+                                        servisAlert.show();
+                                    }
+
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserRegisterResponse> call, Throwable t) {
+
+                        }
+                    });
+
+
+                }
 
 
 

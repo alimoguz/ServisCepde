@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 import serviscepde.com.tr.App;
+import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.City;
@@ -96,11 +97,17 @@ public class IseAracFragment extends Fragment {
     private int saat = takvim.get(Calendar.HOUR_OF_DAY);
     private int dakika = takvim.get(Calendar.MINUTE);
 
-    private String userToken;
-    List<Ilce> ilces;
-    List<Ilce> ilcesList;
+    List<City> sehirler = new ArrayList<>();
+    List<String> cityNames = new ArrayList<>();
+    List<String> marka = new ArrayList<>();
+    List<String> model = new ArrayList<>();
 
-    List<String> tmp2 = new ArrayList<>();
+
+    private String userToken;
+
+    private String cityId,baslamaCityId,bitisCityId;
+    private String townId,baslamaTownId,bitisTownId;
+    private ArrayList<String> townNames , baslamaTownNames , bitisTownNames = new ArrayList<>();
 
 
     public static Activity act;
@@ -120,8 +127,6 @@ public class IseAracFragment extends Fragment {
         act = getActivity();
         ctx = generalView.getContext();
 
-        ilces = new ArrayList<>();
-        ilcesList = new ArrayList<>();
 
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
@@ -341,168 +346,60 @@ public class IseAracFragment extends Fragment {
         });
 
 
+        sehirler = DownloadClass.getCities();
+        cityNames = DownloadClass.getCityNames();
+        marka = DownloadClass.getMarkaNames();
 
 
-
-
-
-
-        /*Call<SehirResponse> sehirResponseCall = App.getApiService().getSehirler();
-        sehirResponseCall.enqueue(new Callback<SehirResponse>() {
-            @Override
-            public void onResponse(Call<SehirResponse> call, Response<SehirResponse> response) {
-
-
-                SehirResponseDetail sehirResponseDetail = response.body().getSehirResponseDetail();
-                String token = sehirResponseDetail.getResult();
-                JSONObject jsonObjectIl = Utils.jwtToJsonObject(token);
-
-                try {
-
-                    JSONObject cities = jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data");
-
-                    for(int i = 0; i < cities.length(); i++)
-                    {
-
-                        Iterator<String> keys = cities.keys();
-                        while (keys.hasNext())
-                        {
-                            String cityID = keys.next();
-                            String cityName = cities.get(cityID).toString();
-                            Log.i("CityNameAndId" , cityID + "" + cityName);
-
-                            City city = new City(cityID,cityName);
-                            tmpCity.add(city);
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.e("jsonArray" , e.getMessage());
-                }
-
-                for (int i = 0;  i < tmpCity.size(); i++)
-                {
-                    String tmp = tmpCity.get(i).getCityName();
-                    sehirListesi.add(tmp);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<SehirResponse> call, Throwable t) {
-
-            }
-        });
-
-
-        Call<IlceResponse> ilceResponseCall = App.getApiService().getIlceler();
-        ilceResponseCall.enqueue(new Callback<IlceResponse>() {
-            @Override
-            public void onResponse(Call<IlceResponse> call, Response<IlceResponse> response) {
-                IlceResponseDetail ilceResponseDetail = response.body().getIlceResponseDetail();
-                String token2 = ilceResponseDetail.getResult();
-                JSONObject jsonObjectIlce = Utils.jwtToJsonObject(token2);
-
-                try {
-                    JSONObject withCityId = jsonObjectIlce.getJSONObject("OutPutMessage").getJSONObject("Data");
-
-                    Iterator<String> keys = withCityId.keys();
-
-                    while (keys.hasNext())
-                    {
-                        String cityId = keys.next();
-
-                        JSONObject ilceler = withCityId.getJSONObject(cityId);
-
-                        Iterator<String> keyilceler = ilceler.keys();
-
-                        while (keyilceler.hasNext())
-                        {
-                            String ilceId = keyilceler.next();
-                            String ilceName = ilceler.getString(ilceId);
-
-                            Ilce ilce = new Ilce(cityId , ilceId , ilceName);
-                            ilces.add(ilce);
-                        }
-
-
-                    }
-
-                    //setilceler();
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<IlceResponse> call, Throwable t) {
-
-            }
-        });*/
-
-        Call<SehirResponse> sehirResponseCall = App.getApiService().getSehirler();
-        sehirResponseCall.enqueue(new Callback<SehirResponse>() {
-            @Override
-            public void onResponse(Call<SehirResponse> call, Response<SehirResponse> response) {
-
-
-                SehirResponseDetail sehirResponseDetail = response.body().getSehirResponseDetail();
-                String token = sehirResponseDetail.getResult();
-                JSONObject jsonObjectIl = Utils.jwtToJsonObject(token);
-
-                try {
-
-                    for(int i = 1; i <= jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").length(); i++)
-                    {
-                        String ID = String.valueOf(i);
-                        String cityName = jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").getString(String.valueOf(i));
-
-                        City city = new City(ID,cityName);
-                        tmpCity.add(city);
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-
-                for (int i = 0;  i < tmpCity.size(); i++)
-                {
-                    String tmp = tmpCity.get(i).getCityName();
-                    sehirListesi.add(tmp);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<SehirResponse> call, Throwable t) {
-
-            }
-        });
-
-
-
-
-        setAutoCompleteAdapter(autoCompleteIseAracil , sehirListesi);
-        setAutoCompleteAdapter(autoCompleteIseAracServisBaslamaili , sehirListesi);
-        setAutoCompleteAdapter(autoCompleteIseAracServisBitisili , sehirListesi);
+        setAutoCompleteAdapter(autoCompleteIseAracil , cityNames);
+        setAutoCompleteAdapter(autoCompleteIseAracServisBaslamaili , cityNames);
+        setAutoCompleteAdapter(autoCompleteIseAracServisBitisili , cityNames);
         setAutoCompleteAdapter(autoCompleteIseAracKapasite , App.getKapasite());
+        setAutoCompleteAdapter(autoCompleteIseAracMarka , marka);
 
+        autoCompleteIseAracMarka.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                actvIseAracMarka = parent.getItemAtPosition(position).toString();
+                actvIseAracMarka = DownloadClass.getMarkaIdWithName(actvIseAracMarka);
+                Log.i("SelectedMarkaId" , actvIseAracMarka);
+
+                model = DownloadClass.getModelNames(actvIseAracMarka);
+                setAutoCompleteAdapter(autoCompleteIseAracModel , model);
+            }
+        });
+
+        autoCompleteIseAracModel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                actvIseAracModel = parent.getItemAtPosition(position).toString();
+                actvIseAracModel = DownloadClass.getModelIdWithName(actvIseAracModel);
+
+            }
+        });
 
 
         autoCompleteIseAracil.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                cityId = parent.getItemAtPosition(position).toString();
+                cityId = DownloadClass.getCityIdWithName(cityId);
+                Log.i("SelectedIl" , cityId);
 
-                actvIseAracil = String.valueOf(position + 1);
-                Log.i("SelectedItem" , actvIseAracil);
+                townNames = DownloadClass.getTownNames(cityId);
+                setAutoCompleteAdapter(autoCompleteIseAracilce , townNames);
+            }
+        });
 
+        autoCompleteIseAracilce.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                townId = parent.getItemAtPosition(position).toString();
+                townId = DownloadClass.getTownIdWithTownName(townId , cityId);
+                Log.i("SelectedIlce" , townId);
             }
         });
 
@@ -511,8 +408,23 @@ public class IseAracFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                actvIseAracServisBaslamaili = String.valueOf(position + 1);
-                Log.i("SelectedItem" , actvIseAracServisBaslamaili);
+                baslamaCityId = parent.getItemAtPosition(position).toString();
+                baslamaCityId = DownloadClass.getCityIdWithName(baslamaCityId);
+                Log.i("SelectedBaslamaId" , baslamaCityId);
+
+                baslamaTownNames = DownloadClass.getTownNames(baslamaCityId);
+                setAutoCompleteAdapter(autoCompleteIseAracServiseBaslamailce , baslamaTownNames);
+            }
+        });
+
+        autoCompleteIseAracServiseBaslamailce.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                baslamaTownId = parent.getItemAtPosition(position).toString();
+                baslamaTownId = DownloadClass.getTownIdWithTownName(baslamaTownId , baslamaCityId);
+
+                Log.i("SelectedBaslamaIlce" , baslamaTownId);
             }
         });
 
@@ -520,7 +432,23 @@ public class IseAracFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                actvIseAracServisBitisili = String.valueOf(position + 1);
+                bitisCityId = parent.getItemAtPosition(position).toString();
+                bitisCityId = DownloadClass.getCityIdWithName(bitisCityId);
+                Log.i("SelectedBitisIl" , bitisCityId);
+
+                bitisTownNames = DownloadClass.getTownNames(bitisCityId);
+                setAutoCompleteAdapter(autoCompleteIseAracServisBitisilce , bitisTownNames);
+            }
+        });
+
+        autoCompleteIseAracServisBitisilce.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                bitisTownId = parent.getItemAtPosition(position).toString();
+                bitisTownId = DownloadClass.getTownIdWithTownName(bitisTownId , bitisCityId);
+                Log.i("SelectedBitisIlce" , bitisTownId);
+
             }
         });
 
@@ -687,21 +615,21 @@ public class IseAracFragment extends Fragment {
 
                     hashMap1.put("Tipi" , "3");
                     hashMap1.put("Baslik" , baslik);
-                    hashMap1.put("ilanCity" , actvIseAracil);
-                    hashMap1.put("ilanSemtleri" , "10");
-                    hashMap1.put("AracMarkasi" , "3");
-                    hashMap1.put("AracModeli" , "4");
+                    hashMap1.put("ilanCity" , cityId);
+                    hashMap1.put("ilanSemtleri" , townId);
+                    hashMap1.put("AracMarkasi" , actvIseAracMarka);
+                    hashMap1.put("AracModeli" , actvIseAracModel);
                     hashMap1.put("AracYili" , yil);
                     hashMap1.put("AracKapasitesi" , actvIseAracKapasite);
                     hashMap1.put("AracOzellikleri" , switchStates);
-                    hashMap1.put("ServiseBaslamaCity" , actvIseAracServisBaslamaili);
-                    hashMap1.put("ServiseBaslamaSemtleri" , "10");
+                    hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
+                    hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
                     hashMap1.put("ServiseBaslamaSaati" , servisBaslamaSaati);
                     hashMap1.put("FirmayaGiriSaati" , firmaGirisSaati);
                     hashMap1.put("FirmadanCikisSaati" , firmaCikisSaati);
                     hashMap1.put("ServisBitisSaati" , servisBitisSaati);
-                    hashMap1.put("ServisBitisCity" , actvIseAracServisBitisili);
-                    hashMap1.put("ServisBitisSemtleri" , "10");
+                    hashMap1.put("ServisBitisCity" , bitisCityId);
+                    hashMap1.put("ServisBitisSemtleri" , bitisTownId);
                     hashMap1.put("ToplamKM" , toplamKM);
                     hashMap1.put("CalisilacakGunSayisi" , gunSayisi);
                     hashMap1.put("Ucret" , fiyat);

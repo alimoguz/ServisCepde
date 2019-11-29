@@ -271,6 +271,7 @@
                         android:id="@+id/autoCompleteIseAracil"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:editable="false"
                         android:hint="@string/İl" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -284,6 +285,7 @@
                         android:id="@+id/autoCompleteIseAracilce"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:editable="false"
                         android:hint="@string/İlçe" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -321,6 +323,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteIseAracMarka"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Marka" />
@@ -334,6 +337,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteIseAracModel"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Model" />
@@ -374,6 +378,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteIseAracServisBaslamaili"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/ServisBaşlamaİli" />
@@ -387,6 +392,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteIseAracServiseBaslamailce"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/ServisBaşlamaİlçe" />
@@ -460,6 +466,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteIseAracServisBitisili"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/ServisBitişİli" />
@@ -473,6 +480,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteIseAracServisBitisilce"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/ServisBitişİlçe" />
