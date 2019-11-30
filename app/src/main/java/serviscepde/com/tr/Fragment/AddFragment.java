@@ -56,7 +56,7 @@ public class AddFragment extends Fragment {
         linDialogKiralikArac = generalView.findViewById(R.id.linDialogKiralikArac);
         linDialogYedekParca = generalView.findViewById(R.id.linDialogYedekParca);
 
-       addingActivity = new Intent(ctx , AddingActivity.class);
+        addingActivity = new Intent(ctx , AddingActivity.class);
 
 
 

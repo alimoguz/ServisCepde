@@ -3,15 +3,145 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Çok Yakında Hizmetinizde..."
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/_25ssp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:gravity="center"
-        />
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/appColor">
+
+        <EditText
+            android:id="@+id/edtArama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_50sdp"
+            android:visibility="gone"
+             />
+
+
+        <TextView
+            android:id="@+id/txtAra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Arama"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/myriadpro_regular"
+            android:layout_centerInParent="true" />
+
+
+        <ImageView
+            android:id="@+id/imgAra"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:src="@drawable/icon_search"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_20sdp"/>
+
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/linFilter"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:background="#E6E6E6"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/_14sdp"
+                android:layout_height="@dimen/_14sdp"
+                android:src="@drawable/icon_filter"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Filtre"
+                android:textSize="@dimen/_14ssp"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:fontFamily="@font/myriadpro_regular"
+                android:textColor="@color/colorBlack"
+                />
+
+
+
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/_1sdp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:background="@color/colorGray" />
+
+        <LinearLayout
+            android:id="@+id/linSirala"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:background="#E6E6E6"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/_14sdp"
+                android:layout_height="@dimen/_14sdp"
+                android:src="@drawable/icon_sort"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Sırala"
+                android:textSize="@dimen/_14ssp"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:fontFamily="@font/myriadpro_regular"
+                android:textColor="@color/colorBlack"
+                />
+
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAramaIlanlar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp">
+
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
 
 </LinearLayout>
