@@ -1,6 +1,7 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import serviscepde.com.tr.App;
+import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.IlanKategori.IlanKategoriResponse;
 import serviscepde.com.tr.Models.IlanKategori.IlanKategoriResponseDetail;
@@ -43,6 +47,7 @@ public class HomeFragment extends Fragment {
     private IlanKategoriFragment ilanKategoriFragment;
     private IlanGuncelFragment ilanGuncelFragment;
     private IlanDetayFragment ilanDetayFragment;
+    private IlanSonFragment ilanSonFragment;
 
     private LinearLayout linIsimeArac,linAracimaIs,linAracaSofor,linSoforeIs,linSatilikArac,linKiralikArac,linYedekParca;
 
@@ -53,9 +58,15 @@ public class HomeFragment extends Fragment {
 
     private TextView txtTumIlanlariGor;
 
+    private LinearLayout linSon,linSon2,linSon3;
+    private ImageView imgSon1,imgSon2,imgSon3;
+    private TextView txtSonAciklama1,txtSonKonum1,txtSonFiyat1,txtSonAciklama2,txtSonKonum2,txtSonFiyat2,txtSonAciklama3,txtSonKonum3,txtSonFiyat3,txtSonIlanlar;
+
     int selectedCategory;
 
-    Context ctx;
+    private String userToken;
+
+    private Context ctx;
 
 
     @Nullable
@@ -70,6 +81,10 @@ public class HomeFragment extends Fragment {
         MainActivity.bottomNav.setVisibility(View.VISIBLE);
 
         ctx = generalView.getContext();
+
+        SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
+        userToken = sharedPref.getString("userToken" , "0");
+        Log.i("userToken" ,userToken);
 
         imgFind = generalView.findViewById(R.id.imgFind);
 
@@ -98,14 +113,35 @@ public class HomeFragment extends Fragment {
         txtIlanGuncel3Aciklama = generalView.findViewById(R.id.txtIlanGuncel3Aciklama);
         txtIlanGuncel3Konum = generalView.findViewById(R.id.txtIlanGuncel3Konum);
         txtIlanGuncel3Fiyat = generalView.findViewById(R.id.txtIlanGuncel3Fiyat);
-
-
         txtTumIlanlariGor = generalView.findViewById(R.id.txtTumIlanlariGor);
+
+
+
+        linSon = generalView.findViewById(R.id.linSon);
+        linSon2 = generalView.findViewById(R.id.linSon2);
+        linSon3 = generalView.findViewById(R.id.linSon3);
+
+        imgSon1 = generalView.findViewById(R.id.imgSon1);
+        imgSon2 = generalView.findViewById(R.id.imgSon2);
+        imgSon3 = generalView.findViewById(R.id.imgSon3);
+
+        txtSonAciklama1 = generalView.findViewById(R.id.txtSonAciklama1);
+        txtSonKonum1 = generalView.findViewById(R.id.txtSonKonum1);
+        txtSonFiyat1 = generalView.findViewById(R.id.txtSonFiyat1);
+        txtSonAciklama2 = generalView.findViewById(R.id.txtSonAciklama2);
+        txtSonKonum2 = generalView.findViewById(R.id.txtSonKonum2);
+        txtSonFiyat2 = generalView.findViewById(R.id.txtSonFiyat2);
+        txtSonAciklama3 = generalView.findViewById(R.id.txtSonAciklama3);
+        txtSonKonum3 = generalView.findViewById(R.id.txtSonKonum3);
+        txtSonFiyat3 = generalView.findViewById(R.id.txtSonFiyat3);
+        txtSonIlanlar = generalView.findViewById(R.id.txtSonIlanlar);
+
 
 
         ilanKategoriFragment = new IlanKategoriFragment();
         ilanGuncelFragment = new IlanGuncelFragment();
         ilanDetayFragment = new IlanDetayFragment();
+        ilanSonFragment = new IlanSonFragment();
 
         Bundle categoryType = new Bundle();
 
@@ -115,6 +151,13 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
 
 
+            }
+        });
+
+        txtSonIlanlar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(ilanSonFragment);
             }
         });
 
@@ -213,8 +256,6 @@ public class HomeFragment extends Fragment {
 
 
         Call<IlanKategoriResponse> call = App.getApiService().getIlanbyKategori(hashMap);
-
-
         call.enqueue(new Callback<IlanKategoriResponse>() {
             @Override
             public void onResponse(Call<IlanKategoriResponse> call, Response<IlanKategoriResponse> response) {
@@ -295,18 +336,21 @@ public class HomeFragment extends Fragment {
 
                             if(Resimler == null)
                             {
-                                Glide.with(ctx).load(R.drawable.default_image).into(imgIlanGuncel1Photo);
+                                Glide.with(ctx).load(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                        .skipMemoryCache(true).into(imgIlanGuncel1Photo);
                             }
                             else
                             {
                                 if(Resimler.contains("|"))
                                 {
                                     String [] images = Resimler.split(Pattern.quote("|"));
-                                    Glide.with(ctx).load(App.IMAGE_URL + images[0]).into(imgIlanGuncel1Photo);
+                                    Glide.with(ctx).load(App.IMAGE_URL + images[0]).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).into(imgIlanGuncel1Photo);
                                 }
                                 else
                                 {
-                                    Glide.with(ctx).load(App.IMAGE_URL + Resimler).into(imgIlanGuncel1Photo);
+                                    Glide.with(ctx).load(App.IMAGE_URL + Resimler).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).into(imgIlanGuncel1Photo);
                                 }
                             }
 
@@ -331,7 +375,6 @@ public class HomeFragment extends Fragment {
                             }
 
                         }
-
                         if(i == 1)
                         {
                             JSONObject tmp = ilanlar.getJSONObject("OutPutMessage").getJSONArray("Data").getJSONObject(i);
@@ -367,28 +410,27 @@ public class HomeFragment extends Fragment {
                             linGuncel2.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-
                                     openIlanDetay(ilanDetayFragment , ID);
-
                                 }
                             });
 
-
-
                             if(Resimler == null)
                             {
-                                Glide.with(ctx).load(R.drawable.default_image).into(imgIlanGuncel2Photo);
+                                Glide.with(ctx).load(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                        .skipMemoryCache(true).into(imgIlanGuncel2Photo);
                             }
                             else
                             {
                                 if(Resimler.contains("|"))
                                 {
                                     String [] images = Resimler.split(Pattern.quote("|"));
-                                    Glide.with(ctx).load(App.IMAGE_URL + images[0]).into(imgIlanGuncel2Photo);
+                                    Glide.with(ctx).load(App.IMAGE_URL + images[0]).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).into(imgIlanGuncel2Photo);
                                 }
                                 else
                                 {
-                                    Glide.with(ctx).load(App.IMAGE_URL + Resimler).into(imgIlanGuncel2Photo);
+                                    Glide.with(ctx).load(App.IMAGE_URL + Resimler).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).into(imgIlanGuncel2Photo);
                                 }
                             }
 
@@ -412,7 +454,6 @@ public class HomeFragment extends Fragment {
                             }
 
                         }
-
                         if(i == 2)
                         {
                             JSONObject tmp = ilanlar.getJSONObject("OutPutMessage").getJSONArray("Data").getJSONObject(i);
@@ -455,21 +496,23 @@ public class HomeFragment extends Fragment {
 
                             if(Resimler == null)
                             {
-                                Glide.with(ctx).load(R.drawable.default_image).into(imgIlanGuncel3Photo);
+                                Glide.with(ctx).load(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                        .skipMemoryCache(true).into(imgIlanGuncel3Photo);
                             }
                             else
                             {
                                 if(Resimler.contains("|"))
                                 {
                                     String [] images = Resimler.split(Pattern.quote("|"));
-                                    Glide.with(ctx).load(App.IMAGE_URL + images[0]).into(imgIlanGuncel3Photo);
+                                    Glide.with(ctx).load(App.IMAGE_URL + images[0]).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).into(imgIlanGuncel3Photo);
                                 }
                                 else
                                 {
-                                    Glide.with(ctx).load(App.IMAGE_URL + Resimler).into(imgIlanGuncel3Photo);
+                                    Glide.with(ctx).load(App.IMAGE_URL + Resimler).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).into(imgIlanGuncel3Photo);
                                 }
                             }
-
                             if(Ucret == null)
                             {
                                 txtIlanGuncel3Fiyat.setText("-");
@@ -488,20 +531,301 @@ public class HomeFragment extends Fragment {
                                 String sehir = Utils.getSehirAdi(ilanCity);
                                 txtIlanGuncel3Konum.setText(sehir);
                             }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<IlanKategoriResponse> call, Throwable t) {
+
+                Log.i("ServisDurumu" , "Başarısız");
+
+            }
+        });
+
+
+
+        HashMap<String , Object> hashMap2 = new HashMap<>();
+        HashMap<String , String> hashMap3 = new HashMap<>();
+
+        hashMap3.put("LastVisited" , "1");
+        hashMap3.put("start" , "0");
+        hashMap3.put("limit" , "3");
+
+        hashMap2.put("param" , hashMap3);
+        hashMap2.put("Token" , userToken);
+
+        Call<IlanKategoriResponse> sonIlanCall = App.getApiService().getSonIlanlar(hashMap2);
+        sonIlanCall.enqueue(new Callback<IlanKategoriResponse>() {
+            @Override
+            public void onResponse(Call<IlanKategoriResponse> call, Response<IlanKategoriResponse> response) {
+
+                IlanKategoriResponseDetail responseDetail = response.body().getIlanKategoriResponseDetail();
+                String token = responseDetail.getResult();
+
+                JSONObject sonIlan = Utils.jwtToJsonObject(token);
+                Log.i("onResponse" , "Success");
+
+                try {
+
+                    for(int k = 0 ; k < sonIlan.getJSONObject("OutPutMessage").getJSONArray("Data").length(); k++)
+                    {
+
+
+                        if (sonIlan.getJSONObject("OutPutMessage").getJSONArray("Data").length() == 0)
+                        {
+                            linSon.setVisibility(View.GONE);
+                            linSon2.setVisibility(View.GONE);
+                            linSon3.setVisibility(View.GONE);
+                            txtSonIlanlar.setVisibility(View.GONE);
+                        }
+
+                        if (sonIlan.getJSONObject("OutPutMessage").getJSONArray("Data").length() == 1)
+                        {
+                            linSon2.setVisibility(View.GONE);
+                            linSon3.setVisibility(View.GONE);
+                        }
+                        if (sonIlan.getJSONObject("OutPutMessage").getJSONArray("Data").length() == 2)
+                        {
+                            linSon3.setVisibility(View.GONE);
+                        }
+
+
+                        if (k == 0)
+                        {
+                            JSONObject tmp = sonIlan.getJSONObject("OutPutMessage").getJSONArray("Data").getJSONObject(k);
+
+                            String ID = tmp.getString("ID");
+                            String ilanCity = tmp.getString("ilanCity");
+                            String Baslik = tmp.getString("Baslik");
+                            String Ucret = null;
+                            String Resimler = null;
+
+                            if (tmp.has("Ucret"))
+                            {
+                                Ucret = tmp.getString("Ucret");
+                            }
+                            else
+                            {
+                                Log.i("Ilan Bilgi" , "Fiyat Bilgisi yok");
+                            }
+
+                            if(tmp.has("Resimler"))
+                            {
+                                Resimler = tmp.getString("Resimler");
+                            }
+                            else
+                            {
+                                Log.i("Ilan bilgi" , "Resim yok");
+                            }
+
+                            Log.i("Ilan Özet Bilgi" , ID + "\t" + ilanCity + "\t" + Baslik + "\t" + Ucret + "\t" + Resimler);
+
+                            txtSonAciklama1.setText(Baslik);
+
+                            linSon.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    openIlanDetay(ilanDetayFragment , ID);
+
+                                }
+                            });
+
+                            if(Resimler == null)
+                            {
+                                Glide.with(ctx).load(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                        .skipMemoryCache(true).into(imgSon1);
+                            }
+                            else
+                            {
+                                if(Resimler.contains("|"))
+                                {
+                                    String [] images = Resimler.split(Pattern.quote("|"));
+                                    Glide.with(ctx).load(App.IMAGE_URL + images[0]).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).into(imgSon1);
+                                }
+                                else
+                                {
+                                    Glide.with(ctx).load(App.IMAGE_URL + Resimler).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).into(imgSon1);
+                                }
+                            }
+
+                            if(Ucret == null)
+                            {
+                                txtSonFiyat1.setText("-");
+                            }
+                            else
+                            {
+                                txtSonFiyat1.setText(Ucret);
+                            }
+                            String sehir = Utils.getSehirAdi(ilanCity);
+                            txtSonKonum1.setText(sehir);
 
                         }
 
+                        if(k == 1)
+                        {
+                            JSONObject tmp = sonIlan.getJSONObject("OutPutMessage").getJSONArray("Data").getJSONObject(k);
+
+                            String ID = tmp.getString("ID");
+                            String ilanCity = tmp.getString("ilanCity");
+                            String Baslik = tmp.getString("Baslik");
+                            String Ucret = null;
+                            String Resimler = null;
+
+                            if (tmp.has("Ucret"))
+                            {
+                                Ucret = tmp.getString("Ucret");
+                            }
+                            else
+                            {
+                                Log.i("Ilan Bilgi" , "Fiyat Bilgisi yok");
+                            }
+
+                            if(tmp.has("Resimler"))
+                            {
+                                Resimler = tmp.getString("Resimler");
+                            }
+                            else
+                            {
+                                Log.i("Ilan bilgi" , "Resim yok");
+                            }
+
+                            Log.i("Ilan Özet Bilgi" , ID + "\t" + ilanCity + "\t" + Baslik + "\t" + Ucret + "\t" + Resimler);
+
+                            txtSonAciklama2.setText(Baslik);
+
+                            linSon2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    openIlanDetay(ilanDetayFragment , ID);
+
+                                }
+                            });
+
+                            if(Resimler == null)
+                            {
+                                Glide.with(ctx).load(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                        .skipMemoryCache(true).into(imgSon2);
+                            }
+                            else
+                            {
+                                if(Resimler.contains("|"))
+                                {
+                                    String [] images = Resimler.split(Pattern.quote("|"));
+                                    Glide.with(ctx).load(App.IMAGE_URL + images[0]).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).into(imgSon2);
+                                }
+                                else
+                                {
+                                    Glide.with(ctx).load(App.IMAGE_URL + Resimler).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).into(imgSon2);
+                                }
+                            }
+
+                            if(Ucret == null)
+                            {
+                                txtSonFiyat2.setText("-");
+                            }
+                            else
+                            {
+                                txtSonFiyat2.setText(Ucret);
+                            }
+                            String sehir = Utils.getSehirAdi(ilanCity);
+                            txtSonKonum2.setText(sehir);
+
+                        }
+
+                        if(k == 2)
+                        {
+                            JSONObject tmp = sonIlan.getJSONObject("OutPutMessage").getJSONArray("Data").getJSONObject(k);
+
+                            String ID = tmp.getString("ID");
+                            String ilanCity = tmp.getString("ilanCity");
+                            String Baslik = tmp.getString("Baslik");
+                            String Ucret = null;
+                            String Resimler = null;
+
+                            if (tmp.has("Ucret"))
+                            {
+                                Ucret = tmp.getString("Ucret");
+                            }
+                            else
+                            {
+                                Log.i("Ilan Bilgi" , "Fiyat Bilgisi yok");
+                            }
+
+                            if(tmp.has("Resimler"))
+                            {
+                                Resimler = tmp.getString("Resimler");
+                            }
+                            else
+                            {
+                                Log.i("Ilan bilgi" , "Resim yok");
+                            }
+
+                            Log.i("Ilan Özet Bilgi" , ID + "\t" + ilanCity + "\t" + Baslik + "\t" + Ucret + "\t" + Resimler);
+
+                            txtSonAciklama3.setText(Baslik);
+
+                            linSon3.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    openIlanDetay(ilanDetayFragment , ID);
+
+                                }
+                            });
+
+                            if(Resimler == null)
+                            {
+                                Glide.with(ctx).load(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                        .skipMemoryCache(true).into(imgSon3);
+                            }
+                            else
+                            {
+                                if(Resimler.contains("|"))
+                                {
+                                    String [] images = Resimler.split(Pattern.quote("|"));
+                                    Glide.with(ctx).load(App.IMAGE_URL + images[0]).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).into(imgSon3);
+                                }
+                                else
+                                {
+                                    Glide.with(ctx).load(App.IMAGE_URL + Resimler).diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true).into(imgSon3);
+                                }
+                            }
+
+                            if(Ucret == null)
+                            {
+                                txtSonFiyat3.setText("-");
+                            }
+                            else
+                            {
+                                txtSonFiyat3.setText(Ucret);
+                            }
+                            String sehir = Utils.getSehirAdi(ilanCity);
+                            txtSonKonum3.setText(sehir);
+
+                        }
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
 
             @Override
             public void onFailure(Call<IlanKategoriResponse> call, Throwable t) {
 
-                Log.i("ServisDurumu" , "Başarısız");
+                Log.i("onFailure"  , t.getMessage());
 
             }
         });
@@ -539,6 +863,5 @@ public class HomeFragment extends Fragment {
         transaction.replace(R.id.fragMain, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
     }
 }

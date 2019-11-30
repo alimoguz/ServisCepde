@@ -23,10 +23,8 @@ import serviscepde.com.tr.R;
 
 
 public class SearchFragment extends Fragment {
-
-
+    
     View generalView;
-
 
     private EditText edtArama;
     private TextView txtAra;
@@ -36,8 +34,6 @@ public class SearchFragment extends Fragment {
 
     private String userToken,searchText;
     private Context ctx;
-
-    private int isEditTextShown,isHeaderShown;
 
 
     @Nullable
@@ -67,16 +63,15 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                isEditTextShown = edtArama.getVisibility();
-                isHeaderShown = txtAra.getVisibility();
-
-
-                Log.i("States Edit , Text" , " " + isEditTextShown + " " + isHeaderShown );
-
-
-
+                if(edtArama.getVisibility() == View.GONE)
+                {
+                    txtAra.setVisibility(View.GONE);
+                    edtArama.setVisibility(View.VISIBLE);
+                }
             }
         });
+
+
 
 
         return rootView;

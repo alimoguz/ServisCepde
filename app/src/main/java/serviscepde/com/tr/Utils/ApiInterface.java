@@ -44,6 +44,9 @@ public interface ApiInterface {
     @POST("index.php?func=ilanlar&file=Details&ReturnType=1")
     Call<IlanDetayResponse> ilanDetay (@Body HashMap ilanDetay);
 
+    @POST("index.php?func=ilanlar&file=List&ReturnType=1")
+    Call<IlanKategoriResponse> getSonIlanlar(@Body HashMap sonIlan);
+
 
 
 
