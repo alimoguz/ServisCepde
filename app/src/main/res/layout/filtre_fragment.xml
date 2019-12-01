@@ -1,6 +1,548 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgType"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/sofurm_is"
+            />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinKategoriTip"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/colorYellow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+        </androidx.appcompat.widget.AppCompatSpinner>
+
+
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/_5sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/acFiltreIl"
+                    android:layout_width="match_parent"
+                    android:editable="false"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Filtreİl" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/acFiltreIlce"
+                    android:layout_width="match_parent"
+                    android:editable="false"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Filtreİlçe" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/linFiltreIseArac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreIseAracMarka"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreMarka" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreIseAracModel"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreModel" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/MinYıl">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtFiltreIseAracMinYil"
+                        android:focusable="false"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/MaxYıl">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtFiltreIseAracMaxYil"
+                        android:focusable="false"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreIseAracKapasite"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreKapasite" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreIseAracServisBaslamaIl"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreServisBaşlamaİl" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreIseAracServisBaslamaIlce"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreServisBaşlamaİlçe" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreIseAracServisBitisIl"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreServisBitişİli" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreIseAracServisBitisIlce"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreServisBitişİlçe" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linFiltreAracaIs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreAracaIsMarka"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreMarka" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreAracaIsModel"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreModel" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/MinYıl">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtFiltreAracaIsMinYil"
+                        android:focusable="false"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/MaxYıl">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtFiltreAracaIsMaxYil"
+                        android:focusable="false"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreAracaIsDurum"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/AraçDurum" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreAracaIsServisBaslamaIl"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreServisBaşlamaİl" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreAracaIsServisBaslamaIlce"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreServisBaşlamaİlçe" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linFiltreAracaSofor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreAracaSoforKapasite"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreKapasite" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreAracaSoforServisBaslamaIl"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreServisBaşlamaİl" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreAracaSoforServisBaslamaIlce"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreServisBaşlamaİlçe" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreAracaSoforServisBitisIl"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreServisBitişİli" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreAracaSoforServisBitisIlce"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreServisBitişİlçe" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linFiltreSoforeIs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreSoforeIsKapasiteler"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreKullanabildiğiKapasiteler" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/MinTecrübe">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtFiltreSoforeIsMinTecrube"
+                        android:focusable="false"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/MaxTecrübe">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtFiltreSoforeIsMaxTecrube"
+                        android:focusable="false"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreSoforeIsServisBaslamaIl"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreServisBaşlamaİl" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acFiltreSoforeIsServisBaslamaIlce"
+                        android:layout_width="match_parent"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/FiltreServisBaşlamaİlçe" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/MinYaş">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtFiltreSoforeIsMinYas"
+                        android:focusable="false"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:hint="@string/MaxYaş">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtFiltreSoforeIsMaxYas"
+                        android:focusable="false"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/txtFiltreUygula"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/Uygula"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        android:fontFamily="@font/myriadpro_regular"
+        android:textSize="@dimen/_15ssp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:background="@drawable/background_login"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
 
 </LinearLayout>

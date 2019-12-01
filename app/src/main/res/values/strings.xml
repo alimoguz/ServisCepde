@@ -151,6 +151,24 @@
     <string name="YedekParçaDurum">Yedek parça durum</string>
 
     <string name="TümKategori">Tüm Kategoriler</string>
+    <string name="Uygula">Uygula</string>
+    <string name="MinYıl">Minimum yıl</string>
+    <string name="MaxYıl">Maximum yıl</string>
+
+    <string name="Filtreİl">İl</string>
+    <string name="Filtreİlçe">İlçe</string>
+    <string name="FiltreMarka">Marka</string>
+    <string name="FiltreModel">Model</string>
+    <string name="FiltreKapasite">Kapasite</string>
+    <string name="FiltreServisBaşlamaİl">Servis başlama ili</string>
+    <string name="FiltreServisBaşlamaİlçe">Servis başlama ilçe</string>
+    <string name="FiltreServisBitişİli">Servis bitiş ili</string>
+    <string name="FiltreServisBitişİlçe">Servis bitiş ilçe</string>
+    <string name="FiltreKullanabildiğiKapasiteler">Kullanabildiği Kapasiteler</string>
+    <string name="MinTecrübe">Minimum tecrübe</string>
+    <string name="MaxTecrübe">Maximum tecrübe</string>
+    <string name="MinYaş">Minimum yaş</string>
+    <string name="MaxYaş">Maximum yaş</string>
 
 
 </resources>
