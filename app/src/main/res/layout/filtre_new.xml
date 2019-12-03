@@ -5,16 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_35sdp"
-        android:text="@string/Filtreler"
-        android:background="@color/appColor"
-        android:gravity="center"
-        android:textColor="@color/colorWhite"
-        android:fontFamily="@font/myriadpro_regular"
-        android:textSize="@dimen/_12ssp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,9 +15,9 @@
 
         <ImageView
             android:id="@+id/imgType"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/icon_tum_kategori"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/sofurm_is"
             />
 
         <androidx.appcompat.widget.AppCompatSpinner
@@ -88,8 +78,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
-                android:id="@+id/linFiltreler"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
