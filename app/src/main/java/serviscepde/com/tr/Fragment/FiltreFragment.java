@@ -48,8 +48,14 @@ public class FiltreFragment extends Fragment {
             ,acFiltreServisBaslamaIl,acFiltreServisBaslamaIlce,acFiltreServisBitisIl,acFiltreServisBitisIlce;
 
     private TextInputEditText edtFiltreMinYil,edtFiltreMaxYil,edtFiltreMinTecrube,edtFiltreMaxTecrube,edtFiltreMinYas,edtFiltreMaxYas;
+    private String minYil,maxYil,minTecrube,maxTecrube,minYas,maxYas;
     private LinearLayout linFiltreler;
     private TextView txtFiltreUygula;
+
+    private LinearLayout linFiltreMarka,linFiltreModel,linFiltreMinYil,linFiltreMaxYil,linFiltreKapasite,linFiltreAracDurum,
+            linFiltreKullanabildiginizKapasiteler,linFiltreMinTecrube,linFiltreMaxTecrube,linFiltreServisBaslaIl,linFiltreServisBaslaIlce,
+            linFiltreServisBitisIl,linFiltreServisBitisIlce,linFiltreMinYas,linFiltreMaxYas;
+
 
     private Context ctx;
     private ArrayAdapter<String> kategoriAdapter;
@@ -63,7 +69,7 @@ public class FiltreFragment extends Fragment {
     private ArrayList<String> townNames , baslamaTownNames , bitisTownNames = new ArrayList<>();
 
     private String userToken;
-    private String acIL,acIlce,acMarka,acModel,acKapasite,acAracDurum,acKullanabildiginizKapasiteler,acServisBaslamaIl,acServisBaslamaIlce,acServisBitisIl,acServisBitisIlce;
+    private String acMarka,acModel,acKapasite,acAracDurum,acKullanabildiginizKapasiteler,acServisBaslamaIl,acServisBaslamaIlce,acServisBitisIl,acServisBitisIlce;
 
 
     @Nullable
@@ -97,6 +103,23 @@ public class FiltreFragment extends Fragment {
         acFiltreServisBitisIl = generalView.findViewById(R.id.acFiltreServisBitisIl);
         acFiltreServisBitisIlce = generalView.findViewById(R.id.acFiltreServisBitisIlce);
 
+        linFiltreMarka = generalView.findViewById(R.id.linFiltreMarka);
+        linFiltreModel = generalView.findViewById(R.id.linFiltreModel);
+        linFiltreMinYil = generalView.findViewById(R.id.linFiltreMinYil);
+        linFiltreMaxYil = generalView.findViewById(R.id.linFiltreMaxYil);
+        linFiltreKapasite = generalView.findViewById(R.id.linFiltreKapasite);
+        linFiltreAracDurum = generalView.findViewById(R.id.linFiltreAracDurum);
+        linFiltreKullanabildiginizKapasiteler = generalView.findViewById(R.id.linFiltreKullanabildiginizKapasiteler);
+        linFiltreMinTecrube = generalView.findViewById(R.id.linFiltreMinTecrube);
+        linFiltreMaxTecrube = generalView.findViewById(R.id.linFiltreMaxTecrube);
+        linFiltreServisBaslaIl = generalView.findViewById(R.id.linFiltreServisBaslaIl);
+        linFiltreServisBaslaIlce = generalView.findViewById(R.id.linFiltreServisBaslaIlce);
+        linFiltreServisBitisIl = generalView.findViewById(R.id.linFiltreServisBitisIl);
+        linFiltreServisBitisIlce = generalView.findViewById(R.id.linFiltreServisBitisIlce);
+        linFiltreMinYas = generalView.findViewById(R.id.linFiltreMinYas);
+        linFiltreMaxYas = generalView.findViewById(R.id.linFiltreMaxYas);
+
+
         edtFiltreMinYil = generalView.findViewById(R.id.edtFiltreMinYil);
         edtFiltreMaxYil = generalView.findViewById(R.id.edtFiltreMaxYil);
         edtFiltreMinTecrube = generalView.findViewById(R.id.edtFiltreMinTecrube);
@@ -129,7 +152,7 @@ public class FiltreFragment extends Fragment {
         Utils.setAutoCompleteAdapter(acFiltreMarka , marka ,ctx);
         Utils.setAutoCompleteAdapter(acFiltreKapasite , App.getKapasite() , ctx);
         Utils.setAutoCompleteAdapter(acFiltreKullanilabilirKapasiteler , App.getKapasite() , ctx);
-        Utils.setAutoCompleteAdapter(acFiltreAracDurum , App.getDurumu() , ctx);
+        Utils.setAutoCompleteAdapter(acFiltreAracDurum , App.getAracDurumu(), ctx);
 
         acFiltreMarka.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -242,7 +265,6 @@ public class FiltreFragment extends Fragment {
         });
 
 
-
         spinKategoriTip.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -261,6 +283,7 @@ public class FiltreFragment extends Fragment {
                 if(kategoriID == 1)
                 {
                     linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
                     Glide.with(ctx).load(R.drawable.isime_arac).into(imgType);
                     loadIseArac();
 
@@ -268,6 +291,7 @@ public class FiltreFragment extends Fragment {
                 if(kategoriID == 2)
                 {
                     linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
                     Glide.with(ctx).load(R.drawable.aracima_is).into(imgType);
                     loadAracaIs();
 
@@ -275,6 +299,7 @@ public class FiltreFragment extends Fragment {
                 if(kategoriID == 3)
                 {
                     linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
                     Glide.with(ctx).load(R.drawable.aracima_sofor).into(imgType);
                     loadAracaSofor();
 
@@ -282,6 +307,7 @@ public class FiltreFragment extends Fragment {
                 if(kategoriID == 4)
                 {
                     linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
                     Glide.with(ctx).load(R.drawable.sofurm_is).into(imgType);
                     loadSoforeIs();
 
@@ -289,28 +315,59 @@ public class FiltreFragment extends Fragment {
                 if(kategoriID == 5)
                 {
                     linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
                     Glide.with(ctx).load(R.drawable.satilik_arac).into(imgType);
                 }
 
                 if(kategoriID == 6)
                 {
                     linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
                     Glide.with(ctx).load(R.drawable.kiralik_arac).into(imgType);
                 }
 
                 if(kategoriID == 7)
                 {
                     linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
                     Glide.with(ctx).load(R.drawable.yedek_parca).into(imgType);
                 }
-
-
-
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        txtFiltreUygula.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.i("OnClick" , "Filtre");
+
+                int selectedCategory = spinKategoriTip.getSelectedItemPosition();
+
+                Log.i("SelectedCategory"  ,  String.valueOf(selectedCategory));
+
+                minYil = edtFiltreMinYil.getText().toString();
+
+                if(minYil.isEmpty())
+                {
+                    Log.i("MinYıl" , "test");
+                }
+                maxYil = edtFiltreMaxYil.getText().toString();
+                minTecrube = edtFiltreMinTecrube.getText().toString();
+                maxTecrube = edtFiltreMaxTecrube.getText().toString();
+                minYas = edtFiltreMinYas.getText().toString();
+                maxYas = edtFiltreMaxYas.getText().toString();
+
+
+
+
+
+
 
             }
         });
@@ -373,51 +430,74 @@ public class FiltreFragment extends Fragment {
         return rootView;
     }
 
+    private void openEverything() {
+
+        linFiltreMarka.setVisibility(View.VISIBLE);
+        linFiltreModel.setVisibility(View.VISIBLE);
+        linFiltreMinYil.setVisibility(View.VISIBLE);
+        linFiltreMaxYil.setVisibility(View.VISIBLE);
+        linFiltreKapasite.setVisibility(View.VISIBLE);
+        linFiltreAracDurum.setVisibility(View.VISIBLE);
+        linFiltreKullanabildiginizKapasiteler.setVisibility(View.VISIBLE);
+        linFiltreMinTecrube.setVisibility(View.VISIBLE);
+        linFiltreMaxTecrube.setVisibility(View.VISIBLE);
+        linFiltreServisBaslaIl.setVisibility(View.VISIBLE);
+        linFiltreServisBaslaIlce.setVisibility(View.VISIBLE);
+        linFiltreServisBitisIl.setVisibility(View.VISIBLE);
+        linFiltreServisBitisIlce.setVisibility(View.VISIBLE);
+        linFiltreMinYas.setVisibility(View.VISIBLE);
+        linFiltreMaxYas.setVisibility(View.VISIBLE);
+
+
+    }
+
     private void loadSoforeIs() {
-        acFiltreMarka.setVisibility(View.GONE);
-        acFiltreModel.setVisibility(View.GONE);
-        edtFiltreMinYil.setVisibility(View.GONE);
-        edtFiltreMaxYil.setVisibility(View.GONE);
-        acFiltreKapasite.setVisibility(View.GONE);
-        acFiltreAracDurum.setVisibility(View.GONE);
-        acFiltreServisBitisIl.setVisibility(View.GONE);
-        acFiltreServisBitisIlce.setVisibility(View.GONE);
+
+        linFiltreMarka.setVisibility(View.GONE);
+        linFiltreModel.setVisibility(View.GONE);
+        linFiltreMinYil.setVisibility(View.GONE);
+        linFiltreMaxYil.setVisibility(View.GONE);
+        linFiltreKapasite.setVisibility(View.GONE);
+        linFiltreAracDurum.setVisibility(View.GONE);
+        linFiltreServisBitisIl.setVisibility(View.GONE);
+        linFiltreServisBitisIlce.setVisibility(View.GONE);
+
     }
 
     private void loadAracaSofor() {
-        acFiltreMarka.setVisibility(View.GONE);
-        acFiltreModel.setVisibility(View.GONE);
-        edtFiltreMinYil.setVisibility(View.GONE);
-        edtFiltreMaxYil.setVisibility(View.GONE);
-        acFiltreAracDurum.setVisibility(View.GONE);
-        acFiltreKullanilabilirKapasiteler.setVisibility(View.GONE);
-        edtFiltreMinTecrube.setVisibility(View.GONE);
-        edtFiltreMaxTecrube.setVisibility(View.GONE);
-        edtFiltreMinYas.setVisibility(View.GONE);
-        edtFiltreMaxYas.setVisibility(View.GONE);
+        linFiltreMarka.setVisibility(View.GONE);
+        linFiltreModel.setVisibility(View.GONE);
+        linFiltreMinYil.setVisibility(View.GONE);
+        linFiltreMaxYil.setVisibility(View.GONE);
+        linFiltreAracDurum.setVisibility(View.GONE);
+        linFiltreKullanabildiginizKapasiteler.setVisibility(View.GONE);
+        linFiltreMinTecrube.setVisibility(View.GONE);
+        linFiltreMaxTecrube.setVisibility(View.GONE);
+        linFiltreMinYas.setVisibility(View.GONE);
+        linFiltreMaxYas.setVisibility(View.GONE);
     }
 
     private void loadAracaIs() {
 
-        acFiltreKapasite.setVisibility(View.GONE);
-        acFiltreKullanilabilirKapasiteler.setVisibility(View.GONE);
-        edtFiltreMinTecrube.setVisibility(View.GONE);
-        edtFiltreMaxTecrube.setVisibility(View.GONE);
-        acFiltreServisBitisIl.setVisibility(View.GONE);
-        acFiltreServisBitisIlce.setVisibility(View.GONE);
-        edtFiltreMinYas.setVisibility(View.GONE);
-        edtFiltreMaxYas.setVisibility(View.GONE);
+        linFiltreKapasite.setVisibility(View.GONE);
+        linFiltreKullanabildiginizKapasiteler.setVisibility(View.GONE);
+        linFiltreMinTecrube.setVisibility(View.GONE);
+        linFiltreMaxTecrube.setVisibility(View.GONE);
+        linFiltreServisBitisIl.setVisibility(View.GONE);
+        linFiltreServisBitisIlce.setVisibility(View.GONE);
+        linFiltreMinYas.setVisibility(View.GONE);
+        linFiltreMaxYas.setVisibility(View.GONE);
+
     }
 
     private void loadIseArac() {
 
-        acFiltreAracDurum.setVisibility(View.GONE);
-        acFiltreKullanilabilirKapasiteler.setVisibility(View.GONE);
-        edtFiltreMinTecrube.setVisibility(View.GONE);
-        edtFiltreMaxTecrube.setVisibility(View.GONE);
-        edtFiltreMinYas.setVisibility(View.GONE);
-        edtFiltreMaxYas.setVisibility(View.GONE);
-
+        linFiltreAracDurum.setVisibility(View.GONE);
+        linFiltreKullanabildiginizKapasiteler.setVisibility(View.GONE);
+        linFiltreMinTecrube.setVisibility(View.GONE);
+        linFiltreMaxTecrube.setVisibility(View.GONE);
+        linFiltreMinYas.setVisibility(View.GONE);
+        linFiltreMaxYas.setVisibility(View.GONE);
 
     }
 }

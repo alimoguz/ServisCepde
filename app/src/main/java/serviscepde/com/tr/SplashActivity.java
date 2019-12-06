@@ -14,6 +14,7 @@ import android.util.Log;
 import android.widget.FrameLayout;
 
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import retrofit2.Retrofit;
@@ -39,6 +40,7 @@ public class SplashActivity extends AppCompatActivity {
     public static SharedPreferences.Editor editor;
 
     List<Ilce> ilces;
+    private Context ctx;
 
 
     @Override
@@ -50,12 +52,14 @@ public class SplashActivity extends AppCompatActivity {
 
         fragSplash = findViewById(R.id.fragSplash);
 
+        ctx = getApplicationContext();
+
         sharedPref = getBaseContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
         ilces = new ArrayList<>();
 
-        setNotification();
+        setNotification(ctx);
 
 
         if(isTesting)
@@ -81,22 +85,13 @@ public class SplashActivity extends AppCompatActivity {
             fragmentTransaction.commitAllowingStateLoss();
 
         }
-
-
-
-
-
-
-
-
     }
 
 
-
-
-    private void setNotification() {
+    private void setNotification(Context ctx) {
         //FirebaseMessaging.getInstance().subscribeToTopic("serviscepde-adnroid1-app");
 
+        FirebaseApp.initializeApp(ctx);
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/serviscepde_android_app_new");
 
 

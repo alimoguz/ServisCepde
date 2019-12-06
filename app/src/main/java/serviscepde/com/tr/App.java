@@ -166,6 +166,15 @@ public class App extends Application {
         return durumu;
     }
 
+    public static List<String> aracDurumu = new ArrayList<>();
+    public static List<String> getAracDurumu()
+    {
+        aracDurumu.add("Aracım Tamamen Boşta");
+        aracDurumu.add("Aracıma Ek İş Arıyorum");
+
+        return  aracDurumu;
+    }
+
 
 
 
