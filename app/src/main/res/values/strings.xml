@@ -170,6 +170,15 @@
     <string name="MaxTecrübe">Maximum tecrübe</string>
     <string name="MinYaş">Minimum yaş</string>
     <string name="MaxYaş">Maximum yaş</string>
+    <string name="MinKm">Minimum Km</string>
+    <string name="MaxKm">Maximum Km</string>
+    <string name="FiltreMotorHacim">Motor hacmi</string>
+    <string name="FiltreMotorGüc">Motor gücü</string>
+    <string name="FiltreVitesTipi">Vites tipi</string>
+    <string name="FiltreYakıtTipi">Yakıt tipi</string>
+    <string name="FiltreKasko">Kasko</string>
+    <string name="FiltreYedekDurum">Durumu</string>
+    <string name="FiltreSatıcı">Satıcı</string>
 
 
 </resources>

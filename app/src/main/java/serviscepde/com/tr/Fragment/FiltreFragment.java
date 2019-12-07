@@ -52,13 +52,17 @@ public class FiltreFragment extends Fragment {
     private MultiAutoCompleteTextView acFiltreKullanilabilirKapasiteler;
 
     private TextInputEditText edtFiltreMinYil,edtFiltreMaxYil,edtFiltreMinTecrube,edtFiltreMaxTecrube,edtFiltreMinYas,edtFiltreMaxYas;
-    private String minYil,maxYil,minTecrube,maxTecrube,minYas,maxYas;
+    private String minYil,maxYil,minTecrube,maxTecrube,minYas,maxYas,minKM,maxKM = null;
     private LinearLayout linFiltreler;
     private TextView txtFiltreUygula;
 
     private LinearLayout linFiltreMarka,linFiltreModel,linFiltreMinYil,linFiltreMaxYil,linFiltreKapasite,linFiltreAracDurum,
             linFiltreKullanabildiginizKapasiteler,linFiltreMinTecrube,linFiltreMaxTecrube,linFiltreServisBaslaIl,linFiltreServisBaslaIlce,
             linFiltreServisBitisIl,linFiltreServisBitisIlce,linFiltreMinYas,linFiltreMaxYas;
+
+    private LinearLayout linFiltreMinKM,linFiltreMaxKM,linFiltreMotorHacim,linFiltreMotorGuc,linFiltreSatici,linFiltreVitesTipi,linFiltreYakitTipi,linFiltreKasko,linFiltreDurum;
+    private TextInputEditText edtFiltreMinKM,edtFiltreMaxKM;
+    private AutoCompleteTextView acFiltreMotorHacim,acFiltreMotorGuc,acFiltreSatici,acFiltreVitesTipi,acFiltreYakitTipi,acFiltreKasko,acFiltreDurum;
 
     private Context ctx;
     private ArrayAdapter<String> kategoriAdapter;
@@ -72,7 +76,7 @@ public class FiltreFragment extends Fragment {
     private ArrayList<String> townNames , baslamaTownNames , bitisTownNames = new ArrayList<>();
 
     private String userToken;
-    private String acMarka,acModel,acKapasite,acAracDurum,acKullanabildiginizKapasiteler;
+    private String acMarka,acModel,acKapasite,acAracDurum,acKullanabildiginizKapasiteler,acMotorHacim,acMotorGuc,acSatici,acVitesTipi,acYakitTipi,acKasko,acDurum = null;
 
 
     @Nullable
@@ -104,6 +108,14 @@ public class FiltreFragment extends Fragment {
         acFiltreServisBaslamaIlce = generalView.findViewById(R.id.acFiltreServisBaslamaIlce);
         acFiltreServisBitisIl = generalView.findViewById(R.id.acFiltreServisBitisIl);
         acFiltreServisBitisIlce = generalView.findViewById(R.id.acFiltreServisBitisIlce);
+        acFiltreMotorHacim = generalView.findViewById(R.id.acFiltreMotorHacim);
+        acFiltreMotorGuc = generalView.findViewById(R.id.acFiltreMotorGuc);
+        acFiltreSatici = generalView.findViewById(R.id.acFiltreSatici);
+        acFiltreVitesTipi = generalView.findViewById(R.id.acFiltreVitesTipi);
+        acFiltreYakitTipi = generalView.findViewById(R.id.acFiltreYakitTipi);
+        acFiltreKasko = generalView.findViewById(R.id.acFiltreKasko);
+        acFiltreDurum = generalView.findViewById(R.id.acFiltreDurum);
+
 
         linFiltreMarka = generalView.findViewById(R.id.linFiltreMarka);
         linFiltreModel = generalView.findViewById(R.id.linFiltreModel);
@@ -120,6 +132,16 @@ public class FiltreFragment extends Fragment {
         linFiltreServisBitisIlce = generalView.findViewById(R.id.linFiltreServisBitisIlce);
         linFiltreMinYas = generalView.findViewById(R.id.linFiltreMinYas);
         linFiltreMaxYas = generalView.findViewById(R.id.linFiltreMaxYas);
+        linFiltreMinKM = generalView.findViewById(R.id.linFiltreMinKM);
+        linFiltreMaxKM = generalView.findViewById(R.id.linFiltreMaxKM);
+        linFiltreMotorHacim = generalView.findViewById(R.id.linFiltreMotorHacim);
+        linFiltreMotorGuc = generalView.findViewById(R.id.linFiltreMotorGuc);
+        linFiltreSatici = generalView.findViewById(R.id.linFiltreSatici);
+        linFiltreVitesTipi = generalView.findViewById(R.id.linFiltreVitesTipi);
+        linFiltreYakitTipi = generalView.findViewById(R.id.linFiltreYakitTipi);
+        linFiltreKasko = generalView.findViewById(R.id.linFiltreKasko);
+        linFiltreDurum = generalView.findViewById(R.id.linFiltreDurum);
+
 
 
         edtFiltreMinYil = generalView.findViewById(R.id.edtFiltreMinYil);
@@ -128,6 +150,9 @@ public class FiltreFragment extends Fragment {
         edtFiltreMaxTecrube = generalView.findViewById(R.id.edtFiltreMaxTecrube);
         edtFiltreMinYas = generalView.findViewById(R.id.edtFiltreMinYas);
         edtFiltreMaxYas = generalView.findViewById(R.id.edtFiltreMaxYas);
+        edtFiltreMinKM = generalView.findViewById(R.id.edtFiltreMinKM);
+        edtFiltreMaxKM = generalView.findViewById(R.id.edtFiltreMaxKM);
+
 
         txtFiltreUygula = generalView.findViewById(R.id.txtFiltreUygula);
 
@@ -148,6 +173,7 @@ public class FiltreFragment extends Fragment {
         cityNames = DownloadClass.getCityNames();
         marka = DownloadClass.getMarkaNames();
 
+
         Utils.setAutoCompleteAdapter(acFiltreIl , cityNames ,ctx);
         Utils.setAutoCompleteAdapter(acFiltreServisBaslamaIl , cityNames ,ctx);
         Utils.setAutoCompleteAdapter(acFiltreServisBitisIl , cityNames ,ctx);
@@ -155,6 +181,63 @@ public class FiltreFragment extends Fragment {
         Utils.setAutoCompleteAdapter(acFiltreKapasite , App.getKapasite() , ctx);
         Utils.setAutoCompleteAdapter(acFiltreKullanilabilirKapasiteler , App.getKapasite() , ctx);
         Utils.setAutoCompleteAdapter(acFiltreAracDurum , App.getAracDurumu(), ctx);
+        Utils.setAutoCompleteAdapter(acFiltreMotorHacim , App.getMotorHacmi() , ctx);
+        Utils.setAutoCompleteAdapter(acFiltreMotorGuc , App.getMotorGucu() , ctx);
+        Utils.setAutoCompleteAdapter(acFiltreSatici , App.getKimden() , ctx);
+        Utils.setAutoCompleteAdapter(acFiltreVitesTipi , App.getVitesTipi() , ctx);
+        Utils.setAutoCompleteAdapter(acFiltreYakitTipi , App.getYakitTipi() , ctx);
+        Utils.setAutoCompleteAdapter(acFiltreKasko , App.getKaskoTuru() , ctx);
+        Utils.setAutoCompleteAdapter(acFiltreDurum , App.getDurumu() , ctx);
+
+        acFiltreDurum.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                acDurum = String.valueOf(position + 1);
+            }
+        });
+
+        acFiltreVitesTipi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                acVitesTipi = String.valueOf(position + 1 );
+            }
+        });
+
+        acFiltreYakitTipi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                acYakitTipi = String.valueOf(position + 1);
+            }
+        });
+
+        acFiltreKasko.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                acKasko = String.valueOf(position + 1);
+            }
+        });
+
+        acFiltreMotorHacim.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                acMotorHacim = String.valueOf(position + 1);
+            }
+        });
+
+        acFiltreMotorGuc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                acMotorGuc = String.valueOf(position + 1);
+            }
+        });
+
+        acFiltreSatici.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                acSatici = String.valueOf(position + 1);
+            }
+        });
 
         acFiltreMarka.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -258,7 +341,7 @@ public class FiltreFragment extends Fragment {
                 Log.i("AraçDurum" , acAracDurum);
             }
         });
-        acKullanabildiginizKapasiteler = "";
+
         acFiltreKullanilabilirKapasiteler.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -321,6 +404,7 @@ public class FiltreFragment extends Fragment {
                     linFiltreler.setVisibility(View.VISIBLE);
                     openEverything();
                     Glide.with(ctx).load(R.drawable.satilik_arac).into(imgType);
+                    loadSatilikArac();
                 }
 
                 if(kategoriID == 6)
@@ -328,6 +412,7 @@ public class FiltreFragment extends Fragment {
                     linFiltreler.setVisibility(View.VISIBLE);
                     openEverything();
                     Glide.with(ctx).load(R.drawable.kiralik_arac).into(imgType);
+                    loadKiralikArac();
                 }
 
                 if(kategoriID == 7)
@@ -335,6 +420,7 @@ public class FiltreFragment extends Fragment {
                     linFiltreler.setVisibility(View.VISIBLE);
                     openEverything();
                     Glide.with(ctx).load(R.drawable.yedek_parca).into(imgType);
+                    loadYedekParca();
                 }
 
             }
@@ -361,6 +447,8 @@ public class FiltreFragment extends Fragment {
                 maxTecrube = edtFiltreMaxTecrube.getText().toString();
                 minYas = edtFiltreMinYas.getText().toString();
                 maxYas = edtFiltreMaxYas.getText().toString();
+                minKM = edtFiltreMinKM.getText().toString();
+                maxKM = edtFiltreMaxKM.getText().toString();
 
                 HashMap<String , Object> hashMap = new HashMap<>();
                 HashMap<String , Object> hashMap1 = new HashMap<>();
@@ -424,19 +512,62 @@ public class FiltreFragment extends Fragment {
                     Log.i("Kapasiteler" , acKullanabildiginizKapasiteler);
                     acKullanabildiginizKapasiteler = Utils.trimmer(acKullanabildiginizKapasiteler);
                     hashMap1.put("KullanabildiginizKapasiteler" , acKullanabildiginizKapasiteler);
-
                 }
-
-
-
-
-
-
-
-
-
-
-
+                if(acMotorHacim != null)
+                {
+                    Log.i("MotorHacmi" , acMotorHacim);
+                    hashMap1.put("MotorHacmi" , acMotorHacim);
+                }
+                if(acMotorGuc != null)
+                {
+                    Log.i("MotorGuc" , acMotorGuc);
+                    hashMap1.put("MotorGucu" , acMotorGuc);
+                }
+                if(acSatici != null)
+                {
+                    Log.i("Satıcı" , acSatici);
+                    hashMap1.put("Kimden" , acSatici);
+                }
+                if(minYil != null)
+                {
+                    Log.i("MinYıl" , minYil);
+                    hashMap1.put("AracYiliMin" , minYil);
+                }
+                if(maxYil != null)
+                {
+                    Log.i("maxYil" , maxYil);
+                    hashMap1.put("AracYiliMax" , maxYil);
+                }
+                if(minTecrube != null)
+                {
+                    Log.i("minTecrube" , minTecrube);
+                    hashMap1.put("TecrubeMin" , minTecrube);
+                }
+                if(maxTecrube != null)
+                {
+                    Log.i("maxTecrube" , maxTecrube);
+                    hashMap1.put("TecrubeMax" , maxTecrube);
+                }
+                if(acVitesTipi != null)
+                {
+                    Log.i("VitesTipi" , acVitesTipi);
+                    hashMap1.put("VitesTipi" ,acVitesTipi );
+                }
+                if(acYakitTipi != null)
+                {
+                    Log.i("YakitTipi" , acYakitTipi);
+                    hashMap1.put("YakitTipi" ,acYakitTipi );
+                }
+                if(acKasko != null)
+                {
+                    Log.i("Kasko" , acKasko);
+                    hashMap1.put("Kasko" ,acKasko );
+                }
+                if(acDurum != null)
+                {
+                    Log.i("YedekParçaDurum" , acDurum);
+                    hashMap1.put("YedekParcaDurum" ,acDurum );
+                }
 
 
 
@@ -473,12 +604,43 @@ public class FiltreFragment extends Fragment {
         ServisBitişİli;
         ServisBitişİlçe;
 
+        SoforeIs;
+        KullanabildiğiKapasiteler;
+        MinimumTecrübe;
+        MaximumTecrübe;
+        ServisBaşlamaİli;
+        ServisBaşlamaİlçe;
+        MinimumYaş;
+        MaximumYaş;
+
+        SatılıkAraç;
+        Marka;
+        Model;
+        MinimumYıl;
+        Maximumyıl;
+        MinimumKm;
+        MaximumKm;
+        MotorHacmi;
+        MotorGücü;
+        Kapasite;
+        Satıcı;
+
+
+
         Toplam;
         Marka;
         Model;
         MinimumYıl;
         MaximumYıl;
+        MinimumKm;
+        MaximumKm;
+        VitesTipi;
+        YakıtTipi;
+        Kasko;
+        MotorHacmi;
+        MotorGücü;
         Kapasite;
+        Satıcı;
         AraçDurumu;
         KullanabildiğinizKapasiteler;
         MinimumTecrübe;
@@ -490,16 +652,176 @@ public class FiltreFragment extends Fragment {
         MinimumYaş;
         MaximumYaş;
 
-        SoforeIs;
-        KullanabildiğiKapasiteler;
-        MinimumTecrübe;
-        MaximumTecrübe;
-        ServisBaşlamaİli;
-        ServisBaşlamaİlçe;
-        MinimumYaş;
-        MaximumYaş;
+        KiralıkAraç;
+        Marka;
+        Model;
+        MinimumYıl;
+        MaximumYıl;
+        VitesTipi;
+        YakıtTipi;
+        Kapasite;
+        Kasko;
+
         */
         return rootView;
+    }
+
+    private void loadYedekParca() {
+
+        linFiltreMarka.setVisibility(View.GONE);
+        linFiltreModel.setVisibility(View.GONE);
+        linFiltreMinYil.setVisibility(View.GONE);
+        linFiltreMaxYil.setVisibility(View.GONE);
+        linFiltreKapasite.setVisibility(View.GONE);
+        linFiltreAracDurum.setVisibility(View.GONE);
+        linFiltreKullanabildiginizKapasiteler.setVisibility(View.GONE);
+        linFiltreMinTecrube.setVisibility(View.GONE);
+        linFiltreMaxTecrube.setVisibility(View.GONE);
+        linFiltreServisBaslaIl.setVisibility(View.GONE);
+        linFiltreServisBaslaIlce.setVisibility(View.GONE);
+        linFiltreServisBitisIl.setVisibility(View.GONE);
+        linFiltreServisBitisIlce.setVisibility(View.GONE);
+        linFiltreMinYas.setVisibility(View.GONE);
+        linFiltreMaxYas.setVisibility(View.GONE);
+        linFiltreMinKM.setVisibility(View.GONE);
+        linFiltreMaxKM.setVisibility(View.GONE);
+        linFiltreMotorHacim.setVisibility(View.GONE);
+        linFiltreMotorGuc.setVisibility(View.GONE);
+        linFiltreSatici.setVisibility(View.GONE);
+        linFiltreVitesTipi.setVisibility(View.GONE);
+        linFiltreYakitTipi.setVisibility(View.GONE);
+        linFiltreKasko.setVisibility(View.GONE);
+
+    }
+
+    private void loadKiralikArac() {
+
+        linFiltreAracDurum.setVisibility(View.GONE);
+        linFiltreKullanabildiginizKapasiteler.setVisibility(View.GONE);
+        linFiltreMinTecrube.setVisibility(View.GONE);
+        linFiltreMaxTecrube.setVisibility(View.GONE);
+        linFiltreServisBaslaIl.setVisibility(View.GONE);
+        linFiltreServisBaslaIlce.setVisibility(View.GONE);
+        linFiltreServisBitisIl.setVisibility(View.GONE);
+        linFiltreServisBitisIlce.setVisibility(View.GONE);
+        linFiltreMinYas.setVisibility(View.GONE);
+        linFiltreMaxYas.setVisibility(View.GONE);
+        linFiltreMinKM.setVisibility(View.GONE);
+        linFiltreMaxKM.setVisibility(View.GONE);
+        linFiltreMotorHacim.setVisibility(View.GONE);
+        linFiltreMotorGuc.setVisibility(View.GONE);
+        linFiltreSatici.setVisibility(View.GONE);
+        linFiltreDurum.setVisibility(View.GONE);
+
+    }
+
+    private void loadSatilikArac() {
+
+        linFiltreAracDurum.setVisibility(View.GONE);
+        linFiltreKullanabildiginizKapasiteler.setVisibility(View.GONE);
+        linFiltreMinTecrube.setVisibility(View.GONE);
+        linFiltreMaxTecrube.setVisibility(View.GONE);
+        linFiltreServisBaslaIl.setVisibility(View.GONE);
+        linFiltreServisBaslaIlce.setVisibility(View.GONE);
+        linFiltreServisBitisIl.setVisibility(View.GONE);
+        linFiltreServisBitisIlce.setVisibility(View.GONE);
+        linFiltreMinYas.setVisibility(View.GONE);
+        linFiltreMaxYas.setVisibility(View.GONE);
+        linFiltreVitesTipi.setVisibility(View.GONE);
+        linFiltreYakitTipi.setVisibility(View.GONE);
+        linFiltreKasko.setVisibility(View.GONE);
+        linFiltreDurum.setVisibility(View.GONE);
+
+
+    }
+
+    private void loadSoforeIs() {
+
+        linFiltreMarka.setVisibility(View.GONE);
+        linFiltreModel.setVisibility(View.GONE);
+        linFiltreMinYil.setVisibility(View.GONE);
+        linFiltreMaxYil.setVisibility(View.GONE);
+        linFiltreKapasite.setVisibility(View.GONE);
+        linFiltreAracDurum.setVisibility(View.GONE);
+        linFiltreServisBitisIl.setVisibility(View.GONE);
+        linFiltreServisBitisIlce.setVisibility(View.GONE);
+        linFiltreMinKM.setVisibility(View.GONE);
+        linFiltreMaxKM.setVisibility(View.GONE);
+        linFiltreMotorHacim.setVisibility(View.GONE);
+        linFiltreMotorGuc.setVisibility(View.GONE);
+        linFiltreSatici.setVisibility(View.GONE);
+        linFiltreVitesTipi.setVisibility(View.GONE);
+        linFiltreYakitTipi.setVisibility(View.GONE);
+        linFiltreKasko.setVisibility(View.GONE);
+        linFiltreDurum.setVisibility(View.GONE);
+
+
+    }
+
+    private void loadAracaSofor() {
+        linFiltreMarka.setVisibility(View.GONE);
+        linFiltreModel.setVisibility(View.GONE);
+        linFiltreMinYil.setVisibility(View.GONE);
+        linFiltreMaxYil.setVisibility(View.GONE);
+        linFiltreAracDurum.setVisibility(View.GONE);
+        linFiltreKullanabildiginizKapasiteler.setVisibility(View.GONE);
+        linFiltreMinTecrube.setVisibility(View.GONE);
+        linFiltreMaxTecrube.setVisibility(View.GONE);
+        linFiltreMinYas.setVisibility(View.GONE);
+        linFiltreMaxYas.setVisibility(View.GONE);
+        linFiltreMinKM.setVisibility(View.GONE);
+        linFiltreMaxKM.setVisibility(View.GONE);
+        linFiltreMotorHacim.setVisibility(View.GONE);
+        linFiltreMotorGuc.setVisibility(View.GONE);
+        linFiltreSatici.setVisibility(View.GONE);
+        linFiltreVitesTipi.setVisibility(View.GONE);
+        linFiltreYakitTipi.setVisibility(View.GONE);
+        linFiltreKasko.setVisibility(View.GONE);
+        linFiltreDurum.setVisibility(View.GONE);
+
+    }
+
+    private void loadAracaIs() {
+
+        linFiltreKapasite.setVisibility(View.GONE);
+        linFiltreKullanabildiginizKapasiteler.setVisibility(View.GONE);
+        linFiltreMinTecrube.setVisibility(View.GONE);
+        linFiltreMaxTecrube.setVisibility(View.GONE);
+        linFiltreServisBitisIl.setVisibility(View.GONE);
+        linFiltreServisBitisIlce.setVisibility(View.GONE);
+        linFiltreMinYas.setVisibility(View.GONE);
+        linFiltreMaxYas.setVisibility(View.GONE);
+        linFiltreMinKM.setVisibility(View.GONE);
+        linFiltreMaxKM.setVisibility(View.GONE);
+        linFiltreMotorHacim.setVisibility(View.GONE);
+        linFiltreMotorGuc.setVisibility(View.GONE);
+        linFiltreSatici.setVisibility(View.GONE);
+        linFiltreVitesTipi.setVisibility(View.GONE);
+        linFiltreYakitTipi.setVisibility(View.GONE);
+        linFiltreKasko.setVisibility(View.GONE);
+        linFiltreDurum.setVisibility(View.GONE);
+
+
+    }
+
+    private void loadIseArac() {
+
+        linFiltreAracDurum.setVisibility(View.GONE);
+        linFiltreKullanabildiginizKapasiteler.setVisibility(View.GONE);
+        linFiltreMinTecrube.setVisibility(View.GONE);
+        linFiltreMaxTecrube.setVisibility(View.GONE);
+        linFiltreMinYas.setVisibility(View.GONE);
+        linFiltreMaxYas.setVisibility(View.GONE);
+        linFiltreMinKM.setVisibility(View.GONE);
+        linFiltreMaxKM.setVisibility(View.GONE);
+        linFiltreMotorHacim.setVisibility(View.GONE);
+        linFiltreMotorGuc.setVisibility(View.GONE);
+        linFiltreSatici.setVisibility(View.GONE);
+        linFiltreVitesTipi.setVisibility(View.GONE);
+        linFiltreYakitTipi.setVisibility(View.GONE);
+        linFiltreKasko.setVisibility(View.GONE);
+        linFiltreDurum.setVisibility(View.GONE);
+
     }
 
     private void openEverything() {
@@ -519,57 +841,17 @@ public class FiltreFragment extends Fragment {
         linFiltreServisBitisIlce.setVisibility(View.VISIBLE);
         linFiltreMinYas.setVisibility(View.VISIBLE);
         linFiltreMaxYas.setVisibility(View.VISIBLE);
+        linFiltreMinKM.setVisibility(View.VISIBLE);
+        linFiltreMaxKM.setVisibility(View.VISIBLE);
+        linFiltreMotorHacim.setVisibility(View.VISIBLE);
+        linFiltreMotorGuc.setVisibility(View.VISIBLE);
+        linFiltreSatici.setVisibility(View.VISIBLE);
+        linFiltreVitesTipi.setVisibility(View.VISIBLE);
+        linFiltreYakitTipi.setVisibility(View.VISIBLE);
+        linFiltreKasko.setVisibility(View.VISIBLE);
+        linFiltreDurum.setVisibility(View.VISIBLE);
 
 
-    }
-
-    private void loadSoforeIs() {
-
-        linFiltreMarka.setVisibility(View.GONE);
-        linFiltreModel.setVisibility(View.GONE);
-        linFiltreMinYil.setVisibility(View.GONE);
-        linFiltreMaxYil.setVisibility(View.GONE);
-        linFiltreKapasite.setVisibility(View.GONE);
-        linFiltreAracDurum.setVisibility(View.GONE);
-        linFiltreServisBitisIl.setVisibility(View.GONE);
-        linFiltreServisBitisIlce.setVisibility(View.GONE);
-
-    }
-
-    private void loadAracaSofor() {
-        linFiltreMarka.setVisibility(View.GONE);
-        linFiltreModel.setVisibility(View.GONE);
-        linFiltreMinYil.setVisibility(View.GONE);
-        linFiltreMaxYil.setVisibility(View.GONE);
-        linFiltreAracDurum.setVisibility(View.GONE);
-        linFiltreKullanabildiginizKapasiteler.setVisibility(View.GONE);
-        linFiltreMinTecrube.setVisibility(View.GONE);
-        linFiltreMaxTecrube.setVisibility(View.GONE);
-        linFiltreMinYas.setVisibility(View.GONE);
-        linFiltreMaxYas.setVisibility(View.GONE);
-    }
-
-    private void loadAracaIs() {
-
-        linFiltreKapasite.setVisibility(View.GONE);
-        linFiltreKullanabildiginizKapasiteler.setVisibility(View.GONE);
-        linFiltreMinTecrube.setVisibility(View.GONE);
-        linFiltreMaxTecrube.setVisibility(View.GONE);
-        linFiltreServisBitisIl.setVisibility(View.GONE);
-        linFiltreServisBitisIlce.setVisibility(View.GONE);
-        linFiltreMinYas.setVisibility(View.GONE);
-        linFiltreMaxYas.setVisibility(View.GONE);
-
-    }
-
-    private void loadIseArac() {
-
-        linFiltreAracDurum.setVisibility(View.GONE);
-        linFiltreKullanabildiginizKapasiteler.setVisibility(View.GONE);
-        linFiltreMinTecrube.setVisibility(View.GONE);
-        linFiltreMaxTecrube.setVisibility(View.GONE);
-        linFiltreMinYas.setVisibility(View.GONE);
-        linFiltreMaxYas.setVisibility(View.GONE);
 
     }
 }
