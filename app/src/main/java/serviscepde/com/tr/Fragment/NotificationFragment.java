@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -26,6 +28,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import serviscepde.com.tr.Adapter.BildirimAdapter;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.Bildirim;
@@ -33,6 +36,8 @@ import serviscepde.com.tr.Models.Response.BaseResponse;
 import serviscepde.com.tr.Models.Response.ResponseDetail;
 import serviscepde.com.tr.R;
 import serviscepde.com.tr.Utils.Utils;
+
+import static serviscepde.com.tr.App.TAG;
 
 
 public class NotificationFragment extends Fragment {
@@ -46,7 +51,7 @@ public class NotificationFragment extends Fragment {
     private String userToken;
     private int count = 0;
 
-    private List<Bildirim> bildirimList = new ArrayList<>();
+    private ArrayList<Bildirim> bildirimList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -83,50 +88,65 @@ public class NotificationFragment extends Fragment {
                 JSONObject jsonObject = Utils.jwtToJsonObject(token);
 
                 try {
-                    JSONArray bildirimler = jsonObject.getJSONObject("OutPutMessage").getJSONArray("Data");
+                    if(jsonObject.get("OutPutMessage") instanceof  JSONObject)
+                    {
+                        Log.i(TAG, "onResponse: " + " Json Object Geldi");
 
-                    for (int i = 0; i <= bildirimler.length(); i++){
 
-                        JSONObject tmp = bildirimler.getJSONObject(i);
-                        int x;
+                        for (int i = 0; i < jsonObject.getJSONObject("OutPutMessage").getJSONArray("Data").length(); i++){
 
-                        String ID = tmp.getString("ID");
-                        String BildirimID = tmp.getString("BildirimID");
-                        String Status = tmp.getString("Status");
-                        String Title = tmp.getString("Title");
-                        String Message = tmp.getString("Message");
-                        String create_at = tmp.getString("create_at");
+                            JSONObject tmp = jsonObject.getJSONObject("OutPutMessage").getJSONArray("Data").getJSONObject(i);
+                            int x;
 
-                        x = Integer.parseInt(Status);
+                            String ID = tmp.getString("ID");
+                            String BildirimID = tmp.getString("BildirimID");
+                            String Status = tmp.getString("Status");
+                            String Title = tmp.getString("Title");
+                            String Message = tmp.getString("Message");
+                            String create_at = tmp.getString("create_at");
 
-                        if(x == 1)
-                        {
-                            ++count;
+                            x = Integer.parseInt(Status);
+
+                            if(x == 0)
+                            {
+                                ++count;
+                            }
+
+                            Bildirim bildirim = new Bildirim(ID , BildirimID , Status , Title , Message , create_at);
+                            bildirimList.add(bildirim);
+
                         }
 
-                        Bildirim bildirim = new Bildirim(ID , BildirimID , Status , Title , Message , create_at);
-                        bildirimList.add(bildirim);
+                        if(count == 0)
+                        {
+                            txtBildirimSayisi.setVisibility(View.GONE);
+                            txt.setText("Hiç bildirim yok");
+                            imgBildirimIcon.setVisibility(View.GONE);
+
+                        }
+                        if(count != 0)
+                        {
+                            txtBildirimSayisi.setText(String.valueOf(count));
+                        }
+
+                        BildirimAdapter bildirimAdapter = new BildirimAdapter(R.layout.row_notification , bildirimList);
+                        rvBildirimler.setLayoutManager(new LinearLayoutManager(ctx));
+                        rvBildirimler.setItemAnimator(new DefaultItemAnimator());
+                        rvBildirimler.setAdapter(bildirimAdapter);
 
                     }
 
-                    if(count == 0)
+                    if(jsonObject.get("OutPutMessage") instanceof  JSONArray)
                     {
+                        Log.i(TAG, "onResponse: " + " Json Array Geldi");
                         txtBildirimSayisi.setVisibility(View.GONE);
                         txt.setText("Hiç bildirim yok");
                         imgBildirimIcon.setVisibility(View.GONE);
-
                     }
-                    if(count != 0)
-                    {
-                        txtBildirimSayisi.setText(String.valueOf(count));
-                    }
-
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
 
             }
 
