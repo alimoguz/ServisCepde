@@ -27,7 +27,38 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_20sdp"
-        app:icon="@drawable/icon_find" />
+        app:backgroundTint="@color/colorBlack"
+        app:icon="@drawable/icon_contact"
+        app:iconTint="@color/colorYellow"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabIconCall"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/_70sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        app:backgroundTint="@color/colorBlack"
+        app:icon="@drawable/icon_call"
+        app:iconTint="@color/colorYellow"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabIconMessage"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/_120sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        app:backgroundTint="@color/colorBlack"
+        app:icon="@drawable/icon_message"
+        app:iconTint="@color/colorYellow"/>
+
+
+
 
     <ScrollView
         android:layout_below="@id/header"

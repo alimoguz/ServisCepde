@@ -1,7 +1,9 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -49,7 +51,7 @@ public class IlanDetayFragment extends Fragment {
     Context ctx;
     ArrayList<String> photos = new ArrayList<>();
 
-    private ExtendedFloatingActionButton fabIcon;
+    private ExtendedFloatingActionButton fabIcon,fabIconCall,fabIconMessage;
     private TextView txtIlanDetayAciklama,txtFiyat,txtIlanSahibi,txtIlanTamKonum,txtIlanNo,txtIlanTarih,txtAracMarkasi,txtAracModel,txtAracAltModel,txtAracYil,txtAracKapasite
             ,txtServisBaslamaSaat,txtServisBitisSaat,txtServisBaslamaKonum,txtServisBitisKonum,txtFirmaGirisSaat,txtFirmaCikisSaat,txtToplamKM,txtGunSayisi,txtMotorHacim,
             txtMotorGuc,txtKimden,txtAracDurumu,txtTecrube,txtPlaka,txtReferans,txtUcretBeklentisi,txtKapasiteler,txtYas,txtEhliyet,txtSrc,txtAylikFiyati,txtHaftalikFiyati,
@@ -167,7 +169,8 @@ public class IlanDetayFragment extends Fragment {
         viewPagerPhotos = generalView.findViewById(R.id.viewPagerPhotos);
         imgNoPhoto = generalView.findViewById(R.id.imgNoPhoto);
         fabIcon = generalView.findViewById(R.id.fabIcon);
-
+        fabIconCall = generalView.findViewById(R.id.fabIconCall);
+        fabIconMessage = generalView.findViewById(R.id.fabIconMessage);
 
 
 
@@ -191,9 +194,13 @@ public class IlanDetayFragment extends Fragment {
 
                 JSONObject ilan = Utils.jwtToJsonObject(token);
 
+                String gsm;
+
 
                 try {
                     JSONObject ilanDetay = ilan.getJSONObject("OutPutMessage").getJSONObject("Data");
+
+                    gsm = ilanDetay.getJSONObject("Users").getString("GSM");
 
                     if(ilanDetay.has("ilanAciklamasi"))
                     {
@@ -706,6 +713,35 @@ public class IlanDetayFragment extends Fragment {
                     {
                         yedekParcaYukle();
                     }
+
+                    fabIcon.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Log.i("FabIcon" , "clicked");
+                            Log.i("FabIconCall" , "" + fabIconCall.getVisibility() + "\n + fabIconMessage" +  fabIconMessage.getVisibility());
+
+
+                            if(fabIconCall.getVisibility() == View.GONE && fabIconMessage.getVisibility() == View.GONE)
+                            {
+                                Log.i("FabIconCall" , "" + fabIconCall.getVisibility() + "\n + fabIconMessage" +  fabIconMessage.getVisibility());
+                                fabIconCall.setVisibility(View.VISIBLE);
+                                fabIconMessage.setVisibility(View.VISIBLE);
+                            }
+
+                        }
+                    });
+
+                    /*fabIconCall.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Intent callIntent = new Intent(Intent.ACTION_CALL);
+                            callIntent.setData(Uri.parse("tel:" + gsm));
+                            startActivity(callIntent);
+
+                        }
+                    });*/
 
 
 

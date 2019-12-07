@@ -10,6 +10,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -42,7 +43,8 @@
             android:name=".MainActivity"
             android:label="MainActivity"
             android:parentActivityName=".SplashActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen">
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen"
+            android:exported="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="serviscepde.com.tr.SplashActivity" />
