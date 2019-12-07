@@ -18,12 +18,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import serviscepde.com.tr.App;
@@ -44,8 +46,10 @@ public class FiltreFragment extends Fragment {
 
     private AppCompatSpinner spinKategoriTip;
 
-    private AutoCompleteTextView acFiltreIl,acFiltreIlce,acFiltreMarka,acFiltreModel,acFiltreKapasite,acFiltreAracDurum,acFiltreKullanilabilirKapasiteler
-            ,acFiltreServisBaslamaIl,acFiltreServisBaslamaIlce,acFiltreServisBitisIl,acFiltreServisBitisIlce;
+    private AutoCompleteTextView acFiltreIl,acFiltreIlce,acFiltreMarka,acFiltreModel,acFiltreKapasite,acFiltreAracDurum,acFiltreServisBaslamaIl,acFiltreServisBaslamaIlce
+            ,acFiltreServisBitisIl,acFiltreServisBitisIlce;
+
+    private MultiAutoCompleteTextView acFiltreKullanilabilirKapasiteler;
 
     private TextInputEditText edtFiltreMinYil,edtFiltreMaxYil,edtFiltreMinTecrube,edtFiltreMaxTecrube,edtFiltreMinYas,edtFiltreMaxYas;
     private String minYil,maxYil,minTecrube,maxTecrube,minYas,maxYas;
@@ -56,7 +60,6 @@ public class FiltreFragment extends Fragment {
             linFiltreKullanabildiginizKapasiteler,linFiltreMinTecrube,linFiltreMaxTecrube,linFiltreServisBaslaIl,linFiltreServisBaslaIlce,
             linFiltreServisBitisIl,linFiltreServisBitisIlce,linFiltreMinYas,linFiltreMaxYas;
 
-
     private Context ctx;
     private ArrayAdapter<String> kategoriAdapter;
 
@@ -64,12 +67,12 @@ public class FiltreFragment extends Fragment {
     private List<String> cityNames = new ArrayList<>();
     private List<String> marka = new ArrayList<>();
     private List<String> model = new ArrayList<>();
-    private String cityId,baslamaCityId,bitisCityId;
-    private String townId,baslamaTownId,bitisTownId;
+    private String cityId,baslamaCityId,bitisCityId = null;
+    private String townId,baslamaTownId,bitisTownId = null;
     private ArrayList<String> townNames , baslamaTownNames , bitisTownNames = new ArrayList<>();
 
     private String userToken;
-    private String acMarka,acModel,acKapasite,acAracDurum,acKullanabildiginizKapasiteler,acServisBaslamaIl,acServisBaslamaIlce,acServisBitisIl,acServisBitisIlce;
+    private String acMarka,acModel,acKapasite,acAracDurum,acKullanabildiginizKapasiteler;
 
 
     @Nullable
@@ -84,7 +87,6 @@ public class FiltreFragment extends Fragment {
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
         Log.i("userToken" ,userToken);
-
 
 
         imgType = generalView.findViewById(R.id.imgType);
@@ -256,10 +258,12 @@ public class FiltreFragment extends Fragment {
                 Log.i("AraçDurum" , acAracDurum);
             }
         });
+        acKullanabildiginizKapasiteler = "";
         acFiltreKullanilabilirKapasiteler.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                acKullanabildiginizKapasiteler = String.valueOf(position + 1);
+                String tmp = String.valueOf(position + 1).concat(",");
+                acKullanabildiginizKapasiteler = acKullanabildiginizKapasiteler.concat(tmp);
                 Log.i("KullanabildiğiKapasite" , acKullanabildiginizKapasiteler);
             }
         });
@@ -352,16 +356,84 @@ public class FiltreFragment extends Fragment {
                 Log.i("SelectedCategory"  ,  String.valueOf(selectedCategory));
 
                 minYil = edtFiltreMinYil.getText().toString();
-
-                if(minYil.isEmpty())
-                {
-                    Log.i("MinYıl" , "test");
-                }
                 maxYil = edtFiltreMaxYil.getText().toString();
                 minTecrube = edtFiltreMinTecrube.getText().toString();
                 maxTecrube = edtFiltreMaxTecrube.getText().toString();
                 minYas = edtFiltreMinYas.getText().toString();
                 maxYas = edtFiltreMaxYas.getText().toString();
+
+                HashMap<String , Object> hashMap = new HashMap<>();
+                HashMap<String , Object> hashMap1 = new HashMap<>();
+
+                hashMap1.put("start" , 0);
+                hashMap1.put("Tipi" , selectedCategory);
+
+
+                if(cityId != null)
+                {
+                    Log.i("Seçilenİl" ,  cityId);
+                    hashMap1.put("ilanCity" , cityId);
+                }
+                if(townId != null)
+                {
+                    Log.i("Seçilenİlçe" , townId);
+                    hashMap1.put("ilanSemtleri" , townId);
+                }
+                if(baslamaCityId != null)
+                {
+                    Log.i("Başlamaİli" , baslamaCityId);
+                    hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
+                }
+                if(baslamaTownId != null)
+                {
+                    Log.i("Başlamaİlçe" , baslamaTownId);
+                    hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
+                }
+                if(bitisCityId != null)
+                {
+                    Log.i("Bitişİl" , bitisCityId);
+                    hashMap1.put("ServisBitisCity" , bitisCityId);
+                }
+                if(bitisTownId != null)
+                {
+                    Log.i("Bitişİlçe" , bitisTownId);
+                    hashMap1.put("ServisBitisSemtleri" , bitisTownId);
+                }
+                if(acMarka != null)
+                {
+                    Log.i("Marka" , acMarka);
+                    hashMap1.put("AracMarkasi" , acMarka);
+                }
+                if(acModel != null)
+                {
+                    Log.i("Model" , acModel);
+                    hashMap1.put("AracModeli" , acModel);
+                }
+                if(acKapasite != null)
+                {
+                    Log.i("Kapasite" , acKapasite);
+                    hashMap1.put("AracKapasitesi" , acKapasite);
+                }
+                if(acAracDurum != null)
+                {
+                    Log.i("AraçDurumu" , acAracDurum);
+                    hashMap1.put("AracDurumu" , acAracDurum);
+                }
+                if(acKullanabildiginizKapasiteler != null)
+                {
+                    Log.i("Kapasiteler" , acKullanabildiginizKapasiteler);
+                    acKullanabildiginizKapasiteler = Utils.trimmer(acKullanabildiginizKapasiteler);
+                    hashMap1.put("KullanabildiginizKapasiteler" , acKullanabildiginizKapasiteler);
+
+                }
+
+
+
+
+
+
+
+
 
 
 

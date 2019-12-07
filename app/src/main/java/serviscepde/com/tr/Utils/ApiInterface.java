@@ -5,6 +5,7 @@ import serviscepde.com.tr.Models.IlanDetay.IlanDetayResponse;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
 import serviscepde.com.tr.Models.IlanKategori.IlanKategoriResponse;
 import serviscepde.com.tr.Models.Ilceler.IlceResponse;
+import serviscepde.com.tr.Models.Response.BaseResponse;
 import serviscepde.com.tr.Models.Sehirler.SehirResponse;
 import serviscepde.com.tr.Models.UserLogin.UserLoginResponse;
 import serviscepde.com.tr.Models.UserRegister.UserRegisterResponse;
@@ -46,6 +47,12 @@ public interface ApiInterface {
 
     @POST("index.php?func=ilanlar&file=List&ReturnType=1")
     Call<IlanKategoriResponse> getSonIlanlar(@Body HashMap sonIlan);
+
+    @POST("index.php?func=ilanlar&file=List&ReturnType=1")
+    Call<IlanKategoriResponse> searchIlan(@Body HashMap ilanAra);
+
+    @POST("index.php?func=Users&file=Bildirimlerim&ReturnType=1")
+    Call<BaseResponse> getBildirimler(@Body HashMap token);
 
 
 

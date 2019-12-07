@@ -59,18 +59,11 @@ public class SplashActivity extends AppCompatActivity {
 
         ilces = new ArrayList<>();
 
-        setNotification(ctx);
+        setNotification();
 
 
         if(isTesting)
         {
-            /*ıseAracFragment = new IseAracFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.fragSplash,ıseAracFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commitAllowingStateLoss();*/
-
             Intent test = new Intent(this , TestActivity.class);
             startActivity(test);
         }
@@ -88,10 +81,10 @@ public class SplashActivity extends AppCompatActivity {
     }
 
 
-    private void setNotification(Context ctx) {
+    private void setNotification() {
         //FirebaseMessaging.getInstance().subscribeToTopic("serviscepde-adnroid1-app");
 
-        FirebaseApp.initializeApp(ctx);
+        FirebaseApp.initializeApp(this);
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/serviscepde_android_app_new");
 
 

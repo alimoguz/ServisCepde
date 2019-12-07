@@ -48,7 +48,7 @@ public class SearchFragment extends Fragment {
     private TextView txtAra;
     private ImageView imgAra;
     private LinearLayout linFilter,linSirala;
-    private RecyclerView rvAramaIlanlar;
+    public static RecyclerView rvAramaIlanlar;
 
     private String userToken,searchText;
     private Context ctx;
