@@ -185,6 +185,8 @@
     <string name="İlanlarım">İlanlarım</string>
     <string name="KayıtlıAramalarım">Kayıtlı Aramalarım</string>
     <string name="BildirimGönder">Bildirim Gönder</string>
+    <string name="Sil">Sil</string>
+    <string name="Güncelle">Güncelle</string>
 
 
 </resources>

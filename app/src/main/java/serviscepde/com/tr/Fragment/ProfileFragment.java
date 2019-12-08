@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class ProfileFragment extends Fragment {
     private TextView txtUserName,txtPhoneNumber,txtProfiliDuzenle,txtCikisYap,txtIlanlarim,txtKayitliAramalar,txtBildirimGonder;
     private Context ctx;
     private String userToken;
+    IlanlarımFragment ilanlarimFragment;
 
     @Nullable
     @Override
@@ -52,6 +54,9 @@ public class ProfileFragment extends Fragment {
 
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
+
+
+        ilanlarimFragment = new IlanlarımFragment();
 
 
 
@@ -88,6 +93,8 @@ public class ProfileFragment extends Fragment {
                     txtPhoneNumber.setText(GSM);
                     String meType = userDetail.getString("MeType");
 
+                    String UserID = userDetail.getString("ID");
+
                     if(meType.equals("1"))
                     {
                         txtBildirimGonder.setVisibility(View.VISIBLE);
@@ -100,6 +107,22 @@ public class ProfileFragment extends Fragment {
                             sharedPref.edit().putString("Loggedin" , "0").apply();
                             Intent intent = new Intent( ctx , SplashActivity.class);
                             startActivity(intent);
+
+                        }
+                    });
+
+                    txtIlanlarim.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString("UserID" , UserID);
+
+                            ilanlarimFragment.setArguments(bundle);
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragMain , ilanlarimFragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
 
                         }
                     });

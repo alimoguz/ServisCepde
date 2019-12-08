@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@color/appColor">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_12ssp"
+                android:text="@string/İlanlarım"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_bold"
+                />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/txtIlanimSayisi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:fontFamily="@font/myriadpro_regular"
+                    android:textSize="@dimen/_10ssp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ilan bulundu"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:textColor="@color/colorWhite"
+                    android:fontFamily="@font/myriadpro_regular"
+                    android:textSize="@dimen/_10ssp"
+                    />
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvIlanlarim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp">
+
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

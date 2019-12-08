@@ -57,6 +57,9 @@ public interface ApiInterface {
     @POST("index.php?func=Users&file=UsersFindID&ReturnType=1")
     Call<BaseResponse> kullaniciBilgileri(@Body HashMap token);
 
+    @POST("index.php?func=ilanlar&file=List&ReturnType=1")
+    Call<BaseResponse> kullanicininIlanlari(@Body HashMap body);
+
 
 
 
