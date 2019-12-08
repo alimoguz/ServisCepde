@@ -3,16 +3,145 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Çok Yakında Hizmetinizde..."
+        android:layout_height="@dimen/_40sdp"
+        android:text="@string/Profil"
+        android:textColor="@color/colorWhite"
+        android:background="@color/appColor"
+        android:textSize="@dimen/_15ssp"
+        android:gravity="center"
+        />
+
+    <ImageView
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/icon_profile"
+        android:layout_marginTop="@dimen/_30sdp"
+        />
+
+    <TextView
+        android:id="@+id/txtUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alim Oğuz"
         android:textColor="@color/colorBlack"
-        android:textSize="@dimen/_25ssp"
+        android:fontFamily="@font/myriadpro_regular"
+        android:textSize="@dimen/_14ssp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_15sdp"
+        />
+
+    <TextView
+        android:id="@+id/txtPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0(554) 596 22 01"
+        android:textColor="@color/colorBlack"
+        android:fontFamily="@font/myriadpro_regular"
+        android:textSize="@dimen/_14ssp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_5sdp"
+        />
+
+    <TextView
+        android:id="@+id/txtProfiliDuzenle"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ProfiliDüzenle"
+        android:textColor="@color/colorYellow"
+        android:textSize="@dimen/_14ssp"
+        android:background="@drawable/background_edit_profile"
+        android:paddingStart="@dimen/_13sdp"
+        android:paddingEnd="@dimen/_13sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_15sdp"
+        />
+
+    <TextView
+        android:id="@+id/txtCikisYap"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ÇıkışYap"
+        android:textColor="@color/colorBlack"
+        android:fontFamily="@font/myriadpro_regular"
+        android:textSize="@dimen/_14ssp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_15sdp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtIlanlarim"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="@string/İlanlarım"
+            android:textColor="@color/colorBlack"
+            android:background="@drawable/background_gray"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            />
+
+        <View
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="0dp"/>
+
+        <TextView
+            android:id="@+id/txtKayitliAramalar"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="@string/KayıtlıAramalarım"
+            android:textColor="@color/colorBlack"
+            android:background="@drawable/background_gray"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            />
+
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/txtBildirimGonder"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="wrap_content"
         android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:text="@string/BildirimGönder"
+        android:textColor="@color/colorBlack"
+        android:background="@drawable/background_gray"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingEnd="@dimen/_15sdp"
         />
 
 </LinearLayout>

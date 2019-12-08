@@ -43,8 +43,7 @@
             android:name=".MainActivity"
             android:label="MainActivity"
             android:parentActivityName=".SplashActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen"
-            android:exported="true">
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="serviscepde.com.tr.SplashActivity" />

@@ -55,6 +55,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.3.2'
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    implementation 'ru.egslava:MaskedEditText:1.0.5'
+
+
+
 
 }
 

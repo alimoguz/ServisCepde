@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import br.com.sapereaude.maskedEditText.MaskedEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.MainActivity;
 
@@ -51,9 +52,10 @@ public class LoginFragment extends Fragment {
     View generalView;
 
     TextView txtKayitOl,txtGirisYap,txtUyeOlmadanDevam;
-    EditText edtSifre,edtCepTelefonu;
+    EditText edtSifre;
     ImageView imgBanner;
     RelativeLayout relSifremiUnuttum;
+    MaskedEditText edtCepTelefonu;
 
     String number,password;
     String token = "";
@@ -73,6 +75,8 @@ public class LoginFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.login_fragment , container , false);
 
         generalView = rootView;
+
+
 
         imgBanner = generalView.findViewById(R.id.imgBanner);
 
@@ -104,6 +108,11 @@ public class LoginFragment extends Fragment {
                 password = edtSifre.getText().toString();
 
 
+                Log.i("MaskedText" , edtCepTelefonu.getMask() + edtCepTelefonu.getRawText() + edtCepTelefonu.getText().toString());
+                Log.i("Number" , number);
+
+
+
                 if(number.isEmpty())
                 {
                     emailAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
@@ -126,6 +135,7 @@ public class LoginFragment extends Fragment {
                 hashMap1.put("Password" , password);
                 hashMap1.put("FirebaseToken" , token);
                 hashMap1.put("DeviceID" , deviceID);
+                hashMap1.put("DeviceType" , "1");
                 hashMap.put("param" , hashMap1);
 
                 Call<UserLoginResponse> userLoginResponseCall = App.getApiService().getLogin(hashMap);
@@ -143,8 +153,7 @@ public class LoginFragment extends Fragment {
 
                         String token = userLoginResponseDetail.getResult();
 
-                        SplashActivity.editor.putString("userToken" , token);
-                        SplashActivity.editor.apply();
+
 
 
 
@@ -163,6 +172,11 @@ public class LoginFragment extends Fragment {
 
                                 if (status == 200)
                                 {
+                                    String loggedIn = jsonObject.getJSONObject("OutPutMessage").getJSONObject("Data").getString("Loggedin");
+                                    Log.i("Loggedin" , loggedIn);
+                                    SplashActivity.editor.putString("userToken" , token);
+                                    SplashActivity.editor.putString("Loggedin" , loggedIn);
+                                    SplashActivity.editor.apply();
                                     Intent intent = new Intent(ctx , MainActivity.class);
                                     startActivity(intent);
                                 }
@@ -185,13 +199,6 @@ public class LoginFragment extends Fragment {
                                 invalidLogin.show();
                             }
 
-
-                            /*status = jsonObject.getJSONObject("OutPutMessage").getInt("Status");
-                            Log.i("JsonObject", " " + jsonObject.getJSONObject("OutPutMessage").getJSONObject("Data").getString("UserID"));
-                            Log.i("JsonObject", " " + jsonObject.getJSONObject("OutPutMessage").getString("SuccessMessage"));
-                            Log.i("JsonObject Status", " " + jsonObject.getJSONObject("OutPutMessage").getInt("Status"));
-                            Log.i("Token sonucu" , " "  + Jwts.parser().setSigningKey(TextCodec.BASE64.encode(App.key)).parseClaimsJws(token).getBody().get("result"));
-                            Log.i("Token sonucu" , " "  + Jwts.parser().setSigningKey(TextCodec.BASE64.encode(App.key)).parseClaimsJws(token).getBody());*/
 
                         } catch (JSONException e) {
                             e.printStackTrace();

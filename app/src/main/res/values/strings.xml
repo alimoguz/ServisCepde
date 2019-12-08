@@ -180,5 +180,11 @@
     <string name="FiltreYedekDurum">Durumu</string>
     <string name="FiltreSatıcı">Satıcı</string>
 
+    <string name="ProfiliDüzenle">Profili Düzenle</string>
+    <string name="ÇıkışYap">Çıkış Yap</string>
+    <string name="İlanlarım">İlanlarım</string>
+    <string name="KayıtlıAramalarım">Kayıtlı Aramalarım</string>
+    <string name="BildirimGönder">Bildirim Gönder</string>
+
 
 </resources>

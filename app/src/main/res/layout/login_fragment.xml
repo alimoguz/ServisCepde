@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mask="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:background="@color/appColor"
     android:layout_height="match_parent">
     
@@ -44,17 +47,20 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:fontFamily="@font/myriadpro_regular"/>
 
-        <EditText
+        <br.com.sapereaude.maskedEditText.MaskedEditText
             android:id="@+id/edtCepTelefonu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/CepTelefonu"
-            android:text="5065081651"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:maxLength="10"
-            android:inputType="number"
+            android:inputType="phone"
+            android:typeface="monospace"
+            mask:allowed_chars="1234567890"
+            mask:mask="0(5##) ### ## ##"
             android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"/>
+            android:textColorHint="@color/colorWhite"
+            app:keep_hint="true"
+            />
+
+
 
 
         <TextView
@@ -78,6 +84,10 @@
             android:textColor="@color/colorWhite"
             android:inputType="textPassword"
             android:textColorHint="@color/colorWhite"/>
+
+
+
+
 
 
         <TextView

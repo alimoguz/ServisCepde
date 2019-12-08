@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+import br.com.sapereaude.maskedEditText.MaskedEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.Models.City;
@@ -52,7 +53,8 @@ public class SignupFragment extends Fragment {
 
     String [] tür = {"Proje Yöneticisi" , "Şoför" , "Diğer"};
 
-    private  EditText edtKayitAd,edtKayitEmail,edtKayitTelefon,edtKayitSifre,edtKayitSifreTekrar,edtKayitSoyad;
+    private  EditText edtKayitAd,edtKayitEmail,edtKayitSifre,edtKayitSifreTekrar,edtKayitSoyad;
+    private MaskedEditText edtKayitTelefon;
     private TextView txtKayitOlSon;
 
     private  AutoCompleteTextView autoCompleteIl,autoCompleteIlce,autoCompleteKullaniciTuru;
@@ -65,9 +67,6 @@ public class SignupFragment extends Fragment {
     List<City> sehirler = new ArrayList<>();
     List<String > cityNames = new ArrayList<>();
     List<String> ilceler= new ArrayList<>();
-
-    JSONObject jsonObjectIl;
-    JSONObject jsonObjectIlce;
 
     int ilCount = 1;
     int ilçeCount = 1;
@@ -112,7 +111,7 @@ public class SignupFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                kullanıcıType = parent.getItemAtPosition(position).toString();
+                kullanıcıType = String.valueOf(position + 1);
             }
         });
 

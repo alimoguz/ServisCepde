@@ -39,6 +39,8 @@ public class SplashActivity extends AppCompatActivity {
     public static SharedPreferences sharedPref;
     public static SharedPreferences.Editor editor;
 
+    private String isLogged;
+
     List<Ilce> ilces;
     private Context ctx;
 
@@ -57,6 +59,25 @@ public class SplashActivity extends AppCompatActivity {
         sharedPref = getBaseContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
+        sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
+        isLogged = sharedPref.getString("Loggedin" , "0");
+
+        if(!isLogged.equals("0"))
+        {
+            Intent ıntentMain = new Intent(this , MainActivity.class);
+            startActivity(ıntentMain);
+        }
+
+        if(isLogged.equals("0"))
+        {
+            videoFragment = new VideoFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragSplash,videoFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+
         ilces = new ArrayList<>();
 
         setNotification();
@@ -68,16 +89,6 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(test);
         }
 
-        else
-        {
-            videoFragment = new VideoFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.fragSplash,videoFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commitAllowingStateLoss();
-
-        }
     }
 
 

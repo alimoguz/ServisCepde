@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import br.com.sapereaude.maskedEditText.MaskedEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.Models.ForgetPassword.ForgetResponse;
 import serviscepde.com.tr.Models.ForgetPassword.ForgetResponseDetail;
@@ -33,7 +34,7 @@ public class ForgetPasswordFragment extends Fragment {
 
     View generalView;
 
-    EditText edtNumara;
+    MaskedEditText edtNumara;
     TextView txtSifreSifirla;
 
     SweetAlertDialog alertNumara;
