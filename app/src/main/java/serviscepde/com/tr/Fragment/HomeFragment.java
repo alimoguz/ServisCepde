@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout linGuncel1,linGuncel2,linGuncel3;
     private ImageView imgIlanGuncel1Photo,imgIlanGuncel2Photo,imgIlanGuncel3Photo;
     private TextView txtIlanGuncel1Aciklama,txtIlanGuncel1Konum,txtIlanGuncel1Fiyat,txtIlanGuncel2Aciklama,txtIlanGuncel2Konum,txtIlanGuncel2Fiyat
-            ,txtIlanGuncel3Aciklama,txtIlanGuncel3Konum,txtIlanGuncel3Fiyat;
+            ,txtIlanGuncel3Aciklama,txtIlanGuncel3Konum,txtIlanGuncel3Fiyat,txtEnSon;
 
     private TextView txtTumIlanlariGor;
 
@@ -114,6 +114,7 @@ public class HomeFragment extends Fragment {
         txtIlanGuncel3Konum = generalView.findViewById(R.id.txtIlanGuncel3Konum);
         txtIlanGuncel3Fiyat = generalView.findViewById(R.id.txtIlanGuncel3Fiyat);
         txtTumIlanlariGor = generalView.findViewById(R.id.txtTumIlanlariGor);
+        txtEnSon = generalView.findViewById(R.id.txtEnSon);
 
 
 
@@ -570,27 +571,32 @@ public class HomeFragment extends Fragment {
 
                 try {
 
+                    String ilanSayisi = sonIlan.getJSONObject("OutPutMessage").getString("Total");
+
+
+                    if(ilanSayisi.equals("0"))
+                    {
+                        linSon.setVisibility(View.GONE);
+                        linSon2.setVisibility(View.GONE);
+                        linSon3.setVisibility(View.GONE);
+                        txtSonIlanlar.setVisibility(View.GONE);
+                        txtEnSon.setVisibility(View.GONE);
+                    }
+                    if(ilanSayisi.equals("1"))
+                    {
+                        linSon2.setVisibility(View.GONE);
+                        linSon3.setVisibility(View.GONE);
+                    }
+                    if(ilanSayisi.equals("2"))
+                    {
+                        linSon3.setVisibility(View.GONE);
+                    }
+
+
+
                     for(int k = 0 ; k < sonIlan.getJSONObject("OutPutMessage").getJSONArray("Data").length(); k++)
                     {
-
-
-                        if (sonIlan.getJSONObject("OutPutMessage").getJSONArray("Data").length() == 0)
-                        {
-                            linSon.setVisibility(View.GONE);
-                            linSon2.setVisibility(View.GONE);
-                            linSon3.setVisibility(View.GONE);
-                            txtSonIlanlar.setVisibility(View.GONE);
-                        }
-
-                        if (sonIlan.getJSONObject("OutPutMessage").getJSONArray("Data").length() == 1)
-                        {
-                            linSon2.setVisibility(View.GONE);
-                            linSon3.setVisibility(View.GONE);
-                        }
-                        if (sonIlan.getJSONObject("OutPutMessage").getJSONArray("Data").length() == 2)
-                        {
-                            linSon3.setVisibility(View.GONE);
-                        }
+                        Log.i("SonIncelenenIlan" , String.valueOf(sonIlan.getJSONObject("OutPutMessage").getJSONArray("Data").length()));
 
 
                         if (k == 0)

@@ -652,6 +652,11 @@ public class FiltreFragment extends Fragment {
         MinimumYaş;
         MaximumYaş;
 
+
+
+
+
+
         KiralıkAraç;
         Marka;
         Model;

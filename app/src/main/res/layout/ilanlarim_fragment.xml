@@ -41,6 +41,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/txtIlanBulundu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ilan bulundu"
@@ -64,7 +65,8 @@
         android:id="@+id/rvIlanlarim"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp">
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_15sdp">
 
 
 
