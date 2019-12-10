@@ -27,6 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
@@ -449,6 +450,7 @@ public class IlanDetayFragment extends Fragment {
                     if(ilanDetay.has("AracDurumu"))
                     {
                         AracDurumu = ilanDetay.getString("AracDurumu");
+                        AracDurumu = App.getAracDurumuWithID(AracDurumu);
                         Log.i("AracDurumu" , AracDurumu);
                     }
                     else
@@ -614,6 +616,14 @@ public class IlanDetayFragment extends Fragment {
                     if(ilanDetay.has("CikmaYedekParca"))
                     {
                         CikmaYedekParca = ilanDetay.getString("CikmaYedekParca");
+                        if(CikmaYedekParca.equals("1"))
+                        {
+                            CikmaYedekParca = "Evet";
+                        }
+                        if(CikmaYedekParca.equals("0"))
+                        {
+                            CikmaYedekParca = "Hayır";
+                        }
                         Log.i("CikmaYedekParca" , CikmaYedekParca);
                     }
                     else
@@ -635,7 +645,8 @@ public class IlanDetayFragment extends Fragment {
 
                     if(ilanDetay.has("AracOzellikleriText"))
                     {
-                        Ozellikler = ilanDetay.getString("AracOzellikleriText");
+                        String Ozellik = ilanDetay.getString("AracOzellikleri");
+                        Ozellikler =  ilanDetay.getString("AracOzellikleriText");
                         Log.i("Ozellikler" , Ozellikler);
                     }
                     else
@@ -850,6 +861,7 @@ public class IlanDetayFragment extends Fragment {
         linCikmaYedekParca.setVisibility(View.GONE);
         linYedekParcaDurumu.setVisibility(View.GONE);
         linBelgeler.setVisibility(View.GONE);
+        linSrc.setVisibility(View.GONE);
 
 
     }
@@ -1043,6 +1055,7 @@ public class IlanDetayFragment extends Fragment {
         linYedekParcaDurumu.setVisibility(View.GONE);
         linAracOzellikleri.setVisibility(View.GONE);
         linBelgeler.setVisibility(View.GONE);
+        linAltModel.setVisibility(View.GONE);
 
     }
 

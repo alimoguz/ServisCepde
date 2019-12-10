@@ -74,6 +74,7 @@ public class YedekParcaFragment extends Fragment {
     private String actvDurum;
 
     private SweetAlertDialog emptyDialog;
+    private String[] imageArray;
 
     private List<City> sehirler = new ArrayList<>();
     private List<String> cityNames = new ArrayList<>();
@@ -89,8 +90,6 @@ public class YedekParcaFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.yedek_parca_fragment, container, false);
-
-        photos = getArguments().getStringArrayList("photoList");
 
         generalView = rootView;
 
@@ -344,9 +343,17 @@ public class YedekParcaFragment extends Fragment {
                 aciklama = edtYedekParcaAciklama.getText().toString();
                 marka = edtYedekParcaMarka.getText().toString();
 
-                ArrayList<String> base64Photo = Utils.pathToBase64(photos);
-                imageString = Utils.imageToString(base64Photo);
-                imageString = Utils.trimmer(imageString);
+                if(photos.size() != 0)
+                {
+                    ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                    imageArray = new String[base64Photo.size()];
+
+                    for(int i = 0; i < base64Photo.size(); i++)
+                    {
+                        imageArray[i] = base64Photo.get(i);
+                    }
+
+                }
 
                 String s = "0";
 
@@ -366,7 +373,7 @@ public class YedekParcaFragment extends Fragment {
                 else
                 {
                     HashMap<String , Object> hashMap = new HashMap<>();
-                    HashMap<String , String> hashMap1 = new HashMap<>();
+                    HashMap<String , Object> hashMap1 = new HashMap<>();
 
                     hashMap1.put("Tipi" , "7");
                     hashMap1.put("Baslik" , baslik);
@@ -374,7 +381,7 @@ public class YedekParcaFragment extends Fragment {
                     hashMap1.put("ilanSemtleri" , townId);
                     hashMap1.put("ParcaMarkasi" , marka);
                     hashMap1.put("Ucret" , fiyat);
-                    hashMap1.put("file" , imageString);
+                    hashMap1.put("file" , imageArray);
                     hashMap1.put("ilanAciklamasi" , aciklama);
                     hashMap1.put("YedekParcaDurum" , actvDurum);
                     hashMap1.put("CikmaYedekParca" , s);
@@ -458,14 +465,20 @@ public class YedekParcaFragment extends Fragment {
             if(resultCode == 100){
                 Glide.with(ctx).load(imageList.get(0)).into(imgYedekParcaFirstPhoto);
                 imgYedekParcaFirstPhotoChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
             }
             else if(resultCode == 200){
                 Glide.with(ctx).load(imageList.get(0)).into(imgYedekParcaSecondPhoto);
                 imgYedekParcaSecondPhotoChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
             }
             else if(resultCode == 300){
                 Glide.with(ctx).load(imageList.get(0)).into(imgYedekParcaLastPhoto);
                 imgYedekParcaLastChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
             }
 
         }

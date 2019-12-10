@@ -69,6 +69,7 @@ public class SatilikAracFragment extends Fragment {
     private TextView txtSatilikAracGonder;
 
     private ArrayList<String> photos = new ArrayList<>();
+    private String []imageArray;
 
     private String baslik,fiyat,aciklama,yil,km,userToken,imagesString;
     private String actvMarka,actvModel,actvAltModel,actvMotorHacmi,actvMotorGucu,actvKapasite,actvKimden;
@@ -93,7 +94,6 @@ public class SatilikAracFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.satilik_arac_fragment, container, false);
 
-        photos = getArguments().getStringArrayList("photoList");
 
         generalView = rootView;
 
@@ -414,12 +414,22 @@ public class SatilikAracFragment extends Fragment {
 
                 else
                 {
-                    ArrayList<String> base64Photo = Utils.pathToBase64(photos);
-                    imagesString = Utils.imageToString(base64Photo);
-                    imagesString = Utils.trimmer(imagesString);
+
+                    if(photos.size() != 0)
+                    {
+                        ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                        imageArray = new String[base64Photo.size()];
+
+                        for(int i = 0; i < base64Photo.size(); i++)
+                        {
+                            imageArray[i] = base64Photo.get(i);
+                        }
+
+                    }
+
 
                     HashMap<String , Object> hashMap = new HashMap<>();
-                    HashMap<String , String> hashMap1 = new HashMap<>();
+                    HashMap<String , Object> hashMap1 = new HashMap<>();
 
                     hashMap1.put("Tipi" , "5");
                     hashMap1.put("Baslik" , baslik);
@@ -434,6 +444,7 @@ public class SatilikAracFragment extends Fragment {
                     hashMap1.put("MotorHacmi" , actvMotorHacmi);
                     hashMap1.put("MotorGucu" , actvMotorGucu);
                     hashMap1.put("AracKapasitesi" , actvKapasite);
+                    hashMap1.put("file" , imageArray);
                     hashMap1.put("Kimden" , actvKimden);
                     hashMap.put("Token" , userToken);
                     hashMap.put("param" , hashMap1);
@@ -468,20 +479,14 @@ public class SatilikAracFragment extends Fragment {
 
                                 }
 
-                                if(ekleResponse.getJSONObject("errorEmpty") != null)
-                                {
-
-                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorEmpty").toString());
-                                    ilanHata.show();
-                                }
-                                if(ekleResponse.getJSONObject("errorOther") !=null)
+                                else
                                 {
                                     ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorOther").toString());
+                                    ilanHata.setTitleText("Bir sorunla karşılaştık lütfen daha sonra tekrar deneyin");
                                     ilanHata.show();
-
                                 }
+
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -514,14 +519,20 @@ public class SatilikAracFragment extends Fragment {
             if(resultCode == 100){
                 Glide.with(ctx).load(imageList.get(0)).into(imgSatilikAracFirstPhoto);
                 imgSatilikAracFirstPhotoChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
             }
             else if(resultCode == 200){
                 Glide.with(ctx).load(imageList.get(0)).into(imgSatilikAracSecondPhoto);
                 imgSatilikAracSecondPhotoChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
             }
             else if(resultCode == 300){
                 Glide.with(ctx).load(imageList.get(0)).into(imgSatilikAracLastPhoto);
                 imgSatilikAracLastChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
             }
 
         }

@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
+import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
@@ -71,12 +72,13 @@ public class SoforeIsFragment extends Fragment {
 
     private ArrayList<String> photos = new ArrayList<>();
 
-    private String baslik,fiyat,aciklama,tecrube,serviseBaslamaSaati,yas,belgeler,imagesString;
+    private String baslik,fiyat,aciklama,tecrube,serviseBaslamaSaati,yas,belgeler;
     private String actvKapasite,actvEhliyet;
 
     private SweetAlertDialog emptyDialog;
 
     private String userToken;
+    private String [] imageArray;
 
     private Context ctx;
 
@@ -86,13 +88,15 @@ public class SoforeIsFragment extends Fragment {
     private String townId,baslamaTownId;
     private ArrayList<String> townNames , baslamaTownNames  = new ArrayList<>();
 
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.sofore_is_fragment, container, false);
 
-        photos = getArguments().getStringArrayList("photoList");
 
         generalView = rootView;
 
@@ -168,6 +172,15 @@ public class SoforeIsFragment extends Fragment {
             imgSoforeIsLastChange.setVisibility(View.INVISIBLE);
             imgSoforeIsSecondPhotoChange.setVisibility(View.INVISIBLE);
         }
+
+        linSoforeIsIptal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ctx , MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         relSoforeIsFirstPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -384,6 +397,7 @@ public class SoforeIsFragment extends Fragment {
         });
 
 
+
         edtSoforeIsServisBaslamaSaati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -421,14 +435,23 @@ public class SoforeIsFragment extends Fragment {
                         switchState = "1";
                     }
 
-                    ArrayList<String> base64Photo = Utils.pathToBase64(photos);
-                    imagesString = Utils.imageToString(base64Photo);
-                    imagesString = Utils.trimmer(imagesString);
+                    if(photos.size() != 0)
+                    {
+                        ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                        imageArray = new String[base64Photo.size()];
+
+                        for(int i = 0; i < base64Photo.size(); i++)
+                        {
+                            imageArray[i] = base64Photo.get(i);
+                        }
+
+                    }
+
                     actvKapasite = Utils.trimmer(actvKapasite);
                     actvEhliyet = Utils.trimmer(actvEhliyet);
 
                     HashMap<String , Object> hashMap = new HashMap<>();
-                    HashMap<String , String> hashMap1 = new HashMap<>();
+                    HashMap<String , Object> hashMap1 = new HashMap<>();
 
                     hashMap1.put("Tipi" , "4");
                     hashMap1.put("Baslik" , baslik);
@@ -440,7 +463,7 @@ public class SoforeIsFragment extends Fragment {
                     hashMap1.put("ServiseBaslamaSaati" , serviseBaslamaSaati);
                     hashMap1.put("Ucret" , fiyat);
                     hashMap1.put("ilanAciklamasi" , aciklama);
-                    hashMap1.put("file" , imagesString);
+                    hashMap1.put("file" , imageArray);
                     hashMap1.put("Tecrube" , tecrube);
                     hashMap1.put("Ehliyetiniz" , actvEhliyet);
                     hashMap1.put("Yasiniz" , yas);
@@ -481,20 +504,14 @@ public class SoforeIsFragment extends Fragment {
 
                                 }
 
-                                if(ekleResponse.getJSONObject("errorEmpty") != null)
-                                {
 
-                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorEmpty").toString());
-                                    ilanHata.show();
-                                }
-                                if(ekleResponse.getJSONObject("errorOther") !=null)
+                                else
                                 {
                                     ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorOther").toString());
+                                    ilanHata.setTitleText("Bir sorunla karşılaştık lütfen daha sonra tekrar deneyin");
                                     ilanHata.show();
-
                                 }
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -515,20 +532,35 @@ public class SoforeIsFragment extends Fragment {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == 6614){
+            ArrayList<String> imageList = data.getStringArrayListExtra("imageList");
+            if(resultCode == 100){
+                Glide.with(ctx).load(imageList.get(0)).into(imgSoforeIsFirstPhoto);
+                imgSoforeIsFirstPhotoChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
+            }
+            else if(resultCode == 200){
+                Glide.with(ctx).load(imageList.get(0)).into(imgSoforeIsSecondPhoto);
+                imgSoforeIsSecondPhotoChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
+            }
+            else if(resultCode == 300){
+                Glide.with(ctx).load(imageList.get(0)).into(imgSoforeIsLastPhoto);
+                imgSoforeIsLastChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
+            }
+
+        }
+
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

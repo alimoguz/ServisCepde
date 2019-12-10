@@ -30,7 +30,25 @@ public class DownloadClass {
     }
 
     private static void downloadMarkaModel() {
-        MarkaModel temp = new MarkaModel("1", "Askam", "0");
+
+        MarkaModel a = new MarkaModel("1" , "BMC" , "0");
+        MarkaModel a1 = new MarkaModel("3" , "Citroen" , "0");
+        MarkaModel a2 = new MarkaModel("5" , "Diğer Markalar" , "0");
+        MarkaModel a3 = new MarkaModel("7" , "Farketmez" , "0");
+        MarkaModel a4 = new MarkaModel("8" , "Fiat" , "0");
+
+        MarkaModel a5 = new MarkaModel("2" , "Levend" , "1");
+        MarkaModel a6 = new MarkaModel("11" , "Levend 2" , "1");
+
+        MarkaModel a7 = new MarkaModel("4" , "Jumper" , "3");
+
+        MarkaModel a8 = new MarkaModel("6" , "Tüm Modeller" , "5");
+
+        MarkaModel a9 = new MarkaModel("9" , "Diğer Modeller" , "8");
+        MarkaModel a10 = new MarkaModel("10" , "Ducato" , "8");
+
+
+        /*MarkaModel temp = new MarkaModel("1", "Askam", "0");
         MarkaModel temp1 = new MarkaModel("2", "Fargo Fora", "1");
         MarkaModel temp2 = new MarkaModel("3", "BMC", "0");
         MarkaModel temp3 = new MarkaModel("4", "Megastar", "3");
@@ -39,18 +57,20 @@ public class DownloadClass {
         MarkaModel temp6 = new MarkaModel("7", "Chevrolet", "0");
         MarkaModel temp7 = new MarkaModel("8", "Express", "7");
         MarkaModel temp8 = new MarkaModel("9", "G Serisi", "7");
-        MarkaModel temp9 = new MarkaModel("10", "Venture", "7");
+        MarkaModel temp9 = new MarkaModel("10", "Venture", "7");*/
 
-        markaModels.add(temp);
-        markaModels.add(temp1);
-        markaModels.add(temp2);
-        markaModels.add(temp3);
-        markaModels.add(temp4);
-        markaModels.add(temp5);
-        markaModels.add(temp6);
-        markaModels.add(temp7);
-        markaModels.add(temp8);
-        markaModels.add(temp9);
+        markaModels.add(a);
+        markaModels.add(a1);
+        markaModels.add(a2);
+        markaModels.add(a3);
+        markaModels.add(a4);
+        markaModels.add(a5);
+        markaModels.add(a6);
+        markaModels.add(a7);
+        markaModels.add(a8);
+        markaModels.add(a9);
+        markaModels.add(a10);
+
 
     }
 

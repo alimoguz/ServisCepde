@@ -161,6 +161,8 @@ public class IlanlarımAdapter extends RecyclerView.Adapter<IlanlarımAdapter.Vi
 
                     Log.i(TAG, "onClick: Sile Tıklandı");
 
+                    ID = data.getID();
+
                     silmeOnay = new SweetAlertDialog(itemView.getContext() , SweetAlertDialog.WARNING_TYPE);
                     silmeOnay.setTitleText("İlanı silmek istediğinize emin misiniz ?");
                     silmeOnay.setConfirmButton("Evet", new SweetAlertDialog.OnSweetClickListener() {

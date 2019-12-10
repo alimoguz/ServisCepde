@@ -63,6 +63,9 @@ public interface ApiInterface {
     @POST("index.php?func=ilanlar&file=Delete&ReturnType=1")
     Call<BaseResponse> ilanSil (@Body HashMap body);
 
+    @POST("index.php?func=Genel&file=AracMarkaModelList&ReturnType=1")
+    Call<BaseResponse> getMarkaModel();
+
 
 
 

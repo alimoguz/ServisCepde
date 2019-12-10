@@ -174,6 +174,21 @@ public class App extends Application {
 
         return  aracDurumu;
     }
+    public static String getAracDurumuWithID (String durumID)
+    {
+        if(durumID.equals("1"))
+        {
+            return "Aracım Tamamen Boşta";
+        }
+        if(durumID.equals("2"))
+        {
+            return "Aracıma Ek İş Arıyorum";
+        }
+
+        return "";
+
+
+    }
 
 
 

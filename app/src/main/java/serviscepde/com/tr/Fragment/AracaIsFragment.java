@@ -82,7 +82,7 @@ public class AracaIsFragment extends Fragment {
     private Context ctx;
     private SweetAlertDialog emptyDialog;
 
-    private String switchStates = "";
+    private String switchStates;
     private List<String> aracDurumu = new ArrayList<>();
 
     private final static Calendar takvim = Calendar.getInstance();
@@ -99,6 +99,7 @@ public class AracaIsFragment extends Fragment {
 
     private String cityId,baslamaCityId;
     private String townId,baslamaTownId;
+    private String [] imageArray;
 
 
     @Nullable
@@ -107,7 +108,6 @@ public class AracaIsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.araca_is_fragment, container, false);
 
-        photos = getArguments().getStringArrayList("photoList");
 
         generalView = rootView;
 
@@ -503,7 +503,7 @@ public class AracaIsFragment extends Fragment {
 
                 if(baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || tecrube.isEmpty() ||
                         plaka.isEmpty() || referans.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvMarka.isEmpty() ||
-                        actvModel.isEmpty() || actvKapasite.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || actvAracDurumu.isEmpty())
+                        actvKapasite.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || actvAracDurumu.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -515,41 +515,51 @@ public class AracaIsFragment extends Fragment {
                     Log.i("YouMadeIt" , "Here");
                     if(switchAracaIsOkulTasiti.isChecked())
                     {
-                        switchStates = "1,";
+                        switchStates = "1|";
                     }
                     if(switchAracaIsTurizmPaketi.isChecked())
                     {
-                        switchStates = switchStates.concat("2,");
+                        switchStates = switchStates.concat("2|");
                     }
                     if(switchAracaIsKlima.isChecked())
                     {
-                        switchStates = switchStates.concat("3,");
+                        switchStates = switchStates.concat("3|");
                     }
                     if(switchAracaIsDeriDoseme.isChecked())
                     {
-                        switchStates = switchStates.concat("4,");
+                        switchStates = switchStates.concat("4|");
                     }
                     if(switchAracaIsTribunTavan.isChecked())
                     {
-                        switchStates = switchStates.concat("5,");
+                        switchStates = switchStates.concat("5|");
                     }
                     if(switchAracaIsYatarKoltuk.isChecked())
                     {
                         switchStates = switchStates.concat("6");
                     }
 
-                    switchStates = Utils.trimmer(switchStates);
+                    if(switchStates != null)
+                    {
+                        switchStates = Utils.SwitchTrimmer(switchStates);
+                    }
 
-                    ArrayList<String> base64Photo = Utils.pathToBase64(photos);
-                    imagesString = Utils.imageToString(base64Photo);
-                    imagesString = Utils.trimmer(imagesString);
+                    if(photos.size() != 0)
+                    {
+                        ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                        imageArray = new String[base64Photo.size()];
+
+                        for(int i = 0; i < base64Photo.size(); i++)
+                        {
+                            imageArray[i] = base64Photo.get(i);
+                        }
+
+                    }
 
 
-                    Log.i("İmages" , imagesString);
                     Log.i("SwitchStates" , switchStates);
 
                     HashMap<String , Object> hashMap = new HashMap<>();
-                    HashMap<String , String> hashMap1 = new HashMap<>();
+                    HashMap<String , Object> hashMap1 = new HashMap<>();
 
                     hashMap1.put("Tipi" , "1");
                     hashMap1.put("Baslik" , baslik);
@@ -568,7 +578,7 @@ public class AracaIsFragment extends Fragment {
                     hashMap1.put("CalisilacakGunSayisi" , gunSayisi);
                     hashMap1.put("Ucret" , fiyat);
                     hashMap1.put("ilanAciklamasi" , aciklama);
-                    hashMap1.put("file" , imagesString);
+                    hashMap1.put("file" , imageArray);
                     hashMap1.put("Tecrube" , tecrube);
                     hashMap1.put("Plaka" , plaka);
                     hashMap1.put("Referanslar" , referans);
@@ -606,23 +616,16 @@ public class AracaIsFragment extends Fragment {
                                     ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                     ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
                                     ilanOnay.show();
-
                                 }
 
-                                if(ekleResponse.getJSONObject("errorEmpty") != null)
-                                {
-
-                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorEmpty").toString());
-                                    ilanHata.show();
-                                }
-                                if(ekleResponse.getJSONObject("errorOther") !=null)
+                                else
                                 {
                                     ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorOther").toString());
+                                    ilanHata.setTitleText("Bir hata oluştu lütfen daha sonra tekrar deneyin");
                                     ilanHata.show();
-
                                 }
+
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -664,14 +667,19 @@ public class AracaIsFragment extends Fragment {
             if(resultCode == 100){
                 Glide.with(ctx).load(imageList.get(0)).into(imgAracaIsFirstPhoto);
                 imgAracaIsFirstPhotoChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
             }
             else if(resultCode == 200){
                 Glide.with(ctx).load(imageList.get(0)).into(imgAracaIsSecondPhoto);
                 imgAracaIsSecondPhotoChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
             }
             else if(resultCode == 300){
                 Glide.with(ctx).load(imageList.get(0)).into(imgAracaIsLastPhoto);
                 imgAracaIsLastChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
             }
 
         }

@@ -175,6 +175,15 @@ public class Utils {
         return  trim;
     }
 
+    public static String SwitchTrimmer(String trim)
+    {
+        if (trim != null && trim.substring(trim.length() - 1).equals("|"))
+        {
+            trim = trim.substring(0 , trim.length() - 1);
+        }
+        return  trim;
+    }
+
 
     public static String imageToString(ArrayList<String> photos)
     {

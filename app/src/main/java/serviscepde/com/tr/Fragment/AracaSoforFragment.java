@@ -69,12 +69,11 @@ public class AracaSoforFragment extends Fragment {
     private String actvKapasite;
     private Context ctx;
 
-    private List<City> tmpCity = new ArrayList<>();
-    private List<String> sehirListesi = new ArrayList<>();
 
     private SweetAlertDialog emptyDialog;
 
     private String userToken;
+    private String [] imageArray;
 
     private List<City> sehirler = new ArrayList<>();
     private List<String> cityNames = new ArrayList<>();
@@ -88,7 +87,6 @@ public class AracaSoforFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.araca_sofor_fragment, container, false);
 
-        photos = getArguments().getStringArrayList("photoList");
 
         generalView = rootView;
 
@@ -449,14 +447,21 @@ public class AracaSoforFragment extends Fragment {
 
                else
                {
-                   ArrayList<String> base64Photo = Utils.pathToBase64(photos);
-                   imagesString = Utils.imageToString(base64Photo);
-                   imagesString = Utils.trimmer(imagesString);
 
-                   Log.i("İmages" , imagesString);
+                   if(photos.size() != 0)
+                   {
+                       ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                       imageArray = new String[base64Photo.size()];
+
+                       for(int i = 0; i < base64Photo.size(); i++)
+                       {
+                           imageArray[i] = base64Photo.get(i);
+                       }
+                   }
+
 
                    HashMap<String , Object> hashMap = new HashMap<>();
-                   HashMap<String , String> hashMap1 = new HashMap<>();
+                   HashMap<String , Object> hashMap1 = new HashMap<>();
 
                    hashMap1.put("Tipi" , "2");
                    hashMap1.put("Baslik" , baslik);
@@ -472,7 +477,7 @@ public class AracaSoforFragment extends Fragment {
                    hashMap1.put("CalisilacakGunSayisi" , gun);
                    hashMap1.put("Ucret" , fiyat);
                    hashMap1.put("ilanAciklamasi" , aciklama);
-                   hashMap1.put("file" , imagesString);
+                   hashMap1.put("file" , imageArray);
                    hashMap1.put("Tecrube" , tecrube);
                    hashMap1.put("ServisBitisCity" , bitisCityId);
                    hashMap1.put("ServisBitisSemtleri" , bitisTownId);
@@ -509,18 +514,13 @@ public class AracaSoforFragment extends Fragment {
                                    ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                    ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
                                    ilanOnay.show();
+
                                }
 
-                               if(ekleResponse.getJSONObject("errorEmpty") != null)
+                               else
                                {
                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                   ilanHata.setTitleText(ekleResponse.getJSONObject("errorEmpty").toString());
-                                   ilanHata.show();
-                               }
-                               if(ekleResponse.getJSONObject("errorOther") !=null)
-                               {
-                                   ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                   ilanHata.setTitleText(ekleResponse.getJSONObject("errorOther").toString());
+                                   ilanHata.setTitleText("Bir hata oluştu lütfen daha sonra tekrar deneyin");
                                    ilanHata.show();
                                }
                            } catch (JSONException e) {
@@ -549,14 +549,17 @@ public class AracaSoforFragment extends Fragment {
             if(resultCode == 100){
                 Glide.with(ctx).load(imageList.get(0)).into(imgAracaSoforFirstPhoto);
                 imgAracaSoforFirstPhotoChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
             }
             else if(resultCode == 200){
                 Glide.with(ctx).load(imageList.get(0)).into(imgAracaSoforSecondPhoto);
                 imgAracaSoforSecondPhotoChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
             }
             else if(resultCode == 300){
                 Glide.with(ctx).load(imageList.get(0)).into(imgAracaSoforLastPhoto);
                 imgAracaSoforLastChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
             }
 
         }

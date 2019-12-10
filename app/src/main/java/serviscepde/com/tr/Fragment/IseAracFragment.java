@@ -41,6 +41,7 @@ import serviscepde.com.tr.R;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -80,9 +81,10 @@ public class IseAracFragment extends Fragment {
     private ArrayList<String> photos = new ArrayList<>();
 
     public  Context ctx;
+    private String [] imageArray;
 
-    private String switchStates = "";
-    private String baslik,fiyat,aciklama,yil,servisBaslamaSaati,servisBitisSaati,firmaGirisSaati,firmaCikisSaati,toplamKM,gunSayisi, imageString;
+    private String switchStates;
+    private String baslik,fiyat,aciklama,yil,servisBaslamaSaati,servisBitisSaati,firmaGirisSaati,firmaCikisSaati,toplamKM,gunSayisi, imageString = null;
     private String actvIseAracMarka,actvIseAracModel,actvIseAracKapasite;
 
     private SweetAlertDialog emptyDialog;
@@ -110,9 +112,6 @@ public class IseAracFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.ise_arac_fragment, container, false);
 
-        photos = getArguments().getStringArrayList("photoList");
-
-        Log.i("Photos" ," " + photos.size() + "photosPath" + photos.toString());
 
         generalView = rootView;
         act = getActivity();
@@ -545,6 +544,7 @@ public class IseAracFragment extends Fragment {
                 toplamKM = edtIseAracToplamKM.getText().toString();
                 gunSayisi = edtIseAracCalisilacakGunSayisi.getText().toString();
 
+
                 if(switchIseAracOkulTasiti.isChecked())
                 {
                     switchStates = "1|";
@@ -570,24 +570,29 @@ public class IseAracFragment extends Fragment {
                     switchStates = switchStates.concat("6");
                 }
 
-                switchStates = Utils.trimmer(switchStates);
-
-                ArrayList<String> base64Photo = Utils.pathToBase64(photos);
-                imageString = Utils.imageToString(base64Photo);
-                imageString = Utils.trimmer(imageString);
-
-
+                if(switchStates != null)
+                {
+                    switchStates = Utils.SwitchTrimmer(switchStates);
+                    Log.i("SwitchStates" ,switchStates);
+                }
 
 
+                if(photos.size() != 0)
+                {
+                    ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                    imageArray = new String[base64Photo.size()];
 
+                    for(int i = 0; i < base64Photo.size(); i++)
+                    {
+                        imageArray[i] = base64Photo.get(i);
+                    }
 
-
-                Log.i("SwitchStates" ,switchStates);
+                }
 
 
                 if(baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty()
                         || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() || firmaCikisSaati.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() ||
-                        cityId.isEmpty() || townId.isEmpty() || actvIseAracKapasite.isEmpty() || actvIseAracMarka.isEmpty() || actvIseAracModel.isEmpty()
+                        cityId.isEmpty() || townId.isEmpty() || actvIseAracKapasite.isEmpty() || actvIseAracMarka.isEmpty()
                         || baslamaCityId.isEmpty() || bitisTownId.isEmpty() || bitisCityId.isEmpty() || baslamaTownId.isEmpty())
                 {
 
@@ -600,7 +605,7 @@ public class IseAracFragment extends Fragment {
                 else
                 {
                     HashMap<String , Object> hashMap = new HashMap<>();
-                    HashMap<String , String> hashMap1 = new HashMap<>();
+                    HashMap<String , Object> hashMap1 = new HashMap<>();
 
                     hashMap1.put("Tipi" , "3");
                     hashMap1.put("Baslik" , baslik);
@@ -614,7 +619,7 @@ public class IseAracFragment extends Fragment {
                     hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
                     hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
                     hashMap1.put("ServiseBaslamaSaati" , servisBaslamaSaati);
-                    hashMap1.put("FirmayaGiriSaati" , firmaGirisSaati);
+                    hashMap1.put("FirmayaGirisSaati" , firmaGirisSaati);
                     hashMap1.put("FirmadanCikisSaati" , firmaCikisSaati);
                     hashMap1.put("ServisBitisSaati" , servisBitisSaati);
                     hashMap1.put("ServisBitisCity" , bitisCityId);
@@ -623,7 +628,7 @@ public class IseAracFragment extends Fragment {
                     hashMap1.put("CalisilacakGunSayisi" , gunSayisi);
                     hashMap1.put("Ucret" , fiyat);
                     hashMap1.put("ilanAciklamasi" , aciklama);
-                    hashMap1.put("file" , imageString);
+                    hashMap1.put("file" , imageArray);
 
                     hashMap.put("Token" , userToken);
                     hashMap.put("param" , hashMap1);
@@ -652,20 +657,13 @@ public class IseAracFragment extends Fragment {
                                     ilanOnay.show();
                                 }
 
-                                if(ekleResponse.getJSONObject("errorEmpty") != null)
-                                {
-
-                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorEmpty").toString());
-                                    ilanHata.show();
-                                }
-                                if(ekleResponse.getJSONObject("errorOther") !=null)
+                                else
                                 {
                                     ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorOther").toString());
+                                    ilanHata.setTitleText("Bir hata oluştu lütfen daha sonra tekrar deneyin");
                                     ilanHata.show();
-
                                 }
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -707,14 +705,19 @@ public class IseAracFragment extends Fragment {
             if(resultCode == 100){
                 Glide.with(ctx).load(imageList.get(0)).into(imgIseAracFirstPhoto);
                 imgIseAracFirstPhotoChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
             }
             else if(resultCode == 200){
                 Glide.with(ctx).load(imageList.get(0)).into(imgIseAracSecondPhoto);
                 imgIseAracSecondPhotoChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
             }
             else if(resultCode == 300){
                 Glide.with(ctx).load(imageList.get(0)).into(imgIseAracLastPhoto);
                 imgIseAracFirstLastChange.setVisibility(View.INVISIBLE);
+                photos.add(imageList.get(0));
+
             }
 
         }
