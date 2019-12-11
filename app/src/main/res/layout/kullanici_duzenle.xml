@@ -249,15 +249,6 @@
                 android:inputType="textPassword"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ŞifreTekrar"
-                android:textColor="@color/colorWhite"
-                android:fontFamily="@font/myriadpro_regular"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:textSize="@dimen/_13ssp"
-                />
 
 
 

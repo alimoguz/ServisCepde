@@ -69,6 +69,9 @@ public interface ApiInterface {
     @POST("index.php?func=Users&file=UsersEdit&ReturnType=1")
     Call<BaseResponse> kullaniciDuzenle(@Body HashMap body);
 
+    @POST("index.php?func=SendNotification&file=Add&ReturnType=1")
+    Call<BaseResponse> bildirimGonder(@Body HashMap body);
+
 
 
 

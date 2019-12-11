@@ -189,6 +189,14 @@
     <string name="Güncelle">Güncelle</string>
     <string name="KullanıcıDüzenle">Düzenle</string>
     <string name="Kaydet">Kaydet</string>
+    <string name="BildirimGonder">Bildirim Gönder</string>
+    <string name="İlSeç">İl seçiniz</string>
+    <string name="BildirimBaşlık">Bildirim Başlığı*</string>
+    <string name="BildirimMesaj">Bildirim Mesajı*</string>
+    <string name="BildirimInfo1">*Bildiriminiz seçtiğiniz ildeki şoforlere iletilir</string>
+    <string name="BildirimInfo2">*Uygunsuz bildirimler reddedilir ve hesabınız silinebilir</string>
+    <string name="BildirimInfo3">*Kayıtlı telefon numaranız, bildirim gönderilen şoforlerle paylaşılır</string>
+    <string name="Gönder">Gönder</string>
 
 
 </resources>

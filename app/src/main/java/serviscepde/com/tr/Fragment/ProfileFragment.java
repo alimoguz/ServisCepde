@@ -41,6 +41,7 @@ public class ProfileFragment extends Fragment {
     private String userToken;
     private IlanlarımFragment ilanlarimFragment;
     private KullanıcıDüzenleFragment kullaniciDuzenleFragment;
+    private BildirimGonderFragment bildirimGonderFragment;
 
     @Nullable
     @Override
@@ -52,6 +53,7 @@ public class ProfileFragment extends Fragment {
         ctx = generalView.getContext();
 
         MainActivity.relHeader.setVisibility(View.GONE);
+        MainActivity.bottomNav.setVisibility(View.VISIBLE);
 
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
@@ -59,6 +61,7 @@ public class ProfileFragment extends Fragment {
 
         ilanlarimFragment = new IlanlarımFragment();
         kullaniciDuzenleFragment = new KullanıcıDüzenleFragment();
+        bildirimGonderFragment = new BildirimGonderFragment();
 
 
 
@@ -75,10 +78,16 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragMain , kullaniciDuzenleFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                loadFragment(kullaniciDuzenleFragment);
+
+            }
+        });
+
+        txtBildirimGonder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                loadFragment(bildirimGonderFragment);
 
             }
         });
@@ -157,12 +166,16 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
-
-
-
-
-
         return rootView;
+    }
+
+    private void loadFragment(Fragment fragment)
+    {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragMain , fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+
     }
 }

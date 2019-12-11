@@ -17,6 +17,7 @@ import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 import com.esafirm.imagepicker.model.Image;
 import serviscepde.com.tr.AddingActivity;
+import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.R;
 
 import java.util.ArrayList;
@@ -43,6 +44,8 @@ public class AddFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.add_fragment, container, false);
+
+        MainActivity.bottomNav.setVisibility(View.VISIBLE);
 
         generalView = rootView;
 

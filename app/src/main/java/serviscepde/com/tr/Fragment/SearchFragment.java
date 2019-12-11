@@ -63,6 +63,8 @@ public class SearchFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.search_fragment, container, false);
 
+        MainActivity.bottomNav.setVisibility(View.VISIBLE);
+
         generalView = rootView;
         ctx = generalView.getContext();
 

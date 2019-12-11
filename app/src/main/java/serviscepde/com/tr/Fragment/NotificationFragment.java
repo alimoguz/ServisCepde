@@ -58,6 +58,7 @@ public class NotificationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.notification_fragment, container, false);
+        MainActivity.bottomNav.setVisibility(View.VISIBLE);
 
         generalView = rootView;
         ctx = generalView.getContext();
