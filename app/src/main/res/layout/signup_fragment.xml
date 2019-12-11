@@ -28,12 +28,61 @@
             android:paddingEnd="@dimen/_10sdp"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/colorWhite"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/RegisterInfo1"
+                    android:fontFamily="@font/myriadpro_regular"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_12ssp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/RegisterInfo2"
+                    android:fontFamily="@font/myriadpro_regular"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:textSize="@dimen/_12ssp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/RegisterInfo3"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:fontFamily="@font/myriadpro_regular"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_12ssp"
+                    />
+
+
+
+
+
+            </LinearLayout>
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Kullanıcı Türü"
                 android:fontFamily="@font/myriadpro_regular"
                 android:textColor="@color/colorWhite"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:textSize="@dimen/_13ssp"
                 />
 

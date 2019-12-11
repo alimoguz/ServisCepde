@@ -39,7 +39,7 @@ public class VideoFragment extends Fragment implements MediaPlayer.OnCompletionL
         videoOpening = generalView.findViewById(R.id.videoOpening);
         context = generalView.getContext();
 
-        String path = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.intro_video;
+        String path = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.serviscepde_splash;
 
         Log.i("Package Name" , getActivity().getPackageName());
 

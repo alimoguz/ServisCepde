@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class HomeFragment extends Fragment {
     View generalView;
 
     private ImageView imgFind;
-    SearchFragment searchFragment;
+    private SearchFragment searchFragment;
     private IlanKategoriFragment ilanKategoriFragment;
     private IlanGuncelFragment ilanGuncelFragment;
     private IlanDetayFragment ilanDetayFragment;
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment {
     private ImageView imgIlanGuncel1Photo,imgIlanGuncel2Photo,imgIlanGuncel3Photo;
     private TextView txtIlanGuncel1Aciklama,txtIlanGuncel1Konum,txtIlanGuncel1Fiyat,txtIlanGuncel2Aciklama,txtIlanGuncel2Konum,txtIlanGuncel2Fiyat
             ,txtIlanGuncel3Aciklama,txtIlanGuncel3Konum,txtIlanGuncel3Fiyat,txtEnSon;
+    private EditText edtSearchIlan;
 
     private TextView txtTumIlanlariGor;
 
@@ -115,6 +117,7 @@ public class HomeFragment extends Fragment {
         txtIlanGuncel3Fiyat = generalView.findViewById(R.id.txtIlanGuncel3Fiyat);
         txtTumIlanlariGor = generalView.findViewById(R.id.txtTumIlanlariGor);
         txtEnSon = generalView.findViewById(R.id.txtEnSon);
+        edtSearchIlan = generalView.findViewById(R.id.edtSearchIlan);
 
 
 
@@ -143,13 +146,32 @@ public class HomeFragment extends Fragment {
         ilanGuncelFragment = new IlanGuncelFragment();
         ilanDetayFragment = new IlanDetayFragment();
         ilanSonFragment = new IlanSonFragment();
+        searchFragment = new SearchFragment();
 
         Bundle categoryType = new Bundle();
+        Bundle search = new Bundle();
 
 
         imgFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String searchText = edtSearchIlan.getText().toString();
+
+
+
+                if(searchText.isEmpty())
+                {
+                    search.putString("SearchText" , "noValue");
+                    loadFragmentwithBundle(searchFragment , search);
+                    MainActivity.bottomNav.setSelectedItemId(R.id.nav_search);
+                }
+                if(!searchText.isEmpty())
+                {
+                    search.putString("SearchText" , searchText);
+                    loadFragmentwithBundle(searchFragment , search);
+                    MainActivity.bottomNav.setSelectedItemId(R.id.nav_search);
+                }
 
 
             }

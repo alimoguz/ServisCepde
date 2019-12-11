@@ -93,6 +93,9 @@ public class FiltreFragment extends Fragment {
         Log.i("userToken" ,userToken);
 
 
+
+
+
         imgType = generalView.findViewById(R.id.imgType);
         spinKategoriTip = generalView.findViewById(R.id.spinKategoriTip);
         linFiltreler = generalView.findViewById(R.id.linFiltreler);
@@ -547,6 +550,26 @@ public class FiltreFragment extends Fragment {
                 {
                     Log.i("maxTecrube" , maxTecrube);
                     hashMap1.put("TecrubeMax" , maxTecrube);
+                }
+                if(minKM != null)
+                {
+                    Log.i("MinKm" , minKM);
+                    hashMap1.put("ToplamKMMin" , minKM);
+                }
+                if(maxKM != null)
+                {
+                    Log.i("maxKM" , maxKM);
+                    hashMap1.put("ToplamKMMax" , maxKM);
+                }
+                if(minYas != null)
+                {
+                    Log.i("minYas" , minYas);
+                    hashMap1.put("YasinizMin" , minYas);
+                }
+                if(maxYas != null)
+                {
+                    Log.i("maxYas" , maxYas);
+                    hashMap1.put("YasinizMax" , maxYas);
                 }
                 if(acVitesTipi != null)
                 {

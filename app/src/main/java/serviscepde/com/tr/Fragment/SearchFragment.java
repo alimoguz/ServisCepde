@@ -64,6 +64,7 @@ public class SearchFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.search_fragment, container, false);
 
         MainActivity.bottomNav.setVisibility(View.VISIBLE);
+        MainActivity.relHeader.setVisibility(View.GONE);
 
         generalView = rootView;
         ctx = generalView.getContext();
@@ -77,11 +78,31 @@ public class SearchFragment extends Fragment {
 
         filtreFragment = new FiltreFragment();
 
-        MainActivity.relHeader.setVisibility(View.GONE);
+
 
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
         Log.i("userToken" ,userToken);
+
+
+        Bundle search = this.getArguments();
+
+        if(search != null)
+        {
+            String text = search.getString("SearchText");
+            Log.i("GelenText" , text);
+
+            if(text.isEmpty())
+            {
+                Log.i("SearchTextGelmedi" , text);
+            }
+            if(!text.isEmpty())
+            {
+                Log.i("SearchTextGeldi" , text );
+            }
+
+        }
+
 
 
         imgAra.setOnClickListener(new View.OnClickListener() {

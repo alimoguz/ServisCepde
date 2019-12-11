@@ -198,5 +198,9 @@
     <string name="BildirimInfo3">*Kayıtlı telefon numaranız, bildirim gönderilen şoforlerle paylaşılır</string>
     <string name="Gönder">Gönder</string>
 
+    <string name="RegisterInfo1">1) Kullanıcı türü bilgilendirme amaçlıdır.Proje sorumluları şoforlere acil iş bildiriminde bulunabilir</string>
+    <string name="RegisterInfo2">2) Şoforler proje sorumlularının bildirimlerini alarak kolayca iş bulabilirler</string>
+    <string name="RegisterInfo3">3) Bildirimler il ve ilçelere özel olacağı için il - ilçe seçmeniz bildirimleri almanız için yararlı olacaktır</string>
+
 
 </resources>

@@ -45,7 +45,7 @@ public class SignupFragment extends Fragment {
 
     View generalView;
 
-    private String [] kullaniciTur = {"Proje Yöneticisi" , "Şoför" , "Diğer"};
+    private String [] kullaniciTur = {"Proje Yöneticisi" , "Şoför" , "Araç Sahibi" , "Diğer"};
 
     private  EditText edtKayitAd,edtKayitEmail,edtKayitSifre,edtKayitSifreTekrar,edtKayitSoyad;
     private MaskedEditText edtKayitTelefon;

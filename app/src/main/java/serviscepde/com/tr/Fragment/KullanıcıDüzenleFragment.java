@@ -55,7 +55,7 @@ public class KullanıcıDüzenleFragment extends Fragment {
 
     private Context ctx;
     private String userToken;
-    private String [] kullaniciTur = {"Proje Yöneticisi" , "Şoför" , "Diğer"};
+    private String [] kullaniciTur = {"Proje Yöneticisi" , "Şoför" , "Araç Sahibi" , "Diğer"};
 
     private List<City> sehirler = new ArrayList<>();
     private List<String> cityNames = new ArrayList<>();
