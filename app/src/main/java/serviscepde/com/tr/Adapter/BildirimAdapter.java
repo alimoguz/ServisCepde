@@ -12,8 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import serviscepde.com.tr.App;
+import serviscepde.com.tr.Fragment.NotificationFragment;
 import serviscepde.com.tr.Models.Bildirim;
+import serviscepde.com.tr.Models.Response.BaseResponse;
 import serviscepde.com.tr.R;
 
 
@@ -22,10 +30,13 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
 
     private ArrayList<Bildirim> bildirimList;
     private int bildirimItemLayout;
+    private String userToken;
+    private SweetAlertDialog bildirimAlert;
 
-    public BildirimAdapter(int bildirimItemLayout , ArrayList<Bildirim> bildirimList) {
+    public BildirimAdapter(int bildirimItemLayout , ArrayList<Bildirim> bildirimList , String userToken) {
         this.bildirimList = bildirimList;
         this.bildirimItemLayout = bildirimItemLayout;
+        this.userToken = userToken;
     }
 
     @NonNull
@@ -87,6 +98,43 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
 
             txtBildirimBaslik.setText(bildirim.getTitle());
             txtBildirimMetin.setText(bildirim.getMessage());
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    HashMap<String , Object> hashMap = new HashMap<>();
+                    HashMap<String , String> hashMap1 = new HashMap<>();
+
+
+                    hashMap1.put("ID" , bildirim.getID());
+                    hashMap.put("param" , hashMap1);
+                    hashMap.put("Token" , userToken);
+
+                    Call<BaseResponse> call = App.getApiService().bildirimOku(hashMap);
+                    call.enqueue(new Callback<BaseResponse>() {
+                        @Override
+                        public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+
+                            bildirimAlert = new SweetAlertDialog(itemView.getContext() , SweetAlertDialog.NORMAL_TYPE);
+                            bildirimAlert.setTitleText(bildirim.getTitle());
+                            bildirimAlert.setContentText(bildirim.getMessage());
+                            bildirimAlert.show();
+                            NotificationFragment.bildirimAdapter.notifyDataSetChanged();
+
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+                        }
+                    });
+
+                }
+            });
 
 
 

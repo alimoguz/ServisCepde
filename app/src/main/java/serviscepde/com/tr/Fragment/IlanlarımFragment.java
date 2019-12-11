@@ -137,6 +137,7 @@ public class IlanlarımFragment extends Fragment {
                         }
 
                         IlanlarımAdapter adapter = new IlanlarımAdapter(R.layout.row_ilanlarim , ilanlar , userToken);
+                        adapter.notifyDataSetChanged();
                         rvIlanlarim.setLayoutManager(new LinearLayoutManager(ctx));
                         rvIlanlarim.setItemAnimator(new DefaultItemAnimator());
                         rvIlanlarim.setAdapter(adapter);

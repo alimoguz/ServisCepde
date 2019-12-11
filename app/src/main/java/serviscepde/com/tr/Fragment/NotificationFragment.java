@@ -45,11 +45,12 @@ public class NotificationFragment extends Fragment {
 
     View generalView;
     private TextView txtBildirimSayisi,txt;
-    private RecyclerView rvBildirimler;
+    public static RecyclerView rvBildirimler;
     private ImageView imgBildirimIcon;
     private Context ctx;
     private String userToken;
     private int count = 0;
+    public static BildirimAdapter bildirimAdapter;
 
     private ArrayList<Bildirim> bildirimList = new ArrayList<>();
 
@@ -130,10 +131,13 @@ public class NotificationFragment extends Fragment {
                             txtBildirimSayisi.setText(String.valueOf(count));
                         }
 
-                        BildirimAdapter bildirimAdapter = new BildirimAdapter(R.layout.row_notification , bildirimList);
+                        bildirimAdapter = new BildirimAdapter(R.layout.row_notification , bildirimList , userToken);
+                        bildirimAdapter.notifyDataSetChanged();
                         rvBildirimler.setLayoutManager(new LinearLayoutManager(ctx));
                         rvBildirimler.setItemAnimator(new DefaultItemAnimator());
                         rvBildirimler.setAdapter(bildirimAdapter);
+
+
 
                     }
 

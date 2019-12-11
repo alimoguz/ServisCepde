@@ -121,6 +121,7 @@ public class IlanGuncelFragment extends Fragment {
                     Log.i("Liste1" , String.valueOf(bilgiList.size()));
 
                     KategorIlanAdapter adapter = new KategorIlanAdapter(R.layout.row_ilan , bilgiList ,0);
+                    adapter.notifyDataSetChanged();
                     rvGuncelIlanlar.setLayoutManager(new LinearLayoutManager(ctx));
                     rvGuncelIlanlar.setItemAnimator(new DefaultItemAnimator());
                     rvGuncelIlanlar.setAdapter(adapter);

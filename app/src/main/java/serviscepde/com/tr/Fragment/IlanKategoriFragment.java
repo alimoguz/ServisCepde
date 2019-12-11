@@ -159,6 +159,7 @@ public class IlanKategoriFragment extends Fragment {
     {
 
         KategorIlanAdapter adapter = new KategorIlanAdapter(R.layout.row_ilan , bilgiList ,category);
+        adapter.notifyDataSetChanged();
         rvIlanlar.setLayoutManager(new LinearLayoutManager(ctx));
         rvIlanlar.setItemAnimator(new DefaultItemAnimator());
         rvIlanlar.setAdapter(adapter);

@@ -125,6 +125,7 @@ public class IlanSonFragment extends Fragment {
                     Log.i("Liste1" , String.valueOf(bilgiList.size()));
 
                     KategorIlanAdapter adapter = new KategorIlanAdapter(R.layout.row_ilan , bilgiList ,0);
+                    adapter.notifyDataSetChanged();
                     rvSonIlanlar.setLayoutManager(new LinearLayoutManager(ctx));
                     rvSonIlanlar.setItemAnimator(new DefaultItemAnimator());
                     rvSonIlanlar.setAdapter(adapter);
