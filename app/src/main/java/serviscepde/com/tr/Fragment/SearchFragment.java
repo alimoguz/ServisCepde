@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -50,11 +50,13 @@ public class SearchFragment extends Fragment {
     private LinearLayout linFilter,linSirala;
     public static RecyclerView rvAramaIlanlar;
 
-    private String userToken,searchText;
+    private String userToken,searchText, textFromHome;
+    private static String tmp;
     private Context ctx;
     private ArrayList<IlanOzetBilgi> bilgiList = new ArrayList<>();
 
-    FiltreFragment filtreFragment;
+    private FiltreFragment filtreFragment;
+
 
 
     @Nullable
@@ -79,29 +81,47 @@ public class SearchFragment extends Fragment {
         filtreFragment = new FiltreFragment();
 
 
-
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
         Log.i("userToken" ,userToken);
 
 
+        edtArama.setText(null);
+
         Bundle search = this.getArguments();
+
 
         if(search != null)
         {
-            String text = search.getString("SearchText");
-            Log.i("GelenText" , text);
+            textFromHome = search.getString("SearchText");
+            tmp = textFromHome;
+            Log.i("GelenText" , textFromHome);
 
-            if(text.isEmpty())
+            if(textFromHome.isEmpty())
             {
-                Log.i("SearchTextGelmedi" , text);
+                Log.i("SearchTextGelmedi" , textFromHome);
             }
-            if(!text.isEmpty())
+            if(!textFromHome.isEmpty())
             {
-                Log.i("SearchTextGeldi" , text );
+                Log.i("SearchTextGeldi" , textFromHome);
             }
 
         }
+
+        if(tmp != null)
+        {
+            if(tmp.equals("noValue"))
+            {
+
+            }
+            else{
+                edtArama.setText(tmp);
+            }
+
+        }
+
+
+
 
 
 
@@ -213,4 +233,6 @@ public class SearchFragment extends Fragment {
 
         return rootView;
     }
+
+
 }

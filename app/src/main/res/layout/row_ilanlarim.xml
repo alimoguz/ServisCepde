@@ -133,6 +133,7 @@
             android:layout_weight="1"
             android:text="@string/Güncelle"
             android:textSize="@dimen/_13ssp"
+            android:visibility="gone"
             android:gravity="center"
             android:textColor="@color/colorYellow"
             android:background="@drawable/background_edit_profile" />

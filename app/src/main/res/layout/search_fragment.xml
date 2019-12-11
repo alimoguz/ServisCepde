@@ -5,18 +5,20 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="@dimen/_45sdp"
         android:background="@color/appColor">
 
         <EditText
             android:id="@+id/edtArama"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_2sdp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_25sdp"
-            android:background="@color/colorWhite"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_50sdp"
-            android:visibility="gone"
+            android:layout_height="@dimen/_30sdp"
+            android:hint="@string/SearchHint"
+            android:background="@drawable/edittext_search"
              />
 
 
@@ -26,6 +28,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Arama"
             android:textSize="@dimen/_14ssp"
+            android:visibility="gone"
             android:textColor="@color/colorWhite"
             android:fontFamily="@font/myriadpro_regular"
             android:layout_centerInParent="true" />
