@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mask="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appColor">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/KullanıcıDüzenle"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_18ssp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_15sdp" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kullanıcı Türü"
+                android:fontFamily="@font/myriadpro_regular"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_13ssp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                app:hintTextColor="@color/colorWhite"
+                android:textColor="@color/colorWhite"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/aCDuzenleKullaniciTuru"
+                    android:editable="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/appColor"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Ad"
+                        android:textColor="@color/colorWhite"
+                        android:fontFamily="@font/myriadpro_regular"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textSize="@dimen/_13ssp"
+                        />
+
+                    <EditText
+                        android:id="@+id/edtDuzenleKayitAd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="0dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Soyad"
+                        android:textColor="@color/colorWhite"
+                        android:fontFamily="@font/myriadpro_regular"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textSize="@dimen/_13ssp"
+                        />
+
+                    <EditText
+                        android:id="@+id/edtDuzenleKayitSoyad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        />
+
+
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="İl"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_13ssp"
+                />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:background="@color/appColor"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteIlDuzenle"
+                    android:textColor="@color/colorWhite"
+                    android:layout_width="match_parent"
+                    android:background="@color/appColor"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:backgroundTint="@color/appColor"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="İlçe"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_13ssp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:background="@color/appColor"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteIlceDuzenle"
+                    android:background="@color/appColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:backgroundTint="@color/appColor"
+                    android:layout_marginTop="@dimen/_minus5sdp"
+                    android:textColor="@color/colorWhite" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Eposta"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_13ssp"
+                />
+
+            <EditText
+                android:id="@+id/edtKayitEmailDuzenle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/colorWhite"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CepTelefonu"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_13ssp"
+                />
+
+            <br.com.sapereaude.maskedEditText.MaskedEditText
+                android:id="@+id/edtKayitTelefonDuzenle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:typeface="monospace"
+                android:editable="false"
+                mask:allowed_chars="1234567890"
+                mask:mask="0(5##) ### ## ##"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                app:keep_hint="true"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Şifre"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_13ssp"
+                />
+
+            <EditText
+                android:id="@+id/edtKayitSifreDuzenle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:inputType="textPassword"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ŞifreTekrar"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textSize="@dimen/_13ssp"
+                />
+
+
+
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp" />
+
+
+
+
+            <TextView
+                android:id="@+id/txtDuzenle"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:text="@string/Kaydet"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/myriadpro_regular"
+                android:textSize="@dimen/_14ssp"
+                android:gravity="center"
+                android:background="@drawable/background_login"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                />
+
+
+
+
+        </LinearLayout>
+
+
+
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>

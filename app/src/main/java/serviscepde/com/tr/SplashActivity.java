@@ -50,6 +50,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
 
+
+        /*throw new RuntimeException("Crash");*/
+
+
         DownloadClass.downloadAllVariables();
 
         fragSplash = findViewById(R.id.fragSplash);
@@ -64,8 +68,8 @@ public class SplashActivity extends AppCompatActivity {
 
         if(!isLogged.equals("0"))
         {
-            Intent ıntentMain = new Intent(this , MainActivity.class);
-            startActivity(ıntentMain);
+            Intent intentMain = new Intent(this , MainActivity.class);
+            startActivity(intentMain);
         }
 
         if(isLogged.equals("0"))

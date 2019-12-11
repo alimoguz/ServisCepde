@@ -48,17 +48,6 @@ public class DownloadClass {
         MarkaModel a10 = new MarkaModel("10" , "Ducato" , "8");
 
 
-        /*MarkaModel temp = new MarkaModel("1", "Askam", "0");
-        MarkaModel temp1 = new MarkaModel("2", "Fargo Fora", "1");
-        MarkaModel temp2 = new MarkaModel("3", "BMC", "0");
-        MarkaModel temp3 = new MarkaModel("4", "Megastar", "3");
-        MarkaModel temp4 = new MarkaModel("5", "Chery", "0");
-        MarkaModel temp5 = new MarkaModel("6", "Taxim", "5");
-        MarkaModel temp6 = new MarkaModel("7", "Chevrolet", "0");
-        MarkaModel temp7 = new MarkaModel("8", "Express", "7");
-        MarkaModel temp8 = new MarkaModel("9", "G Serisi", "7");
-        MarkaModel temp9 = new MarkaModel("10", "Venture", "7");*/
-
         markaModels.add(a);
         markaModels.add(a1);
         markaModels.add(a2);

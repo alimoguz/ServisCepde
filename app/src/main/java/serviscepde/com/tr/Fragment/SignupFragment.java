@@ -21,11 +21,6 @@ import br.com.sapereaude.maskedEditText.MaskedEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.Models.City;
-import serviscepde.com.tr.Models.Ilce;
-import serviscepde.com.tr.Models.Ilceler.IlceResponse;
-import serviscepde.com.tr.Models.Ilceler.IlceResponseDetail;
-import serviscepde.com.tr.Models.Sehirler.SehirResponse;
-import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.Models.UserRegister.UserRegisterResponse;
 import serviscepde.com.tr.Models.UserRegister.UserRegisterResponseDetail;
 import serviscepde.com.tr.R;
@@ -37,7 +32,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -51,7 +45,7 @@ public class SignupFragment extends Fragment {
 
     View generalView;
 
-    String [] tür = {"Proje Yöneticisi" , "Şoför" , "Diğer"};
+    private String [] kullaniciTur = {"Proje Yöneticisi" , "Şoför" , "Diğer"};
 
     private  EditText edtKayitAd,edtKayitEmail,edtKayitSifre,edtKayitSifreTekrar,edtKayitSoyad;
     private MaskedEditText edtKayitTelefon;
@@ -103,7 +97,7 @@ public class SignupFragment extends Fragment {
 
 
 
-        ArrayAdapter<String> Turadapter = new ArrayAdapter<>(ctx, R.layout.dropdown_item, tür);
+        ArrayAdapter<String> Turadapter = new ArrayAdapter<>(ctx, R.layout.dropdown_item, kullaniciTur);
         autoCompleteKullaniciTuru.setAdapter(Turadapter);
 
 

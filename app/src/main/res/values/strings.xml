@@ -187,6 +187,8 @@
     <string name="BildirimGönder">Bildirim Gönder</string>
     <string name="Sil">Sil</string>
     <string name="Güncelle">Güncelle</string>
+    <string name="KullanıcıDüzenle">Düzenle</string>
+    <string name="Kaydet">Kaydet</string>
 
 
 </resources>

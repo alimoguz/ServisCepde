@@ -39,7 +39,8 @@ public class ProfileFragment extends Fragment {
     private TextView txtUserName,txtPhoneNumber,txtProfiliDuzenle,txtCikisYap,txtIlanlarim,txtKayitliAramalar,txtBildirimGonder;
     private Context ctx;
     private String userToken;
-    IlanlarımFragment ilanlarimFragment;
+    private IlanlarımFragment ilanlarimFragment;
+    private KullanıcıDüzenleFragment kullaniciDuzenleFragment;
 
     @Nullable
     @Override
@@ -57,6 +58,7 @@ public class ProfileFragment extends Fragment {
 
 
         ilanlarimFragment = new IlanlarımFragment();
+        kullaniciDuzenleFragment = new KullanıcıDüzenleFragment();
 
 
 
@@ -68,6 +70,18 @@ public class ProfileFragment extends Fragment {
         txtIlanlarim = generalView.findViewById(R.id.txtIlanlarim);
         txtKayitliAramalar = generalView.findViewById(R.id.txtKayitliAramalar);
         txtBildirimGonder = generalView.findViewById(R.id.txtBildirimGonder);
+
+        txtProfiliDuzenle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragMain , kullaniciDuzenleFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+            }
+        });
 
         HashMap<String , String> hashMap1 = new HashMap<>();
         hashMap1.put("Token" , userToken);
