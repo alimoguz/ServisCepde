@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/dialog_background"
+    android:layout_marginStart="@dimen/_20sdp"
+    android:layout_marginEnd="@dimen/_20sdp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/txtFiyatArtan"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/FiyatArtan"
+        android:textColor="@color/colorBlue"
+        android:textSize="@dimen/_14ssp"
+        android:gravity="center"
+        android:paddingTop="@dimen/_7sdp"
+        android:paddingBottom="@dimen/_7sdp" />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/colorBlue" />
+
+    <TextView
+        android:id="@+id/txtFiyatAzalan"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/FiyatAzalan"
+        android:textColor="@color/colorBlue"
+        android:textSize="@dimen/_14ssp"
+        android:gravity="center"
+        android:paddingTop="@dimen/_7sdp"
+        android:paddingBottom="@dimen/_7sdp" />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/colorBlue" />
+
+    <TextView
+        android:id="@+id/txtTarihEski"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/TarihEski"
+        android:textColor="@color/colorBlue"
+        android:textSize="@dimen/_14ssp"
+        android:gravity="center"
+        android:paddingTop="@dimen/_7sdp"
+        android:paddingBottom="@dimen/_7sdp" />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/colorBlue" />
+
+    <TextView
+        android:id="@+id/txtTarihYeni"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/TarihYeni"
+        android:textColor="@color/colorBlue"
+        android:textSize="@dimen/_14ssp"
+        android:gravity="center"
+        android:paddingTop="@dimen/_7sdp"
+        android:paddingBottom="@dimen/_7sdp" />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/colorBlue" />
+
+    <TextView
+        android:id="@+id/txtBaslikAZ"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/BaşlıkAZ"
+        android:textColor="@color/colorBlue"
+        android:textSize="@dimen/_14ssp"
+        android:gravity="center"
+        android:paddingTop="@dimen/_7sdp"
+        android:paddingBottom="@dimen/_7sdp" />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/colorBlue" />
+
+    <TextView
+        android:id="@+id/txtBaslikZA"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/BaşlıkZA"
+        android:textColor="@color/colorBlue"
+        android:textSize="@dimen/_14ssp"
+        android:gravity="center"
+        android:paddingTop="@dimen/_7sdp"
+        android:paddingBottom="@dimen/_7sdp" />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/colorBlue" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_20sdp"
+        android:background="#00ffffff"
+        />
+
+    <TextView
+        android:id="@+id/txtIptal"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/İptal"
+        android:textColor="@color/colorBlue"
+        android:textSize="@dimen/_14ssp"
+        android:gravity="center"
+        android:paddingTop="@dimen/_7sdp"
+        android:paddingBottom="@dimen/_7sdp" />
+
+</LinearLayout>

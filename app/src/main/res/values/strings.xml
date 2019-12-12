@@ -201,6 +201,14 @@
     <string name="RegisterInfo1">1) Kullanıcı türü bilgilendirme amaçlıdır.Proje sorumluları şoforlere acil iş bildiriminde bulunabilir</string>
     <string name="RegisterInfo2">2) Şoforler proje sorumlularının bildirimlerini alarak kolayca iş bulabilirler</string>
     <string name="RegisterInfo3">3) Bildirimler il ve ilçelere özel olacağı için il - ilçe seçmeniz bildirimleri almanız için yararlı olacaktır</string>
+    
+    <string name="FiyatArtan">Fiyata göre (Artan)</string>
+    <string name="FiyatAzalan">Fiyata göre (Azalan)</string>
+    <string name="TarihEski">Tarihe göre (Önce en eski)</string>
+    <string name="TarihYeni">Tarihe göre (Önce en yeni)</string>
+    <string name="BaşlıkAZ">Başlığa göre (A-Z)</string>
+    <string name="BaşlıkZA">Başlığa göre (Z-A)</string>
+
 
 
 </resources>
