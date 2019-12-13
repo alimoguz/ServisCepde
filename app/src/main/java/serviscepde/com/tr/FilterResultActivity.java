@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.FrameLayout;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 import serviscepde.com.tr.Fragment.FiltreSonucFragment;
 
@@ -35,9 +36,78 @@ public class FilterResultActivity extends AppCompatActivity {
 
         Intent filterResult = getIntent();
         HashMap<String , Object> param = (HashMap<String , Object>)filterResult.getSerializableExtra("paramHash");
-
         Log.i("HashMapSize" , " " + param.size());
+        HashMap<String , Object> getParameters = new HashMap<>();
+        getParameters = param;
+
+        Iterator<String> iterator = getParameters.keySet().iterator();
+
+
+        while (iterator.hasNext())
+        {
+            String value = iterator.next();
+            if(value.equals("IsSaved"))
+            {
+                iterator.remove();
+            }
+            if(value.equals("SavedName"))
+            {
+                iterator.remove();
+            }
+            if(value.equals("start"))
+            {
+                iterator.remove();
+            }
+            if(value.equals("Tipi"))
+            {
+                iterator.remove();
+                getParameters.put("ID" , param.get("Tipi"));
+            }
+        }
+
+        Log.i("ParamSize" , "" + param.size());
+        Log.i("GetParameterSize" , "" + getParameters.size());
+
         HashMap<String , Object> finalHashMap = new HashMap<>();
+
+        finalHashMap.put("Token" , userToken);
+        finalHashMap.put("param" , param);
+        finalHashMap.put("GetParameters" , getParameters);
+
+        Log.i("FinalHashMapSize" ," " + finalHashMap.size());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*HashMap<String , Object> finalHashMap = new HashMap<>();
         finalHashMap.put("param" , param);
 
         HashMap<String , Object> getParameters;
@@ -63,7 +133,7 @@ public class FilterResultActivity extends AppCompatActivity {
         finalHashMap.put("GetParameters" , getParameters);
         finalHashMap.put("Token" , userToken);
 
-        loadFilterResult(finalHashMap);
+        loadFilterResult(finalHashMap);*/
 
 
 

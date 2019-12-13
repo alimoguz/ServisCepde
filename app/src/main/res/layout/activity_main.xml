@@ -25,6 +25,18 @@
             />
 
 
+        <ImageView
+            android:id="@+id/imgIconIletisim"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/icon_call"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp" />
+
+
 
     </RelativeLayout>
 

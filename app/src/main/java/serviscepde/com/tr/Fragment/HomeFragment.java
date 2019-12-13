@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment {
 
     private LinearLayout linSon,linSon2,linSon3;
     private ImageView imgSon1,imgSon2,imgSon3;
+    private ImageView imgIconIletisim;
     private TextView txtSonAciklama1,txtSonKonum1,txtSonFiyat1,txtSonAciklama2,txtSonKonum2,txtSonFiyat2,txtSonAciklama3,txtSonKonum3,txtSonFiyat3,txtSonIlanlar;
 
     int selectedCategory;
@@ -89,6 +90,7 @@ public class HomeFragment extends Fragment {
         Log.i("userToken" ,userToken);
 
         imgFind = generalView.findViewById(R.id.imgFind);
+        imgIconIletisim = generalView.findViewById(R.id.imgIconIletisim);
 
         linIsimeArac = generalView.findViewById(R.id.linIsimeArac);
         linAracimaIs = generalView.findViewById(R.id.linAracimaIs);
