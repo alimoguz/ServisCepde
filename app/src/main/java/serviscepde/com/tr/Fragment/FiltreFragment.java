@@ -560,42 +560,42 @@ public class FiltreFragment extends Fragment {
                     Log.i("Satıcı" , acSatici);
                     param.put("Kimden" , acSatici);
                 }
-                if(minYil != null)
+                if(!minYil.isEmpty())
                 {
                     Log.i("MinYıl" , minYil);
                     param.put("AracYiliMin" , minYil);
                 }
-                if(maxYil != null)
+                if(!maxYil.isEmpty())
                 {
                     Log.i("maxYil" , maxYil);
                     param.put("AracYiliMax" , maxYil);
                 }
-                if(minTecrube != null)
+                if(!minTecrube.isEmpty())
                 {
                     Log.i("minTecrube" , minTecrube);
                     param.put("TecrubeMin" , minTecrube);
                 }
-                if(maxTecrube != null)
+                if(!maxTecrube.isEmpty())
                 {
                     Log.i("maxTecrube" , maxTecrube);
                     param.put("TecrubeMax" , maxTecrube);
                 }
-                if(minKM != null)
+                if(!minKM.isEmpty())
                 {
                     Log.i("MinKm" , minKM);
                     param.put("ToplamKMMin" , minKM);
                 }
-                if(maxKM != null)
+                if(!maxKM.isEmpty())
                 {
                     Log.i("maxKM" , maxKM);
                     param.put("ToplamKMMax" , maxKM);
                 }
-                if(minYas != null)
+                if(!minYas.isEmpty())
                 {
                     Log.i("minYas" , minYas);
                     param.put("YasinizMin" , minYas);
                 }
-                if(maxYas != null)
+                if(!maxYas.isEmpty())
                 {
                     Log.i("maxYas" , maxYas);
                     param.put("YasinizMax" , maxYas);

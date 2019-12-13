@@ -214,6 +214,13 @@
     <string name="Kaydedilsinmi">Kaydedilsin mi ?</string>
     <string name="İsimGir">Aramanızı kaydetmek için lütfen bir isim giriniz</string>
     <string name="Tamam">Tamam</string>
+    <string name="FiltreSonuç">Filtreleme Sonuçları</string>
+    <string name="İlanBulunamadı">Aramınıza uygun ilan bulunamadı</string>
+
+    <string name="İletişim">İletişim</string>
+    <string name="İletişimInfo">Karşılaştığınız hataları bildirmek, destek almak, şikayet ve taleplerinizi iletmek için numaralarımız</string>
+    <string name="Number1">0(530) 096 50 37</string>
+    <string name="Number2">0(541) 455 60 75</string>
 
 
 </resources>

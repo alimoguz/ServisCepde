@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class App extends Application {
 
-    private static String BASE_URL = "http://fatura-kes.site/servis/webServices/";
+    private static String BASE_URL = "http://www.serviscepde.com/webServices/";
     public static  String TAG = "ServisCepde";
     public static String key = "23424234234456hjgfd";
     public static String IMAGE_URL = "http://fatura-kes.site/servis/webServices/Uploads/ilanlar/Big/";
