@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_marginStart="@dimen/_20sdp"
+    android:layout_marginEnd="@dimen/_20sdp"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_10sdp"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog_background"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Bilgilendirme"
+        android:fontFamily="@font/myriadpro_regular"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/_14ssp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_10sdp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/FiltreKayıt"
+        android:fontFamily="@font/myriadpro_regular"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/_12ssp"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
+        />
+
+    <Switch
+        android:id="@+id/switchFiltre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Kaydedilsinmi"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textSize="@dimen/_14ssp"
+        android:layout_gravity="center"
+        android:paddingStart="@dimen/_30sdp"
+        android:paddingEnd="@dimen/_30sdp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorBlack"
+        android:layout_marginTop="@dimen/_10sdp"/>
+
+
+    <TextView
+        android:id="@+id/txtFiltreKayitTamam"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Tamam"
+        android:fontFamily="@font/myriadpro_regular"
+        android:textColor="@color/colorBlue"
+        android:textSize="@dimen/_14ssp"
+        android:gravity="center"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        />
+
+</LinearLayout>

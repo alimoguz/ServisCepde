@@ -33,7 +33,9 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="@dimen/_30sdp"
+                        android:maxLines="1"
                         android:hint="@string/SearchHint"
+                        android:textSize="@dimen/_12ssp"
                         android:background="@drawable/edittext_search"/>
 
 

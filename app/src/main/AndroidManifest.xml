@@ -21,7 +21,8 @@
         android:theme="@style/Theme.MaterialComponents"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".GalleryActivity"></activity>
+        <activity android:name=".FilterResultActivity"></activity>
+        <activity android:name=".GalleryActivity" />
 
         <service android:name=".Firebase.MyFirebaseMessagingService">
             <intent-filter>

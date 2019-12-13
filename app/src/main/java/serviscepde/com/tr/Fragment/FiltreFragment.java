@@ -1,6 +1,7 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -16,9 +17,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -28,10 +31,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import serviscepde.com.tr.App;
+import serviscepde.com.tr.Dialogs.DialogFiltreAd;
+import serviscepde.com.tr.Dialogs.DialogFiltreKaydet;
 import serviscepde.com.tr.DownloadClass;
+import serviscepde.com.tr.FilterResultActivity;
+import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.City;
-import serviscepde.com.tr.Models.MarkaModel;
 import serviscepde.com.tr.R;
 import serviscepde.com.tr.Utils.Utils;
 
@@ -74,6 +81,8 @@ public class FiltreFragment extends Fragment {
     private String cityId,baslamaCityId,bitisCityId = null;
     private String townId,baslamaTownId,bitisTownId = null;
     private ArrayList<String> townNames , baslamaTownNames , bitisTownNames = new ArrayList<>();
+    private static String searchText,orderBY;
+    private String [] multipleSearch = {"Baslik" , "ilanAciklamasi"};
 
     private String userToken;
     private String acMarka,acModel,acKapasite,acAracDurum,acKullanabildiginizKapasiteler,acMotorHacim,acMotorGuc,acSatici,acVitesTipi,acYakitTipi,acKasko,acDurum = null;
@@ -91,9 +100,6 @@ public class FiltreFragment extends Fragment {
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
         Log.i("userToken" ,userToken);
-
-
-
 
 
         imgType = generalView.findViewById(R.id.imgType);
@@ -168,6 +174,20 @@ public class FiltreFragment extends Fragment {
         kategoriler.add("Kiralık araç");
         kategoriler.add("Yedek parça");
 
+        Bundle fromSearchFragment = this.getArguments();
+
+        if(fromSearchFragment != null)
+        {
+            if(fromSearchFragment.getString("searchText") != null)
+            {
+                searchText = fromSearchFragment.getString("searchText");
+            }
+            if(fromSearchFragment.getString("orderBY") != null)
+            {
+                orderBY = fromSearchFragment.getString("orderBY");
+            }
+        }
+
 
         kategoriAdapter = new ArrayAdapter<>(ctx , R.layout.support_simple_spinner_dropdown_item , kategoriler);
         spinKategoriTip.setAdapter(kategoriAdapter);
@@ -199,49 +219,42 @@ public class FiltreFragment extends Fragment {
                 acDurum = String.valueOf(position + 1);
             }
         });
-
         acFiltreVitesTipi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 acVitesTipi = String.valueOf(position + 1 );
             }
         });
-
         acFiltreYakitTipi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 acYakitTipi = String.valueOf(position + 1);
             }
         });
-
         acFiltreKasko.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 acKasko = String.valueOf(position + 1);
             }
         });
-
         acFiltreMotorHacim.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 acMotorHacim = String.valueOf(position + 1);
             }
         });
-
         acFiltreMotorGuc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 acMotorGuc = String.valueOf(position + 1);
             }
         });
-
         acFiltreSatici.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 acSatici = String.valueOf(position + 1);
             }
         });
-
         acFiltreMarka.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -344,7 +357,6 @@ public class FiltreFragment extends Fragment {
                 Log.i("AraçDurum" , acAracDurum);
             }
         });
-
         acFiltreKullanilabilirKapasiteler.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -453,144 +465,235 @@ public class FiltreFragment extends Fragment {
                 minKM = edtFiltreMinKM.getText().toString();
                 maxKM = edtFiltreMaxKM.getText().toString();
 
-                HashMap<String , Object> hashMap = new HashMap<>();
-                HashMap<String , Object> hashMap1 = new HashMap<>();
+                HashMap<String , Object> param = new HashMap<>();
 
-                hashMap1.put("start" , 0);
-                hashMap1.put("Tipi" , selectedCategory);
+                if(selectedCategory != 0)
+                {
+                    param.put("Tipi" , selectedCategory);
+                }
 
+                param.put("start" , 0);
+                param.put("func" , "Ilanlar");
+                param.put("b1" , "Filtrele");
+
+
+                if(searchText != null)
+                {
+                    Log.i("searchText" , searchText);
+                    param.put("Search" , searchText);
+                    param.put("MultipleSearch" , multipleSearch );
+                }
+                if(orderBY != null)
+                {
+                    Log.i("orderBY" , orderBY);
+                    param.put("OrderBy" , orderBY);
+                }
 
                 if(cityId != null)
                 {
                     Log.i("Seçilenİl" ,  cityId);
-                    hashMap1.put("ilanCity" , cityId);
+                    param.put("ilanCity" , cityId);
                 }
                 if(townId != null)
                 {
                     Log.i("Seçilenİlçe" , townId);
-                    hashMap1.put("ilanSemtleri" , townId);
+                    param.put("ilanSemtleri" , townId);
                 }
                 if(baslamaCityId != null)
                 {
                     Log.i("Başlamaİli" , baslamaCityId);
-                    hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
+                    param.put("ServiseBaslamaCity" , baslamaCityId);
                 }
                 if(baslamaTownId != null)
                 {
                     Log.i("Başlamaİlçe" , baslamaTownId);
-                    hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
+                    param.put("ServiseBaslamaSemtleri" , baslamaTownId);
                 }
                 if(bitisCityId != null)
                 {
                     Log.i("Bitişİl" , bitisCityId);
-                    hashMap1.put("ServisBitisCity" , bitisCityId);
+                    param.put("ServisBitisCity" , bitisCityId);
                 }
                 if(bitisTownId != null)
                 {
                     Log.i("Bitişİlçe" , bitisTownId);
-                    hashMap1.put("ServisBitisSemtleri" , bitisTownId);
+                    param.put("ServisBitisSemtleri" , bitisTownId);
                 }
                 if(acMarka != null)
                 {
                     Log.i("Marka" , acMarka);
-                    hashMap1.put("AracMarkasi" , acMarka);
+                    param.put("AracMarkasi" , acMarka);
                 }
                 if(acModel != null)
                 {
                     Log.i("Model" , acModel);
-                    hashMap1.put("AracModeli" , acModel);
+                    param.put("AracModeli" , acModel);
                 }
                 if(acKapasite != null)
                 {
                     Log.i("Kapasite" , acKapasite);
-                    hashMap1.put("AracKapasitesi" , acKapasite);
+                    param.put("AracKapasitesi" , acKapasite);
                 }
                 if(acAracDurum != null)
                 {
                     Log.i("AraçDurumu" , acAracDurum);
-                    hashMap1.put("AracDurumu" , acAracDurum);
+                    param.put("AracDurumu" , acAracDurum);
                 }
                 if(acKullanabildiginizKapasiteler != null)
                 {
                     Log.i("Kapasiteler" , acKullanabildiginizKapasiteler);
                     acKullanabildiginizKapasiteler = Utils.trimmer(acKullanabildiginizKapasiteler);
-                    hashMap1.put("KullanabildiginizKapasiteler" , acKullanabildiginizKapasiteler);
+                    param.put("KullanabildiginizKapasiteler" , acKullanabildiginizKapasiteler);
                 }
                 if(acMotorHacim != null)
                 {
                     Log.i("MotorHacmi" , acMotorHacim);
-                    hashMap1.put("MotorHacmi" , acMotorHacim);
+                    param.put("MotorHacmi" , acMotorHacim);
                 }
                 if(acMotorGuc != null)
                 {
                     Log.i("MotorGuc" , acMotorGuc);
-                    hashMap1.put("MotorGucu" , acMotorGuc);
+                    param.put("MotorGucu" , acMotorGuc);
                 }
                 if(acSatici != null)
                 {
                     Log.i("Satıcı" , acSatici);
-                    hashMap1.put("Kimden" , acSatici);
+                    param.put("Kimden" , acSatici);
                 }
                 if(minYil != null)
                 {
                     Log.i("MinYıl" , minYil);
-                    hashMap1.put("AracYiliMin" , minYil);
+                    param.put("AracYiliMin" , minYil);
                 }
                 if(maxYil != null)
                 {
                     Log.i("maxYil" , maxYil);
-                    hashMap1.put("AracYiliMax" , maxYil);
+                    param.put("AracYiliMax" , maxYil);
                 }
                 if(minTecrube != null)
                 {
                     Log.i("minTecrube" , minTecrube);
-                    hashMap1.put("TecrubeMin" , minTecrube);
+                    param.put("TecrubeMin" , minTecrube);
                 }
                 if(maxTecrube != null)
                 {
                     Log.i("maxTecrube" , maxTecrube);
-                    hashMap1.put("TecrubeMax" , maxTecrube);
+                    param.put("TecrubeMax" , maxTecrube);
                 }
                 if(minKM != null)
                 {
                     Log.i("MinKm" , minKM);
-                    hashMap1.put("ToplamKMMin" , minKM);
+                    param.put("ToplamKMMin" , minKM);
                 }
                 if(maxKM != null)
                 {
                     Log.i("maxKM" , maxKM);
-                    hashMap1.put("ToplamKMMax" , maxKM);
+                    param.put("ToplamKMMax" , maxKM);
                 }
                 if(minYas != null)
                 {
                     Log.i("minYas" , minYas);
-                    hashMap1.put("YasinizMin" , minYas);
+                    param.put("YasinizMin" , minYas);
                 }
                 if(maxYas != null)
                 {
                     Log.i("maxYas" , maxYas);
-                    hashMap1.put("YasinizMax" , maxYas);
+                    param.put("YasinizMax" , maxYas);
                 }
                 if(acVitesTipi != null)
                 {
                     Log.i("VitesTipi" , acVitesTipi);
-                    hashMap1.put("VitesTipi" ,acVitesTipi );
+                    param.put("VitesTipi" ,acVitesTipi );
                 }
                 if(acYakitTipi != null)
                 {
                     Log.i("YakitTipi" , acYakitTipi);
-                    hashMap1.put("YakitTipi" ,acYakitTipi );
+                    param.put("YakitTipi" ,acYakitTipi );
                 }
                 if(acKasko != null)
                 {
                     Log.i("Kasko" , acKasko);
-                    hashMap1.put("Kasko" ,acKasko );
+                    param.put("Kasko" ,acKasko );
                 }
                 if(acDurum != null)
                 {
                     Log.i("YedekParçaDurum" , acDurum);
-                    hashMap1.put("YedekParcaDurum" ,acDurum );
+                    param.put("YedekParcaDurum" ,acDurum );
                 }
+
+                final DialogFiltreKaydet diaKaydet = new DialogFiltreKaydet(MainActivity.act);
+                diaKaydet.setCancelable(false);
+                diaKaydet.setCanceledOnTouchOutside(false);
+                diaKaydet.show();
+
+                Switch saveSwitch = diaKaydet.findViewById(R.id.switchFiltre);
+                TextView tamam = diaKaydet.findViewById(R.id.txtFiltreKayitTamam);
+
+
+                tamam.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean isSaved = saveSwitch.isChecked();
+                        Log.i("switchState" , " " + isSaved);
+
+                        if(isSaved)
+                        {
+                            diaKaydet.dismiss();
+                            final DialogFiltreAd dialogFiltreAd = new DialogFiltreAd(MainActivity.act);
+                            dialogFiltreAd.setCancelable(false);
+                            dialogFiltreAd.setCanceledOnTouchOutside(false);
+                            dialogFiltreAd.show();
+
+                            EditText et = dialogFiltreAd.findViewById(R.id.edtFiltreAd);
+                            TextView tamam = dialogFiltreAd.findViewById(R.id.txtFiltreKayıtAdTamam);
+                            TextView iptal = dialogFiltreAd.findViewById(R.id.txtFiltreKayıtAdIptal);
+
+                            iptal.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    param.put("IsSaved" , 0);
+                                    param.put("SavedName" , null);
+                                    openFilterResult(param);
+                                }
+                            });
+
+                            tamam.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    String filtreAd = et.getText().toString();
+
+                                    if(filtreAd.isEmpty())
+                                    {
+                                        SweetAlertDialog adAlert;
+                                        adAlert = new SweetAlertDialog(ctx , SweetAlertDialog.WARNING_TYPE);
+                                        adAlert.setTitleText("İsim boş bırakılamaz !");
+                                        adAlert.show();
+                                    }
+                                    else
+                                    {
+                                        param.put("IsSaved" , 1);
+                                        param.put("SavedName" , filtreAd);
+                                        openFilterResult(param);
+                                    }
+
+                                }
+                            });
+
+                        }
+                        else
+                        {
+                            diaKaydet.dismiss();
+                            param.put("IsSaved" , 0);
+                            param.put("SavedName" , null);
+                            openFilterResult(param);
+                        }
+
+
+                    }
+                });
+
 
 
 
@@ -692,6 +795,15 @@ public class FiltreFragment extends Fragment {
 
         */
         return rootView;
+    }
+
+    private void openFilterResult(HashMap param) {
+
+        Intent filterResult = new Intent(ctx , FilterResultActivity.class);
+        filterResult.putExtra("paramHash" , param);
+        startActivity(filterResult);
+
+
     }
 
     private void loadYedekParca() {
