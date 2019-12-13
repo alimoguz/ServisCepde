@@ -78,6 +78,9 @@ public interface ApiInterface {
     @POST("index.php?func=ilanlar&file=List&ReturnType=1")
     Call<BaseResponse> ilanFiltrele (@Body HashMap map);
 
+    @POST("index.php?func=Users&file=SavedSearches&ReturnType=1")
+    Call<BaseResponse> kayitliAramalarım(@Body HashMap body);
+
 
 
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:text="@string/KayıtlıAramalarım"
+        android:textColor="@color/ef_white"
+        android:fontFamily="@font/myriadpro_regular"
+        android:textSize="@dimen/_13ssp"
+        android:gravity="center"
+        android:background="@color/appColor"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/rvKayıtlıAramalarim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp">
+
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

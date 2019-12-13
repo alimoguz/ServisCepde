@@ -42,6 +42,7 @@ public class ProfileFragment extends Fragment {
     private IlanlarımFragment ilanlarimFragment;
     private KullanıcıDüzenleFragment kullaniciDuzenleFragment;
     private BildirimGonderFragment bildirimGonderFragment;
+    private KayitliAramaFragment kayitliAramaFragment;
 
     @Nullable
     @Override
@@ -62,6 +63,7 @@ public class ProfileFragment extends Fragment {
         ilanlarimFragment = new IlanlarımFragment();
         kullaniciDuzenleFragment = new KullanıcıDüzenleFragment();
         bildirimGonderFragment = new BildirimGonderFragment();
+        kayitliAramaFragment = new KayitliAramaFragment();
 
 
 
@@ -73,6 +75,14 @@ public class ProfileFragment extends Fragment {
         txtIlanlarim = generalView.findViewById(R.id.txtIlanlarim);
         txtKayitliAramalar = generalView.findViewById(R.id.txtKayitliAramalar);
         txtBildirimGonder = generalView.findViewById(R.id.txtBildirimGonder);
+
+        txtKayitliAramalar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                loadFragment(kayitliAramaFragment);
+            }
+        });
 
         txtProfiliDuzenle.setOnClickListener(new View.OnClickListener() {
             @Override
