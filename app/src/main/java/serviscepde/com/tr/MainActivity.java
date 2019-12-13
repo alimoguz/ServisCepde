@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import serviscepde.com.tr.Fragment.AddFragment;
@@ -21,6 +22,7 @@ import serviscepde.com.tr.Fragment.HomeFragment;
 import serviscepde.com.tr.Fragment.NotificationFragment;
 import serviscepde.com.tr.Fragment.ProfileFragment;
 import serviscepde.com.tr.Fragment.SearchFragment;
+import serviscepde.com.tr.Fragment.İletisimFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,12 +30,15 @@ public class MainActivity extends AppCompatActivity {
     FrameLayout fragMain;
     public static BottomNavigationView bottomNav;
 
-    HomeFragment homeFragment;
-    SearchFragment searchFragment;
-    AddFragment addFragment;
-    NotificationFragment notificationFragment;
-    ProfileFragment profileFragment;
+    private HomeFragment homeFragment;
+    private SearchFragment searchFragment;
+    private AddFragment addFragment;
+    private NotificationFragment notificationFragment;
+    private ProfileFragment profileFragment;
+    private İletisimFragment iletisimFragment;
     public static Activity act;
+
+    private ImageView imgIconIletisim;
 
     public static FragmentTransaction fragmentTransaction;
     public static FragmentManager fragmentManager;
@@ -51,11 +56,22 @@ public class MainActivity extends AppCompatActivity {
         fragMain = findViewById(R.id.fragMain);
         bottomNav = findViewById(R.id.bottomNav);
         relHeader = findViewById(R.id.relHeader);
+        imgIconIletisim = findViewById(R.id.imgIconIletisim);
 
         relHeader.setVisibility(View.VISIBLE);
         bottomNav.setVisibility(View.VISIBLE);
 
         loadFragment(new HomeFragment());
+
+        iletisimFragment = new İletisimFragment();
+
+        imgIconIletisim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                loadFragment(iletisimFragment);
+            }
+        });
 
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 

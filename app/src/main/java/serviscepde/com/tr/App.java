@@ -16,10 +16,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class App extends Application {
 
-    private static String BASE_URL = "http://www.serviscepde.com/webServices/";
+    private static String BASE_URL = "https://www.serviscepde.com/webServices/";
     public static  String TAG = "ServisCepde";
     public static String key = "23424234234456hjgfd";
-    public static String IMAGE_URL = "http://fatura-kes.site/servis/webServices/Uploads/ilanlar/Big/";
+    public static String IMAGE_URL = "https://www.serviscepde.com/webServices/Uploads/ilanlar/Big/";
     public static List<City> citiesList = new ArrayList<>();
     public static List<City> tmp = new ArrayList<>();
 
