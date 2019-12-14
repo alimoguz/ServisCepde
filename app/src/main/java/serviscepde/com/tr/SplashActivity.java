@@ -5,10 +5,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
@@ -97,12 +100,20 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void setNotification() {
-        //FirebaseMessaging.getInstance().subscribeToTopic("serviscepde-adnroid1-app");
+        FirebaseApp.initializeApp(this);
+        FirebaseMessaging.getInstance().subscribeToTopic("serviscepde_android_app_new");
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel("channel", "channel", NotificationManager.IMPORTANCE_DEFAULT);
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
 
         FirebaseApp.initializeApp(this);
-        FirebaseMessaging.getInstance().subscribeToTopic("/topics/serviscepde_android_app_new");
+        FirebaseMessaging.getInstance().subscribeToTopic("serviscepde_android_app_new");
 
-
+/*
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
@@ -117,6 +128,6 @@ public class SplashActivity extends AppCompatActivity {
 
             AlertDialog dialog = builder.create();
             dialog.show();
-        }
+        }*/
     }
 }

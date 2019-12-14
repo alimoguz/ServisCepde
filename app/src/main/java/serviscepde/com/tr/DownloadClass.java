@@ -1,9 +1,16 @@
 package serviscepde.com.tr;
 
+import android.util.Log;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import retrofit2.Call;
@@ -14,6 +21,8 @@ import serviscepde.com.tr.Models.Ilce;
 import serviscepde.com.tr.Models.Ilceler.IlceResponse;
 import serviscepde.com.tr.Models.Ilceler.IlceResponseDetail;
 import serviscepde.com.tr.Models.MarkaModel;
+import serviscepde.com.tr.Models.Response.BaseResponse;
+import serviscepde.com.tr.Models.Response.ResponseDetail;
 import serviscepde.com.tr.Models.Sehirler.SehirResponse;
 import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.Utils.Utils;
@@ -21,7 +30,7 @@ import serviscepde.com.tr.Utils.Utils;
 public class DownloadClass {
     public static ArrayList<City> cities = new ArrayList<>();
     public static ArrayList<Ilce> towns = new ArrayList<>();
-    public static ArrayList<MarkaModel> markaModels = new ArrayList<>();
+    public static ArrayList<MarkaModel> markaModelsArray = new ArrayList<>();
 
     public static void downloadAllVariables() {
         downloadCities();
@@ -30,8 +39,48 @@ public class DownloadClass {
     }
 
     private static void downloadMarkaModel() {
+        markaModelsArray = new ArrayList<>();
+        Call<BaseResponse> sehirResponseCall = App.getApiService().getMarkaModel();
+        sehirResponseCall.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
 
-        MarkaModel a = new MarkaModel("1" , "BMC" , "0");
+
+                ResponseDetail sehirResponseDetail = response.body().getResponseDetail();
+                String token = sehirResponseDetail.getResult();
+                JSONObject jsonObjectIl = Utils.jwtToJsonObject(token);
+
+                try {
+                    JSONObject markaModels = jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data");
+                    HashMap<String, Object> hashMap = new Gson().fromJson(markaModels.toString(), HashMap.class);
+
+                    Iterator<String> temp = hashMap.keySet().iterator();
+                    while(temp.hasNext()){
+                        String parentId  = temp.next();
+                        JSONObject object = (JSONObject) markaModels.get(parentId);
+                        HashMap<String, Object> hashMapValue = new Gson().fromJson(object.toString(), HashMap.class);
+                        Iterator<String> temp1 = hashMapValue.keySet().iterator();
+                        while(temp1.hasNext()){
+                            String id  = temp1.next();
+                            String name = object.get(id).toString();
+
+                            Log.i("%%%", "onResponse: %%%"+parentId + "----" + id + "----" + name);
+                            MarkaModel a = new MarkaModel(id , name , parentId);
+                            markaModelsArray.add(a);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+            }
+        });
+
+ /*       MarkaModel a = new MarkaModel("1" , "BMC" , "0");
         MarkaModel a1 = new MarkaModel("3" , "Citroen" , "0");
         MarkaModel a2 = new MarkaModel("5" , "Diğer Markalar" , "0");
         MarkaModel a3 = new MarkaModel("7" , "Farketmez" , "0");
@@ -59,7 +108,7 @@ public class DownloadClass {
         markaModels.add(a8);
         markaModels.add(a9);
         markaModels.add(a10);
-
+*/
 
     }
 
@@ -197,7 +246,7 @@ public class DownloadClass {
 
     public static ArrayList<String> getMarkaNames(){
         ArrayList<String> temp = new ArrayList<>();
-        for(MarkaModel markaModel: markaModels){
+        for(MarkaModel markaModel: markaModelsArray){
             if(markaModel.getParentId().equals("0")){
                 temp.add(markaModel.getName());
             }
@@ -207,7 +256,7 @@ public class DownloadClass {
 
     public static ArrayList<String> getModelNames(String parentId){
         ArrayList<String> temp = new ArrayList<>();
-        for(MarkaModel markaModel: markaModels){
+        for(MarkaModel markaModel: markaModelsArray){
             if(markaModel.getParentId().equals(parentId)){
                 temp.add(markaModel.getName());
             }
@@ -216,7 +265,7 @@ public class DownloadClass {
     }
 
     public static String getMarkaIdWithName(String markaName){
-        for(MarkaModel markaModel: markaModels){
+        for(MarkaModel markaModel: markaModelsArray){
             if(markaModel.getName().equals(markaName)){
                 return markaModel.getId();
             }
@@ -225,7 +274,7 @@ public class DownloadClass {
     }
 
     public static String getModelIdWithName(String modelName){
-        for(MarkaModel markaModel: markaModels){
+        for(MarkaModel markaModel: markaModelsArray){
             if(markaModel.getName().equals(modelName)){
                 return markaModel.getId();
             }

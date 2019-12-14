@@ -21,18 +21,34 @@
         android:theme="@style/Theme.MaterialComponents"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
+        <receiver android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService"
+            android:enabled="true"
+            android:exported="false" />
+        <service android:name=".Firebase.MyMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".Firebase.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+
         <activity
             android:name=".FilterResultActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen"
             android:parentActivityName=".MainActivity">
         </activity>
         <activity android:name=".GalleryActivity" />
-
-        <service android:name=".Firebase.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
 
         <activity android:name=".TestActivity" />
         <activity
