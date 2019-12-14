@@ -48,7 +48,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/CepTelefonu"
+                android:text="@string/CepTelefonu1"
                 android:textSize="@dimen/_14ssp"
                 android:textColor="@color/colorDarkGray"
                 android:layout_marginTop="@dimen/_20sdp"

@@ -1,6 +1,7 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,9 +67,6 @@ public class ProfileFragment extends Fragment {
         bildirimGonderFragment = new BildirimGonderFragment();
         kayitliAramaFragment = new KayitliAramaFragment();
 
-
-
-
         txtUserName = generalView.findViewById(R.id.txtUserName);
         txtPhoneNumber = generalView.findViewById(R.id.txtPhoneNumber);
         txtProfiliDuzenle = generalView.findViewById(R.id.txtProfiliDuzenle);
@@ -76,107 +75,130 @@ public class ProfileFragment extends Fragment {
         txtKayitliAramalar = generalView.findViewById(R.id.txtKayitliAramalar);
         txtBildirimGonder = generalView.findViewById(R.id.txtBildirimGonder);
 
-        txtKayitliAramalar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if(userToken.equals("0"))
+        {
+            SweetAlertDialog girisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.WARNING_TYPE);
+            girisAlert.setTitleText("Devam edebilmek için lütfen önce giriş yapın");
+            girisAlert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    Intent intent = new Intent(ctx , SplashActivity.class);
+                    startActivity(intent);
+                }
+            });
+            girisAlert.show();
+        }
 
-                loadFragment(kayitliAramaFragment);
-            }
-        });
+        else
+        {
+            txtKayitliAramalar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        txtProfiliDuzenle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    loadFragment(kayitliAramaFragment);
+                }
+            });
 
-                loadFragment(kullaniciDuzenleFragment);
+            txtProfiliDuzenle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-            }
-        });
+                    loadFragment(kullaniciDuzenleFragment);
 
-        txtBildirimGonder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                }
+            });
 
-                loadFragment(bildirimGonderFragment);
+            txtBildirimGonder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-            }
-        });
+                    loadFragment(bildirimGonderFragment);
 
-        HashMap<String , String> hashMap1 = new HashMap<>();
-        hashMap1.put("Token" , userToken);
+                }
+            });
 
-        Call<BaseResponse> call = App.getApiService().kullaniciBilgileri(hashMap1);
-        call.enqueue(new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+            HashMap<String , String> hashMap1 = new HashMap<>();
+            hashMap1.put("Token" , userToken);
 
-                Log.i("Başarılı" , "onResponse");
+            Call<BaseResponse> call = App.getApiService().kullaniciBilgileri(hashMap1);
+            call.enqueue(new Callback<BaseResponse>() {
+                @Override
+                public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
 
-                ResponseDetail detail = response.body().getResponseDetail();
-                String token = detail.getResult();
+                    Log.i("Başarılı" , "onResponse");
 
-                JSONObject user = Utils.jwtToJsonObject(token);
+                    ResponseDetail detail = response.body().getResponseDetail();
+                    String token = detail.getResult();
 
-                try {
-                    JSONObject userDetail = user.getJSONObject("OutPutMessage").getJSONObject("Data");
+                    JSONObject user = Utils.jwtToJsonObject(token);
 
-                    String name = userDetail.getString("UserName").concat(" ").concat(userDetail.getString("SurName"));
-                    txtUserName.setText(name);
-                    String GSM = userDetail.getString("GSM");
-                    txtPhoneNumber.setText(GSM);
-                    String meType = userDetail.getString("MeType");
+                    try {
+                        JSONObject userDetail = user.getJSONObject("OutPutMessage").getJSONObject("Data");
 
-                    String UserID = userDetail.getString("ID");
+                        String name = userDetail.getString("UserName").concat(" ").concat(userDetail.getString("SurName"));
+                        txtUserName.setText(name);
+                        String GSM = userDetail.getString("GSM");
+                        txtPhoneNumber.setText(GSM);
+                        String meType = userDetail.getString("MeType");
 
-                    if(meType.equals("1"))
-                    {
-                        txtBildirimGonder.setVisibility(View.VISIBLE);
+                        String UserID = userDetail.getString("ID");
+
+                        if(meType.equals("1"))
+                        {
+                            txtBildirimGonder.setVisibility(View.VISIBLE);
+                        }
+
+                        txtCikisYap.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                sharedPref.edit().putString("Loggedin" , "0").apply();
+                                sharedPref.edit().putString("userToken" , "0").apply();
+                                Intent intent = new Intent( ctx , SplashActivity.class);
+                                startActivity(intent);
+
+                            }
+                        });
+
+                        txtIlanlarim.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("UserID" , UserID);
+
+                                ilanlarimFragment.setArguments(bundle);
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                transaction.replace(R.id.fragMain , ilanlarimFragment);
+                                transaction.addToBackStack(null);
+                                transaction.commit();
+
+                            }
+                        });
+
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
-                    txtCikisYap.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
 
-                            sharedPref.edit().putString("Loggedin" , "0").apply();
-                            Intent intent = new Intent( ctx , SplashActivity.class);
-                            startActivity(intent);
-
-                        }
-                    });
-
-                    txtIlanlarim.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            Bundle bundle = new Bundle();
-                            bundle.putString("UserID" , UserID);
-
-                            ilanlarimFragment.setArguments(bundle);
-                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.replace(R.id.fragMain , ilanlarimFragment);
-                            transaction.addToBackStack(null);
-                            transaction.commit();
-
-                        }
-                    });
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
 
+                @Override
+                public void onFailure(Call<BaseResponse> call, Throwable t) {
 
-            }
+                    Log.i("Başarısız" , t.getMessage());
 
-            @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                }
+            });
+            return rootView;
 
-                Log.i("Başarısız" , t.getMessage());
+        }
 
-            }
-        });
-        return rootView;
+        return null;
+
+
     }
 
     private void loadFragment(Fragment fragment)

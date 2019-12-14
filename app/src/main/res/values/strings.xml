@@ -14,6 +14,7 @@
     <string name="ŞifreTekrar">Şifre Tekrar*</string>
     <string name="NumaraDoğrula">Kayıt ol düğmesine tıkladıktan sonra numaranıza doğrulama kodu gönderilecek</string>
     <string name="CepTelefonu">Cep Telefonu*</string>
+    <string name="CepTelefonu1">Cep Telefonu</string>
     <string name="NumarayaKodGönder">Doğrulama kodu göndermek için lütfen 10 haneli olarak telefon numaranızı girin</string>
     <string name="ŞifremiSıfırla">Şifremi Sıfırla</string>
     <string name="İlan">İlanlar</string>

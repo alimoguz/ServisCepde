@@ -42,7 +42,7 @@ public class SplashActivity extends AppCompatActivity {
     public static SharedPreferences sharedPref;
     public static SharedPreferences.Editor editor;
 
-    private String isLogged;
+    private static String isLogged;
 
     List<Ilce> ilces;
     private Context ctx;
@@ -66,7 +66,14 @@ public class SplashActivity extends AppCompatActivity {
         sharedPref = getBaseContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
-        sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
+        videoFragment = new VideoFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragSplash,videoFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commitAllowingStateLoss();
+
+        /*sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         isLogged = sharedPref.getString("Loggedin" , "0");
 
         if(!isLogged.equals("0"))
@@ -83,7 +90,7 @@ public class SplashActivity extends AppCompatActivity {
             fragmentTransaction.add(R.id.fragSplash,videoFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commitAllowingStateLoss();
-        }
+        }*/
 
         ilces = new ArrayList<>();
 

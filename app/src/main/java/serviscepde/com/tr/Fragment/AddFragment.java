@@ -1,7 +1,9 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,9 +18,12 @@ import android.widget.LinearLayout;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 import com.esafirm.imagepicker.model.Image;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import serviscepde.com.tr.AddingActivity;
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.R;
+import serviscepde.com.tr.SplashActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +39,8 @@ public class AddFragment extends Fragment {
     Intent addingActivity;
 
     LinearLayout linDialogIsimeArac,linDialogAracimaIs,linDialogAracimaSofor,linDialogSoforeIs,linDialogSatilikArac,linDialogKiralikArac,linDialogYedekParca;
-
     private Bundle bundle = new Bundle();
-
+    private String userToken;
 
 
     @Nullable
@@ -59,108 +63,111 @@ public class AddFragment extends Fragment {
         linDialogKiralikArac = generalView.findViewById(R.id.linDialogKiralikArac);
         linDialogYedekParca = generalView.findViewById(R.id.linDialogYedekParca);
 
-        addingActivity = new Intent(ctx , AddingActivity.class);
+        SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
+        userToken = sharedPref.getString("userToken" , "0");
+        Log.i("userToken" ,userToken);
 
+        if(userToken.equals("0"))
+        {
+            SweetAlertDialog girisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.WARNING_TYPE);
+            girisAlert.setTitleText("Devam edebilmek için lütfen önce giriş yapın");
+            girisAlert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    Intent intent = new Intent(ctx , SplashActivity.class);
+                    startActivity(intent);
+                }
+            });
+            girisAlert.show();
+        }
+        else
+        {
+            addingActivity = new Intent(ctx , AddingActivity.class);
 
+            linDialogIsimeArac.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                    selectedCategory = 1;
+                    bundle.putInt("selectedCategory" , selectedCategory);
+                    choosePhoto();
 
-        linDialogIsimeArac.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                }
+            });
+            linDialogAracimaIs.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                selectedCategory = 1;
-                bundle.putInt("selectedCategory" , selectedCategory);
-                choosePhoto();
+                    selectedCategory = 2;
+                    bundle.putInt("selectedCategory" , selectedCategory);
+                    choosePhoto();
 
-            }
-        });
+                }
+            });
+            linDialogAracimaSofor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        linDialogAracimaIs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    selectedCategory = 3;
+                    bundle.putInt("selectedCategory" , selectedCategory);
+                    choosePhoto();
 
-                selectedCategory = 2;
-                bundle.putInt("selectedCategory" , selectedCategory);
-                choosePhoto();
+                }
+            });
+            linDialogSoforeIs.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-            }
-        });
+                    selectedCategory = 4;
+                    bundle.putInt("selectedCategory" , selectedCategory);
+                    choosePhoto();
 
-        linDialogAracimaSofor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                }
+            });
+            linDialogSatilikArac.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                selectedCategory = 3;
-                bundle.putInt("selectedCategory" , selectedCategory);
-                choosePhoto();
+                    selectedCategory = 5;
+                    bundle.putInt("selectedCategory" , selectedCategory);
+                    choosePhoto();
 
-            }
-        });
+                }
+            });
+            linDialogKiralikArac.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        linDialogSoforeIs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    selectedCategory = 6;
+                    bundle.putInt("selectedCategory" , selectedCategory);
+                    choosePhoto();
 
-                selectedCategory = 4;
-                bundle.putInt("selectedCategory" , selectedCategory);
-                choosePhoto();
+                }
+            });
+            linDialogYedekParca.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-            }
-        });
+                    selectedCategory = 7;
+                    bundle.putInt("selectedCategory" , selectedCategory);
+                    choosePhoto();
 
-        linDialogSatilikArac.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                }
+            });
 
-                selectedCategory = 5;
-                bundle.putInt("selectedCategory" , selectedCategory);
-                choosePhoto();
-
-            }
-        });
-
-        linDialogKiralikArac.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                selectedCategory = 6;
-                bundle.putInt("selectedCategory" , selectedCategory);
-                choosePhoto();
-
-            }
-        });
-
-        linDialogYedekParca.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                selectedCategory = 7;
-                bundle.putInt("selectedCategory" , selectedCategory);
-                choosePhoto();
-
-            }
-        });
+            return rootView;
+        }
 
         return rootView;
+
     }
 
     private void choosePhoto()
     {
-        /*ImagePicker.create(this)
-                .returnMode(ReturnMode.GALLERY_ONLY)
-                .returnMode(ReturnMode.CAMERA_ONLY)
-                .folderMode(true)
-                .toolbarFolderTitle("Folder")
-                .includeVideo(false)
-                .multi()
-                .limit(3)
-                .start();*/
-
         bundle.putStringArrayList("imageList" , imagesPath);
         addingActivity.putExtras(bundle);
         startActivity(addingActivity);
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

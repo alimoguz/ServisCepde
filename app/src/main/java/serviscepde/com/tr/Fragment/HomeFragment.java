@@ -1,6 +1,8 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,12 +23,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.IlanKategori.IlanKategoriResponse;
 import serviscepde.com.tr.Models.IlanKategori.IlanKategoriResponseDetail;
 import serviscepde.com.tr.R;
+import serviscepde.com.tr.SplashActivity;
 import serviscepde.com.tr.Utils.Utils;
 
 import org.json.JSONException;
@@ -61,7 +65,7 @@ public class HomeFragment extends Fragment {
 
     private TextView txtTumIlanlariGor;
 
-    private LinearLayout linSon,linSon2,linSon3;
+    private LinearLayout linSon,linSon2,linSon3,linSonIlanlar;
     private ImageView imgSon1,imgSon2,imgSon3;
     private TextView txtSonAciklama1,txtSonKonum1,txtSonFiyat1,txtSonAciklama2,txtSonKonum2,txtSonFiyat2,txtSonAciklama3,txtSonKonum3,txtSonFiyat3,txtSonIlanlar;
 
@@ -89,6 +93,17 @@ public class HomeFragment extends Fragment {
         userToken = sharedPref.getString("userToken" , "0");
         Log.i("userToken" ,userToken);
 
+        linSonIlanlar = generalView.findViewById(R.id.linSonIlanlar);
+
+        if(userToken.equals("0"))
+        {
+            linSonIlanlar.setVisibility(View.GONE);
+        }
+        else
+        {
+            loadLastVisited();
+        }
+
         imgFind = generalView.findViewById(R.id.imgFind);
 
         linIsimeArac = generalView.findViewById(R.id.linIsimeArac);
@@ -98,6 +113,7 @@ public class HomeFragment extends Fragment {
         linSatilikArac = generalView.findViewById(R.id.linSatilikArac);
         linKiralikArac = generalView.findViewById(R.id.linKiralikArac);
         linYedekParca = generalView.findViewById(R.id.linYedekParca);
+
 
         linGuncel1 = generalView.findViewById(R.id.linGuncel1);
         linGuncel2 = generalView.findViewById(R.id.linGuncel2);
@@ -356,7 +372,23 @@ public class HomeFragment extends Fragment {
 
                                     Log.i("Bastın" , "test");
 
-                                    openIlanDetay(ilanDetayFragment ,ID);
+                                    if(userToken.equals("0"))
+                                    {
+                                        SweetAlertDialog girisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.WARNING_TYPE);
+                                        girisAlert.setTitleText("Devam edebilmek için lütfen önce giriş yapın");
+                                        girisAlert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                            @Override
+                                            public void onDismiss(DialogInterface dialog) {
+                                                Intent intent = new Intent(ctx , SplashActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                        girisAlert.show();
+                                    }
+                                    else
+                                    {
+                                        openIlanDetay(ilanDetayFragment ,ID);
+                                    }
 
                                 }
                             });
@@ -437,7 +469,23 @@ public class HomeFragment extends Fragment {
                             linGuncel2.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    openIlanDetay(ilanDetayFragment , ID);
+                                    if(userToken.equals("0"))
+                                    {
+                                        SweetAlertDialog girisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.WARNING_TYPE);
+                                        girisAlert.setTitleText("Devam edebilmek için lütfen önce giriş yapın");
+                                        girisAlert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                            @Override
+                                            public void onDismiss(DialogInterface dialog) {
+                                                Intent intent = new Intent(ctx , SplashActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                        girisAlert.show();
+                                    }
+                                    else
+                                    {
+                                        openIlanDetay(ilanDetayFragment ,ID);
+                                    }
                                 }
                             });
 
@@ -517,7 +565,23 @@ public class HomeFragment extends Fragment {
                                 @Override
                                 public void onClick(View v) {
 
-                                    openIlanDetay(ilanDetayFragment , ID);
+                                    if(userToken.equals("0"))
+                                    {
+                                        SweetAlertDialog girisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.WARNING_TYPE);
+                                        girisAlert.setTitleText("Devam edebilmek için lütfen önce giriş yapın");
+                                        girisAlert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                            @Override
+                                            public void onDismiss(DialogInterface dialog) {
+                                                Intent intent = new Intent(ctx , SplashActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                        girisAlert.show();
+                                    }
+                                    else
+                                    {
+                                        openIlanDetay(ilanDetayFragment ,ID);
+                                    }
                                 }
                             });
 
@@ -573,6 +637,16 @@ public class HomeFragment extends Fragment {
         });
 
 
+
+
+
+
+
+
+        return rootView;
+    }
+
+    private void loadLastVisited() {
 
         HashMap<String , Object> hashMap2 = new HashMap<>();
         HashMap<String , String> hashMap3 = new HashMap<>();
@@ -861,8 +935,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
-        return rootView;
     }
 
 

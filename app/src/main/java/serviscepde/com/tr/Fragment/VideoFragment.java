@@ -1,6 +1,7 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +18,10 @@ import android.view.ViewGroup;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.R;
+
+import static serviscepde.com.tr.SplashActivity.sharedPref;
 
 public class VideoFragment extends Fragment implements MediaPlayer.OnCompletionListener {
 
@@ -29,6 +33,8 @@ public class VideoFragment extends Fragment implements MediaPlayer.OnCompletionL
 
     Context context;
 
+    private static String isLogged;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,6 +44,9 @@ public class VideoFragment extends Fragment implements MediaPlayer.OnCompletionL
         generalView = rootView;
         videoOpening = generalView.findViewById(R.id.videoOpening);
         context = generalView.getContext();
+
+        sharedPref = context.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
+        isLogged = sharedPref.getString("Loggedin" , "0");
 
         String path = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.serviscepde_splash;
 
@@ -59,13 +68,29 @@ public class VideoFragment extends Fragment implements MediaPlayer.OnCompletionL
     @Override
     public void onCompletion(MediaPlayer mp) {
 
-        loginFragment = new LoginFragment();
+        if(!isLogged.equals("0"))
+        {
+            Intent intentMain = new Intent(context , MainActivity.class);
+            startActivity(intentMain);
+        }
+
+        if(isLogged.equals("0"))
+        {
+            loginFragment = new LoginFragment();
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragSplash,loginFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+
+        /*loginFragment = new LoginFragment();
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragSplash , loginFragment);
         fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        fragmentTransaction.commit();*/
 
     }
 }
