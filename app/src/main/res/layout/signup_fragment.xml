@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/colorWhite"
+                android:background="#FFFFBA"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:paddingStart="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_5sdp"
@@ -79,7 +79,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kullanıcı Türü"
+                android:text="Kullanıcı Türü*"
                 android:fontFamily="@font/myriadpro_regular"
                 android:textColor="@color/colorWhite"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -118,7 +118,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Ad"
+                        android:text="Ad*"
                         android:textColor="@color/colorWhite"
                         android:fontFamily="@font/myriadpro_regular"
                         android:layout_marginTop="@dimen/_10sdp"
@@ -148,7 +148,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Soyad"
+                        android:text="Soyad*"
                         android:textColor="@color/colorWhite"
                         android:fontFamily="@font/myriadpro_regular"
                         android:layout_marginTop="@dimen/_10sdp"
@@ -176,7 +176,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="İl"
+                android:text="@string/İl"
                 android:textColor="@color/colorWhite"
                 android:fontFamily="@font/myriadpro_regular"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -207,7 +207,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="İlçe"
+                android:text="@string/İlçe"
                 android:textColor="@color/colorWhite"
                 android:fontFamily="@font/myriadpro_regular"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -288,7 +288,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Şifre"
+                android:text="@string/ŞifreNew"
                 android:textColor="@color/colorWhite"
                 android:fontFamily="@font/myriadpro_regular"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -321,22 +321,6 @@
                 android:inputType="textPassword"
                 />
 
-
-
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp" />
-
-
-
-
-
-
-
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -346,6 +330,40 @@
                 android:gravity="center"
                 android:textSize="@dimen/_14ssp"
                 />
+
+
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/KullanımŞartları"
+                    android:fontFamily="@font/myriadpro_bold"
+                    android:textColor="@color/colorBlue"
+                    android:textSize="@dimen/_13ssp"
+                    />
+
+                <CheckBox
+                    android:id="@+id/checkBoxKullanim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtKayitOlSon"

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -50,10 +51,11 @@ public class SignupFragment extends Fragment {
     private  EditText edtKayitAd,edtKayitEmail,edtKayitSifre,edtKayitSifreTekrar,edtKayitSoyad;
     private MaskedEditText edtKayitTelefon;
     private TextView txtKayitOlSon;
+    private CheckBox checkBoxKullanim;
 
     private  AutoCompleteTextView autoCompleteIl,autoCompleteIlce,autoCompleteKullaniciTuru;
 
-    private  SweetAlertDialog adAlert, soyadAlert,emailAlert,telefonAlert,sifreAlert,servisAlert;
+    private  SweetAlertDialog adAlert, soyadAlert,emailAlert,telefonAlert,sifreAlert,servisAlert,checkAlert,kullaniciAlert;
     private String ad,soyad,email,telefon,sifre,sifreTekrar,il,ilçe,kullanıcıType;
     private boolean isEmailValid = true;
     private boolean isPasswordMatch;
@@ -88,6 +90,7 @@ public class SignupFragment extends Fragment {
         edtKayitSifreTekrar = generalView.findViewById(R.id.edtKayitSifreTekrar);
 
         txtKayitOlSon = generalView.findViewById(R.id.txtKayitOlSon);
+        checkBoxKullanim = generalView.findViewById(R.id.checkBoxKullanim);
 
         autoCompleteIl = generalView.findViewById(R.id.autoCompleteIl);
         autoCompleteIlce = generalView.findViewById(R.id.autoCompleteIlce);
@@ -156,6 +159,21 @@ public class SignupFragment extends Fragment {
                 telefon = edtKayitTelefon.getText().toString();
                 sifre = edtKayitSifre.getText().toString();
                 sifreTekrar = edtKayitSifreTekrar.getText().toString();
+                boolean isAccepted = checkBoxKullanim.isChecked();
+
+                if(kullanıcıType.isEmpty())
+                {
+                    kullaniciAlert = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
+                    kullaniciAlert.setTitleText("Kullanıcı türü boş bırakılamaz");
+                    kullaniciAlert.show();
+                }
+
+                if(!isAccepted)
+                {
+                    checkAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
+                    checkAlert.setTitleText("Kullanım şartları kabul edilmeli!");
+                    checkAlert.show();
+                }
 
                 if(ad.isEmpty())
                 {
@@ -213,7 +231,7 @@ public class SignupFragment extends Fragment {
                 }
 
 
-                if(!ad.isEmpty() &&  !soyad.isEmpty() && !telefon.isEmpty() && !sifre.isEmpty() && isEmailValid && isPasswordMatch && sifre.length() >= 6)
+                if(!ad.isEmpty() &&  !soyad.isEmpty() && !telefon.isEmpty() && !sifre.isEmpty() && isEmailValid && isPasswordMatch && sifre.length() >= 6 && isAccepted && !kullanıcıType.isEmpty())
                 {
 
                     HashMap<String , HashMap<String , String>> node = new HashMap<>();

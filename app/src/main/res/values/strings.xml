@@ -2,6 +2,7 @@
     <string name="app_name">ServisCepde</string>
     <string name="Eposta">E-posta</string>
     <string name="Şifre">Şifre</string>
+    <string name="ŞifreNew">Şifre*</string>
     <string name="Giriş">Giriş Yap</string>
     <string name="Kayıt">Kayıt Ol</string>
     <string name="Veya">Veya</string>
@@ -10,9 +11,9 @@
     <string name="HemenSıfırla">Hemen Sıfırla</string>
     <string name="Ad">Ad</string>
     <string name="Soyad">Soyad</string>
-    <string name="ŞifreTekrar">Şifre Tekrar</string>
+    <string name="ŞifreTekrar">Şifre Tekrar*</string>
     <string name="NumaraDoğrula">Kayıt ol düğmesine tıkladıktan sonra numaranıza doğrulama kodu gönderilecek</string>
-    <string name="CepTelefonu">Cep Telefonu</string>
+    <string name="CepTelefonu">Cep Telefonu*</string>
     <string name="NumarayaKodGönder">Doğrulama kodu göndermek için lütfen 10 haneli olarak telefon numaranızı girin</string>
     <string name="ŞifremiSıfırla">Şifremi Sıfırla</string>
     <string name="İlan">İlanlar</string>
@@ -223,6 +224,8 @@
     <string name="Number2">0(541) 455 60 75</string>
 
     <string name="KayıtlıArama">Kayıtlı Aramalarım</string>
+    <string name="KullanımŞartları">Kullanım şartlarını okudum kabul ediyorum</string>
+    <string name="Okudum">okudum kabul ediyorum</string>
 
 
 </resources>
