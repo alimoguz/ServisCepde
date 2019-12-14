@@ -103,13 +103,13 @@ public class KategorIlanAdapter extends RecyclerView.Adapter<KategorIlanAdapter.
                 if(data.getResimler().contains("|"))
                 {
                     String [] images = data.getResimler().split(Pattern.quote("|"));
-                    Glide.with(itemView).load(App.IMAGE_URL + images[0]).into(imgIlanPhoto);
+                    Glide.with(itemView).load(App.IMAGE_URL + images[0]).error(R.drawable.default_image).into(imgIlanPhoto);
                     Log.i("Resim" ,App.IMAGE_URL + images[0] );
 
                 }
                 else
                 {
-                    Glide.with(itemView).load(App.IMAGE_URL + data.getResimler()).into(imgIlanPhoto);
+                    Glide.with(itemView).load(App.IMAGE_URL + data.getResimler()).error(R.drawable.default_image).into(imgIlanPhoto);
                     Log.i("Resim" ,App.IMAGE_URL + data.getResimler());
 
                 }
@@ -117,7 +117,11 @@ public class KategorIlanAdapter extends RecyclerView.Adapter<KategorIlanAdapter.
 
             if(data.getUcret() == null)
             {
-                txtIlanFiyat.setText("-");
+                txtIlanFiyat.setText("Belirtilmedi");
+            }
+            if(data.getUcret().equals("0"))
+            {
+                txtIlanFiyat.setText("Belirtilmedi");
             }
             else
             {

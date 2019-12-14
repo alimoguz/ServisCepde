@@ -96,7 +96,7 @@ public class FiltreIlanAdapter extends RecyclerView.Adapter<FiltreIlanAdapter.Vi
 
             if(data.getResimler() == null)
             {
-                Glide.with(itemView).load(R.drawable.default_image).into(imgIlanPhoto);
+                Glide.with(itemView).load(R.drawable.default_image).error(R.drawable.default_image).into(imgIlanPhoto);
             }
 
 
@@ -105,13 +105,13 @@ public class FiltreIlanAdapter extends RecyclerView.Adapter<FiltreIlanAdapter.Vi
                 if(data.getResimler().contains("|"))
                 {
                     String [] images = data.getResimler().split(Pattern.quote("|"));
-                    Glide.with(itemView).load(App.IMAGE_URL + images[0]).into(imgIlanPhoto);
+                    Glide.with(itemView).load(App.IMAGE_URL + images[0]).error(R.drawable.default_image).into(imgIlanPhoto);
                     Log.i("Resim" ,App.IMAGE_URL + images[0] );
 
                 }
                 else
                 {
-                    Glide.with(itemView).load(App.IMAGE_URL + data.getResimler()).into(imgIlanPhoto);
+                    Glide.with(itemView).load(App.IMAGE_URL + data.getResimler()).error(R.drawable.default_image).into(imgIlanPhoto);
                     Log.i("Resim" ,App.IMAGE_URL + data.getResimler());
 
                 }

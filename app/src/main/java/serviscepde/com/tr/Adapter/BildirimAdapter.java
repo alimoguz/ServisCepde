@@ -106,7 +106,6 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
                     HashMap<String , Object> hashMap = new HashMap<>();
                     HashMap<String , String> hashMap1 = new HashMap<>();
 
-
                     hashMap1.put("ID" , bildirim.getID());
                     hashMap.put("param" , hashMap1);
                     hashMap.put("Token" , userToken);
@@ -116,13 +115,17 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
                         @Override
                         public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
 
+                            if(bildirim.getStatus().equals("0"))
+                            {
+                                Glide.with(itemView).clear(imgBildirimDurum);
+                                Glide.with(itemView).load(R.drawable.icon_notification_read).into(imgBildirimDurum);
+                                NotificationFragment.bildirimAdapter.notifyDataSetChanged();
+                            }
 
                             bildirimAlert = new SweetAlertDialog(itemView.getContext() , SweetAlertDialog.NORMAL_TYPE);
                             bildirimAlert.setTitleText(bildirim.getTitle());
                             bildirimAlert.setContentText(bildirim.getMessage());
                             bildirimAlert.show();
-                            NotificationFragment.bildirimAdapter.notifyDataSetChanged();
-
 
 
                         }

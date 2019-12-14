@@ -2,6 +2,7 @@ package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -363,7 +364,7 @@ public class HomeFragment extends Fragment {
                             if(Resimler == null)
                             {
                                 Glide.with(ctx).load(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                        .skipMemoryCache(true).into(imgIlanGuncel1Photo);
+                                        .skipMemoryCache(true).error(R.drawable.default_image).into(imgIlanGuncel1Photo);
                             }
                             else
                             {
@@ -371,12 +372,12 @@ public class HomeFragment extends Fragment {
                                 {
                                     String [] images = Resimler.split(Pattern.quote("|"));
                                     Glide.with(ctx).load(App.IMAGE_URL + images[0]).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                            .skipMemoryCache(true).into(imgIlanGuncel1Photo);
+                                            .skipMemoryCache(true).error(R.drawable.default_image).into(imgIlanGuncel1Photo);
                                 }
                                 else
                                 {
                                     Glide.with(ctx).load(App.IMAGE_URL + Resimler).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                            .skipMemoryCache(true).into(imgIlanGuncel1Photo);
+                                            .skipMemoryCache(true).error(R.drawable.default_image).into(imgIlanGuncel1Photo);
                                 }
                             }
 
@@ -443,7 +444,7 @@ public class HomeFragment extends Fragment {
                             if(Resimler == null)
                             {
                                 Glide.with(ctx).load(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                        .skipMemoryCache(true).into(imgIlanGuncel2Photo);
+                                        .skipMemoryCache(true).error(R.drawable.default_image).into(imgIlanGuncel2Photo);
                             }
                             else
                             {
@@ -451,12 +452,12 @@ public class HomeFragment extends Fragment {
                                 {
                                     String [] images = Resimler.split(Pattern.quote("|"));
                                     Glide.with(ctx).load(App.IMAGE_URL + images[0]).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                            .skipMemoryCache(true).into(imgIlanGuncel2Photo);
+                                            .skipMemoryCache(true).error(R.drawable.default_image).into(imgIlanGuncel2Photo);
                                 }
                                 else
                                 {
                                     Glide.with(ctx).load(App.IMAGE_URL + Resimler).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                            .skipMemoryCache(true).into(imgIlanGuncel2Photo);
+                                            .skipMemoryCache(true).error(R.drawable.default_image).into(imgIlanGuncel2Photo);
                                 }
                             }
 
@@ -523,7 +524,7 @@ public class HomeFragment extends Fragment {
                             if(Resimler == null)
                             {
                                 Glide.with(ctx).load(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                        .skipMemoryCache(true).into(imgIlanGuncel3Photo);
+                                        .skipMemoryCache(true).error(R.drawable.default_image).into(imgIlanGuncel3Photo);
                             }
                             else
                             {
@@ -531,12 +532,12 @@ public class HomeFragment extends Fragment {
                                 {
                                     String [] images = Resimler.split(Pattern.quote("|"));
                                     Glide.with(ctx).load(App.IMAGE_URL + images[0]).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                            .skipMemoryCache(true).into(imgIlanGuncel3Photo);
+                                            .skipMemoryCache(true).error(R.drawable.default_image).into(imgIlanGuncel3Photo);
                                 }
                                 else
                                 {
                                     Glide.with(ctx).load(App.IMAGE_URL + Resimler).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                            .skipMemoryCache(true).into(imgIlanGuncel3Photo);
+                                            .skipMemoryCache(true).error(R.drawable.default_image).into(imgIlanGuncel3Photo);
                                 }
                             }
                             if(Ucret == null)
@@ -668,7 +669,7 @@ public class HomeFragment extends Fragment {
                             if(Resimler == null)
                             {
                                 Glide.with(ctx).load(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                        .skipMemoryCache(true).into(imgSon1);
+                                        .skipMemoryCache(true).error(R.drawable.default_image).into(imgSon1);
                             }
                             else
                             {
@@ -676,12 +677,12 @@ public class HomeFragment extends Fragment {
                                 {
                                     String [] images = Resimler.split(Pattern.quote("|"));
                                     Glide.with(ctx).load(App.IMAGE_URL + images[0]).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                            .skipMemoryCache(true).into(imgSon1);
+                                            .skipMemoryCache(true).error(R.drawable.default_image).into(imgSon1);
                                 }
                                 else
                                 {
                                     Glide.with(ctx).load(App.IMAGE_URL + Resimler).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                            .skipMemoryCache(true).into(imgSon1);
+                                            .skipMemoryCache(true).error(R.drawable.default_image).into(imgSon1);
                                 }
                             }
 
@@ -742,7 +743,7 @@ public class HomeFragment extends Fragment {
                             if(Resimler == null)
                             {
                                 Glide.with(ctx).load(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                        .skipMemoryCache(true).into(imgSon2);
+                                        .skipMemoryCache(true).error(R.drawable.default_image).into(imgSon2);
                             }
                             else
                             {
@@ -750,12 +751,12 @@ public class HomeFragment extends Fragment {
                                 {
                                     String [] images = Resimler.split(Pattern.quote("|"));
                                     Glide.with(ctx).load(App.IMAGE_URL + images[0]).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                            .skipMemoryCache(true).into(imgSon2);
+                                            .skipMemoryCache(true).error(R.drawable.default_image).into(imgSon2);
                                 }
                                 else
                                 {
                                     Glide.with(ctx).load(App.IMAGE_URL + Resimler).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                            .skipMemoryCache(true).into(imgSon2);
+                                            .skipMemoryCache(true).error(R.drawable.default_image).into(imgSon2);
                                 }
                             }
 
@@ -816,7 +817,7 @@ public class HomeFragment extends Fragment {
                             if(Resimler == null)
                             {
                                 Glide.with(ctx).load(R.drawable.default_image).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                        .skipMemoryCache(true).into(imgSon3);
+                                        .skipMemoryCache(true).error(R.drawable.default_image).into(imgSon3);
                             }
                             else
                             {
@@ -824,12 +825,12 @@ public class HomeFragment extends Fragment {
                                 {
                                     String [] images = Resimler.split(Pattern.quote("|"));
                                     Glide.with(ctx).load(App.IMAGE_URL + images[0]).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                            .skipMemoryCache(true).into(imgSon3);
+                                            .skipMemoryCache(true).error(R.drawable.default_image).into(imgSon3);
                                 }
                                 else
                                 {
                                     Glide.with(ctx).load(App.IMAGE_URL + Resimler).diskCacheStrategy(DiskCacheStrategy.NONE)
-                                            .skipMemoryCache(true).into(imgSon3);
+                                            .skipMemoryCache(true).error(R.drawable.default_image).into(imgSon3);
                                 }
                             }
 

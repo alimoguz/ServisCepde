@@ -83,6 +83,7 @@ public class FiltreFragment extends Fragment {
     private ArrayList<String> townNames , baslamaTownNames , bitisTownNames = new ArrayList<>();
     private static String searchText,orderBY;
     private String [] multipleSearch = {"Baslik" , "ilanAciklamasi"};
+    private static String categoryFromOut;
 
     private String userToken;
     private String acMarka,acModel,acKapasite,acAracDurum,acKullanabildiginizKapasiteler,acMotorHacim,acMotorGuc,acSatici,acVitesTipi,acYakitTipi,acKasko,acDurum = null;
@@ -174,6 +175,9 @@ public class FiltreFragment extends Fragment {
         kategoriler.add("Kiralık araç");
         kategoriler.add("Yedek parça");
 
+        kategoriAdapter = new ArrayAdapter<>(ctx , R.layout.support_simple_spinner_dropdown_item , kategoriler);
+        spinKategoriTip.setAdapter(kategoriAdapter);
+
         Bundle fromSearchFragment = this.getArguments();
 
         if(fromSearchFragment != null)
@@ -186,11 +190,74 @@ public class FiltreFragment extends Fragment {
             {
                 orderBY = fromSearchFragment.getString("orderBY");
             }
+            if(fromSearchFragment.getString("selectedCategory") != null)
+            {
+                categoryFromOut = fromSearchFragment.getString("selectedCategory");
+                Log.i("SelectedCategoryFromOut" , categoryFromOut);
+
+
+                if(categoryFromOut.equals("1"))
+                {
+                    linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
+                    loadAracaIs();
+                    spinKategoriTip.setSelection(2);
+                    Log.i("SpinPosition" , " " + spinKategoriTip.getSelectedItemPosition() );
+
+                }
+                if(categoryFromOut.equals("2"))
+                {
+                    linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
+                    loadAracaSofor();
+                    spinKategoriTip.setSelection(3);
+                    Log.i("SpinPosition" , " " + spinKategoriTip.getSelectedItemPosition() );
+                }
+                if(categoryFromOut.equals("3"))
+                {
+                    linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
+                    loadIseArac();
+                    spinKategoriTip.setSelection(1);
+                    Log.i("SpinPosition" , " " + spinKategoriTip.getSelectedItemPosition() );
+                }
+                if(categoryFromOut.equals("4"))
+                {
+                    linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
+                    loadSoforeIs();
+                    spinKategoriTip.setSelection(4);
+                    Log.i("SpinPosition" , " " + spinKategoriTip.getSelectedItemPosition() );
+                }
+                if(categoryFromOut.equals("5"))
+                {
+                    linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
+                    loadSatilikArac();
+                    spinKategoriTip.setSelection(5);
+                    Log.i("SpinPosition" , " " + spinKategoriTip.getSelectedItemPosition() );
+                }
+                if(categoryFromOut.equals("6"))
+                {
+                    linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
+                    loadKiralikArac();
+                    spinKategoriTip.setSelection(6);
+                    Log.i("SpinPosition" , " " + spinKategoriTip.getSelectedItemPosition() );
+                }
+                if(categoryFromOut.equals("7"))
+                {
+                    linFiltreler.setVisibility(View.VISIBLE);
+                    openEverything();
+                    loadYedekParca();
+                    spinKategoriTip.setSelection(7);
+                    Log.i("SpinPosition" , " " + spinKategoriTip.getSelectedItemPosition() );
+                }
+            }
         }
 
 
-        kategoriAdapter = new ArrayAdapter<>(ctx , R.layout.support_simple_spinner_dropdown_item , kategoriler);
-        spinKategoriTip.setAdapter(kategoriAdapter);
+
 
         sehirler = DownloadClass.getCities();
         cityNames = DownloadClass.getCityNames();
@@ -421,7 +488,6 @@ public class FiltreFragment extends Fragment {
                     Glide.with(ctx).load(R.drawable.satilik_arac).into(imgType);
                     loadSatilikArac();
                 }
-
                 if(kategoriID == 6)
                 {
                     linFiltreler.setVisibility(View.VISIBLE);
@@ -429,7 +495,6 @@ public class FiltreFragment extends Fragment {
                     Glide.with(ctx).load(R.drawable.kiralik_arac).into(imgType);
                     loadKiralikArac();
                 }
-
                 if(kategoriID == 7)
                 {
                     linFiltreler.setVisibility(View.VISIBLE);
@@ -445,6 +510,7 @@ public class FiltreFragment extends Fragment {
 
             }
         });
+
 
         txtFiltreUygula.setOnClickListener(new View.OnClickListener() {
             @Override

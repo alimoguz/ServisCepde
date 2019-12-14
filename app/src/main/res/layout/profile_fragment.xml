@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
@@ -25,7 +27,7 @@
         android:id="@+id/txtUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alim Oğuz"
+        tools:text="Alim Oğuz"
         android:textColor="@color/colorBlack"
         android:fontFamily="@font/myriadpro_regular"
         android:textSize="@dimen/_14ssp"
@@ -37,7 +39,7 @@
         android:id="@+id/txtPhoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0(554) 596 22 01"
+        tools:text="0(554) 596 22 01"
         android:textColor="@color/colorBlack"
         android:fontFamily="@font/myriadpro_regular"
         android:textSize="@dimen/_14ssp"
@@ -76,6 +78,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_15sdp"
         />
+
 
 
     <LinearLayout

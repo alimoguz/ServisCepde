@@ -98,13 +98,13 @@ public class IlanlarımAdapter extends RecyclerView.Adapter<IlanlarımAdapter.Vi
                 if(data.getResimler().contains("|"))
                 {
                     String [] images = data.getResimler().split(Pattern.quote("|"));
-                    Glide.with(itemView).load(App.IMAGE_URL + images[0]).into(imgIlanim);
+                    Glide.with(itemView).load(App.IMAGE_URL + images[0]).error(R.drawable.default_image).into(imgIlanim);
                     Log.i("Resim" ,App.IMAGE_URL + images[0] );
 
                 }
                 else
                 {
-                    Glide.with(itemView).load(App.IMAGE_URL + data.getResimler()).into(imgIlanim);
+                    Glide.with(itemView).load(App.IMAGE_URL + data.getResimler()).error(R.drawable.default_image).into(imgIlanim);
                     Log.i("Resim" ,App.IMAGE_URL + data.getResimler());
 
                 }

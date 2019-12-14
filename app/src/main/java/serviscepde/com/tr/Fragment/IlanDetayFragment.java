@@ -56,9 +56,9 @@ public class IlanDetayFragment extends Fragment {
     private TextView txtIlanDetayAciklama,txtFiyat,txtIlanSahibi,txtIlanTamKonum,txtIlanNo,txtIlanTarih,txtAracMarkasi,txtAracModel,txtAracAltModel,txtAracYil,txtAracKapasite
             ,txtServisBaslamaSaat,txtServisBitisSaat,txtServisBaslamaKonum,txtServisBitisKonum,txtFirmaGirisSaat,txtFirmaCikisSaat,txtToplamKM,txtGunSayisi,txtMotorHacim,
             txtMotorGuc,txtKimden,txtAracDurumu,txtTecrube,txtPlaka,txtReferans,txtUcretBeklentisi,txtKapasiteler,txtYas,txtEhliyet,txtSrc,txtAylikFiyati,txtHaftalikFiyati,
-            txtVitesTipi,txtYakitTipi,txtKaskoDurum,txtParcaMarkasi,txtCikmaYedekParca,txtYedekParcaDurumu,txtAracOzellikler,txtBelgeler;
+            txtVitesTipi,txtYakitTipi,txtKaskoDurum,txtParcaMarkasi,txtCikmaYedekParca,txtYedekParcaDurumu,txtAracOzellikler,txtBelgeler,txtIlanDetayBaslik;
 
-    private String Aciklama,Fiyat,IlanSahibi,Konum,IlanNo,IlanTarih,AracMarkasi,AracModel,AracAltModel,AracYil,AracKapasite
+    private String Baslik,Aciklama,Fiyat,IlanSahibi,Konum,IlanNo,IlanTarih,AracMarkasi,AracModel,AracAltModel,AracYil,AracKapasite
             ,ServisBaslamaSaat,ServisBitisSaat,ServisBaslamaKonum,ServisBitisKonum,FirmaGirisSaat,FirmaCikisSaat,ToplamKM,GunSayisi,MotorHacim,
             MotorGuc,Kimden,AracDurumu,Tecrube,Plaka,Referans,UcretBeklentisi,Kapasiteler,Yas,Ehliyet,Src,AylikFiyati,HaftalikFiyati,
             VitesTipi,YakitTipi,KaskoDurum,ParcaMarkasi,CikmaYedekParca,YedekParcaDurumu,Ozellikler,Belgeler;
@@ -129,6 +129,7 @@ public class IlanDetayFragment extends Fragment {
         txtYedekParcaDurumu = generalView.findViewById(R.id.txtYedekParcaDurumu);
         txtAracOzellikler = generalView.findViewById(R.id.txtAracOzellikler);
         txtBelgeler = generalView.findViewById(R.id.txtBelgeler);
+        txtIlanDetayBaslik = generalView.findViewById(R.id.txtIlanDetayBaslik);
 
 
         linMarka = generalView.findViewById(R.id.linMarka);
@@ -203,6 +204,18 @@ public class IlanDetayFragment extends Fragment {
 
                     gsm = ilanDetay.getJSONObject("Users").getString("GSM");
 
+                    if(ilanDetay.has("Baslik"))
+                    {
+                        Baslik = ilanDetay.getString("Baslik");
+                        Log.i("Başlık", Baslik);
+                    }
+                    else
+                    {
+                        Baslik = "-";
+                        Log.i("Baslik" , Baslik);
+
+                    }
+
                     if(ilanDetay.has("ilanAciklamasi"))
                     {
                         Aciklama = ilanDetay.getString("ilanAciklamasi");
@@ -217,6 +230,10 @@ public class IlanDetayFragment extends Fragment {
                     if(ilanDetay.has("Ucret"))
                     {
                         Fiyat = ilanDetay.getString("Ucret");
+                        if(Fiyat.equals("0"))
+                        {
+                            Fiyat = "Belirtilmedi";
+                        }
                         Log.i("Fiyat" , Fiyat);
                     }
                     else
@@ -820,6 +837,7 @@ public class IlanDetayFragment extends Fragment {
 
     private void iseAracYukle()
     {
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
@@ -868,6 +886,7 @@ public class IlanDetayFragment extends Fragment {
 
     private void aracaIsYukle()
     {
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
@@ -915,7 +934,7 @@ public class IlanDetayFragment extends Fragment {
 
     private void aracaSoforYukle()
     {
-
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
@@ -964,6 +983,7 @@ public class IlanDetayFragment extends Fragment {
 
     private void soforeIsYukle()
     {
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
@@ -1012,6 +1032,7 @@ public class IlanDetayFragment extends Fragment {
 
     private void satilikAracYukle()
     {
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
@@ -1061,6 +1082,7 @@ public class IlanDetayFragment extends Fragment {
 
     private void kiralikAracYukle()
     {
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
@@ -1110,7 +1132,7 @@ public class IlanDetayFragment extends Fragment {
 
     private void yedekParcaYukle()
     {
-
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
