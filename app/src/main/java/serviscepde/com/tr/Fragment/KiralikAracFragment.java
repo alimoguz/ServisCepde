@@ -1,6 +1,7 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -407,6 +409,15 @@ public class KiralikAracFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                txtKiralikAracGonder.setClickable(false);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtKiralikAracGonder.setClickable(true);
+                    }
+                },3000);
+
                 baslik = edtKiralikAracBaslik.getText().toString();
                 fiyat = edtKiralikAracFiyat.getText().toString();
                 aciklama = edtKiralikAracAciklama.getText().toString();
@@ -476,6 +487,14 @@ public class KiralikAracFragment extends Fragment {
                                 {
                                     ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                     ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
+                                    ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss(DialogInterface dialog) {
+                                            Intent main = new Intent(ctx , MainActivity.class);
+                                            startActivity(main);
+                                            getActivity().finish();
+                                        }
+                                    });
                                     ilanOnay.show();
 
                                 }

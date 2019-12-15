@@ -2,9 +2,11 @@ package serviscepde.com.tr.Fragment;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -494,6 +496,14 @@ public class AracaIsFragment extends Fragment {
             public void onClick(View v) {
 
 
+                txtAracaIsGonder.setClickable(false);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtAracaIsGonder.setClickable(true);
+                    }
+                },3000);
 
                 baslik = edtAracaIsBaslik.getText().toString();
                 fiyat = edtAracaIsFiyat.getText().toString();
@@ -559,11 +569,9 @@ public class AracaIsFragment extends Fragment {
                         {
                             imageArray[i] = base64Photo.get(i);
                         }
-
                     }
 
-
-                    Log.i("SwitchStates" , switchStates);
+                    //Log.i("SwitchStates" , switchStates);
 
                     HashMap<String , Object> hashMap = new HashMap<>();
                     HashMap<String , Object> hashMap1 = new HashMap<>();
@@ -614,14 +622,20 @@ public class AracaIsFragment extends Fragment {
                             SweetAlertDialog ilanHata;
                             SweetAlertDialog ilanOnay;
 
-
-
                             try {
 
                                 if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
                                 {
                                     ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                     ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
+                                    ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss(DialogInterface dialog) {
+                                            Intent main = new Intent(ctx , MainActivity.class);
+                                            startActivity(main);
+                                            getActivity().finish();
+                                        }
+                                    });
                                     ilanOnay.show();
                                 }
 

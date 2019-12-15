@@ -1,9 +1,11 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -430,6 +432,15 @@ public class AracaSoforFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                txtAracaSoforGonder.setClickable(false);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtAracaSoforGonder.setClickable(true);
+                    }
+                },3000);
+
                 baslik = edtAracaSoforBaslik.getText().toString();
                 fiyat = edtAracaSoforFiyat.getText().toString();
                 aciklama = edtAracaSoforAciklama.getText().toString();
@@ -519,6 +530,14 @@ public class AracaSoforFragment extends Fragment {
                                {
                                    ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                    ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
+                                   ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                       @Override
+                                       public void onDismiss(DialogInterface dialog) {
+                                           Intent main = new Intent(ctx , MainActivity.class);
+                                           startActivity(main);
+                                           getActivity().finish();
+                                       }
+                                   });
                                    ilanOnay.show();
 
                                }

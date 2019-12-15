@@ -3,9 +3,11 @@ package serviscepde.com.tr.Fragment;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -540,6 +542,15 @@ public class IseAracFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                txtIseAracGonder.setClickable(false);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtIseAracGonder.setClickable(true);
+                    }
+                },3000);
+
                 baslik = edtIseAracBaslik.getText().toString();
                 fiyat = edtIseAracFiyat.getText().toString();
                 aciklama = edtIseAracAciklama.getText().toString();
@@ -661,6 +672,14 @@ public class IseAracFragment extends Fragment {
                                 {
                                     ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                     ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
+                                    ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss(DialogInterface dialog) {
+                                            Intent main = new Intent(ctx , MainActivity.class);
+                                            startActivity(main);
+                                            getActivity().finish();
+                                        }
+                                    });
                                     ilanOnay.show();
                                 }
 
