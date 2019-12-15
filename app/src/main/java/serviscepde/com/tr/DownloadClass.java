@@ -20,6 +20,7 @@ import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.Ilce;
 import serviscepde.com.tr.Models.Ilceler.IlceResponse;
 import serviscepde.com.tr.Models.Ilceler.IlceResponseDetail;
+import serviscepde.com.tr.Models.Kapasite;
 import serviscepde.com.tr.Models.MarkaModel;
 import serviscepde.com.tr.Models.Response.BaseResponse;
 import serviscepde.com.tr.Models.Response.ResponseDetail;
@@ -31,11 +32,13 @@ public class DownloadClass {
     public static ArrayList<City> cities = new ArrayList<>();
     public static ArrayList<Ilce> towns = new ArrayList<>();
     public static ArrayList<MarkaModel> markaModelsArray = new ArrayList<>();
+    public static ArrayList<Kapasite> kapasiteList =  new ArrayList<>();
 
     public static void downloadAllVariables() {
         downloadCities();
         downloadTowns();
         downloadMarkaModel();
+        downloadKapasite();
     }
 
     private static void downloadMarkaModel() {
@@ -80,35 +83,6 @@ public class DownloadClass {
             }
         });
 
- /*       MarkaModel a = new MarkaModel("1" , "BMC" , "0");
-        MarkaModel a1 = new MarkaModel("3" , "Citroen" , "0");
-        MarkaModel a2 = new MarkaModel("5" , "Diğer Markalar" , "0");
-        MarkaModel a3 = new MarkaModel("7" , "Farketmez" , "0");
-        MarkaModel a4 = new MarkaModel("8" , "Fiat" , "0");
-
-        MarkaModel a5 = new MarkaModel("2" , "Levend" , "1");
-        MarkaModel a6 = new MarkaModel("11" , "Levend 2" , "1");
-
-        MarkaModel a7 = new MarkaModel("4" , "Jumper" , "3");
-
-        MarkaModel a8 = new MarkaModel("6" , "Tüm Modeller" , "5");
-
-        MarkaModel a9 = new MarkaModel("9" , "Diğer Modeller" , "8");
-        MarkaModel a10 = new MarkaModel("10" , "Ducato" , "8");
-
-
-        markaModels.add(a);
-        markaModels.add(a1);
-        markaModels.add(a2);
-        markaModels.add(a3);
-        markaModels.add(a4);
-        markaModels.add(a5);
-        markaModels.add(a6);
-        markaModels.add(a7);
-        markaModels.add(a8);
-        markaModels.add(a9);
-        markaModels.add(a10);
-*/
 
     }
 
@@ -191,6 +165,78 @@ public class DownloadClass {
 
             }
         });
+    }
+
+    private static void downloadKapasite() {
+
+        kapasiteList = new ArrayList<>();
+        Call<BaseResponse> kapasiteCall = App.getApiService().getKapasite();
+        kapasiteCall.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                ResponseDetail detail = response.body().getResponseDetail();
+                String token = detail.getResult();
+                JSONObject kapasite = Utils.jwtToJsonObject(token);
+
+
+                try {
+                    JSONObject kapasiteler = kapasite.getJSONObject("OutPutMessage").getJSONObject("Data");
+
+                    for(int i = 1; i <= kapasiteler.length(); i++)
+                    {
+
+                        String ID = String.valueOf(i);
+                        String capacity = kapasiteler.getString(String.valueOf(i));
+
+                        Kapasite kapasite1 = new Kapasite(ID, capacity);
+                        kapasiteList.add(kapasite1);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+            }
+        });
+
+
+
+    }
+
+
+    public static ArrayList<Kapasite> getKapasite()
+    {
+        return kapasiteList;
+    }
+
+    public static ArrayList<String> getKapasiteNames()
+    {
+        ArrayList<String> kapasiteNames = new ArrayList<>();
+        for(Kapasite kapasite : kapasiteList)
+        {
+            kapasiteNames.add(kapasite.getCapacity());
+        }
+        return  kapasiteNames;
+    }
+
+    public static String getKapasiteIdWithName(String kapasiteName)
+    {
+        for(Kapasite kapasite : kapasiteList)
+        {
+            if(kapasite.getCapacity().equals(kapasiteName))
+            {
+                return kapasite.getID();
+            }
+        }
+
+        return "";
     }
 
     public static ArrayList<City> getCities() {

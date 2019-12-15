@@ -54,6 +54,8 @@ public class IlanDetayFragment extends Fragment {
     Context ctx;
     ArrayList<String> photos = new ArrayList<>();
 
+    private boolean isVisibe = false;
+
     private ExtendedFloatingActionButton fabIcon,fabIconCall,fabIconMessage;
     private TextView txtIlanDetayAciklama,txtFiyat,txtIlanSahibi,txtIlanTamKonum,txtIlanNo,txtIlanTarih,txtAracMarkasi,txtAracModel,txtAracAltModel,txtAracYil,txtAracKapasite
             ,txtServisBaslamaSaat,txtServisBitisSaat,txtServisBaslamaKonum,txtServisBitisKonum,txtFirmaGirisSaat,txtFirmaCikisSaat,txtToplamKM,txtGunSayisi,txtMotorHacim,
@@ -768,70 +770,46 @@ public class IlanDetayFragment extends Fragment {
                                 Log.i("FabIcon" , "clicked");
                                 Log.i("FabIconCall" , "" + fabIconCall.getVisibility() + "\n + fabIconMessage" +  fabIconMessage.getVisibility());
 
-
-                                if(fabIconCall.getVisibility() == View.GONE && fabIconMessage.getVisibility() == View.GONE)
+                                if(isVisibe)
                                 {
-                                    Log.i("FabIconCall" , "" + fabIconCall.getVisibility() + "\n + fabIconMessage" +  fabIconMessage.getVisibility());
+                                    fabIconCall.setVisibility(View.GONE);
+                                    fabIconMessage.setVisibility(View.GONE);
+                                }
+                                if(!isVisibe)
+                                {
                                     fabIconCall.setVisibility(View.VISIBLE);
                                     fabIconMessage.setVisibility(View.VISIBLE);
                                 }
 
+                                isVisibe = !isVisibe;
+
+
                             }
                         });
 
-                    /*fabIconCall.setOnClickListener(new View.OnClickListener() {
+                    fabIconCall.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            Intent callIntent = new Intent(Intent.ACTION_CALL);
+                            Intent callIntent = new Intent(Intent.ACTION_DIAL);
                             callIntent.setData(Uri.parse("tel:" + gsm));
                             startActivity(callIntent);
 
                         }
-                    });*/
+                    });
 
 
+                    fabIconMessage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            SweetAlertDialog mesajAlert = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                            mesajAlert.setTitleText("Çok yakında hizmetinizde");
+                            mesajAlert.show();
 
 
-                    /*Aciklama = ilanDetay.getString("ilanAciklamasi");
-                    Fiyat = ilanDetay.getString("Ucret");
-                    IlanSahibi = ilanDetay.getJSONObject("Users").getString("UserName").concat(" ").concat(ilanDetay.getJSONObject("Users").getString("SurName"));
-                    Konum = ilanDetay.getString("ilanCityText").concat("/").concat(ilanDetay.getString("ilanSemtleriText"));
-                    IlanNo = ilanDetay.getString("ID");
-                    IlanTarih = ilanDetay.getString("create_at");
-                    AracMarkasi = ilanDetay.getString("AracMarkasiText");
-                    AracModel = ilanDetay.getString("AracModeliText");
-                    AracAltModel = ilanDetay.getString("AracSubModeli");
-                    AracYil = ilanDetay.getString("AracYili");
-                    AracKapasite = ilanDetay.getString("AracKapasiteText");
-                    ServisBaslamaSaat = ilanDetay.getString("ServiseBaslamaSaati");
-                    ServisBitisSaat = ilanDetay.getString("ServisBitisSaati");
-                    ServisBaslamaKonum = ilanDetay.getString("ServiseBaslamaCityText").concat("/").concat(ilanDetay.getString("ServiseBaslamaSemtleriText"));
-                    ServisBitisKonum = ilanDetay.getString("ServisBitisCityText").concat("/").concat(ilanDetay.getString("ServisBitisSemtleriText"));
-                    FirmaGirisSaat = ilanDetay.getString("FirmayaGirisSaati");
-                    FirmaCikisSaat = ilanDetay.getString("FirmadanCikisSaati");
-                    ToplamKM = ilanDetay.getString("ToplamKM");
-                    GunSayisi = ilanDetay.getString("CalisilacakGunSayisi");
-                    MotorHacim = ilanDetay.getString("MotorHacmiText");
-                    MotorGuc = ilanDetay.getString("MotorGucuText");
-                    Kimden = ilanDetay.getString("Kimden");
-                    AracDurumu = ilanDetay.getString("AracDurumu");
-                    Tecrube = ilanDetay.getString("Tecrube");
-                    Plaka = ilanDetay.getString("Plaka");
-                    Referans = ilanDetay.getString("Referanslar");
-                    UcretBeklentisi = ilanDetay.getString("UcretBeklentisi");
-                    Kapasiteler = ilanDetay.getString("KullanabildiginizKapasiteler");
-                    Yas = ilanDetay.getString("Yasiniz");
-                    Ehliyet = ilanDetay.getString("Ehliyetiniz");
-                    Src = ilanDetay.getString("SRC");
-                    AylikFiyati = ilanDetay.getString("AylikFiyat");
-                    HaftalikFiyati = ilanDetay.getString("HaftalikFiyat");
-                    VitesTipi = ilanDetay.getString("VitesTipi");
-                    YakitTipi = ilanDetay.getString("YakitTipi");
-                    KaskoDurum = ilanDetay.getString("Kasko");
-                    ParcaMarkasi = ilanDetay.getString("ParcaMarkasi");
-                    CikmaYedekParca = ilanDetay.getString("CikmaYedekParca");
-                    YedekParcaDurumu = ilanDetay.getString("YedekParcaDurum");*/
+                        }
+                    });
 
 
 

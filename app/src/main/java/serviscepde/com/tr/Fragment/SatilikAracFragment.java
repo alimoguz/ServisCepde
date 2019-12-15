@@ -30,6 +30,7 @@ import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
 import serviscepde.com.tr.Models.Ilce;
+import serviscepde.com.tr.Models.Kapasite;
 import serviscepde.com.tr.Models.Sehirler.SehirResponse;
 import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.R;
@@ -86,6 +87,9 @@ public class SatilikAracFragment extends Fragment {
     private String cityId;
     private String townId;
     private ArrayList<String> townNames = new ArrayList<>();
+
+    private List<Kapasite> kapasites = new ArrayList<>();
+    private List<String> kapasiteNames = new ArrayList<>();
 
 
     @Nullable
@@ -308,11 +312,13 @@ public class SatilikAracFragment extends Fragment {
         sehirler = DownloadClass.getCities();
         cityNames = DownloadClass.getCityNames();
         marka = DownloadClass.getMarkaNames();
+        kapasites = DownloadClass.getKapasite();
+        kapasiteNames = DownloadClass.getKapasiteNames();
 
 
 
         Utils.setAutoCompleteAdapter(autoCompleteSatilikAracil , cityNames , ctx);
-        Utils.setAutoCompleteAdapter(autoCompleteSatilikAracKapasite ,App.getKapasite() ,ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteSatilikAracKapasite , kapasiteNames ,ctx);
         Utils.setAutoCompleteAdapter(autoCompleteSatilikAracMotorGucu ,App.getMotorGucu() ,ctx);
         Utils.setAutoCompleteAdapter(autoCompleteSatilikAracMotorHacmi ,App.getMotorHacmi() ,ctx);
         Utils.setAutoCompleteAdapter(autoCompleteSatilikAracKimden ,App.getKimden() ,ctx);
@@ -369,7 +375,8 @@ public class SatilikAracFragment extends Fragment {
         autoCompleteSatilikAracKapasite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                actvKapasite = String.valueOf(position + 1);
+                actvKapasite = parent.getItemAtPosition(position).toString();
+                actvKapasite = DownloadClass.getKapasiteIdWithName(actvKapasite);
             }
         });
         autoCompleteSatilikAracMotorGucu.setOnItemClickListener(new AdapterView.OnItemClickListener() {

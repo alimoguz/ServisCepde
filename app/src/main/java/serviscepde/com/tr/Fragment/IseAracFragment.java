@@ -35,6 +35,7 @@ import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
 import serviscepde.com.tr.Models.Ilce;
+import serviscepde.com.tr.Models.Kapasite;
 import serviscepde.com.tr.Models.Sehirler.SehirResponse;
 import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.R;
@@ -88,6 +89,9 @@ public class IseAracFragment extends Fragment {
     private String actvIseAracMarka,actvIseAracModel,actvIseAracKapasite;
 
     private SweetAlertDialog emptyDialog;
+
+    private List<Kapasite> kapasites = new ArrayList<>();
+    private List<String> kapasiteNames = new ArrayList<>();
 
 
     final static  Calendar takvim = Calendar.getInstance();
@@ -337,12 +341,14 @@ public class IseAracFragment extends Fragment {
         sehirler = DownloadClass.getCities();
         cityNames = DownloadClass.getCityNames();
         marka = DownloadClass.getMarkaNames();
+        kapasites = DownloadClass.getKapasite();
+        kapasiteNames = DownloadClass.getKapasiteNames();
 
 
         setAutoCompleteAdapter(autoCompleteIseAracil , cityNames);
         setAutoCompleteAdapter(autoCompleteIseAracServisBaslamaili , cityNames);
         setAutoCompleteAdapter(autoCompleteIseAracServisBitisili , cityNames);
-        setAutoCompleteAdapter(autoCompleteIseAracKapasite , App.getKapasite());
+        setAutoCompleteAdapter(autoCompleteIseAracKapasite , kapasiteNames);
         setAutoCompleteAdapter(autoCompleteIseAracMarka , marka);
 
         autoCompleteIseAracMarka.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -444,7 +450,8 @@ public class IseAracFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                actvIseAracKapasite = String.valueOf(position + 1);
+                actvIseAracKapasite = parent.getItemAtPosition(position).toString();
+                actvIseAracKapasite = DownloadClass.getKapasiteIdWithName(actvIseAracKapasite);
             }
         });
 

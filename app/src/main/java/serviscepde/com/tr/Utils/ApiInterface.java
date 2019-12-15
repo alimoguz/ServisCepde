@@ -81,6 +81,9 @@ public interface ApiInterface {
     @POST("index.php?func=Users&file=SavedSearches&ReturnType=1")
     Call<BaseResponse> kayitliAramalarım(@Body HashMap body);
 
+    @POST("index.php?func=Genel&file=AracKapasiteList&ReturnType=1")
+    Call<BaseResponse> getKapasite();
+
 
 
 }

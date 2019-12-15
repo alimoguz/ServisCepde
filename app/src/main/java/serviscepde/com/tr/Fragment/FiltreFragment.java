@@ -40,6 +40,7 @@ import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.FilterResultActivity;
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.City;
+import serviscepde.com.tr.Models.Kapasite;
 import serviscepde.com.tr.R;
 import serviscepde.com.tr.SplashActivity;
 import serviscepde.com.tr.Utils.Utils;
@@ -89,6 +90,9 @@ public class FiltreFragment extends Fragment {
 
     private String userToken;
     private String acMarka,acModel,acKapasite,acAracDurum,acKullanabildiginizKapasiteler,acMotorHacim,acMotorGuc,acSatici,acVitesTipi,acYakitTipi,acKasko,acDurum = null;
+
+    private List<Kapasite> kapasites = new ArrayList<>();
+    private List<String> kapasiteNames = new ArrayList<>();
 
 
     @Nullable
@@ -264,14 +268,16 @@ public class FiltreFragment extends Fragment {
         sehirler = DownloadClass.getCities();
         cityNames = DownloadClass.getCityNames();
         marka = DownloadClass.getMarkaNames();
+        kapasites = DownloadClass.getKapasite();
+        kapasiteNames = DownloadClass.getKapasiteNames();
 
 
         Utils.setAutoCompleteAdapter(acFiltreIl , cityNames ,ctx);
         Utils.setAutoCompleteAdapter(acFiltreServisBaslamaIl , cityNames ,ctx);
         Utils.setAutoCompleteAdapter(acFiltreServisBitisIl , cityNames ,ctx);
         Utils.setAutoCompleteAdapter(acFiltreMarka , marka ,ctx);
-        Utils.setAutoCompleteAdapter(acFiltreKapasite , App.getKapasite() , ctx);
-        Utils.setAutoCompleteAdapter(acFiltreKullanilabilirKapasiteler , App.getKapasite() , ctx);
+        Utils.setAutoCompleteAdapter(acFiltreKapasite , kapasiteNames , ctx);
+        Utils.setAutoCompleteAdapter(acFiltreKullanilabilirKapasiteler , kapasiteNames , ctx);
         Utils.setAutoCompleteAdapter(acFiltreAracDurum , App.getAracDurumu(), ctx);
         Utils.setAutoCompleteAdapter(acFiltreMotorHacim , App.getMotorHacmi() , ctx);
         Utils.setAutoCompleteAdapter(acFiltreMotorGuc , App.getMotorGucu() , ctx);
@@ -415,7 +421,8 @@ public class FiltreFragment extends Fragment {
         acFiltreKapasite.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                acKapasite = String.valueOf(position + 1);
+                acKapasite = parent.getItemAtPosition(position).toString();
+                acKapasite = DownloadClass.getKapasiteIdWithName(acKapasite);
                 Log.i("Kapasite" , acKapasite);
             }
         });
@@ -429,7 +436,7 @@ public class FiltreFragment extends Fragment {
         acFiltreKullanilabilirKapasiteler.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String tmp = String.valueOf(position + 1).concat(",");
+                String tmp = DownloadClass.getKapasiteIdWithName(parent.getItemAtPosition(position).toString()).concat(",");
                 acKullanabildiginizKapasiteler = acKullanabildiginizKapasiteler.concat(tmp);
                 Log.i("KullanabildiğiKapasite" , acKullanabildiginizKapasiteler);
             }

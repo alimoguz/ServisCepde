@@ -30,6 +30,7 @@ import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
+import serviscepde.com.tr.Models.Kapasite;
 import serviscepde.com.tr.Models.Sehirler.SehirResponse;
 import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.R;
@@ -83,6 +84,9 @@ public class KiralikAracFragment extends Fragment {
     private String cityId;
     private String townId;
     private ArrayList<String> townNames = new ArrayList<>();
+
+    private List<Kapasite> kapasites = new ArrayList<>();
+    private List<String> kapasiteNames = new ArrayList<>();
 
     private Context ctx;
 
@@ -308,9 +312,11 @@ public class KiralikAracFragment extends Fragment {
         sehirler = DownloadClass.getCities();
         cityNames = DownloadClass.getCityNames();
         marka = DownloadClass.getMarkaNames();
+        kapasites = DownloadClass.getKapasite();
+        kapasiteNames = DownloadClass.getKapasiteNames();
 
         Utils.setAutoCompleteAdapter(autoCompleteKiralikAracil , cityNames , ctx );
-        Utils.setAutoCompleteAdapter(autoCompleteKiralikAracKapasite , App.getKapasite() , ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteKiralikAracKapasite , kapasiteNames , ctx);
         Utils.setAutoCompleteAdapter(autoCompleteKiralikAracKasko, App.getKaskoTuru() , ctx);
         Utils.setAutoCompleteAdapter(autoCompleteKiralikAracVitesTipi , App.getVitesTipi() ,ctx);
         Utils.setAutoCompleteAdapter(autoCompleteKiralikAracYakitTipi , App.getYakitTipi() , ctx);
@@ -369,7 +375,8 @@ public class KiralikAracFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                actvKapasite = String.valueOf(position + 1);
+                actvKapasite = parent.getItemAtPosition(position).toString();
+                actvKapasite = DownloadClass.getKapasiteIdWithName(actvKapasite);
             }
         });
 

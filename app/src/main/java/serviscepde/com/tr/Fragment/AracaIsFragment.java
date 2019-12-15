@@ -32,6 +32,7 @@ import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
+import serviscepde.com.tr.Models.Kapasite;
 import serviscepde.com.tr.Models.Sehirler.SehirResponse;
 import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.R;
@@ -96,6 +97,8 @@ public class AracaIsFragment extends Fragment {
     private List<String> marka = new ArrayList<>();
     private List<String> model = new ArrayList<>();
     private ArrayList<String> townNames , baslamaTownNames  = new ArrayList<>();
+    private List<Kapasite> kapasites = new ArrayList<>();
+    private List<String> kapasiteNames = new ArrayList<>();
 
     private String cityId,baslamaCityId;
     private String townId,baslamaTownId;
@@ -340,12 +343,15 @@ public class AracaIsFragment extends Fragment {
         sehirler = DownloadClass.getCities();
         cityNames = DownloadClass.getCityNames();
         marka = DownloadClass.getMarkaNames();
+        kapasites = DownloadClass.getKapasite();
+        kapasiteNames = DownloadClass.getKapasiteNames();
+
 
 
 
         Utils.setAutoCompleteAdapter(autoCompleteAracaIsil , cityNames ,ctx);
         Utils.setAutoCompleteAdapter(autoCompleteAracaIsServisBaslamaili , cityNames  ,ctx);
-        Utils.setAutoCompleteAdapter(autoCompleteAracaIsKapasite , App.getKapasite() , ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteAracaIsKapasite , kapasiteNames , ctx);
         Utils.setAutoCompleteAdapter(autoCompleteAracaIsAracDurumu , aracDurumu , ctx);
         Utils.setAutoCompleteAdapter(autoCompleteAracaIsMarka , marka , ctx);
 
@@ -426,7 +432,8 @@ public class AracaIsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                actvKapasite = String.valueOf(position + 1);
+                actvKapasite = parent.getItemAtPosition(position).toString();
+                actvKapasite = DownloadClass.getKapasiteIdWithName(actvKapasite);
                 Log.i("SelectedKapasite" , actvKapasite);
             }
         });

@@ -31,6 +31,7 @@ import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
+import serviscepde.com.tr.Models.Kapasite;
 import serviscepde.com.tr.R;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
@@ -87,6 +88,8 @@ public class SoforeIsFragment extends Fragment {
     private String cityId,baslamaCityId;
     private String townId,baslamaTownId;
     private ArrayList<String> townNames , baslamaTownNames  = new ArrayList<>();
+    private List<Kapasite> kapasites = new ArrayList<>();
+    private List<String> kapasiteNames = new ArrayList<>();
 
 
 
@@ -302,6 +305,8 @@ public class SoforeIsFragment extends Fragment {
 
         sehirler = DownloadClass.getCities();
         cityNames = DownloadClass.getCityNames();
+        kapasites = DownloadClass.getKapasite();
+        kapasiteNames = DownloadClass.getKapasiteNames();
 
 
 
@@ -378,7 +383,7 @@ public class SoforeIsFragment extends Fragment {
 
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(ctx, R.layout.dropdown_item, App.getKapasite());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(ctx, R.layout.dropdown_item, kapasiteNames);
 
         autoCompleteSoforeIsKapasite.setAdapter(adapter);
         autoCompleteSoforeIsKapasite.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -389,7 +394,7 @@ public class SoforeIsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                String tmp = String.valueOf(position + 1).concat(",");
+                String tmp = DownloadClass.getKapasiteIdWithName(parent.getItemAtPosition(position).toString()).concat(",");
                 actvKapasite = actvKapasite.concat(tmp);
                 Log.i("Kapasite" , actvKapasite);
 

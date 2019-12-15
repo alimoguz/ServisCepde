@@ -1,6 +1,8 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.R;
 
 
@@ -31,13 +34,23 @@ public class İletisimFragment extends Fragment {
         generalView = rootView;
         ctx = generalView.getContext();
 
+        MainActivity.relHeader.setVisibility(View.GONE);
+
         linNumber1 = generalView.findViewById(R.id.linNumber1);
         linNumber2 = generalView.findViewById(R.id.linNumber2);
+
+        String number1 = getString(R.string.Number1);
+        String number2 = getString(R.string.Number1);
 
 
         linNumber1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + number1));
+                startActivity(intent);
+
 
             }
         });
@@ -45,6 +58,10 @@ public class İletisimFragment extends Fragment {
         linNumber2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + number2));
+                startActivity(intent);
 
             }
         });
