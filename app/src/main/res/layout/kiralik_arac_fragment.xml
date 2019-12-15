@@ -268,6 +268,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteKiralikAracil"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/İl" />
@@ -281,6 +282,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteKiralikAracilce"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/İlçe" />
@@ -320,6 +322,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteKiralikAracMarka"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Marka" />
@@ -333,6 +336,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteKiralikAracModel"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Model" />
@@ -356,19 +360,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorWhite"
-                    android:hint="@string/HaftalıkFiyat">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edtKiralikAracHaftalikFiyat"
-                        android:background="@color/colorWhite"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -392,6 +383,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteKiralikAracVitesTipi"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/VitesTipi" />
@@ -405,6 +397,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteKiralikAracYakitTipi"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/YakıtTipi" />
@@ -418,6 +411,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteKiralikAracKapasite"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Kapasite" />
@@ -431,6 +425,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteKiralikAracKasko"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Kasko" />

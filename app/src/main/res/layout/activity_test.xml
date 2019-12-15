@@ -44,6 +44,7 @@
 
     <AutoCompleteTextView
         android:id="@+id/ilce"
+        android:editable="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/İlçe" />
@@ -100,6 +101,7 @@
 
         <AutoCompleteTextView
             android:id="@+id/autoCompleteIseAracil"
+            android:editable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/İl" />

@@ -128,30 +128,27 @@ public class BildirimGonderFragment extends Fragment {
                             String token = detail.getResult();
                             JSONObject sonuc = Utils.jwtToJsonObject(token);
 
+                            servisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
+                            servisAlert.setTitleText("Bildirim yönetici onayından sonra yayınlanacaktır");
+                            servisAlert.show();
+
 
                             try {
-                                int status = sonuc.getJSONObject("OutPutMessage").getInt("Status");
-
-                                if(sonuc.getJSONObject("OutPutMessage").getJSONArray("errorEmpty").get(0) == null )
-                                {
-                                    servisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                    servisAlert.setTitleText(sonuc.getJSONObject("OutPutMessage").getJSONArray("errorEmpty").get(0).toString());
-                                    servisAlert.show();
-
-                                }
-                                if(sonuc.getJSONObject("OutPutMessage").getJSONArray("errorOther").get(0) == null)
-                                {
-                                    servisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                    servisAlert.setTitleText(sonuc.getJSONObject("OutPutMessage").getJSONArray("errorOther").get(0).toString());
-                                    servisAlert.show();
-                                }
-
+                                int status = sonuc.getJSONObject("OutPutMessage").getJSONObject("Data").getInt("Status");
                                 if(status == 200)
                                 {
                                     servisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
                                     servisAlert.setTitleText("Bildirim yönetici onayından sonra yayınlanacaktır");
                                     servisAlert.show();
                                 }
+
+                                else
+                                {
+                                    servisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
+                                    servisAlert.setTitleText("Bir hata oluştu lütfen daha sonra tekrar deneyiniz");
+                                    servisAlert.show();
+                                }
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

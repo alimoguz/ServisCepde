@@ -543,26 +543,29 @@ public class SoforeIsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == 6614){
-            ArrayList<String> imageList = data.getStringArrayListExtra("imageList");
-            if(resultCode == 100){
-                Glide.with(ctx).load(imageList.get(0)).into(imgSoforeIsFirstPhoto);
-                imgSoforeIsFirstPhotoChange.setVisibility(View.INVISIBLE);
-                photos.add(imageList.get(0));
 
+            if(data != null)
+            {
+                ArrayList<String> imageList = data.getStringArrayListExtra("imageList");
+                if(resultCode == 100){
+                    Glide.with(ctx).load(imageList.get(0)).into(imgSoforeIsFirstPhoto);
+                    imgSoforeIsFirstPhotoChange.setVisibility(View.INVISIBLE);
+                    photos.add(imageList.get(0));
+
+                }
+                else if(resultCode == 200){
+                    Glide.with(ctx).load(imageList.get(0)).into(imgSoforeIsSecondPhoto);
+                    imgSoforeIsSecondPhotoChange.setVisibility(View.INVISIBLE);
+                    photos.add(imageList.get(0));
+
+                }
+                else if(resultCode == 300){
+                    Glide.with(ctx).load(imageList.get(0)).into(imgSoforeIsLastPhoto);
+                    imgSoforeIsLastChange.setVisibility(View.INVISIBLE);
+                    photos.add(imageList.get(0));
+
+                }
             }
-            else if(resultCode == 200){
-                Glide.with(ctx).load(imageList.get(0)).into(imgSoforeIsSecondPhoto);
-                imgSoforeIsSecondPhotoChange.setVisibility(View.INVISIBLE);
-                photos.add(imageList.get(0));
-
-            }
-            else if(resultCode == 300){
-                Glide.with(ctx).load(imageList.get(0)).into(imgSoforeIsLastPhoto);
-                imgSoforeIsLastChange.setVisibility(View.INVISIBLE);
-                photos.add(imageList.get(0));
-
-            }
-
         }
 
 

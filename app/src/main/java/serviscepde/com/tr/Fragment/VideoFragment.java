@@ -79,7 +79,7 @@ public class VideoFragment extends Fragment implements MediaPlayer.OnCompletionL
             loginFragment = new LoginFragment();
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.fragSplash,loginFragment);
+            fragmentTransaction.add(R.id.fragSplash,loginFragment );
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commitAllowingStateLoss();
         }

@@ -1,6 +1,9 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 
 import br.com.sapereaude.maskedEditText.MaskedEditText;
@@ -25,6 +29,7 @@ import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.UserRegister.UserRegisterResponse;
 import serviscepde.com.tr.Models.UserRegister.UserRegisterResponseDetail;
 import serviscepde.com.tr.R;
+import serviscepde.com.tr.SplashActivity;
 import serviscepde.com.tr.Utils.Utils;
 
 import org.json.JSONArray;
@@ -50,7 +55,7 @@ public class SignupFragment extends Fragment {
 
     private  EditText edtKayitAd,edtKayitEmail,edtKayitSifre,edtKayitSifreTekrar,edtKayitSoyad;
     private MaskedEditText edtKayitTelefon;
-    private TextView txtKayitOlSon;
+    private TextView txtKayitOlSon,txtKullanim;
     private CheckBox checkBoxKullanim;
 
     private  AutoCompleteTextView autoCompleteIl,autoCompleteIlce,autoCompleteKullaniciTuru;
@@ -90,6 +95,7 @@ public class SignupFragment extends Fragment {
         edtKayitSifreTekrar = generalView.findViewById(R.id.edtKayitSifreTekrar);
 
         txtKayitOlSon = generalView.findViewById(R.id.txtKayitOlSon);
+        txtKullanim = generalView.findViewById(R.id.txtKullanim);
         checkBoxKullanim = generalView.findViewById(R.id.checkBoxKullanim);
 
         autoCompleteIl = generalView.findViewById(R.id.autoCompleteIl);
@@ -104,6 +110,7 @@ public class SignupFragment extends Fragment {
         autoCompleteKullaniciTuru.setAdapter(Turadapter);
 
 
+        kullanıcıType = "";
         autoCompleteKullaniciTuru.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -112,6 +119,21 @@ public class SignupFragment extends Fragment {
             }
         });
 
+
+        txtKullanim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String url = "https://www.serviscepde.com/sozlesme/uyelik-sozlesmesi";
+
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+
+
+
+            }
+        });
 
 
         sehirler = DownloadClass.getCities();
@@ -127,10 +149,12 @@ public class SignupFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
                 String tempCityName = parent.getItemAtPosition(position).toString();
 
                 SelectedCityId = DownloadClass.getCityIdWithName(tempCityName);
                 ArrayList<String> cityTownNames = DownloadClass.getTownNames(SelectedCityId);
+                autoCompleteIlce.setText(cityTownNames.get(0));
 
                 ArrayAdapter<String> ilceAdapter = new ArrayAdapter<>(ctx, R.layout.dropdown_item, cityTownNames);
 
@@ -161,11 +185,13 @@ public class SignupFragment extends Fragment {
                 sifreTekrar = edtKayitSifreTekrar.getText().toString();
                 boolean isAccepted = checkBoxKullanim.isChecked();
 
-                if(kullanıcıType.isEmpty())
+                if(kullanıcıType.isEmpty() || ad.isEmpty() || soyad.isEmpty() || telefon.isEmpty() || sifre.isEmpty() || !sifre.isEmpty() && sifre.length() < 6)
                 {
                     kullaniciAlert = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
-                    kullaniciAlert.setTitleText("Kullanıcı türü boş bırakılamaz");
+                    kullaniciAlert.setTitleText("* ile belirtilen alanlar boş bırakılamaz");
                     kullaniciAlert.show();
+
+                    return;
                 }
 
                 if(!isAccepted)
@@ -175,21 +201,21 @@ public class SignupFragment extends Fragment {
                     checkAlert.show();
                 }
 
-                if(ad.isEmpty())
+               /* if()
                 {
                     adAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
                     adAlert.setTitleText("Ad boş bırakılamaz");
                     adAlert.show();
                 }
 
-                if(soyad.isEmpty())
+                if()
                 {
                     soyadAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
                     soyadAlert.setTitleText("Soyad boş bırakılamaz");
                     soyadAlert.show();
                 }
 
-                if(telefon.isEmpty())
+                if()
                 {
                     telefonAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
                     telefonAlert.setTitleText("Telefon boş bırakılamaz");
@@ -197,19 +223,19 @@ public class SignupFragment extends Fragment {
                 }
 
 
-                if(sifre.isEmpty())
+                if()
                 {
                     sifreAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
                     sifreAlert.setTitleText("Şifre boş bırakılamaz");
                     sifreAlert.show();
                 }
 
-                if(!sifre.isEmpty() && sifre.length() < 6)
+                if()
                 {
                     sifreAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.ERROR_TYPE);
                     sifreAlert.setTitleText("Şifre 6 haneden daha kısa olamaz");
                     sifreAlert.show();
-                }
+                }*/
 
                 if(!email.isEmpty())
                 {
@@ -273,6 +299,17 @@ public class SignupFragment extends Fragment {
                                     {
                                         servisAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.NORMAL_TYPE);
                                         servisAlert.setTitleText(jsonObject.getJSONObject("OutPutMessage").getString("SuccessMessage"));
+                                        servisAlert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                            @Override
+                                            public void onDismiss(DialogInterface dialog) {
+
+                                                FragmentManager manager = getFragmentManager();
+                                                manager.popBackStackImmediate();
+
+                                            }
+                                        });
+
+
                                         servisAlert.show();
                                     }
                                 }

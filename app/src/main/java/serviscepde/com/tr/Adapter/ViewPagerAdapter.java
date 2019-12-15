@@ -38,8 +38,6 @@ public class ViewPagerAdapter extends PagerAdapter {
         Picasso.get()
                 .load(App.IMAGE_URL.concat(imageUrls[position]))
                 .error((imageView.getResources().getDrawable(R.drawable.default_image)))
-                .fit()
-                .centerCrop()
                 .into(imageView);
         container.addView(imageView);
 

@@ -551,21 +551,26 @@ public class AracaSoforFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         if(requestCode == 6614){
-            ArrayList<String> imageList = data.getStringArrayListExtra("imageList");
-            if(resultCode == 100){
-                Glide.with(ctx).load(imageList.get(0)).into(imgAracaSoforFirstPhoto);
-                imgAracaSoforFirstPhotoChange.setVisibility(View.INVISIBLE);
-                photos.add(imageList.get(0));
-            }
-            else if(resultCode == 200){
-                Glide.with(ctx).load(imageList.get(0)).into(imgAracaSoforSecondPhoto);
-                imgAracaSoforSecondPhotoChange.setVisibility(View.INVISIBLE);
-                photos.add(imageList.get(0));
-            }
-            else if(resultCode == 300){
-                Glide.with(ctx).load(imageList.get(0)).into(imgAracaSoforLastPhoto);
-                imgAracaSoforLastChange.setVisibility(View.INVISIBLE);
-                photos.add(imageList.get(0));
+            if(data != null)
+            {
+                ArrayList<String> imageList = data.getStringArrayListExtra("imageList");
+                if(resultCode == 100){
+                    Glide.with(ctx).load(imageList.get(0)).into(imgAracaSoforFirstPhoto);
+                    imgAracaSoforFirstPhotoChange.setVisibility(View.INVISIBLE);
+                    photos.add(imageList.get(0));
+                }
+                else if(resultCode == 200){
+                    Glide.with(ctx).load(imageList.get(0)).into(imgAracaSoforSecondPhoto);
+                    imgAracaSoforSecondPhotoChange.setVisibility(View.INVISIBLE);
+                    photos.add(imageList.get(0));
+
+                }
+                else if(resultCode == 300){
+                    Glide.with(ctx).load(imageList.get(0)).into(imgAracaSoforLastPhoto);
+                    imgAracaSoforLastChange.setVisibility(View.INVISIBLE);
+                    photos.add(imageList.get(0));
+
+                }
             }
 
         }

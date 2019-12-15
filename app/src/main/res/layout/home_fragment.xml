@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -458,19 +459,29 @@
                 android:background="#E6E6E6"
                 android:orientation="vertical">
 
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/EnGüncelİlan"
-                    android:textColor="@color/colorBlack"
-                    android:paddingEnd="@dimen/_20sdp"
-                    android:paddingStart="0dp"
-                    android:background="#E0E0E0"
-                    android:paddingTop="@dimen/_2sdp"
-                    android:paddingBottom="@dimen/_2sdp"
-                    android:textSize="@dimen/_12ssp"
-                    />
+                    android:background="@color/colorWhite">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/EnGüncelİlan"
+                        android:textColor="@color/colorBlack"
+                        android:paddingEnd="@dimen/_20sdp"
+                        android:paddingStart="@dimen/_7sdp"
+                        android:background="@drawable/background_text"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:paddingBottom="@dimen/_2sdp"
+                        android:textSize="@dimen/_12ssp"
+                        />
+
+
+                </LinearLayout>
+
+
+
 
                 <LinearLayout
                     android:id="@+id/linGuncel1"
@@ -505,7 +516,7 @@
                             android:id="@+id/txtIlanGuncel1Aciklama"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                            tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                             android:maxLines="2"
                             android:textSize="@dimen/_11ssp"
                             android:textColor="@color/colorBlack"
@@ -532,7 +543,7 @@
                                 android:id="@+id/txtIlanGuncel1Konum"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Yenimahalle"
+                                tools:text="Yenimahalle"
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/_11ssp"
@@ -573,7 +584,20 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp"
+                    android:layout_height="@dimen/_5sdp"
+                    android:background="@color/colorWhite"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_4sdp"
+                    android:background="#E6E6E6" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_5sdp"
                     android:background="@color/colorWhite"
                     android:layout_marginStart="@dimen/_3sdp"
                     android:layout_marginEnd="@dimen/_3sdp"
@@ -612,7 +636,7 @@
                             android:id="@+id/txtIlanGuncel2Aciklama"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                            tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                             android:maxLines="2"
                             android:textSize="@dimen/_11ssp"
                             android:textColor="@color/colorBlack"
@@ -639,7 +663,7 @@
                                 android:id="@+id/txtIlanGuncel2Konum"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Yenimahalle"
+                                tools:text="Yenimahalle"
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/_11ssp"
@@ -680,7 +704,20 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp"
+                    android:layout_height="@dimen/_5sdp"
+                    android:background="@color/colorWhite"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_4sdp"
+                    android:background="#E6E6E6" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_5sdp"
                     android:background="@color/colorWhite"
                     android:layout_marginStart="@dimen/_3sdp"
                     android:layout_marginEnd="@dimen/_3sdp"
@@ -718,7 +755,7 @@
                             android:id="@+id/txtIlanGuncel3Aciklama"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                            tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                             android:maxLines="2"
                             android:textSize="@dimen/_11ssp"
                             android:textColor="@color/colorBlack"
@@ -745,7 +782,7 @@
                                 android:id="@+id/txtIlanGuncel3Konum"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Yenimahalle"
+                                tools:text="Yenimahalle"
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/_11ssp"
@@ -828,19 +865,30 @@
                 android:orientation="vertical">
 
 
-                <TextView
-                    android:id="@+id/txtEnSon"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/EnSonİncelenen"
-                    android:textColor="@color/colorBlack"
-                    android:paddingEnd="@dimen/_20sdp"
-                    android:paddingStart="0dp"
-                    android:background="#E0E0E0"
-                    android:paddingTop="@dimen/_2sdp"
-                    android:paddingBottom="@dimen/_2sdp"
-                    android:textSize="@dimen/_12ssp"
-                    />
+                    android:background="@color/colorWhite">
+
+                    <TextView
+                        android:id="@+id/txtEnSon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/EnSonİncelenen"
+                        android:textColor="@color/colorBlack"
+                        android:paddingEnd="@dimen/_20sdp"
+                        android:paddingStart="@dimen/_7sdp"
+                        android:background="@drawable/background_text"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:paddingBottom="@dimen/_2sdp"
+                        android:textSize="@dimen/_12ssp"
+                        />
+
+
+                </LinearLayout>
+
+
+
 
 
                 <LinearLayout
@@ -874,7 +922,7 @@
                             android:id="@+id/txtSonAciklama1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                            tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                             android:maxLines="2"
                             android:textSize="@dimen/_11ssp"
                             android:textColor="@color/colorBlack"
@@ -901,7 +949,7 @@
                                 android:id="@+id/txtSonKonum1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Yenimahalle"
+                                tools:text="Yenimahalle"
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/_11ssp"
@@ -930,7 +978,20 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp"
+                    android:layout_height="@dimen/_5sdp"
+                    android:background="@color/colorWhite"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_4sdp"
+                    android:background="#E6E6E6" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_5sdp"
                     android:background="@color/colorWhite"
                     android:layout_marginStart="@dimen/_3sdp"
                     android:layout_marginEnd="@dimen/_3sdp"
@@ -968,7 +1029,7 @@
                             android:id="@+id/txtSonAciklama2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                            tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                             android:maxLines="2"
                             android:textSize="@dimen/_11ssp"
                             android:textColor="@color/colorBlack"
@@ -995,7 +1056,7 @@
                                 android:id="@+id/txtSonKonum2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Yenimahalle"
+                                tools:text="Yenimahalle"
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/_11ssp"
@@ -1024,7 +1085,20 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp"
+                    android:layout_height="@dimen/_5sdp"
+                    android:background="@color/colorWhite"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_4sdp"
+                    android:background="#E6E6E6" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_5sdp"
                     android:background="@color/colorWhite"
                     android:layout_marginStart="@dimen/_3sdp"
                     android:layout_marginEnd="@dimen/_3sdp"
@@ -1063,7 +1137,7 @@
                             android:id="@+id/txtSonAciklama3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                            tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                             android:maxLines="2"
                             android:textSize="@dimen/_11ssp"
                             android:textColor="@color/colorBlack"
@@ -1090,7 +1164,7 @@
                                 android:id="@+id/txtSonKonum3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Yenimahalle"
+                                tools:text="Yenimahalle"
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@color/colorBlack"
                                 android:textSize="@dimen/_11ssp"

@@ -178,614 +178,598 @@ public class IlanDetayFragment extends Fragment {
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
 
-        if(userToken.equals("0"))
+        HashMap<String , Object> hashMap = new HashMap<>();
+        HashMap<String , String> hashMap1 = new HashMap<>();
+
+        hashMap1.put("ID" , ilanID);
+
+        hashMap.put("param" , hashMap1);
+
+        if(!userToken.equals("0"))
         {
-
-            SweetAlertDialog girisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.WARNING_TYPE);
-            girisAlert.setTitleText("Devam edebilmek için lütfen önce giriş yapın");
-            girisAlert.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    Intent intent = new Intent(ctx , SplashActivity.class);
-                    startActivity(intent);
-                }
-            });
-            girisAlert.show();
-
-
-
-        }
-        else
-        {
-            HashMap<String , Object> hashMap = new HashMap<>();
-            HashMap<String , String> hashMap1 = new HashMap<>();
-
-            hashMap1.put("ID" , ilanID);
-
-            hashMap.put("param" , hashMap1);
             hashMap.put("Token" , userToken);
+        }
+
+        Call<IlanDetayResponse> ilanDetayResponseCal = App.getApiService().ilanDetay( hashMap);
+
+        ilanDetayResponseCal.enqueue(new Callback<IlanDetayResponse>() {
+            @Override
+            public void onResponse(Call<IlanDetayResponse> call, Response<IlanDetayResponse> response) {
+
+                IlanDetayResponseDetail detail = response.body().getDetail();
+                String token = detail.getResult();
+
+                JSONObject ilan = Utils.jwtToJsonObject(token);
+
+                String gsm;
 
 
-            Call<IlanDetayResponse> ilanDetayResponseCal = App.getApiService().ilanDetay( hashMap);
+                try {
+                    JSONObject ilanDetay = ilan.getJSONObject("OutPutMessage").getJSONObject("Data");
 
-            ilanDetayResponseCal.enqueue(new Callback<IlanDetayResponse>() {
-                @Override
-                public void onResponse(Call<IlanDetayResponse> call, Response<IlanDetayResponse> response) {
+                    gsm = ilanDetay.getJSONObject("Users").getString("GSM");
 
-                    IlanDetayResponseDetail detail = response.body().getDetail();
-                    String token = detail.getResult();
+                    if(ilanDetay.has("Baslik"))
+                    {
+                        Baslik = ilanDetay.getString("Baslik");
+                        Log.i("Başlık", Baslik);
+                    }
+                    else
+                    {
+                        Baslik = "-";
+                        Log.i("Baslik" , Baslik);
 
-                    JSONObject ilan = Utils.jwtToJsonObject(token);
+                    }
 
-                    String gsm;
+                    if(ilanDetay.has("ilanAciklamasi"))
+                    {
+                        Aciklama = ilanDetay.getString("ilanAciklamasi");
+                        Log.i("Açıklama" , Aciklama);
+                    }
+                    else
+                    {
+                        Aciklama = "-";
+                        Log.i("Açıklama" , Aciklama);
+                    }
 
-
-                    try {
-                        JSONObject ilanDetay = ilan.getJSONObject("OutPutMessage").getJSONObject("Data");
-
-                        gsm = ilanDetay.getJSONObject("Users").getString("GSM");
-
-                        if(ilanDetay.has("Baslik"))
+                    if(ilanDetay.has("Ucret"))
+                    {
+                        Fiyat = ilanDetay.getString("Ucret");
+                        if(Fiyat.equals("0"))
                         {
-                            Baslik = ilanDetay.getString("Baslik");
-                            Log.i("Başlık", Baslik);
+                            Fiyat = "Belirtilmedi";
+                        }
+                        Log.i("Fiyat" , Fiyat);
+                    }
+                    else
+                    {
+                        Fiyat = "-";
+                        Log.i("Fiyat" , Fiyat);
+                    }
+
+                    if(ilanDetay.getJSONObject("Users").has("UserName") && ilanDetay.getJSONObject("Users").has("SurName"))
+                    {
+                        IlanSahibi = ilanDetay.getJSONObject("Users").getString("UserName").concat(" ").concat(ilanDetay.getJSONObject("Users").getString("SurName"));
+                        Log.i("IlanSahibi" , IlanSahibi);
+                    }
+                    else
+                    {
+                        IlanSahibi = "-";
+                        Log.i("IlanSahibi" , IlanSahibi);
+                    }
+
+                    if(ilanDetay.has("ilanCityText") && ilanDetay.has("ilanSemtleriText"))
+                    {
+                        Konum = ilanDetay.getString("ilanCityText").concat("/").concat(ilanDetay.getString("ilanSemtleriText"));
+                        Log.i("Konum" , Konum);
+                    }
+                    else
+                    {
+                        Konum = "-";
+                        Log.i("Konum" , Konum);
+                    }
+
+                    if(ilanDetay.has("ID"))
+                    {
+                        IlanNo = ilanDetay.getString("ID");
+                        Log.i("IlanNo" , IlanNo);
+                    }
+                    else
+                    {
+                        IlanNo = "-";
+                        Log.i("IlanNo" , IlanNo);
+                    }
+
+                    if(ilanDetay.has("create_at"))
+                    {
+                        String tmp2 = ilanDetay.getString("create_at");
+                        String [] tmp = tmp2.split("\\+s");
+                        IlanTarih = tmp[0];
+                        Log.i("IlanTarih" , IlanTarih);
+                    }
+                    else
+                    {
+                        IlanTarih = "-";
+                        Log.i("IlanTarih" , IlanTarih);
+                    }
+
+                    if(ilanDetay.has("AracMarkasiText"))
+                    {
+                        AracMarkasi = ilanDetay.getString("AracMarkasiText");
+                        Log.i("AracMarkasi" , AracMarkasi);
+                    }
+                    else
+                    {
+                        AracMarkasi = "-";
+                        Log.i("AracMarkasi" , AracMarkasi);
+                    }
+
+                    if(ilanDetay.has("AracModeliText"))
+                    {
+                        AracModel = ilanDetay.getString("AracModeliText");
+                        Log.i("AracModel" , AracModel);
+                    }
+                    else
+                    {
+                        AracModel = "-";
+                        Log.i("AracModel" , AracModel);
+                    }
+
+                    if(ilanDetay.has("AracSubModeli"))
+                    {
+                        AracAltModel = ilanDetay.getString("AracSubModeli");
+                        Log.i("AracAltModel" , AracAltModel);
+                    }
+                    else
+                    {
+                        AracAltModel = "-";
+                        Log.i("AracAltModel" , AracAltModel);
+                    }
+
+                    if(ilanDetay.has("AracYili"))
+                    {
+                        AracYil = ilanDetay.getString("AracYili");
+                        Log.i("AracYil" , AracYil);
+                    }
+                    else
+                    {
+                        AracYil = "-";
+                        Log.i("AracYil" , AracYil);
+                    }
+
+                    if(ilanDetay.has("AracKapasiteText"))
+                    {
+                        AracKapasite = ilanDetay.getString("AracKapasiteText");
+                        Log.i("AracKapasite" , AracKapasite);
+                    }
+                    else
+                    {
+                        AracKapasite = "-";
+                        Log.i("AracKapasite" , AracKapasite);
+                    }
+
+                    if(ilanDetay.has("ServiseBaslamaSaati"))
+                    {
+                        ServisBaslamaSaat = ilanDetay.getString("ServiseBaslamaSaati");
+                        Log.i("ServisBaslamaSaat" , ServisBaslamaSaat);
+                    }
+                    else
+                    {
+                        ServisBaslamaSaat = "-";
+                        Log.i("ServisBaslamaSaat" , ServisBaslamaSaat);
+                    }
+
+                    if(ilanDetay.has("ServisBitisSaati"))
+                    {
+                        ServisBitisSaat = ilanDetay.getString("ServisBitisSaati");
+                        Log.i("ServisBitisSaat" , ServisBitisSaat);
+                    }
+                    else
+                    {
+                        ServisBitisSaat = "-";
+                        Log.i("ServisBitisSaat" , ServisBitisSaat);
+                    }
+
+                    if(ilanDetay.has("ServiseBaslamaCityText") && ilanDetay.has("ServiseBaslamaSemtleriText"))
+                    {
+                        ServisBaslamaKonum = ilanDetay.getString("ServiseBaslamaCityText").concat("/").concat(ilanDetay.getString("ServiseBaslamaSemtleriText"));
+                        Log.i("ServisBaslamaKonum" , ServisBaslamaKonum);
+                    }
+                    else
+                    {
+                        ServisBaslamaKonum = "-";
+                        Log.i("ServisBaslamaKonum" , ServisBaslamaKonum);
+                    }
+
+                    if(ilanDetay.has("ServisBitisCityText") && ilanDetay.has("ServisBitisSemtleriText"))
+                    {
+                        ServisBitisKonum = ilanDetay.getString("ServisBitisCityText").concat("/").concat(ilanDetay.getString("ServisBitisSemtleriText"));
+                        Log.i("ServisBitisKonum" , ServisBitisKonum);
+                    }
+                    else
+                    {
+                        ServisBitisKonum = "-";
+                        Log.i("ServisBitisKonum" , ServisBitisKonum);
+                    }
+
+                    if(ilanDetay.has("FirmayaGirisSaati"))
+                    {
+                        FirmaGirisSaat = ilanDetay.getString("FirmayaGirisSaati");
+                        Log.i("FirmaGirisSaat" , FirmaGirisSaat);
+                    }
+                    else
+                    {
+                        FirmaGirisSaat = "-";
+                        Log.i("FirmaGirisSaat" , FirmaGirisSaat);
+                    }
+
+                    if(ilanDetay.has("FirmadanCikisSaati"))
+                    {
+                        FirmaCikisSaat = ilanDetay.getString("FirmadanCikisSaati");
+                        Log.i("FirmaCikisSaat" , FirmaCikisSaat);
+                    }
+                    else
+                    {
+                        FirmaCikisSaat = "-";
+                        Log.i("FirmaCikisSaat" , FirmaCikisSaat);
+                    }
+
+                    if(ilanDetay.has("ToplamKM"))
+                    {
+                        ToplamKM = ilanDetay.getString("ToplamKM");
+                        Log.i("ToplamKM" , ToplamKM);
+                    }
+                    else
+                    {
+                        ToplamKM = "-";
+                        Log.i("ToplamKM" , ToplamKM);
+                    }
+
+                    if(ilanDetay.has("CalisilacakGunSayisi"))
+                    {
+                        GunSayisi = ilanDetay.getString("CalisilacakGunSayisi");
+                        Log.i("GunSayisi" , GunSayisi);
+                    }
+                    else
+                    {
+                        GunSayisi = "-";
+                        Log.i("GunSayisi" , GunSayisi);
+                    }
+
+                    if(ilanDetay.has("MotorHacmiText"))
+                    {
+                        MotorHacim = ilanDetay.getString("MotorHacmiText");
+                        Log.i("MotorHacim" , MotorHacim);
+                    }
+                    else
+                    {
+                        MotorHacim = "-";
+                        Log.i("MotorHacim" , MotorHacim);
+                    }
+
+                    if(ilanDetay.has("MotorGucuText"))
+                    {
+                        MotorGuc = ilanDetay.getString("MotorGucuText");
+                        Log.i("MotorGuc" , MotorGuc);
+                    }
+                    else
+                    {
+                        MotorGuc = "-";
+                        Log.i("MotorGuc" , MotorGuc);
+                    }
+
+                    if(ilanDetay.has("Kimden"))
+                    {
+                        Kimden = ilanDetay.getString("Kimden");
+                        Log.i("Kimden" , Kimden);
+                    }
+                    else
+                    {
+                        Kimden = "-";
+                        Log.i("Kimden" , Kimden);
+                    }
+
+                    if(ilanDetay.has("AracDurumu"))
+                    {
+                        AracDurumu = ilanDetay.getString("AracDurumu");
+                        AracDurumu = App.getAracDurumuWithID(AracDurumu);
+                        Log.i("AracDurumu" , AracDurumu);
+                    }
+                    else
+                    {
+                        AracDurumu = "-";
+                        Log.i("AracDurumu" , AracDurumu);
+                    }
+
+                    if(ilanDetay.has("Tecrube"))
+                    {
+                        Tecrube = ilanDetay.getString("Tecrube");
+                        Log.i("Tecrube" , Tecrube);
+                    }
+                    else
+                    {
+                        Tecrube = "-";
+                        Log.i("Tecrube" , Tecrube);
+                    }
+
+                    if(ilanDetay.has("Plaka"))
+                    {
+                        Plaka = ilanDetay.getString("Plaka");
+                        Log.i("Plaka" , Plaka);
+                    }
+                    else
+                    {
+                        Plaka = "-";
+                        Log.i("Plaka" , Plaka);
+                    }
+
+                    if(ilanDetay.has("Referanslar"))
+                    {
+                        Referans = ilanDetay.getString("Referanslar");
+                        Log.i("Referans" , Referans);
+                    }
+                    else
+                    {
+                        Referans = "-";
+                        Log.i("Referans" , Referans);
+                    }
+
+                    if(ilanDetay.has("UcretBeklentisi"))
+                    {
+                        UcretBeklentisi = ilanDetay.getString("UcretBeklentisi");
+                        Log.i("UcretBeklentisi" , UcretBeklentisi);
+                    }
+                    else
+                    {
+                        UcretBeklentisi = "-";
+                        Log.i("UcretBeklentisi" , UcretBeklentisi);
+                    }
+
+                    if(ilanDetay.has("KullanabildiginizKapasiteler"))
+                    {
+                        Kapasiteler = ilanDetay.getString("KullanabildiginizKapasiteler");
+                        Log.i("Kapasiteler" , Kapasiteler);
+                    }
+                    else
+                    {
+                        Kapasiteler = "-";
+                        Log.i("Kapasiteler" , Kapasiteler);
+                    }
+
+                    if(ilanDetay.has("Yasiniz"))
+                    {
+                        Yas = ilanDetay.getString("Yasiniz");
+                        Log.i("Yas" , Yas);
+                    }
+                    else
+                    {
+                        Yas = "-";
+                        Log.i("Yas" , Yas);
+                    }
+
+                    if(ilanDetay.has("Ehliyetiniz"))
+                    {
+                        Ehliyet = ilanDetay.getString("Ehliyetiniz");
+                        Log.i("Ehliyet" , Ehliyet);
+                    }
+                    else
+                    {
+                        Ehliyet = "-";
+                        Log.i("Ehliyet" , Ehliyet);
+                    }
+
+                    if(ilanDetay.has("SRC"))
+                    {
+                        Src = ilanDetay.getString("SRC");
+                        Log.i("Src" , Src);
+                    }
+                    else
+                    {
+                        Src = "-";
+                        Log.i("Src" , Src);
+                    }
+
+                    if(ilanDetay.has("AylikFiyat"))
+                    {
+                        AylikFiyati = ilanDetay.getString("AylikFiyat");
+                        Log.i("AylikFiyati" , AylikFiyati);
+                    }
+                    else
+                    {
+                        AylikFiyati = "-";
+                        Log.i("AylikFiyati" , AylikFiyati);
+                    }
+
+                    if(ilanDetay.has("HaftalikFiyat"))
+                    {
+                        HaftalikFiyati = ilanDetay.getString("HaftalikFiyat");
+                        Log.i("HaftalikFiyati" , HaftalikFiyati);
+                    }
+                    else
+                    {
+                        HaftalikFiyati = "-";
+                        Log.i("HaftalikFiyati" , HaftalikFiyati);
+                    }
+
+                    if(ilanDetay.has("VitesTipi"))
+                    {
+                        VitesTipi = ilanDetay.getString("VitesTipi");
+                        Log.i("VitesTipi" , VitesTipi);
+                    }
+                    else
+                    {
+                        VitesTipi = "-";
+                        Log.i("VitesTipi" , VitesTipi);
+                    }
+
+                    if(ilanDetay.has("YakitTipi"))
+                    {
+                        YakitTipi = ilanDetay.getString("YakitTipi");
+                        Log.i("YakitTipi" , YakitTipi);
+                    }
+                    else
+                    {
+                        YakitTipi = "-";
+                        Log.i("YakitTipi" , YakitTipi);
+                    }
+
+                    if(ilanDetay.has("Kasko"))
+                    {
+                        KaskoDurum = ilanDetay.getString("Kasko");
+                        Log.i("KaskoDurum" , KaskoDurum);
+                    }
+                    else
+                    {
+                        KaskoDurum = "-";
+                        Log.i("KaskoDurum" , KaskoDurum);
+                    }
+
+                    if(ilanDetay.has("ParcaMarkasi"))
+                    {
+                        ParcaMarkasi = ilanDetay.getString("ParcaMarkasi");
+                        Log.i("ParcaMarkasi" , ParcaMarkasi);
+                    }
+                    else
+                    {
+                        ParcaMarkasi = "-";
+                        Log.i("ParcaMarkasi" , ParcaMarkasi);
+                    }
+
+                    if(ilanDetay.has("CikmaYedekParca"))
+                    {
+                        CikmaYedekParca = ilanDetay.getString("CikmaYedekParca");
+                        if(CikmaYedekParca.equals("1"))
+                        {
+                            CikmaYedekParca = "Evet";
+                        }
+                        if(CikmaYedekParca.equals("0"))
+                        {
+                            CikmaYedekParca = "Hayır";
+                        }
+                        Log.i("CikmaYedekParca" , CikmaYedekParca);
+                    }
+                    else
+                    {
+                        CikmaYedekParca = "-";
+                        Log.i("CikmaYedekParca" , CikmaYedekParca);
+                    }
+
+                    if(ilanDetay.has("YedekParcaDurum"))
+                    {
+                        YedekParcaDurumu = ilanDetay.getString("YedekParcaDurum");
+                        Log.i("YedekParcaDurumu" , YedekParcaDurumu);
+                    }
+                    else
+                    {
+                        YedekParcaDurumu = "-";
+                        Log.i("YedekParcaDurumu" , YedekParcaDurumu);
+                    }
+
+                    if(ilanDetay.has("AracOzellikleriText"))
+                    {
+                        String Ozellik = ilanDetay.getString("AracOzellikleri");
+                        Ozellikler =  ilanDetay.getString("AracOzellikleriText");
+                        Log.i("Ozellikler" , Ozellikler);
+                    }
+                    else
+                    {
+                        Ozellikler = "-";
+                        Log.i("Ozellikler" , Ozellikler);
+                    }
+
+                    if(ilanDetay.has("Belgeler"))
+                    {
+                        Belgeler = ilanDetay.getString("Belgeler");
+                        Log.i("Belgeler" , Belgeler);
+                    }
+                    else
+                    {
+                        Belgeler = "-";
+                        Log.i("Belgeler" , Belgeler);
+                    }
+
+                    if(ilanDetay.has("Resimler"))
+                    {
+                        Resimler = ilanDetay.getString("Resimler");
+                        Log.i("Resimler" , Resimler);
+
+                        if(Resimler.contains("|"))
+                        {
+                            String [] images = Resimler.split(Pattern.quote("|"));
+                            ViewPagerAdapter adapter = new ViewPagerAdapter(ctx ,images);
+                            viewPagerPhotos.setAdapter(adapter);
                         }
                         else
                         {
-                            Baslik = "-";
-                            Log.i("Baslik" , Baslik);
-
+                            String [] images = new String[1];
+                            images[0] = Resimler;
+                            ViewPagerAdapter adapter = new ViewPagerAdapter(ctx ,images);
+                            viewPagerPhotos.setAdapter(adapter);
                         }
 
-                        if(ilanDetay.has("ilanAciklamasi"))
-                        {
-                            Aciklama = ilanDetay.getString("ilanAciklamasi");
-                            Log.i("Açıklama" , Aciklama);
-                        }
-                        else
-                        {
-                            Aciklama = "-";
-                            Log.i("Açıklama" , Aciklama);
-                        }
+                    }
+                    else
+                    {
+                        Resimler = "-";
+                        Log.i("Resimler" , Resimler);
+                        viewPagerPhotos.setVisibility(View.INVISIBLE);
+                        imgNoPhoto.setVisibility(View.VISIBLE);
+                    }
 
-                        if(ilanDetay.has("Ucret"))
-                        {
-                            Fiyat = ilanDetay.getString("Ucret");
-                            if(Fiyat.equals("0"))
+                    String ilanKategori = ilanDetay.getString("Tipi");
+
+                    if(ilanKategori.equals("1"))
+                    {
+                        aracaIsYukle();
+                    }
+                    if(ilanKategori.equals("2"))
+                    {
+                        aracaSoforYukle();
+                    }
+                    if(ilanKategori.equals("3"))
+                    {
+                        iseAracYukle();
+                    }
+                    if(ilanKategori.equals("4"))
+                    {
+                        soforeIsYukle();
+                    }
+                    if(ilanKategori.equals("5"))
+                    {
+                        satilikAracYukle();
+                    }
+                    if(ilanKategori.equals("6"))
+                    {
+                        kiralikAracYukle();
+                    }
+                    if(ilanKategori.equals("7"))
+                    {
+                        yedekParcaYukle();
+                    }
+
+                    fabIcon.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Log.i("FabIcon" , "clicked");
+                            Log.i("FabIconCall" , "" + fabIconCall.getVisibility() + "\n + fabIconMessage" +  fabIconMessage.getVisibility());
+
+                            if(isVisibe)
                             {
-                                Fiyat = "Belirtilmedi";
+                                fabIconCall.setVisibility(View.GONE);
+                                fabIconMessage.setVisibility(View.GONE);
                             }
-                            Log.i("Fiyat" , Fiyat);
-                        }
-                        else
-                        {
-                            Fiyat = "-";
-                            Log.i("Fiyat" , Fiyat);
-                        }
-
-                        if(ilanDetay.getJSONObject("Users").has("UserName") && ilanDetay.getJSONObject("Users").has("SurName"))
-                        {
-                            IlanSahibi = ilanDetay.getJSONObject("Users").getString("UserName").concat(" ").concat(ilanDetay.getJSONObject("Users").getString("SurName"));
-                            Log.i("IlanSahibi" , IlanSahibi);
-                        }
-                        else
-                        {
-                            IlanSahibi = "-";
-                            Log.i("IlanSahibi" , IlanSahibi);
-                        }
-
-                        if(ilanDetay.has("ilanCityText") && ilanDetay.has("ilanSemtleriText"))
-                        {
-                            Konum = ilanDetay.getString("ilanCityText").concat("/").concat(ilanDetay.getString("ilanSemtleriText"));
-                            Log.i("Konum" , Konum);
-                        }
-                        else
-                        {
-                            Konum = "-";
-                            Log.i("Konum" , Konum);
-                        }
-
-                        if(ilanDetay.has("ID"))
-                        {
-                            IlanNo = ilanDetay.getString("ID");
-                            Log.i("IlanNo" , IlanNo);
-                        }
-                        else
-                        {
-                            IlanNo = "-";
-                            Log.i("IlanNo" , IlanNo);
-                        }
-
-                        if(ilanDetay.has("create_at"))
-                        {
-                            String tmp2 = ilanDetay.getString("create_at");
-                            String [] tmp = tmp2.split("\\+s");
-                            IlanTarih = tmp[0];
-                            Log.i("IlanTarih" , IlanTarih);
-                        }
-                        else
-                        {
-                            IlanTarih = "-";
-                            Log.i("IlanTarih" , IlanTarih);
-                        }
-
-                        if(ilanDetay.has("AracMarkasiText"))
-                        {
-                            AracMarkasi = ilanDetay.getString("AracMarkasiText");
-                            Log.i("AracMarkasi" , AracMarkasi);
-                        }
-                        else
-                        {
-                            AracMarkasi = "-";
-                            Log.i("AracMarkasi" , AracMarkasi);
-                        }
-
-                        if(ilanDetay.has("AracModeliText"))
-                        {
-                            AracModel = ilanDetay.getString("AracModeliText");
-                            Log.i("AracModel" , AracModel);
-                        }
-                        else
-                        {
-                            AracModel = "-";
-                            Log.i("AracModel" , AracModel);
-                        }
-
-                        if(ilanDetay.has("AracSubModeli"))
-                        {
-                            AracAltModel = ilanDetay.getString("AracSubModeli");
-                            Log.i("AracAltModel" , AracAltModel);
-                        }
-                        else
-                        {
-                            AracAltModel = "-";
-                            Log.i("AracAltModel" , AracAltModel);
-                        }
-
-                        if(ilanDetay.has("AracYili"))
-                        {
-                            AracYil = ilanDetay.getString("AracYili");
-                            Log.i("AracYil" , AracYil);
-                        }
-                        else
-                        {
-                            AracYil = "-";
-                            Log.i("AracYil" , AracYil);
-                        }
-
-                        if(ilanDetay.has("AracKapasiteText"))
-                        {
-                            AracKapasite = ilanDetay.getString("AracKapasiteText");
-                            Log.i("AracKapasite" , AracKapasite);
-                        }
-                        else
-                        {
-                            AracKapasite = "-";
-                            Log.i("AracKapasite" , AracKapasite);
-                        }
-
-                        if(ilanDetay.has("ServiseBaslamaSaati"))
-                        {
-                            ServisBaslamaSaat = ilanDetay.getString("ServiseBaslamaSaati");
-                            Log.i("ServisBaslamaSaat" , ServisBaslamaSaat);
-                        }
-                        else
-                        {
-                            ServisBaslamaSaat = "-";
-                            Log.i("ServisBaslamaSaat" , ServisBaslamaSaat);
-                        }
-
-                        if(ilanDetay.has("ServisBitisSaati"))
-                        {
-                            ServisBitisSaat = ilanDetay.getString("ServisBitisSaati");
-                            Log.i("ServisBitisSaat" , ServisBitisSaat);
-                        }
-                        else
-                        {
-                            ServisBitisSaat = "-";
-                            Log.i("ServisBitisSaat" , ServisBitisSaat);
-                        }
-
-                        if(ilanDetay.has("ServiseBaslamaCityText") && ilanDetay.has("ServiseBaslamaSemtleriText"))
-                        {
-                            ServisBaslamaKonum = ilanDetay.getString("ServiseBaslamaCityText").concat("/").concat(ilanDetay.getString("ServiseBaslamaSemtleriText"));
-                            Log.i("ServisBaslamaKonum" , ServisBaslamaKonum);
-                        }
-                        else
-                        {
-                            ServisBaslamaKonum = "-";
-                            Log.i("ServisBaslamaKonum" , ServisBaslamaKonum);
-                        }
-
-                        if(ilanDetay.has("ServisBitisCityText") && ilanDetay.has("ServisBitisSemtleriText"))
-                        {
-                            ServisBitisKonum = ilanDetay.getString("ServisBitisCityText").concat("/").concat(ilanDetay.getString("ServisBitisSemtleriText"));
-                            Log.i("ServisBitisKonum" , ServisBitisKonum);
-                        }
-                        else
-                        {
-                            ServisBitisKonum = "-";
-                            Log.i("ServisBitisKonum" , ServisBitisKonum);
-                        }
-
-                        if(ilanDetay.has("FirmayaGirisSaati"))
-                        {
-                            FirmaGirisSaat = ilanDetay.getString("FirmayaGirisSaati");
-                            Log.i("FirmaGirisSaat" , FirmaGirisSaat);
-                        }
-                        else
-                        {
-                            FirmaGirisSaat = "-";
-                            Log.i("FirmaGirisSaat" , FirmaGirisSaat);
-                        }
-
-                        if(ilanDetay.has("FirmadanCikisSaati"))
-                        {
-                            FirmaCikisSaat = ilanDetay.getString("FirmadanCikisSaati");
-                            Log.i("FirmaCikisSaat" , FirmaCikisSaat);
-                        }
-                        else
-                        {
-                            FirmaCikisSaat = "-";
-                            Log.i("FirmaCikisSaat" , FirmaCikisSaat);
-                        }
-
-                        if(ilanDetay.has("ToplamKM"))
-                        {
-                            ToplamKM = ilanDetay.getString("ToplamKM");
-                            Log.i("ToplamKM" , ToplamKM);
-                        }
-                        else
-                        {
-                            ToplamKM = "-";
-                            Log.i("ToplamKM" , ToplamKM);
-                        }
-
-                        if(ilanDetay.has("CalisilacakGunSayisi"))
-                        {
-                            GunSayisi = ilanDetay.getString("CalisilacakGunSayisi");
-                            Log.i("GunSayisi" , GunSayisi);
-                        }
-                        else
-                        {
-                            GunSayisi = "-";
-                            Log.i("GunSayisi" , GunSayisi);
-                        }
-
-                        if(ilanDetay.has("MotorHacmiText"))
-                        {
-                            MotorHacim = ilanDetay.getString("MotorHacmiText");
-                            Log.i("MotorHacim" , MotorHacim);
-                        }
-                        else
-                        {
-                            MotorHacim = "-";
-                            Log.i("MotorHacim" , MotorHacim);
-                        }
-
-                        if(ilanDetay.has("MotorGucuText"))
-                        {
-                            MotorGuc = ilanDetay.getString("MotorGucuText");
-                            Log.i("MotorGuc" , MotorGuc);
-                        }
-                        else
-                        {
-                            MotorGuc = "-";
-                            Log.i("MotorGuc" , MotorGuc);
-                        }
-
-                        if(ilanDetay.has("Kimden"))
-                        {
-                            Kimden = ilanDetay.getString("Kimden");
-                            Log.i("Kimden" , Kimden);
-                        }
-                        else
-                        {
-                            Kimden = "-";
-                            Log.i("Kimden" , Kimden);
-                        }
-
-                        if(ilanDetay.has("AracDurumu"))
-                        {
-                            AracDurumu = ilanDetay.getString("AracDurumu");
-                            AracDurumu = App.getAracDurumuWithID(AracDurumu);
-                            Log.i("AracDurumu" , AracDurumu);
-                        }
-                        else
-                        {
-                            AracDurumu = "-";
-                            Log.i("AracDurumu" , AracDurumu);
-                        }
-
-                        if(ilanDetay.has("Tecrube"))
-                        {
-                            Tecrube = ilanDetay.getString("Tecrube");
-                            Log.i("Tecrube" , Tecrube);
-                        }
-                        else
-                        {
-                            Tecrube = "-";
-                            Log.i("Tecrube" , Tecrube);
-                        }
-
-                        if(ilanDetay.has("Plaka"))
-                        {
-                            Plaka = ilanDetay.getString("Plaka");
-                            Log.i("Plaka" , Plaka);
-                        }
-                        else
-                        {
-                            Plaka = "-";
-                            Log.i("Plaka" , Plaka);
-                        }
-
-                        if(ilanDetay.has("Referanslar"))
-                        {
-                            Referans = ilanDetay.getString("Referanslar");
-                            Log.i("Referans" , Referans);
-                        }
-                        else
-                        {
-                            Referans = "-";
-                            Log.i("Referans" , Referans);
-                        }
-
-                        if(ilanDetay.has("UcretBeklentisi"))
-                        {
-                            UcretBeklentisi = ilanDetay.getString("UcretBeklentisi");
-                            Log.i("UcretBeklentisi" , UcretBeklentisi);
-                        }
-                        else
-                        {
-                            UcretBeklentisi = "-";
-                            Log.i("UcretBeklentisi" , UcretBeklentisi);
-                        }
-
-                        if(ilanDetay.has("KullanabildiginizKapasiteler"))
-                        {
-                            Kapasiteler = ilanDetay.getString("KullanabildiginizKapasiteler");
-                            Log.i("Kapasiteler" , Kapasiteler);
-                        }
-                        else
-                        {
-                            Kapasiteler = "-";
-                            Log.i("Kapasiteler" , Kapasiteler);
-                        }
-
-                        if(ilanDetay.has("Yasiniz"))
-                        {
-                            Yas = ilanDetay.getString("Yasiniz");
-                            Log.i("Yas" , Yas);
-                        }
-                        else
-                        {
-                            Yas = "-";
-                            Log.i("Yas" , Yas);
-                        }
-
-                        if(ilanDetay.has("Ehliyetiniz"))
-                        {
-                            Ehliyet = ilanDetay.getString("Ehliyetiniz");
-                            Log.i("Ehliyet" , Ehliyet);
-                        }
-                        else
-                        {
-                            Ehliyet = "-";
-                            Log.i("Ehliyet" , Ehliyet);
-                        }
-
-                        if(ilanDetay.has("SRC"))
-                        {
-                            Src = ilanDetay.getString("SRC");
-                            Log.i("Src" , Src);
-                        }
-                        else
-                        {
-                            Src = "-";
-                            Log.i("Src" , Src);
-                        }
-
-                        if(ilanDetay.has("AylikFiyat"))
-                        {
-                            AylikFiyati = ilanDetay.getString("AylikFiyat");
-                            Log.i("AylikFiyati" , AylikFiyati);
-                        }
-                        else
-                        {
-                            AylikFiyati = "-";
-                            Log.i("AylikFiyati" , AylikFiyati);
-                        }
-
-                        if(ilanDetay.has("HaftalikFiyat"))
-                        {
-                            HaftalikFiyati = ilanDetay.getString("HaftalikFiyat");
-                            Log.i("HaftalikFiyati" , HaftalikFiyati);
-                        }
-                        else
-                        {
-                            HaftalikFiyati = "-";
-                            Log.i("HaftalikFiyati" , HaftalikFiyati);
-                        }
-
-                        if(ilanDetay.has("VitesTipi"))
-                        {
-                            VitesTipi = ilanDetay.getString("VitesTipi");
-                            Log.i("VitesTipi" , VitesTipi);
-                        }
-                        else
-                        {
-                            VitesTipi = "-";
-                            Log.i("VitesTipi" , VitesTipi);
-                        }
-
-                        if(ilanDetay.has("YakitTipi"))
-                        {
-                            YakitTipi = ilanDetay.getString("YakitTipi");
-                            Log.i("YakitTipi" , YakitTipi);
-                        }
-                        else
-                        {
-                            YakitTipi = "-";
-                            Log.i("YakitTipi" , YakitTipi);
-                        }
-
-                        if(ilanDetay.has("Kasko"))
-                        {
-                            KaskoDurum = ilanDetay.getString("Kasko");
-                            Log.i("KaskoDurum" , KaskoDurum);
-                        }
-                        else
-                        {
-                            KaskoDurum = "-";
-                            Log.i("KaskoDurum" , KaskoDurum);
-                        }
-
-                        if(ilanDetay.has("ParcaMarkasi"))
-                        {
-                            ParcaMarkasi = ilanDetay.getString("ParcaMarkasi");
-                            Log.i("ParcaMarkasi" , ParcaMarkasi);
-                        }
-                        else
-                        {
-                            ParcaMarkasi = "-";
-                            Log.i("ParcaMarkasi" , ParcaMarkasi);
-                        }
-
-                        if(ilanDetay.has("CikmaYedekParca"))
-                        {
-                            CikmaYedekParca = ilanDetay.getString("CikmaYedekParca");
-                            if(CikmaYedekParca.equals("1"))
+                            if(!isVisibe)
                             {
-                                CikmaYedekParca = "Evet";
-                            }
-                            if(CikmaYedekParca.equals("0"))
-                            {
-                                CikmaYedekParca = "Hayır";
-                            }
-                            Log.i("CikmaYedekParca" , CikmaYedekParca);
-                        }
-                        else
-                        {
-                            CikmaYedekParca = "-";
-                            Log.i("CikmaYedekParca" , CikmaYedekParca);
-                        }
-
-                        if(ilanDetay.has("YedekParcaDurum"))
-                        {
-                            YedekParcaDurumu = ilanDetay.getString("YedekParcaDurum");
-                            Log.i("YedekParcaDurumu" , YedekParcaDurumu);
-                        }
-                        else
-                        {
-                            YedekParcaDurumu = "-";
-                            Log.i("YedekParcaDurumu" , YedekParcaDurumu);
-                        }
-
-                        if(ilanDetay.has("AracOzellikleriText"))
-                        {
-                            String Ozellik = ilanDetay.getString("AracOzellikleri");
-                            Ozellikler =  ilanDetay.getString("AracOzellikleriText");
-                            Log.i("Ozellikler" , Ozellikler);
-                        }
-                        else
-                        {
-                            Ozellikler = "-";
-                            Log.i("Ozellikler" , Ozellikler);
-                        }
-
-                        if(ilanDetay.has("Belgeler"))
-                        {
-                            Belgeler = ilanDetay.getString("Belgeler");
-                            Log.i("Belgeler" , Belgeler);
-                        }
-                        else
-                        {
-                            Belgeler = "-";
-                            Log.i("Belgeler" , Belgeler);
-                        }
-
-                        if(ilanDetay.has("Resimler"))
-                        {
-                            Resimler = ilanDetay.getString("Resimler");
-                            Log.i("Resimler" , Resimler);
-
-                            if(Resimler.contains("|"))
-                            {
-                                String [] images = Resimler.split(Pattern.quote("|"));
-                                ViewPagerAdapter adapter = new ViewPagerAdapter(ctx ,images);
-                                viewPagerPhotos.setAdapter(adapter);
-                            }
-                            else
-                            {
-                                String [] images = new String[1];
-                                images[0] = Resimler;
-                                ViewPagerAdapter adapter = new ViewPagerAdapter(ctx ,images);
-                                viewPagerPhotos.setAdapter(adapter);
+                                fabIconCall.setVisibility(View.VISIBLE);
+                                fabIconMessage.setVisibility(View.VISIBLE);
                             }
 
-                        }
-                        else
-                        {
-                            Resimler = "-";
-                            Log.i("Resimler" , Resimler);
-                            viewPagerPhotos.setVisibility(View.INVISIBLE);
-                            imgNoPhoto.setVisibility(View.VISIBLE);
-                        }
-
-                        String ilanKategori = ilanDetay.getString("Tipi");
-
-                        if(ilanKategori.equals("1"))
-                        {
-                            aracaIsYukle();
-                        }
-                        if(ilanKategori.equals("2"))
-                        {
-                            aracaSoforYukle();
-                        }
-                        if(ilanKategori.equals("3"))
-                        {
-                            iseAracYukle();
-                        }
-                        if(ilanKategori.equals("4"))
-                        {
-                            soforeIsYukle();
-                        }
-                        if(ilanKategori.equals("5"))
-                        {
-                            satilikAracYukle();
-                        }
-                        if(ilanKategori.equals("6"))
-                        {
-                            kiralikAracYukle();
-                        }
-                        if(ilanKategori.equals("7"))
-                        {
-                            yedekParcaYukle();
-                        }
-
-                        fabIcon.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                Log.i("FabIcon" , "clicked");
-                                Log.i("FabIconCall" , "" + fabIconCall.getVisibility() + "\n + fabIconMessage" +  fabIconMessage.getVisibility());
-
-                                if(isVisibe)
-                                {
-                                    fabIconCall.setVisibility(View.GONE);
-                                    fabIconMessage.setVisibility(View.GONE);
-                                }
-                                if(!isVisibe)
-                                {
-                                    fabIconCall.setVisibility(View.VISIBLE);
-                                    fabIconMessage.setVisibility(View.VISIBLE);
-                                }
-
-                                isVisibe = !isVisibe;
+                            isVisibe = !isVisibe;
 
 
-                            }
-                        });
+                        }
+                    });
 
                     fabIconCall.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -813,27 +797,25 @@ public class IlanDetayFragment extends Fragment {
 
 
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    Log.i("Başardın" , "Başarılı");
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
-                @Override
-                public void onFailure(Call<IlanDetayResponse> call, Throwable t) {
 
-                    Log.i("Error" , t.getMessage());
+                Log.i("Başardın" , "Başarılı");
+            }
 
-                }
-            });
+            @Override
+            public void onFailure(Call<IlanDetayResponse> call, Throwable t) {
 
-            return rootView;
+                Log.i("Error" , t.getMessage());
 
-        }
+            }
+        });
 
-        return null;
+        return rootView;
+
+
     }
 
     private void iseAracYukle()

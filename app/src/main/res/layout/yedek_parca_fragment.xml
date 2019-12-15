@@ -267,6 +267,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteYedekParcail"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/İl" />
@@ -280,6 +281,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteYedekParcailce"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/İlçe" />

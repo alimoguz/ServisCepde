@@ -95,9 +95,10 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/autoCompleteKullaniciTuru"
+                    android:editable="false"
+                    android:backgroundTint="@color/appColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/appColor"
                     android:textColor="@color/colorWhite"
                     android:textColorHint="@color/colorWhite"/>
 
@@ -343,11 +344,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_40sdp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtKullanim"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/KullanımŞartları"
                     android:fontFamily="@font/myriadpro_bold"

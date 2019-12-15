@@ -537,24 +537,27 @@ public class SatilikAracFragment extends Fragment {
 
 
         if(requestCode == 6614){
-            ArrayList<String> imageList = data.getStringArrayListExtra("imageList");
-            if(resultCode == 100){
-                Glide.with(ctx).load(imageList.get(0)).into(imgSatilikAracFirstPhoto);
-                imgSatilikAracFirstPhotoChange.setVisibility(View.INVISIBLE);
-                photos.add(imageList.get(0));
+            if(data != null)
+            {
+                ArrayList<String> imageList = data.getStringArrayListExtra("imageList");
+                if(resultCode == 100){
+                    Glide.with(ctx).load(imageList.get(0)).into(imgSatilikAracFirstPhoto);
+                    imgSatilikAracFirstPhotoChange.setVisibility(View.INVISIBLE);
+                    photos.add(imageList.get(0));
 
-            }
-            else if(resultCode == 200){
-                Glide.with(ctx).load(imageList.get(0)).into(imgSatilikAracSecondPhoto);
-                imgSatilikAracSecondPhotoChange.setVisibility(View.INVISIBLE);
-                photos.add(imageList.get(0));
+                }
+                else if(resultCode == 200){
+                    Glide.with(ctx).load(imageList.get(0)).into(imgSatilikAracSecondPhoto);
+                    imgSatilikAracSecondPhotoChange.setVisibility(View.INVISIBLE);
+                    photos.add(imageList.get(0));
 
-            }
-            else if(resultCode == 300){
-                Glide.with(ctx).load(imageList.get(0)).into(imgSatilikAracLastPhoto);
-                imgSatilikAracLastChange.setVisibility(View.INVISIBLE);
-                photos.add(imageList.get(0));
+                }
+                else if(resultCode == 300){
+                    Glide.with(ctx).load(imageList.get(0)).into(imgSatilikAracLastPhoto);
+                    imgSatilikAracLastChange.setVisibility(View.INVISIBLE);
+                    photos.add(imageList.get(0));
 
+                }
             }
 
         }

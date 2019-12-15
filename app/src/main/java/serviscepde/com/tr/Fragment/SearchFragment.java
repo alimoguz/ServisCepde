@@ -99,18 +99,22 @@ public class SearchFragment extends Fragment {
 
         if(search != null)
         {
-            tmp = search.getString("SearchText");
-            textFromHome = tmp;
-            Log.i("GelenText" , textFromHome);
+            if(search.getString("SearchText") != null)
+            {
+                tmp = search.getString("SearchText");
+                textFromHome = tmp;
+                Log.i("GelenText" , textFromHome);
 
-            if(textFromHome.isEmpty())
-            {
-                Log.i("SearchTextGelmedi" , textFromHome);
+                if(textFromHome.isEmpty())
+                {
+                    Log.i("SearchTextGelmedi" , textFromHome);
+                }
+                if(!textFromHome.isEmpty())
+                {
+                    Log.i("SearchTextGeldi" , textFromHome);
+                }
             }
-            if(!textFromHome.isEmpty())
-            {
-                Log.i("SearchTextGeldi" , textFromHome);
-            }
+
 
         }
 
@@ -179,14 +183,15 @@ public class SearchFragment extends Fragment {
                         dialogOrder.dismiss();
                         orderBY = "Ucret ASC";
                         clearAdapter();
-                        if(searchText.isEmpty())
-                        {
-                            searchWithoutText();
-                        }
-                        if(!searchText.isEmpty())
+                        if(searchText != null)
                         {
                             searchWithText(searchText);
                         }
+                        if(searchText == null)
+                        {
+                            searchWithoutText();
+                        }
+
 
                     }
                 });
@@ -197,13 +202,13 @@ public class SearchFragment extends Fragment {
                         dialogOrder.dismiss();
                         orderBY = "Ucret DESC";
                         clearAdapter();
-                        if(searchText.isEmpty())
-                        {
-                            searchWithoutText();
-                        }
-                        if(!searchText.isEmpty())
+                        if(searchText != null)
                         {
                             searchWithText(searchText);
+                        }
+                        if(searchText == null)
+                        {
+                            searchWithoutText();
                         }
 
                     }
@@ -215,13 +220,13 @@ public class SearchFragment extends Fragment {
                         dialogOrder.dismiss();
                         orderBY = "create_at ASC";
                         clearAdapter();
-                        if(searchText.isEmpty())
-                        {
-                            searchWithoutText();
-                        }
-                        if(!searchText.isEmpty())
+                        if(searchText != null)
                         {
                             searchWithText(searchText);
+                        }
+                        if(searchText == null)
+                        {
+                            searchWithoutText();
                         }
 
                     }
@@ -233,13 +238,13 @@ public class SearchFragment extends Fragment {
                         dialogOrder.dismiss();
                         orderBY = "create_at DESC";
                         clearAdapter();
-                        if(searchText.isEmpty())
-                        {
-                            searchWithoutText();
-                        }
-                        if(!searchText.isEmpty())
+                        if(searchText != null)
                         {
                             searchWithText(searchText);
+                        }
+                        if(searchText == null)
+                        {
+                            searchWithoutText();
                         }
 
                     }
@@ -251,13 +256,13 @@ public class SearchFragment extends Fragment {
                         dialogOrder.dismiss();
                         orderBY = "Baslik ASC";
                         clearAdapter();
-                        if(searchText.isEmpty())
-                        {
-                            searchWithoutText();
-                        }
-                        if(!searchText.isEmpty())
+                        if(searchText != null)
                         {
                             searchWithText(searchText);
+                        }
+                        if(searchText == null)
+                        {
+                            searchWithoutText();
                         }
 
                     }
@@ -269,13 +274,13 @@ public class SearchFragment extends Fragment {
                         dialogOrder.dismiss();
                         orderBY = "Baslik DESC";
                         clearAdapter();
-                        if(searchText.isEmpty())
-                        {
-                            searchWithoutText();
-                        }
-                        if(!searchText.isEmpty())
+                        if(searchText != null)
                         {
                             searchWithText(searchText);
+                        }
+                        if(searchText == null)
+                        {
+                            searchWithoutText();
                         }
                     }
                 });

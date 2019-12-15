@@ -267,6 +267,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteSatilikAracil"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/İl" />
@@ -280,6 +281,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteSatilikAracilce"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/İlçe" />
@@ -319,6 +321,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteSatilikAracMarka"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Marka" />
@@ -332,6 +335,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteSatilikAracModel"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Model" />
@@ -346,6 +350,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteSatilikAracAltModel"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/AltModel" />
@@ -389,6 +394,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteSatilikAracMotorHacmi"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/MotorHacmi" />
@@ -402,6 +408,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteSatilikAracMotorGucu"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/MotorGücü" />
@@ -415,6 +422,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteSatilikAracKapasite"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Kapasite" />
@@ -428,6 +436,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteSatilikAracKimden"
+                        android:editable="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Kimden" />

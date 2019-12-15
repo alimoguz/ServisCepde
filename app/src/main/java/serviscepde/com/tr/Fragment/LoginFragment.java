@@ -100,6 +100,8 @@ public class LoginFragment extends Fragment {
 
 
 
+
+
         txtGirisYap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,7 +231,7 @@ public class LoginFragment extends Fragment {
 
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragSplash , signupFragment);
+                fragmentTransaction.replace(R.id.fragSplash , signupFragment );
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }

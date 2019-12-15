@@ -86,7 +86,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/Şifre"
-                android:text="123456"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textColor="@color/colorWhite"
                 android:inputType="textPassword"

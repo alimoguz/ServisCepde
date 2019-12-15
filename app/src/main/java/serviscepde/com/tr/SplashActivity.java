@@ -1,5 +1,6 @@
 package serviscepde.com.tr;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import retrofit2.Retrofit;
 import serviscepde.com.tr.Fragment.IseAracFragment;
+import serviscepde.com.tr.Fragment.LoginFragment;
 import serviscepde.com.tr.Fragment.VideoFragment;
 import serviscepde.com.tr.Models.Ilce;
 
@@ -49,6 +51,24 @@ public class SplashActivity extends AppCompatActivity {
 
 
     @Override
+    public void onBackPressed() {
+        FragmentManager manager = getSupportFragmentManager();
+
+
+        if(manager.getBackStackEntryCount() > 2)
+        {
+            manager.popBackStackImmediate();
+        }
+        else
+        {
+            System.exit(0);
+        }
+
+
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
@@ -66,10 +86,12 @@ public class SplashActivity extends AppCompatActivity {
         sharedPref = getBaseContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
+
+
         videoFragment = new VideoFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragSplash,videoFragment);
+        fragmentTransaction.add(R.id.fragSplash,videoFragment , "videoTag");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commitAllowingStateLoss();
 

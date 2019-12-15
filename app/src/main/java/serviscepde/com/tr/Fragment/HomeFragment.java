@@ -380,24 +380,7 @@ public class HomeFragment extends Fragment {
                                 public void onClick(View v) {
 
                                     Log.i("Bastın" , "test");
-
-                                    if(userToken.equals("0"))
-                                    {
-                                        SweetAlertDialog girisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.WARNING_TYPE);
-                                        girisAlert.setTitleText("Devam edebilmek için lütfen önce giriş yapın");
-                                        girisAlert.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                            @Override
-                                            public void onDismiss(DialogInterface dialog) {
-                                                Intent intent = new Intent(ctx , SplashActivity.class);
-                                                startActivity(intent);
-                                            }
-                                        });
-                                        girisAlert.show();
-                                    }
-                                    else
-                                    {
-                                        openIlanDetay(ilanDetayFragment ,ID);
-                                    }
+                                    openIlanDetay(ilanDetayFragment ,ID);
 
                                 }
                             });
@@ -478,23 +461,9 @@ public class HomeFragment extends Fragment {
                             linGuncel2.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    if(userToken.equals("0"))
-                                    {
-                                        SweetAlertDialog girisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.WARNING_TYPE);
-                                        girisAlert.setTitleText("Devam edebilmek için lütfen önce giriş yapın");
-                                        girisAlert.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                            @Override
-                                            public void onDismiss(DialogInterface dialog) {
-                                                Intent intent = new Intent(ctx , SplashActivity.class);
-                                                startActivity(intent);
-                                            }
-                                        });
-                                        girisAlert.show();
-                                    }
-                                    else
-                                    {
-                                        openIlanDetay(ilanDetayFragment ,ID);
-                                    }
+
+                                    openIlanDetay(ilanDetayFragment ,ID);
+
                                 }
                             });
 
@@ -574,23 +543,8 @@ public class HomeFragment extends Fragment {
                                 @Override
                                 public void onClick(View v) {
 
-                                    if(userToken.equals("0"))
-                                    {
-                                        SweetAlertDialog girisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.WARNING_TYPE);
-                                        girisAlert.setTitleText("Devam edebilmek için lütfen önce giriş yapın");
-                                        girisAlert.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                            @Override
-                                            public void onDismiss(DialogInterface dialog) {
-                                                Intent intent = new Intent(ctx , SplashActivity.class);
-                                                startActivity(intent);
-                                            }
-                                        });
-                                        girisAlert.show();
-                                    }
-                                    else
-                                    {
-                                        openIlanDetay(ilanDetayFragment ,ID);
-                                    }
+                                    openIlanDetay(ilanDetayFragment ,ID);
+
                                 }
                             });
 
@@ -644,12 +598,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
-
-
-
-
-
 
 
         return rootView;

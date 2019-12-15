@@ -72,7 +72,7 @@ public class KiralikAracFragment extends Fragment {
     private List<City> tmpCity = new ArrayList<>();
     private List<String> sehirListesi = new ArrayList<>();
 
-    private String baslik,fiyat,aciklama,yil,haftalikFiyat,aylikFiyat,imageString,userToken;
+    private String baslik,fiyat,aciklama,yil,aylikFiyat,imageString,userToken;
     private String actvKasko,actvKapasite,actvYakitTipi,actvVitesTipi,actvModel,actvMarka;
 
     private SweetAlertDialog emptyDialog;;
@@ -117,7 +117,6 @@ public class KiralikAracFragment extends Fragment {
 
 
         edtKiralikAracAylikFiyat = generalView.findViewById(R.id.edtKiralikAracAylikFiyat);
-        edtKiralikAracHaftalikFiyat = generalView.findViewById(R.id.edtKiralikAracHaftalikFiyat);
         edtKiralikAracAracYili = generalView.findViewById(R.id.edtKiralikAracAracYili);
         edtKiralikAracAciklama = generalView.findViewById(R.id.edtKiralikAracAciklama);
         edtKiralikAracFiyat = generalView.findViewById(R.id.edtKiralikAracFiyat);
@@ -412,7 +411,6 @@ public class KiralikAracFragment extends Fragment {
                 fiyat = edtKiralikAracFiyat.getText().toString();
                 aciklama = edtKiralikAracAciklama.getText().toString();
                 yil = edtKiralikAracAracYili.getText().toString();
-                haftalikFiyat = edtKiralikAracHaftalikFiyat.getText().toString();
                 aylikFiyat = edtKiralikAracAylikFiyat.getText().toString();
 
                 if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || actvKasko.isEmpty() || actvKapasite.isEmpty() || actvYakitTipi.isEmpty() ||
@@ -443,7 +441,6 @@ public class KiralikAracFragment extends Fragment {
                     hashMap1.put("AracKapasitesi" , actvKapasite);
                     hashMap1.put("Ucret" , fiyat);
                     hashMap1.put("file" , imageString);
-                    hashMap1.put("HaftalikFiyat" , haftalikFiyat);
                     hashMap1.put("AylikFiyat" , aylikFiyat);
                     hashMap1.put("VitesTipi" , actvVitesTipi);
                     hashMap1.put("YakitTipi" , actvYakitTipi);
@@ -524,19 +521,23 @@ public class KiralikAracFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         if(requestCode == 6614){
-            ArrayList<String> imageList = data.getStringArrayListExtra("imageList");
-            if(resultCode == 100){
-                Glide.with(ctx).load(imageList.get(0)).into(imgKiralikAracFirstPhoto);
-                imgKiralikAracFirstPhotoChange.setVisibility(View.INVISIBLE);
+            if(data != null)
+            {
+                ArrayList<String> imageList = data.getStringArrayListExtra("imageList");
+                if(resultCode == 100){
+                    Glide.with(ctx).load(imageList.get(0)).into(imgKiralikAracFirstPhoto);
+                    imgKiralikAracFirstPhotoChange.setVisibility(View.INVISIBLE);
+                }
+                else if(resultCode == 200){
+                    Glide.with(ctx).load(imageList.get(0)).into(imgKiralikAracSecondPhoto);
+                    imgKiralikAracSecondPhotoChange.setVisibility(View.INVISIBLE);
+                }
+                else if(resultCode == 300){
+                    Glide.with(ctx).load(imageList.get(0)).into(imgKiralikAracLastPhoto);
+                    imgKiralikAracLastChange.setVisibility(View.INVISIBLE);
+                }
             }
-            else if(resultCode == 200){
-                Glide.with(ctx).load(imageList.get(0)).into(imgKiralikAracSecondPhoto);
-                imgKiralikAracSecondPhotoChange.setVisibility(View.INVISIBLE);
-            }
-            else if(resultCode == 300){
-                Glide.with(ctx).load(imageList.get(0)).into(imgKiralikAracLastPhoto);
-                imgKiralikAracLastChange.setVisibility(View.INVISIBLE);
-            }
+
 
         }
 

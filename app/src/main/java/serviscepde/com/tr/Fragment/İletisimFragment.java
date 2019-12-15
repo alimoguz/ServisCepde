@@ -40,7 +40,7 @@ public class İletisimFragment extends Fragment {
         linNumber2 = generalView.findViewById(R.id.linNumber2);
 
         String number1 = getString(R.string.Number1);
-        String number2 = getString(R.string.Number1);
+        String number2 = getString(R.string.Number2);
 
 
         linNumber1.setOnClickListener(new View.OnClickListener() {

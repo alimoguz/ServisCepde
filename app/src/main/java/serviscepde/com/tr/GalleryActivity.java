@@ -17,12 +17,15 @@ import java.util.List;
 public class GalleryActivity extends AppCompatActivity {
 
     ArrayList<String> imagesPath = new ArrayList<>();
+    int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
+
+        Log.i("FlagOnCreate" , "" + flag);
         ImagePicker.create(this)
                 .returnMode(ReturnMode.GALLERY_ONLY)
                 .returnMode(ReturnMode.CAMERA_ONLY)
@@ -35,10 +38,31 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        ++flag;
+        Log.i("Flag" , "" + flag);
+        if(flag > 1){
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList("imageList", new ArrayList<>());
+            intent.putExtras(bundle);
+
+            setResult(404, intent);
+            finish();
+
+        }
+
+
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
             // Get a list of picked images
             List<Image> images = ImagePicker.getImages(data);
+
 
             Bundle bundle1 = getIntent().getExtras();
             int pos = bundle1.getInt("position");

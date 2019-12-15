@@ -58,7 +58,10 @@ public class FilterResultActivity extends AppCompatActivity {
         HashMap<String , Object> param = (HashMap<String , Object>)filterResult.getSerializableExtra("paramHash");
 
         Log.i("HashMapSize" , " " + param.size());
-        finalHashMap.put("Token" , userToken);
+        if(!userToken.equals("0"))
+        {
+            finalHashMap.put("Token" , userToken);
+        }
         finalHashMap.put("param" , param);
 
 

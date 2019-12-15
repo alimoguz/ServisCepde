@@ -151,11 +151,13 @@
 
             </LinearLayout>
 
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_header"
-                android:text="İlan Açıklaması"
+                android:text="@string/İlanBilgi"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:fontFamily="@font/myriadpro_regular"
@@ -167,27 +169,12 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 />
 
-            <TextView
-                android:id="@+id/txtIlanDetayAciklama"
-                tools:text="CANSIN OTOKAR ANKARADAN 2017 MODEL SULTAN S 75.000 KMDE"
-                android:fontFamily="@font/myriadpro_regular"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_16ssp"
-                android:gravity="center"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_60sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 app:contentPaddingBottom="@dimen/_10sdp"
                 app:cardUseCompatPadding="true"
                 app:cardElevation="@dimen/_2sdp"
@@ -198,24 +185,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/İlanBilgileri"
-                        android:fontFamily="@font/myriadpro_regular"
-                        android:textSize="@dimen/_11ssp" />
-
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/colorDarkGray"
-                        android:layout_marginTop="@dimen/_1sdp" />
-
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1451,6 +1422,36 @@
 
 
             </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_header"
+                android:text="İlan Açıklaması"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:fontFamily="@font/myriadpro_regular"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:textSize="@dimen/_10ssp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                />
+
+            <TextView
+                android:id="@+id/txtIlanDetayAciklama"
+                tools:text="CANSIN OTOKAR ANKARADAN 2017 MODEL SULTAN S 75.000 KMDE"
+                android:fontFamily="@font/myriadpro_regular"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_16ssp"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_60sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
 
