@@ -25,7 +25,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="ca-app-pub-9098556749113718~1513609024" />
 
         <receiver
             android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
