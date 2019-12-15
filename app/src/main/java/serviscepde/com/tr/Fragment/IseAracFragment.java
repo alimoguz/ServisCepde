@@ -363,6 +363,7 @@ public class IseAracFragment extends Fragment {
 
                 model = DownloadClass.getModelNames(actvIseAracMarka);
                 setAutoCompleteAdapter(autoCompleteIseAracModel , model);
+                autoCompleteIseAracModel.setText(model.get(0));
             }
         });
 

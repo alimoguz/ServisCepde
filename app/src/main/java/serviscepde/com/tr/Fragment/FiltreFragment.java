@@ -352,6 +352,7 @@ public class FiltreFragment extends Fragment {
 
                 model = DownloadClass.getModelNames(acMarka);
                 Utils.setAutoCompleteAdapter(acFiltreModel , model , ctx);
+                acFiltreModel.setText(model.get(0));
             }
         });
         acFiltreModel.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -334,6 +334,7 @@ public class KiralikAracFragment extends Fragment {
 
                 model = DownloadClass.getModelNames(actvMarka);
                 Utils.setAutoCompleteAdapter(autoCompleteKiralikAracModel , model , ctx);
+                autoCompleteKiralikAracModel.setText(model.get(0));
             }
         });
 

@@ -347,6 +347,7 @@ public class SatilikAracFragment extends Fragment {
 
                 model = DownloadClass.getModelNames(actvMarka);
                 Utils.setAutoCompleteAdapter(autoCompleteSatilikAracModel , model , ctx);
+                autoCompleteSatilikAracModel.setText(model.get(0));
             }
         });
 
