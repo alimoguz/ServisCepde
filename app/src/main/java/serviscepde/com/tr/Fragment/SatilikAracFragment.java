@@ -31,6 +31,8 @@ import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
 import serviscepde.com.tr.Models.Ilce;
 import serviscepde.com.tr.Models.Kapasite;
+import serviscepde.com.tr.Models.MotorGuc;
+import serviscepde.com.tr.Models.MotorHacim;
 import serviscepde.com.tr.Models.Sehirler.SehirResponse;
 import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.R;
@@ -90,6 +92,10 @@ public class SatilikAracFragment extends Fragment {
 
     private List<Kapasite> kapasites = new ArrayList<>();
     private List<String> kapasiteNames = new ArrayList<>();
+    private List<MotorGuc> gucs = new ArrayList<>();
+    private List<String> gucNames = new ArrayList<>();
+    private List<MotorHacim> hacims = new ArrayList<>();
+    private List<String> hacimNames = new ArrayList<>();
 
 
     @Nullable
@@ -314,13 +320,17 @@ public class SatilikAracFragment extends Fragment {
         marka = DownloadClass.getMarkaNames();
         kapasites = DownloadClass.getKapasite();
         kapasiteNames = DownloadClass.getKapasiteNames();
+        gucs = DownloadClass.getMotorGuc();
+        gucNames = DownloadClass.getGucNames();
+        hacims = DownloadClass.getMotorHacim();
+        hacimNames = DownloadClass.getHacimNames();
 
 
 
         Utils.setAutoCompleteAdapter(autoCompleteSatilikAracil , cityNames , ctx);
         Utils.setAutoCompleteAdapter(autoCompleteSatilikAracKapasite , kapasiteNames ,ctx);
-        Utils.setAutoCompleteAdapter(autoCompleteSatilikAracMotorGucu ,App.getMotorGucu() ,ctx);
-        Utils.setAutoCompleteAdapter(autoCompleteSatilikAracMotorHacmi ,App.getMotorHacmi() ,ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteSatilikAracMotorGucu , gucNames ,ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteSatilikAracMotorHacmi , hacimNames ,ctx);
         Utils.setAutoCompleteAdapter(autoCompleteSatilikAracKimden ,App.getKimden() ,ctx);
         Utils.setAutoCompleteAdapter(autoCompleteSatilikAracMarka , marka  , ctx);
 
@@ -382,13 +392,18 @@ public class SatilikAracFragment extends Fragment {
         autoCompleteSatilikAracMotorGucu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                actvMotorGucu = String.valueOf(position + 1);
+
+                actvMotorGucu = parent.getItemAtPosition(position).toString();
+                actvMotorGucu = DownloadClass.getGucIdWithName(actvMotorGucu);
+                Log.i("MotorGucu" , actvMotorGucu);
             }
         });
         autoCompleteSatilikAracMotorHacmi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                actvMotorHacmi = String.valueOf(position + 1);
+                actvMotorHacmi = parent.getItemAtPosition(position).toString();
+                actvMotorHacmi = DownloadClass.getHacimIdWithName(actvMotorHacmi);
+                Log.i("MotorHacim" , actvMotorHacmi);
             }
         });
         autoCompleteSatilikAracKimden.setOnItemClickListener(new AdapterView.OnItemClickListener() {

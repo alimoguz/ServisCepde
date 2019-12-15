@@ -22,6 +22,8 @@ import serviscepde.com.tr.Models.Ilceler.IlceResponse;
 import serviscepde.com.tr.Models.Ilceler.IlceResponseDetail;
 import serviscepde.com.tr.Models.Kapasite;
 import serviscepde.com.tr.Models.MarkaModel;
+import serviscepde.com.tr.Models.MotorGuc;
+import serviscepde.com.tr.Models.MotorHacim;
 import serviscepde.com.tr.Models.Response.BaseResponse;
 import serviscepde.com.tr.Models.Response.ResponseDetail;
 import serviscepde.com.tr.Models.Sehirler.SehirResponse;
@@ -33,12 +35,96 @@ public class DownloadClass {
     public static ArrayList<Ilce> towns = new ArrayList<>();
     public static ArrayList<MarkaModel> markaModelsArray = new ArrayList<>();
     public static ArrayList<Kapasite> kapasiteList =  new ArrayList<>();
+    public static ArrayList<MotorGuc> motorGucList =  new ArrayList<>();
+    public static ArrayList<MotorHacim> motorHacimList = new ArrayList<>();
 
     public static void downloadAllVariables() {
         downloadCities();
         downloadTowns();
         downloadMarkaModel();
         downloadKapasite();
+        downloadGuc();
+        downloadHacim();
+    }
+
+    private static void downloadHacim() {
+
+        motorHacimList = new ArrayList<>();
+        Call<BaseResponse> hacimCall = App.getApiService().getMotorHacim();
+        hacimCall.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                ResponseDetail detail = response.body().getResponseDetail();
+                String token = detail.getResult();
+                JSONObject tmp = Utils.jwtToJsonObject(token);
+
+                try {
+                    JSONObject motorHacim = tmp.getJSONObject("OutPutMessage").getJSONObject("Data");
+
+                    for(int i = 1; i <= motorHacim.length(); i++)
+                    {
+                        String ID = String.valueOf(i);
+                        String hacim = motorHacim.getString(String.valueOf(i));
+
+                        MotorHacim tmpHacim = new MotorHacim(ID , hacim);
+                        motorHacimList.add(tmpHacim);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private static void downloadGuc() {
+
+        motorGucList = new ArrayList<>();
+
+        Call<BaseResponse> gucCall = App.getApiService().getMotorGucu();
+        gucCall.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                ResponseDetail detail = response.body().getResponseDetail();
+                String token = detail.getResult();
+                JSONObject motorGuc = Utils.jwtToJsonObject(token);
+
+
+                try {
+                    JSONObject motorGucListe = motorGuc.getJSONObject("OutPutMessage").getJSONObject("Data");
+
+                    for(int i = 1; i <= motorGucListe.length(); i++)
+                    {
+                        String ID = String.valueOf(i);
+                        String guc = motorGucListe.getString(String.valueOf(i));
+
+                        MotorGuc motorGuc1 = new MotorGuc(ID , guc);
+                        motorGucList.add(motorGuc1);
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private static void downloadMarkaModel() {
@@ -208,6 +294,62 @@ public class DownloadClass {
 
 
 
+    }
+
+    public static ArrayList<MotorHacim> getMotorHacim()
+    {
+        return motorHacimList;
+    }
+
+    public static ArrayList<String> getHacimNames()
+    {
+        ArrayList<String> hacimNames = new ArrayList<>();
+        for(MotorHacim motorHacim : motorHacimList)
+        {
+            hacimNames.add(motorHacim.getMotorHacim());
+        }
+
+        return hacimNames;
+    }
+
+    public static String getHacimIdWithName(String hacimName)
+    {
+        for(MotorHacim motorHacim : motorHacimList)
+        {
+            if(motorHacim.getMotorHacim().equals(hacimName))
+            {
+                return motorHacim.getID();
+            }
+        }
+        return "";
+    }
+
+    public static ArrayList<MotorGuc> getMotorGuc()
+    {
+        return motorGucList;
+    }
+
+    public static ArrayList<String> getGucNames()
+    {
+        ArrayList<String>  gucNames = new ArrayList<>();
+        for(MotorGuc motorGuc : motorGucList)
+        {
+            gucNames.add(motorGuc.getMotorGuc());
+        }
+        return gucNames;
+    }
+
+    public static String getGucIdWithName(String motorGucu)
+    {
+        for(MotorGuc motorGuc : motorGucList)
+        {
+            if(motorGuc.getMotorGuc().equals(motorGucu))
+            {
+                return motorGuc.getID();
+            }
+        }
+
+        return "";
     }
 
 

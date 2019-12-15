@@ -41,6 +41,8 @@ import serviscepde.com.tr.FilterResultActivity;
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.Kapasite;
+import serviscepde.com.tr.Models.MotorGuc;
+import serviscepde.com.tr.Models.MotorHacim;
 import serviscepde.com.tr.R;
 import serviscepde.com.tr.SplashActivity;
 import serviscepde.com.tr.Utils.Utils;
@@ -93,6 +95,10 @@ public class FiltreFragment extends Fragment {
 
     private List<Kapasite> kapasites = new ArrayList<>();
     private List<String> kapasiteNames = new ArrayList<>();
+    private List<MotorGuc> gucs = new ArrayList<>();
+    private List<String> gucNames = new ArrayList<>();
+    private List<MotorHacim> hacims = new ArrayList<>();
+    private List<String> hacimNames = new ArrayList<>();
 
 
     @Nullable
@@ -270,6 +276,10 @@ public class FiltreFragment extends Fragment {
         marka = DownloadClass.getMarkaNames();
         kapasites = DownloadClass.getKapasite();
         kapasiteNames = DownloadClass.getKapasiteNames();
+        gucs = DownloadClass.getMotorGuc();
+        gucNames = DownloadClass.getGucNames();
+        hacims = DownloadClass.getMotorHacim();
+        hacimNames = DownloadClass.getHacimNames();
 
 
         Utils.setAutoCompleteAdapter(acFiltreIl , cityNames ,ctx);
@@ -279,8 +289,8 @@ public class FiltreFragment extends Fragment {
         Utils.setAutoCompleteAdapter(acFiltreKapasite , kapasiteNames , ctx);
         Utils.setAutoCompleteAdapter(acFiltreKullanilabilirKapasiteler , kapasiteNames , ctx);
         Utils.setAutoCompleteAdapter(acFiltreAracDurum , App.getAracDurumu(), ctx);
-        Utils.setAutoCompleteAdapter(acFiltreMotorHacim , App.getMotorHacmi() , ctx);
-        Utils.setAutoCompleteAdapter(acFiltreMotorGuc , App.getMotorGucu() , ctx);
+        Utils.setAutoCompleteAdapter(acFiltreMotorHacim , hacimNames , ctx);
+        Utils.setAutoCompleteAdapter(acFiltreMotorGuc , gucNames , ctx);
         Utils.setAutoCompleteAdapter(acFiltreSatici , App.getKimden() , ctx);
         Utils.setAutoCompleteAdapter(acFiltreVitesTipi , App.getVitesTipi() , ctx);
         Utils.setAutoCompleteAdapter(acFiltreYakitTipi , App.getYakitTipi() , ctx);
@@ -315,13 +325,15 @@ public class FiltreFragment extends Fragment {
         acFiltreMotorHacim.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                acMotorHacim = String.valueOf(position + 1);
+                acMotorHacim = parent.getItemAtPosition(position).toString();
+                acMotorHacim = DownloadClass.getHacimIdWithName(acMotorHacim);
             }
         });
         acFiltreMotorGuc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                acMotorGuc = String.valueOf(position + 1);
+                acMotorGuc = parent.getItemAtPosition(position).toString();
+                acMotorGuc = DownloadClass.getGucIdWithName(acMotorGuc);
             }
         });
         acFiltreSatici.setOnItemClickListener(new AdapterView.OnItemClickListener() {

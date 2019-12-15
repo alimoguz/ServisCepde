@@ -84,6 +84,12 @@ public interface ApiInterface {
     @POST("index.php?func=Genel&file=AracKapasiteList&ReturnType=1")
     Call<BaseResponse> getKapasite();
 
+    @POST("index.php?func=Genel&file=MotorGucuList&ReturnType=1")
+    Call<BaseResponse> getMotorGucu();
+
+    @POST("index.php?func=Genel&file=MotorHacmiList&ReturnType=1")
+    Call<BaseResponse> getMotorHacim();
+
 
 
 }
