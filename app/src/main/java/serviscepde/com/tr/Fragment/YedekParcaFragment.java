@@ -362,7 +362,7 @@ public class YedekParcaFragment extends Fragment {
                    s = "1";
                 }
 
-                if (baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || marka.isEmpty()
+                if (baslik.isEmpty()  || aciklama.isEmpty() || marka.isEmpty()
                         || cityId.isEmpty() || townId.isEmpty() || actvDurum.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);

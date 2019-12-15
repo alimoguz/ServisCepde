@@ -408,7 +408,7 @@ public class KiralikAracFragment extends Fragment {
                 haftalikFiyat = edtKiralikAracHaftalikFiyat.getText().toString();
                 aylikFiyat = edtKiralikAracAylikFiyat.getText().toString();
 
-                if(baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || actvKasko.isEmpty() || actvKapasite.isEmpty() || actvYakitTipi.isEmpty() ||
+                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || actvKasko.isEmpty() || actvKapasite.isEmpty() || actvYakitTipi.isEmpty() ||
                         actvVitesTipi.isEmpty() || actvModel.isEmpty() || actvMarka.isEmpty() || cityId.isEmpty() || townId.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);

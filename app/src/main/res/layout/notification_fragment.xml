@@ -31,7 +31,7 @@
                 android:id="@+id/txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/OkunmamışBildirim"
+                android:text="@string/OkunmamışBildirim"
                 android:fontFamily="@font/myriadpro_regular"
                 android:textColor="@color/colorWhite"
                 android:layout_marginStart="@dimen/_3sdp"

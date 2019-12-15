@@ -501,7 +501,7 @@ public class AracaIsFragment extends Fragment {
                 gunSayisi = edtAracaIsCalisilacakGunSayisi.getText().toString();
 
 
-                if(baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || tecrube.isEmpty() ||
+                if(baslik.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || tecrube.isEmpty() ||
                         plaka.isEmpty() || referans.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvMarka.isEmpty() ||
                         actvKapasite.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || actvAracDurumu.isEmpty())
                 {

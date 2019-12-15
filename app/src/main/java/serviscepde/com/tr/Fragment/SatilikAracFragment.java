@@ -403,7 +403,7 @@ public class SatilikAracFragment extends Fragment {
                 km = edtSatilikAracKM.getText().toString();
 
 
-                if(baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || km.isEmpty() || cityId.isEmpty() || townId.isEmpty() ||
+                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || km.isEmpty() || cityId.isEmpty() || townId.isEmpty() ||
                         actvMarka.isEmpty() || actvModel.isEmpty() || actvMotorHacmi.isEmpty() || actvMotorGucu.isEmpty() ||
                         actvKapasite.isEmpty() || actvKimden.isEmpty())
                 {

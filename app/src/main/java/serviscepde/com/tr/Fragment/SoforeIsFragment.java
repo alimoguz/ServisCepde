@@ -419,7 +419,7 @@ public class SoforeIsFragment extends Fragment {
                 belgeler = edtSoforeIsBelgeler.getText().toString();
 
 
-                if( baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || tecrube.isEmpty() || serviseBaslamaSaati.isEmpty() ||
+                if( baslik.isEmpty()  || aciklama.isEmpty() || tecrube.isEmpty() || serviseBaslamaSaati.isEmpty() ||
                         actvEhliyet.isEmpty() || yas.isEmpty() || belgeler.isEmpty() || cityId.isEmpty() || townId.isEmpty()
                         || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || actvKapasite.isEmpty() )
                 {

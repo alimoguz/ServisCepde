@@ -64,7 +64,7 @@
     <string name="GenelBilgiler">Genel Bilgiler</string>
     <string name="MarkaBilgileri">Marka Bilgileri</string>
     <string name="Başlık">Başlık*</string>
-    <string name="Fiyat">Fiyat*</string>
+    <string name="Fiyat">Fiyat</string>
     <string name="Açıklama">Açıklama*</string>
     <string name="İl">İl*</string>
     <string name="İlçe">İlçe*</string>

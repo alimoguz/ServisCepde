@@ -435,7 +435,7 @@ public class AracaSoforFragment extends Fragment {
                 gun = edtAracaSoforCalisilacakGunSayisi.getText().toString();
 
 
-               if(baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() ||
+               if(baslik.isEmpty()  || aciklama.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() ||
                        firmadanCikisSaati.isEmpty() || tecrube.isEmpty() || gun.isEmpty() ||  cityId.isEmpty() || townId.isEmpty() || actvKapasite.isEmpty() || baslamaCityId.isEmpty() ||
                        baslamaTownId.isEmpty() || bitisCityId.isEmpty() || bitisTownId.isEmpty())
                {

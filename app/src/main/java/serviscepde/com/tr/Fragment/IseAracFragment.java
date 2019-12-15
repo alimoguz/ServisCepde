@@ -590,7 +590,7 @@ public class IseAracFragment extends Fragment {
                 }
 
 
-                if(baslik.isEmpty() || fiyat.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty()
+                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty()
                         || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() || firmaCikisSaati.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() ||
                         cityId.isEmpty() || townId.isEmpty() || actvIseAracKapasite.isEmpty() || actvIseAracMarka.isEmpty()
                         || baslamaCityId.isEmpty() || bitisTownId.isEmpty() || bitisCityId.isEmpty() || baslamaTownId.isEmpty())
