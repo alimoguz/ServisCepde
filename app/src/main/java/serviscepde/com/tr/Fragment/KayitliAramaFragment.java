@@ -84,19 +84,21 @@ public class KayitliAramaFragment extends Fragment {
                         {
                             JSONObject tmp = kayitliArama.getJSONObject("OutPutMessage").getJSONArray("Data").getJSONObject(i);
 
+                            String ID = tmp.getString("ID");
                             String name = tmp.getString("Name");
                             String date = tmp.getString("create_at");
 
 
+
                             Log.i("Kayıtlı arama info" , name + date);
-                            KayitliArama aramam = new KayitliArama(name , date);
+                            KayitliArama aramam = new KayitliArama(ID , name , date);
                             aramalarim.add(aramam);
 
                         }
 
                         Log.i("AramaSize" , " " + aramalarim.size());
 
-                        KayitliAramaAdapter adapter = new KayitliAramaAdapter(R.layout.row_arama , aramalarim);
+                        KayitliAramaAdapter adapter = new KayitliAramaAdapter(R.layout.row_arama , aramalarim , userToken);
                         rvKayıtlıAramalarim.setLayoutManager(new LinearLayoutManager(ctx));
                         rvKayıtlıAramalarim.setItemAnimator(new DefaultItemAnimator());
                         rvKayıtlıAramalarim.setAdapter(adapter);

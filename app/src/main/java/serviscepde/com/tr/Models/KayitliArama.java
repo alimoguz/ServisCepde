@@ -2,12 +2,22 @@ package serviscepde.com.tr.Models;
 
 public class KayitliArama {
 
+    private String ID;
     private String name;
     private String date;
 
-    public KayitliArama(String name, String date) {
+    public KayitliArama(String ID, String name, String date) {
+        this.ID = ID;
         this.name = name;
         this.date = date;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getName() {

@@ -127,6 +127,46 @@ public class KullanıcıDüzenleFragment extends Fragment {
             }
         });
 
+
+        HashMap<String , String> kullanici = new HashMap<>();
+        kullanici.put("Token" , userToken);
+        Call<BaseResponse> kullaniciBilgi = App.getApiService().kullaniciBilgileri(kullanici);
+        kullaniciBilgi.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                ResponseDetail detail = response.body().getResponseDetail();
+                String token = detail.getResult();
+
+                JSONObject kullaniciInfo = Utils.jwtToJsonObject(token);
+
+
+                try {
+                    JSONObject tmp = kullaniciInfo.getJSONObject("OutPutMessage").getJSONObject("Data");
+
+                    edtDuzenleKayitAd.setText(tmp.getString("UserName"));
+                    edtDuzenleKayitSoyad.setText(tmp.getString("SurName"));
+                    edtKayitEmailDuzenle.setText(tmp.getString("Email"));
+                    edtKayitTelefonDuzenle.setText(tmp.getString("GSM"));
+                    aCDuzenleKullaniciTuru.setText(setKullaniciTur(tmp.getString("MeType")));
+                    autoCompleteIlDuzenle.setText(Utils.getSehirAdi(tmp.getString("CityID")));
+                    autoCompleteIlceDuzenle.setText(DownloadClass.getTownNameWithId(tmp.getString("TownID")));
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+            }
+        });
+
         txtDuzenle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,73 +177,25 @@ public class KullanıcıDüzenleFragment extends Fragment {
                 telefon = edtKayitTelefonDuzenle.getText().toString();
                 sifre = edtKayitSifreDuzenle.getText().toString();
 
+                SweetAlertDialog kullaniciAlert;
+
                 HashMap<String , Object> hashMap = new HashMap<>();
                 HashMap<String , String> hashMap1 = new HashMap<>();
 
-                if(!kullaniciType.isEmpty())
+                if(ad.isEmpty() || soyad.isEmpty())
                 {
-                    hashMap1.put("MeType" , kullaniciType);
-                }
-                if(!ad.isEmpty())
-                {
-                    hashMap1.put("UserName" , ad);
-                }
-                if(!soyad.isEmpty())
-                {
-                    hashMap1.put("SurName" , soyad);
-                }
-                if(!email.isEmpty())
-                {
-
-                    boolean isEmailValid = Utils.isValidEmailAddress(email);
-
-                    if(isEmailValid)
-                    {
-                        hashMap1.put("Email" , email);
-                    }
-                    else
-                    {
-                        dialog = new SweetAlertDialog(ctx ,SweetAlertDialog.WARNING_TYPE);
-                        dialog.setTitleText("Lütfen geçerli bir e-mail adresi girin");
-                        dialog.show();
-                    }
-
-                }
-                if(!cityId.isEmpty())
-                {
-                    hashMap1.put("CityID" , cityId);
-                }
-                if(!townId.isEmpty())
-                {
-                    hashMap1.put("TownID" , townId);
+                    kullaniciAlert = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
+                    kullaniciAlert.setTitleText("* ile belirtilen alanlar boş bırakılamaz");
+                    kullaniciAlert.show();
                 }
 
-                if(!telefon.isEmpty())
-                {
-                    hashMap1.put("GSM" , telefon);
-                }
+                hashMap1.put("UserName" , ad);
+                hashMap1.put("SurName" , soyad);
+                hashMap1.put("Email" , email);
 
-                if(!sifre.isEmpty())
-                {
-                    if(sifre.length() < 6)
-                    {
-                        dialog = new SweetAlertDialog(ctx ,SweetAlertDialog.WARNING_TYPE);
-                        dialog.setTitleText("Şifre 6 haneden kısa olamaz");
-                        dialog.show();
-                    }
-                    else
-                    {
-                        hashMap1.put("Password" , sifre);
-                    }
-                }
-                if(!cityId.isEmpty())
-                {
-                    hashMap1.put("CityID" , cityId);
-                }
-                if(!townId.isEmpty())
-                {
-                    hashMap1.put("CityID" , townId);
-                }
+                hashMap1.put("GSM" , telefon);
+                hashMap1.put("CityID" , cityId);
+                hashMap1.put("TownID" , townId);
 
                 hashMap.put("param" , hashMap1);
                 hashMap.put("Token" , userToken);
@@ -233,41 +225,7 @@ public class KullanıcıDüzenleFragment extends Fragment {
 
 
 
-        /*HashMap<String , String> kullanici = new HashMap<>();
-        kullanici.put("Token" , userToken);
-        Call<BaseResponse> kullaniciBilgi = App.getApiService().kullaniciBilgileri(kullanici);
-        kullaniciBilgi.enqueue(new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
 
-                ResponseDetail detail = response.body().getResponseDetail();
-                String token = detail.getResult();
-
-                JSONObject kullaniciInfo = Utils.jwtToJsonObject(token);
-
-
-                try {
-                    JSONObject tmp = kullaniciInfo.getJSONObject("OutPutMessage").getJSONObject("Data");
-
-                    edtDuzenleKayitAd.setText(tmp.getString("UserName"));
-                    edtDuzenleKayitSoyad.setText(tmp.getString("SurName"));
-                    edtKayitEmailDuzenle.setText(tmp.getString("Email"));
-                    edtKayitTelefonDuzenle.setText(tmp.getString("GSM"));
-                    aCDuzenleKullaniciTuru.setText(setKullaniciTur(tmp.getString("MeType")));
-                    autoCompleteIlDuzenle.setText(Utils.getSehirAdi(tmp.getString("CityID")));
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
-
-            }
-        });*/
 
 
 

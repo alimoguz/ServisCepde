@@ -173,7 +173,11 @@ public class FiltreDetayFragment extends Fragment {
         hashMap1.put("ID", ilanID);
 
         hashMap.put("param", hashMap1);
-        hashMap.put("Token", userToken);
+
+        if(!userToken.equals("0"))
+        {
+            hashMap.put("Token" , userToken);
+        }
 
 
         Call<IlanDetayResponse> ilanDetayResponseCal = App.getApiService().ilanDetay(hashMap);

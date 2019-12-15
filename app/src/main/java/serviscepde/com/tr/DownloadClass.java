@@ -432,6 +432,22 @@ public class DownloadClass {
         return "";
     }
 
+    public static String getTownNameWithId(String townID)
+    {
+        for(Ilce ılce : towns)
+        {
+            if(ılce.getIlceID().equals(townID))
+            {
+                return ılce.getIlceName();
+            }
+
+        }
+
+        return  "";
+
+
+    }
+
     public static ArrayList<String> getMarkaNames(){
         ArrayList<String> temp = new ArrayList<>();
         for(MarkaModel markaModel: markaModelsArray){
