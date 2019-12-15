@@ -22,6 +22,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import serviscepde.com.tr.App;
@@ -168,6 +171,12 @@ public class HomeFragment extends Fragment {
 
         Bundle categoryType = new Bundle();
         Bundle search = new Bundle();
+
+        MobileAds.initialize(ctx ,"ca-app-pub-3940256099942544/6300978111");
+
+        AdView adView = generalView.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
 
 

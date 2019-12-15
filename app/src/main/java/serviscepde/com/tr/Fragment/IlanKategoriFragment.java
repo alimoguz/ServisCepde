@@ -19,6 +19,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import serviscepde.com.tr.Adapter.KategorIlanAdapter;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.Dialogs.DialogOrder;
@@ -75,6 +79,12 @@ public class IlanKategoriFragment extends Fragment {
         ctx = generalView.getContext();
 
         selectedCategory = getArguments().getInt("selectedCategory");
+
+        MobileAds.initialize(ctx ,"ca-app-pub-3940256099942544/6300978111");
+
+        AdView adView = generalView.findViewById(R.id.adViewKategori);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         clearAdapter();
 

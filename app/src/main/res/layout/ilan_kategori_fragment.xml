@@ -147,12 +147,22 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvIlanlar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginTop="@dimen/_5sdp"
         >
 
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adViewKategori"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp">
+    </com.google.android.gms.ads.AdView>
 
 
 
