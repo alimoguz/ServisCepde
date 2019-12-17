@@ -72,9 +72,9 @@ public class FiltreFragment extends Fragment {
             linFiltreKullanabildiginizKapasiteler,linFiltreMinTecrube,linFiltreMaxTecrube,linFiltreServisBaslaIl,linFiltreServisBaslaIlce,
             linFiltreServisBitisIl,linFiltreServisBitisIlce,linFiltreMinYas,linFiltreMaxYas;
 
-    private LinearLayout linFiltreMinKM,linFiltreMaxKM,linFiltreMotorHacim,linFiltreMotorGuc,linFiltreSatici,linFiltreVitesTipi,linFiltreYakitTipi,linFiltreKasko,linFiltreDurum;
+    private LinearLayout linFiltreMinKM,linFiltreMaxKM,linFiltreMotorHacim,linFiltreMotorGuc,linFiltreSatici,linFiltreKasko,linFiltreDurum;
     private TextInputEditText edtFiltreMinKM,edtFiltreMaxKM;
-    private AutoCompleteTextView acFiltreMotorHacim,acFiltreMotorGuc,acFiltreSatici,acFiltreVitesTipi,acFiltreYakitTipi,acFiltreKasko,acFiltreDurum;
+    private AutoCompleteTextView acFiltreMotorHacim,acFiltreMotorGuc,acFiltreSatici,acFiltreKasko,acFiltreDurum;
 
     private Context ctx;
     private ArrayAdapter<String> kategoriAdapter;
@@ -91,7 +91,7 @@ public class FiltreFragment extends Fragment {
     private static String categoryFromOut;
 
     private String userToken;
-    private String acMarka,acModel,acKapasite,acAracDurum,acKullanabildiginizKapasiteler,acMotorHacim,acMotorGuc,acSatici,acVitesTipi,acYakitTipi,acKasko,acDurum = null;
+    private String acMarka,acModel,acKapasite,acAracDurum,acKullanabildiginizKapasiteler,acMotorHacim,acMotorGuc,acSatici,acKasko,acDurum = null;
 
     private List<Kapasite> kapasites = new ArrayList<>();
     private List<String> kapasiteNames = new ArrayList<>();
@@ -133,8 +133,6 @@ public class FiltreFragment extends Fragment {
         acFiltreMotorHacim = generalView.findViewById(R.id.acFiltreMotorHacim);
         acFiltreMotorGuc = generalView.findViewById(R.id.acFiltreMotorGuc);
         acFiltreSatici = generalView.findViewById(R.id.acFiltreSatici);
-        acFiltreVitesTipi = generalView.findViewById(R.id.acFiltreVitesTipi);
-        acFiltreYakitTipi = generalView.findViewById(R.id.acFiltreYakitTipi);
         acFiltreKasko = generalView.findViewById(R.id.acFiltreKasko);
         acFiltreDurum = generalView.findViewById(R.id.acFiltreDurum);
 
@@ -159,8 +157,6 @@ public class FiltreFragment extends Fragment {
         linFiltreMotorHacim = generalView.findViewById(R.id.linFiltreMotorHacim);
         linFiltreMotorGuc = generalView.findViewById(R.id.linFiltreMotorGuc);
         linFiltreSatici = generalView.findViewById(R.id.linFiltreSatici);
-        linFiltreVitesTipi = generalView.findViewById(R.id.linFiltreVitesTipi);
-        linFiltreYakitTipi = generalView.findViewById(R.id.linFiltreYakitTipi);
         linFiltreKasko = generalView.findViewById(R.id.linFiltreKasko);
         linFiltreDurum = generalView.findViewById(R.id.linFiltreDurum);
 
@@ -292,8 +288,6 @@ public class FiltreFragment extends Fragment {
         Utils.setAutoCompleteAdapter(acFiltreMotorHacim , hacimNames , ctx);
         Utils.setAutoCompleteAdapter(acFiltreMotorGuc , gucNames , ctx);
         Utils.setAutoCompleteAdapter(acFiltreSatici , App.getKimden() , ctx);
-        Utils.setAutoCompleteAdapter(acFiltreVitesTipi , App.getVitesTipi() , ctx);
-        Utils.setAutoCompleteAdapter(acFiltreYakitTipi , App.getYakitTipi() , ctx);
         Utils.setAutoCompleteAdapter(acFiltreKasko , App.getKaskoTuru() , ctx);
         Utils.setAutoCompleteAdapter(acFiltreDurum , App.getDurumu() , ctx);
 
@@ -302,18 +296,6 @@ public class FiltreFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 acDurum = String.valueOf(position + 1);
-            }
-        });
-        acFiltreVitesTipi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                acVitesTipi = String.valueOf(position + 1 );
-            }
-        });
-        acFiltreYakitTipi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                acYakitTipi = String.valueOf(position + 1);
             }
         });
         acFiltreKasko.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -688,16 +670,6 @@ public class FiltreFragment extends Fragment {
                     Log.i("maxYas" , maxYas);
                     param.put("YasinizMax" , maxYas);
                 }
-                if(acVitesTipi != null)
-                {
-                    Log.i("VitesTipi" , acVitesTipi);
-                    param.put("VitesTipi" ,acVitesTipi );
-                }
-                if(acYakitTipi != null)
-                {
-                    Log.i("YakitTipi" , acYakitTipi);
-                    param.put("YakitTipi" ,acYakitTipi );
-                }
                 if(acKasko != null)
                 {
                     Log.i("Kasko" , acKasko);
@@ -820,8 +792,6 @@ public class FiltreFragment extends Fragment {
         linFiltreMotorHacim.setVisibility(View.GONE);
         linFiltreMotorGuc.setVisibility(View.GONE);
         linFiltreSatici.setVisibility(View.GONE);
-        linFiltreVitesTipi.setVisibility(View.GONE);
-        linFiltreYakitTipi.setVisibility(View.GONE);
         linFiltreKasko.setVisibility(View.GONE);
 
     }
@@ -860,8 +830,6 @@ public class FiltreFragment extends Fragment {
         linFiltreServisBitisIlce.setVisibility(View.GONE);
         linFiltreMinYas.setVisibility(View.GONE);
         linFiltreMaxYas.setVisibility(View.GONE);
-        linFiltreVitesTipi.setVisibility(View.GONE);
-        linFiltreYakitTipi.setVisibility(View.GONE);
         linFiltreKasko.setVisibility(View.GONE);
         linFiltreDurum.setVisibility(View.GONE);
 
@@ -883,8 +851,6 @@ public class FiltreFragment extends Fragment {
         linFiltreMotorHacim.setVisibility(View.GONE);
         linFiltreMotorGuc.setVisibility(View.GONE);
         linFiltreSatici.setVisibility(View.GONE);
-        linFiltreVitesTipi.setVisibility(View.GONE);
-        linFiltreYakitTipi.setVisibility(View.GONE);
         linFiltreKasko.setVisibility(View.GONE);
         linFiltreDurum.setVisibility(View.GONE);
 
@@ -907,8 +873,6 @@ public class FiltreFragment extends Fragment {
         linFiltreMotorHacim.setVisibility(View.GONE);
         linFiltreMotorGuc.setVisibility(View.GONE);
         linFiltreSatici.setVisibility(View.GONE);
-        linFiltreVitesTipi.setVisibility(View.GONE);
-        linFiltreYakitTipi.setVisibility(View.GONE);
         linFiltreKasko.setVisibility(View.GONE);
         linFiltreDurum.setVisibility(View.GONE);
 
@@ -929,8 +893,6 @@ public class FiltreFragment extends Fragment {
         linFiltreMotorHacim.setVisibility(View.GONE);
         linFiltreMotorGuc.setVisibility(View.GONE);
         linFiltreSatici.setVisibility(View.GONE);
-        linFiltreVitesTipi.setVisibility(View.GONE);
-        linFiltreYakitTipi.setVisibility(View.GONE);
         linFiltreKasko.setVisibility(View.GONE);
         linFiltreDurum.setVisibility(View.GONE);
 
@@ -950,8 +912,6 @@ public class FiltreFragment extends Fragment {
         linFiltreMotorHacim.setVisibility(View.GONE);
         linFiltreMotorGuc.setVisibility(View.GONE);
         linFiltreSatici.setVisibility(View.GONE);
-        linFiltreVitesTipi.setVisibility(View.GONE);
-        linFiltreYakitTipi.setVisibility(View.GONE);
         linFiltreKasko.setVisibility(View.GONE);
         linFiltreDurum.setVisibility(View.GONE);
 
@@ -979,8 +939,6 @@ public class FiltreFragment extends Fragment {
         linFiltreMotorHacim.setVisibility(View.VISIBLE);
         linFiltreMotorGuc.setVisibility(View.VISIBLE);
         linFiltreSatici.setVisibility(View.VISIBLE);
-        linFiltreVitesTipi.setVisibility(View.VISIBLE);
-        linFiltreYakitTipi.setVisibility(View.VISIBLE);
         linFiltreKasko.setVisibility(View.VISIBLE);
         linFiltreDurum.setVisibility(View.VISIBLE);
 

@@ -382,34 +382,6 @@
                     android:layout_height="wrap_content">
 
                     <AutoCompleteTextView
-                        android:id="@+id/autoCompleteKiralikAracVitesTipi"
-                        android:editable="false"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/VitesTipi" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/autoCompleteKiralikAracYakitTipi"
-                        android:editable="false"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/YakıtTipi" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <AutoCompleteTextView
                         android:id="@+id/autoCompleteKiralikAracKapasite"
                         android:editable="false"
                         android:layout_width="match_parent"

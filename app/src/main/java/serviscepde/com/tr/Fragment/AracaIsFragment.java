@@ -368,7 +368,7 @@ public class AracaIsFragment extends Fragment {
 
                 model = DownloadClass.getModelNames(actvMarka);
                 Utils.setAutoCompleteAdapter(autoCompleteAracaIsModel , model , ctx);
-                autoCompleteAracaIsModel.setText(model.get(0));
+                autoCompleteAracaIsModel.setText("");
 
             }
         });

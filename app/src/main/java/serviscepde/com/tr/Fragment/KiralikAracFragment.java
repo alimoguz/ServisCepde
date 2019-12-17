@@ -75,7 +75,7 @@ public class KiralikAracFragment extends Fragment {
     private List<String> sehirListesi = new ArrayList<>();
 
     private String baslik,fiyat,aciklama,yil,aylikFiyat,imageString,userToken;
-    private String actvKasko,actvKapasite,actvYakitTipi,actvVitesTipi,actvModel,actvMarka;
+    private String actvKasko,actvKapasite,actvModel,actvMarka;
 
     private SweetAlertDialog emptyDialog;;
 
@@ -110,8 +110,6 @@ public class KiralikAracFragment extends Fragment {
 
         autoCompleteKiralikAracKasko = generalView.findViewById(R.id.autoCompleteKiralikAracKasko);
         autoCompleteKiralikAracKapasite = generalView.findViewById(R.id.autoCompleteKiralikAracKapasite);
-        autoCompleteKiralikAracYakitTipi = generalView.findViewById(R.id.autoCompleteKiralikAracYakitTipi);
-        autoCompleteKiralikAracVitesTipi = generalView.findViewById(R.id.autoCompleteKiralikAracVitesTipi);
         autoCompleteKiralikAracModel = generalView.findViewById(R.id.autoCompleteKiralikAracModel);
         autoCompleteKiralikAracMarka = generalView.findViewById(R.id.autoCompleteKiralikAracMarka);
         autoCompleteKiralikAracilce = generalView.findViewById(R.id.autoCompleteKiralikAracilce);
@@ -319,8 +317,6 @@ public class KiralikAracFragment extends Fragment {
         Utils.setAutoCompleteAdapter(autoCompleteKiralikAracil , cityNames , ctx );
         Utils.setAutoCompleteAdapter(autoCompleteKiralikAracKapasite , kapasiteNames , ctx);
         Utils.setAutoCompleteAdapter(autoCompleteKiralikAracKasko, App.getKaskoTuru() , ctx);
-        Utils.setAutoCompleteAdapter(autoCompleteKiralikAracVitesTipi , App.getVitesTipi() ,ctx);
-        Utils.setAutoCompleteAdapter(autoCompleteKiralikAracYakitTipi , App.getYakitTipi() , ctx);
         Utils.setAutoCompleteAdapter(autoCompleteKiralikAracMarka , marka , ctx);
 
 
@@ -390,21 +386,8 @@ public class KiralikAracFragment extends Fragment {
             }
         });
 
-        autoCompleteKiralikAracVitesTipi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                actvVitesTipi = String.valueOf(position + 1);
-            }
-        });
 
-        autoCompleteKiralikAracYakitTipi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                actvYakitTipi = String.valueOf(position + 1);
-            }
-        });
 
         txtKiralikAracGonder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -425,8 +408,8 @@ public class KiralikAracFragment extends Fragment {
                 yil = edtKiralikAracAracYili.getText().toString();
                 aylikFiyat = edtKiralikAracAylikFiyat.getText().toString();
 
-                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || actvKasko.isEmpty() || actvKapasite.isEmpty() || actvYakitTipi.isEmpty() ||
-                        actvVitesTipi.isEmpty() || actvModel.isEmpty() || actvMarka.isEmpty() || cityId.isEmpty() || townId.isEmpty())
+                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || actvKasko.isEmpty() || actvKapasite.isEmpty() ||
+                         actvModel.isEmpty() || actvMarka.isEmpty() || cityId.isEmpty() || townId.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -454,8 +437,6 @@ public class KiralikAracFragment extends Fragment {
                     hashMap1.put("Ucret" , fiyat);
                     hashMap1.put("file" , imageString);
                     hashMap1.put("AylikFiyat" , aylikFiyat);
-                    hashMap1.put("VitesTipi" , actvVitesTipi);
-                    hashMap1.put("YakitTipi" , actvYakitTipi);
                     hashMap1.put("Kasko" , actvKasko);
                     hashMap1.put("ilanAciklamasi" , aciklama);
 
