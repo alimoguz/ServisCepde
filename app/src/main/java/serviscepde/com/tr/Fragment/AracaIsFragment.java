@@ -392,6 +392,7 @@ public class AracaIsFragment extends Fragment {
                 Log.i("SelectedCity" , cityId);
 
                 townNames = DownloadClass.getTownNames(cityId);
+                autoCompleteAracaIsilce.setText(townNames.get(0));
                 Utils.setAutoCompleteAdapter(autoCompleteAracaIsilce , townNames ,ctx);
             }
         });
@@ -415,6 +416,7 @@ public class AracaIsFragment extends Fragment {
                 Log.i("BaslamaCityId" , baslamaCityId);
 
                 baslamaTownNames = DownloadClass.getTownNames(baslamaCityId);
+                autoCompleteAracaIsServiseBaslamailce.setText(baslamaTownNames.get(0));
                 Utils.setAutoCompleteAdapter(autoCompleteAracaIsServiseBaslamailce , baslamaTownNames , ctx);
             }
         });

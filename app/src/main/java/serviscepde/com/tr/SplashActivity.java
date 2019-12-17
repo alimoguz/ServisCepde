@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -74,58 +75,53 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.splash_activity);
 
 
-        /*throw new RuntimeException("Crash");*/
-
-
         DownloadClass.downloadAllVariables();
-
         fragSplash = findViewById(R.id.fragSplash);
-
         ctx = getApplicationContext();
-
+        setNotification();
         sharedPref = getBaseContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         editor = sharedPref.edit();
-
 
 
         videoFragment = new VideoFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragSplash,videoFragment , "videoTag");
+        fragmentTransaction.add(R.id.fragSplash, videoFragment, "videoTag");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commitAllowingStateLoss();
 
-        /*sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
-        isLogged = sharedPref.getString("Loggedin" , "0");
-
-        if(!isLogged.equals("0"))
-        {
-            Intent intentMain = new Intent(this , MainActivity.class);
-            startActivity(intentMain);
-        }
-
-        if(isLogged.equals("0"))
-        {
-            videoFragment = new VideoFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.fragSplash,videoFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commitAllowingStateLoss();
-        }*/
 
         ilces = new ArrayList<>();
 
-        setNotification();
 
-
-        if(isTesting)
-        {
-            Intent test = new Intent(this , TestActivity.class);
+        if (isTesting) {
+            Intent test = new Intent(this, TestActivity.class);
             startActivity(test);
         }
 
+
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
     }
+
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        String appLinkAction = intent.getAction();
+        Uri appLinkData = intent.getData();
+        if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null){
+            String recipeId = appLinkData.getLastPathSegment();
+            Uri appData = Uri.parse("https://www.serviscepde.com/mobileApp").buildUpon()
+                    .appendPath(recipeId).build();
+
+        }
+    }
+
 
 
     private void setNotification() {

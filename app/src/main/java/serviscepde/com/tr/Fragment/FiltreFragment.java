@@ -355,6 +355,7 @@ public class FiltreFragment extends Fragment {
                 Log.i("SelectedIl" , cityId);
 
                 townNames = DownloadClass.getTownNames(cityId);
+                acFiltreIlce.setText(townNames.get(0));
                 Utils.setAutoCompleteAdapter(acFiltreIlce , townNames , ctx);
             }
         });
@@ -376,6 +377,7 @@ public class FiltreFragment extends Fragment {
                 Log.i("SelectedBaslamaId" , baslamaCityId);
 
                 baslamaTownNames = DownloadClass.getTownNames(baslamaCityId);
+                acFiltreServisBaslamaIlce.setText(baslamaTownNames.get(0));
                 Utils.setAutoCompleteAdapter(acFiltreServisBaslamaIlce , baslamaTownNames , ctx);
 
             }
@@ -399,6 +401,7 @@ public class FiltreFragment extends Fragment {
                 Log.i("SelectedBitisIl" , bitisCityId);
 
                 bitisTownNames = DownloadClass.getTownNames(bitisCityId);
+                acFiltreServisBitisIlce.setText(bitisTownNames.get(0));
                 Utils.setAutoCompleteAdapter(acFiltreServisBitisIlce ,bitisTownNames , ctx);
 
             }

@@ -318,6 +318,7 @@ public class AracaSoforFragment extends Fragment {
                 Log.i("selectedIlId" , cityId);
 
                 townNames = DownloadClass.getTownNames(cityId);
+                autoCompleteAracaSoforilce.setText(townNames.get(0));
                 Utils.setAutoCompleteAdapter(autoCompleteAracaSoforilce , townNames , ctx);
 
             }
@@ -343,6 +344,7 @@ public class AracaSoforFragment extends Fragment {
                 Log.i("selectedIlId" , baslamaCityId);
 
                 baslamaTownNames = DownloadClass.getTownNames(baslamaCityId);
+                autoCompleteAracaSoforServiseBaslamailce.setText(baslamaTownNames.get(0));
                 Utils.setAutoCompleteAdapter(autoCompleteAracaSoforServiseBaslamailce , baslamaTownNames , ctx);
 
             }
@@ -370,6 +372,7 @@ public class AracaSoforFragment extends Fragment {
                 Log.i("SelectedBitisIl" , bitisCityId);
 
                 bitisTownNames = DownloadClass.getTownNames(bitisCityId);
+                autoCompleteAracaSoforServisBitisilce.setText(bitisTownNames.get(0));
                 Utils.setAutoCompleteAdapter(autoCompleteAracaSoforServisBitisilce , bitisTownNames , ctx);
 
             }

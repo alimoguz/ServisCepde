@@ -347,7 +347,7 @@ public class SatilikAracFragment extends Fragment {
 
                 model = DownloadClass.getModelNames(actvMarka);
                 Utils.setAutoCompleteAdapter(autoCompleteSatilikAracModel , model , ctx);
-                autoCompleteSatilikAracModel.setText(model.get(0));
+                autoCompleteSatilikAracModel.setText("");
             }
         });
 
@@ -369,6 +369,7 @@ public class SatilikAracFragment extends Fragment {
                 Log.i("SelectedCityId" , cityId);
 
                 townNames = DownloadClass.getTownNames(cityId);
+                autoCompleteSatilikAracilce.setText(townNames.get(0));
                 Utils.setAutoCompleteAdapter(autoCompleteSatilikAracilce , townNames , ctx);
             }
         });

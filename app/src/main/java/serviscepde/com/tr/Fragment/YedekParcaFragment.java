@@ -313,6 +313,7 @@ public class YedekParcaFragment extends Fragment {
                 Log.i("SelectedIlId" , cityId);
 
                 townNames = DownloadClass.getTownNames(cityId);
+                autoCompleteYedekParcailce.setText(townNames.get(0));
                 Utils.setAutoCompleteAdapter(autoCompleteYedekParcailce , townNames , ctx);
             }
         });

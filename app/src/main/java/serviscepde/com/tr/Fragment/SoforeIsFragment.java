@@ -325,6 +325,7 @@ public class SoforeIsFragment extends Fragment {
                 Log.i("SelectedIlId" , cityId);
 
                 townNames = DownloadClass.getTownNames(cityId);
+                autoCompleteSoforeIsilce.setText(townNames.get(0));
                 Utils.setAutoCompleteAdapter(autoCompleteSoforeIsilce , townNames , ctx);
             }
         });
@@ -348,6 +349,7 @@ public class SoforeIsFragment extends Fragment {
                 Log.i("ServisBaslamaId" , baslamaCityId);
 
                 baslamaTownNames = DownloadClass.getTownNames(baslamaCityId);
+                autoCompleteSoforeIsServiseBaslamailce.setText(baslamaTownNames.get(0));
                 Utils.setAutoCompleteAdapter(autoCompleteSoforeIsServiseBaslamailce , baslamaTownNames , ctx);
             }
         });

@@ -386,6 +386,7 @@ public class IseAracFragment extends Fragment {
                 Log.i("SelectedIl" , cityId);
 
                 townNames = DownloadClass.getTownNames(cityId);
+                autoCompleteIseAracilce.setText(townNames.get(0));
                 setAutoCompleteAdapter(autoCompleteIseAracilce , townNames);
             }
         });
@@ -410,6 +411,7 @@ public class IseAracFragment extends Fragment {
                 Log.i("SelectedBaslamaId" , baslamaCityId);
 
                 baslamaTownNames = DownloadClass.getTownNames(baslamaCityId);
+                autoCompleteIseAracServiseBaslamailce.setText(baslamaTownNames.get(0));
                 setAutoCompleteAdapter(autoCompleteIseAracServiseBaslamailce , baslamaTownNames);
             }
         });
@@ -434,6 +436,7 @@ public class IseAracFragment extends Fragment {
                 Log.i("SelectedBitisIl" , bitisCityId);
 
                 bitisTownNames = DownloadClass.getTownNames(bitisCityId);
+                autoCompleteIseAracServisBitisilce.setText(bitisTownNames.get(0));
                 setAutoCompleteAdapter(autoCompleteIseAracServisBitisilce , bitisTownNames);
             }
         });

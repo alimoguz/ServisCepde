@@ -330,7 +330,7 @@ public class KiralikAracFragment extends Fragment {
 
                 model = DownloadClass.getModelNames(actvMarka);
                 Utils.setAutoCompleteAdapter(autoCompleteKiralikAracModel , model , ctx);
-                autoCompleteKiralikAracModel.setText(model.get(0));
+                autoCompleteKiralikAracModel.setText("");
             }
         });
 
@@ -353,6 +353,7 @@ public class KiralikAracFragment extends Fragment {
                 Log.i("SelectedIlId" , cityId);
 
                 townNames = DownloadClass.getTownNames(cityId);
+                autoCompleteKiralikAracilce.setText(townNames.get(0));
                 Utils.setAutoCompleteAdapter(autoCompleteKiralikAracilce , townNames , ctx);
             }
         });
