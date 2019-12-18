@@ -73,6 +73,130 @@ public class App extends Application {
 
     }
 
+    public static String kapasiteText;
+    public static String returnKapasite(String kapasiteID)
+    {
+        if(kapasiteID.equals("1"))
+        {
+            return "9+1";
+        }
+        if(kapasiteID.equals("2"))
+        {
+            return "10+1";
+        }
+        if(kapasiteID.equals("3"))
+        {
+            return "11+1";
+        }
+        if(kapasiteID.equals("4"))
+        {
+            return "12+1";
+        }
+        if(kapasiteID.equals("5"))
+        {
+            return "13+1";
+        }
+        if(kapasiteID.equals("6"))
+        {
+            return "14+1";
+        }
+        if(kapasiteID.equals("7"))
+        {
+            return "15+1";
+        }
+        if(kapasiteID.equals("8"))
+        {
+            return "16+1";
+        }
+        if(kapasiteID.equals("9"))
+        {
+            return "17+1";
+        }
+        if(kapasiteID.equals("10"))
+        {
+            return "18+1";
+        }
+        if(kapasiteID.equals("11"))
+        {
+            return "19+1";
+        }
+        if(kapasiteID.equals("12"))
+        {
+            return "20+1";
+        }
+        if(kapasiteID.equals("13"))
+        {
+            return "21+1";
+        }
+        if(kapasiteID.equals("14"))
+        {
+            return "23+1";
+        }
+        if(kapasiteID.equals("15"))
+        {
+            return "27+1";
+        }
+        if(kapasiteID.equals("16"))
+        {
+            return "28+1";
+        }
+        if(kapasiteID.equals("17"))
+        {
+            return "29+1";
+        }
+        if(kapasiteID.equals("18"))
+        {
+            return "30+1";
+        }
+        if(kapasiteID.equals("19"))
+        {
+            return "31+1";
+        }
+        if(kapasiteID.equals("20"))
+        {
+            return "35+1";
+        }
+        if(kapasiteID.equals("21"))
+        {
+            return "45+1";
+        }
+        if(kapasiteID.equals("22"))
+        {
+            return "46+1";
+        }
+        if(kapasiteID.equals("23"))
+        {
+            return "54+1";
+        }
+        if(kapasiteID.equals("24"))
+        {
+            return "askıda (4+1)";
+        }
+        if(kapasiteID.equals("25"))
+        {
+            return "askıda (5+1)";
+        }
+        if(kapasiteID.equals("26"))
+        {
+            return "askıda (6+1)";
+        }
+        if(kapasiteID.equals("27"))
+        {
+            return "askıda (7+1)";
+        }
+        if(kapasiteID.equals("28"))
+        {
+            return "askıda (8+1)";
+        }
+        if(kapasiteID.equals("29"))
+        {
+            return "Şoför";
+        }
+
+        return "";
+
+    }
+
     public static List<String> ehliyet = new ArrayList<>();
     public static List<String> getEhliyet()
     {
@@ -85,6 +209,37 @@ public class App extends Application {
 
         return  ehliyet;
 
+    }
+
+    public static String ehliyetText;
+    public static String returnEhliyet (String ehliyetID)
+    {
+        if(ehliyetID.equals("1"))
+        {
+            return "M";
+        }
+        if(ehliyetID.equals("2"))
+        {
+            return "A1";
+        }
+        if(ehliyetID.equals("3"))
+        {
+            return "A2";
+        }
+        if(ehliyetID.equals("4"))
+        {
+            return "A";
+        }
+        if(ehliyetID.equals("5"))
+        {
+            return "B1";
+        }
+        if(ehliyetID.equals("6"))
+        {
+            return "B";
+        }
+
+        return "";
     }
 
     public static List<String> motorGucu = new ArrayList<>();

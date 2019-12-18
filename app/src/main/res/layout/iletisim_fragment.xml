@@ -94,4 +94,16 @@
 
     </LinearLayout>
 
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adViewIletisim"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-9098556749113718/7887445686"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.google.android.gms.ads.AdView>
+
+
 </LinearLayout>

@@ -20,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import org.json.JSONException;
@@ -71,6 +74,8 @@ public class IlanDetayFragment extends Fragment {
     private LinearLayout linMarka,linModel,linAltModel,linYil,linKapasite,linBaslamaSaat,linBitisSaat,linBaslamaKonum,linBitisKonum,linFirmaGiris,linFirmaCikis,linToplamKM,
             linGunSayisi,linMotorHacim,linMotorGuc,linKimden,linAracDurum,linTecrube,linPlaka,linReferans,linUcretBeklentisi,linKapasiteler,linYas,linEhliyet,linSrc,
             linAylikFiyat,linHaftalikFiyat,linVitesTipi,linYakitTipi,linKaskoDurum,linParcaMarkasi,linCikmaYedekParca,linYedekParcaDurumu,linAracOzellikleri,linBelgeler;
+
+    private AdView adViewDetay;
 
     private String userToken,Resimler;
 
@@ -174,6 +179,13 @@ public class IlanDetayFragment extends Fragment {
         fabIcon = generalView.findViewById(R.id.fabIcon);
         fabIconCall = generalView.findViewById(R.id.fabIconCall);
         fabIconMessage = generalView.findViewById(R.id.fabIconMessage);
+
+
+        MobileAds.initialize(ctx ,"ca-app-pub-3940256099942544/6300978111");
+
+        adViewDetay = generalView.findViewById(R.id.adViewDetay);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adViewDetay.loadAd(adRequest);
 
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");

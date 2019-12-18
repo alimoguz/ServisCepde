@@ -375,7 +375,9 @@ public class SoforeIsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String tmp = String.valueOf(position + 1).concat(",");
+                String ehliyetText = App.returnEhliyet(String.valueOf(position + 1));
+
+                String tmp = ehliyetText.concat(",");
                 actvEhliyet = actvEhliyet.concat(tmp);
                 Log.i("Kapasite" , actvEhliyet);
 
@@ -397,8 +399,10 @@ public class SoforeIsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                String kapasiteText = App.returnKapasite(String.valueOf(position + 1));
 
-                String tmp = DownloadClass.getKapasiteIdWithName(parent.getItemAtPosition(position).toString()).concat(",");
+
+                String tmp = kapasiteText.concat(",");
                 actvKapasite = actvKapasite.concat(tmp);
                 Log.i("Kapasite" , actvKapasite);
 

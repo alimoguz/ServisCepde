@@ -14,6 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.R;
 
@@ -38,6 +42,12 @@ public class İletisimFragment extends Fragment {
 
         linNumber1 = generalView.findViewById(R.id.linNumber1);
         linNumber2 = generalView.findViewById(R.id.linNumber2);
+
+        MobileAds.initialize(ctx ,"ca-app-pub-3940256099942544/6300978111");
+
+        AdView adViewIletisim = generalView.findViewById(R.id.adViewIletisim);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adViewIletisim.loadAd(adRequest);
 
         String number1 = getString(R.string.Number1);
         String number2 = getString(R.string.Number2);

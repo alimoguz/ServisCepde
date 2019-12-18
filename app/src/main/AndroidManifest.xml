@@ -54,11 +54,13 @@
         <activity
             android:name=".FilterResultActivity"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen"></activity>
         <activity android:name=".GalleryActivity" />
         <activity android:name=".TestActivity" />
         <activity
             android:name=".SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,14 +74,15 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
+                    android:scheme="http"
                     android:host="www.serviscepde.com"
-                    android:pathPrefix="/mobileApp" />
+                    android:path="/mobileApp" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="MainActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".SplashActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen">
             <meta-data
@@ -89,6 +92,7 @@
         <activity
             android:name=".AddingActivity"
             android:label="AddingActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen">
             <meta-data

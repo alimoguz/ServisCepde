@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +44,26 @@ public class MainActivity extends AppCompatActivity {
 
     public static FragmentTransaction fragmentTransaction;
     public static FragmentManager fragmentManager;
+
+    @Override
+    public void onBackPressed() {
+
+        FragmentManager manager = getSupportFragmentManager();
+
+        if(manager.getBackStackEntryCount() > 2)
+        {
+            manager.popBackStackImmediate();
+        }
+        else
+        {
+            Bundle quit = new Bundle();
+            quit.putString("quit" , "Yes");
+            Intent quitIntent = new Intent(this , SplashActivity.class);
+            quitIntent.putExtras(quit);
+            startActivity(quitIntent);
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

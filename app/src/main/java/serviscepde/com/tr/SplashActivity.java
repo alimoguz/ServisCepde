@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Retrofit;
 import serviscepde.com.tr.Fragment.IseAracFragment;
 import serviscepde.com.tr.Fragment.LoginFragment;
@@ -73,6 +74,13 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
+
+        Bundle quit = this.getIntent().getExtras();
+
+        if(quit != null)
+        {
+            this.finishAffinity();
+        }
 
 
         DownloadClass.downloadAllVariables();

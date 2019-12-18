@@ -334,7 +334,7 @@ public class FiltreFragment extends Fragment {
 
                 model = DownloadClass.getModelNames(acMarka);
                 Utils.setAutoCompleteAdapter(acFiltreModel , model , ctx);
-                acFiltreModel.setText(model.get(0));
+                acFiltreModel.setText("");
             }
         });
         acFiltreModel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -431,10 +431,15 @@ public class FiltreFragment extends Fragment {
                 Log.i("AraçDurum" , acAracDurum);
             }
         });
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(ctx, R.layout.dropdown_item, kapasiteNames);
+        acFiltreKullanilabilirKapasiteler.setAdapter(adapter);
+        acFiltreKullanilabilirKapasiteler.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         acFiltreKullanilabilirKapasiteler.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String tmp = DownloadClass.getKapasiteIdWithName(parent.getItemAtPosition(position).toString()).concat(",");
+                String kapasiteText = App.returnKapasite(String.valueOf(position + 1));
+
+                String tmp = kapasiteText.concat(",");
                 acKullanabildiginizKapasiteler = acKullanabildiginizKapasiteler.concat(tmp);
                 Log.i("KullanabildiğiKapasite" , acKullanabildiginizKapasiteler);
             }
