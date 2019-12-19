@@ -74,9 +74,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
+                    android:scheme="https"
                     android:host="www.serviscepde.com"
-                    android:path="/mobileApp" />
+                    android:path="/mobilAppp"/>
             </intent-filter>
         </activity>
         <activity

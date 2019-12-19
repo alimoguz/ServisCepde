@@ -1,5 +1,6 @@
 package serviscepde.com.tr;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -55,8 +56,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         FragmentManager manager = getSupportFragmentManager();
-
-
         if(manager.getBackStackEntryCount() > 2)
         {
             manager.popBackStackImmediate();
@@ -65,10 +64,8 @@ public class SplashActivity extends AppCompatActivity {
         {
             System.exit(0);
         }
-
-
-
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +73,22 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.splash_activity);
 
         Bundle quit = this.getIntent().getExtras();
-
-        if(quit != null)
+        if (quit != null)
         {
-            this.finishAffinity();
+            String tmp = quit.getString("quit" , "No");
+            if(tmp.equals("Yes"))
+            {
+                this.finishAffinity();
+                quit.remove("quit");
+            }
+            if(tmp.equals("No"))
+            {
+
+            }
+
         }
 
+        handleIntent(getIntent());
 
         DownloadClass.downloadAllVariables();
         fragSplash = findViewById(R.id.fragSplash);
@@ -108,6 +115,7 @@ public class SplashActivity extends AppCompatActivity {
         }
 
 
+
         // ATTENTION: This was auto-generated to handle app links.
         Intent appLinkIntent = getIntent();
         String appLinkAction = appLinkIntent.getAction();
@@ -118,20 +126,17 @@ public class SplashActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         handleIntent(intent);
     }
-
     private void handleIntent(Intent intent) {
         String appLinkAction = intent.getAction();
         Uri appLinkData = intent.getData();
         if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null){
             String recipeId = appLinkData.getLastPathSegment();
-            Uri appData = Uri.parse("https://www.serviscepde.com/mobileApp").buildUpon()
+            Uri appData = Uri.parse("content://com.recipe_app/recipe/").buildUpon()
                     .appendPath(recipeId).build();
-
+            Intent splash = new Intent(this , SplashActivity.class);
+            startActivity(splash);
         }
     }
-
-
-
     private void setNotification() {
         FirebaseApp.initializeApp(this);
         FirebaseMessaging.getInstance().subscribeToTopic("serviscepde_android_app_new");
@@ -145,22 +150,5 @@ public class SplashActivity extends AppCompatActivity {
 
         FirebaseApp.initializeApp(this);
         FirebaseMessaging.getInstance().subscribeToTopic("serviscepde_android_app_new");
-
-/*
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
-            builder.setTitle(bundle.getString("title", ""));
-            builder.setMessage(bundle.getString("message"));
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }*/
     }
 }

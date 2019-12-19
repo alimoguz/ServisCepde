@@ -20,8 +20,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -78,6 +80,8 @@ public class IlanDetayFragment extends Fragment {
     private AdView adViewDetay;
 
     private String userToken,Resimler;
+
+    private InterstitialAd interstitialAd;
 
     @Nullable
     @Override
@@ -180,12 +184,22 @@ public class IlanDetayFragment extends Fragment {
         fabIconCall = generalView.findViewById(R.id.fabIconCall);
         fabIconMessage = generalView.findViewById(R.id.fabIconMessage);
 
-
         MobileAds.initialize(ctx ,"ca-app-pub-3940256099942544/6300978111");
 
         adViewDetay = generalView.findViewById(R.id.adViewDetay);
         AdRequest adRequest = new AdRequest.Builder().build();
         adViewDetay.loadAd(adRequest);
+
+        interstitialAd = new InterstitialAd(ctx);
+        interstitialAd.setAdUnitId("ca-app-pub-9098556749113718/7594658063");
+        interstitialAd.setAdListener(new AdListener(){
+            public void onAdLoaded(){
+                openAd();
+            }
+        });
+
+
+
 
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
@@ -828,6 +842,13 @@ public class IlanDetayFragment extends Fragment {
         return rootView;
 
 
+    }
+
+    public void openAd(){
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+        if (interstitialAd != null && interstitialAd.isLoaded()) {
+            interstitialAd.show();
+        }
     }
 
     private void iseAracYukle()
