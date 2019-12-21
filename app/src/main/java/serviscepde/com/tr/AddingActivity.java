@@ -16,6 +16,7 @@ import serviscepde.com.tr.Fragment.AracaSoforFragment;
 import serviscepde.com.tr.Fragment.IseAracFragment;
 import serviscepde.com.tr.Fragment.KiralikAracFragment;
 import serviscepde.com.tr.Fragment.SatilikAracFragment;
+import serviscepde.com.tr.Fragment.SatilikPlakaFragment;
 import serviscepde.com.tr.Fragment.SoforeIsFragment;
 import serviscepde.com.tr.Fragment.YedekParcaFragment;
 
@@ -33,6 +34,7 @@ public class AddingActivity extends AppCompatActivity {
     SatilikAracFragment satilikAracFragment;
     KiralikAracFragment kiralikAracFragment;
     YedekParcaFragment yedekParcaFragment;
+    SatilikPlakaFragment satilikPlakaFragment;
 
     FrameLayout fragAdd;
 
@@ -70,6 +72,7 @@ public class AddingActivity extends AppCompatActivity {
         satilikAracFragment = new SatilikAracFragment();
         kiralikAracFragment = new KiralikAracFragment();
         yedekParcaFragment = new YedekParcaFragment();
+        satilikPlakaFragment = new SatilikPlakaFragment();
 
         Bundle photoList = new Bundle();
         photoList.putStringArrayList("photoList" , imagesPath);
@@ -113,6 +116,10 @@ public class AddingActivity extends AppCompatActivity {
         if(selectedCategory == 7)
         {
             loadFragmentWithPhoto(yedekParcaFragment,photoList);
+        }
+        if(selectedCategory == 8)
+        {
+            loadFragmentWithPhoto(satilikPlakaFragment,photoList);
         }
     }
 

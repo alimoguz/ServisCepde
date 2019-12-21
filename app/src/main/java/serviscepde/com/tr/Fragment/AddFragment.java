@@ -38,7 +38,7 @@ public class AddFragment extends Fragment {
     Context ctx;
     Intent addingActivity;
 
-    LinearLayout linDialogIsimeArac,linDialogAracimaIs,linDialogAracimaSofor,linDialogSoforeIs,linDialogSatilikArac,linDialogKiralikArac,linDialogYedekParca;
+    LinearLayout linDialogIsimeArac,linDialogAracimaIs,linDialogAracimaSofor,linDialogSoforeIs,linDialogSatilikArac,linDialogKiralikArac,linDialogYedekParca,linDialogSatilikPlaka;
     private Bundle bundle = new Bundle();
     private String userToken;
 
@@ -62,6 +62,7 @@ public class AddFragment extends Fragment {
         linDialogSatilikArac = generalView.findViewById(R.id.linDialogSatilikArac);
         linDialogKiralikArac = generalView.findViewById(R.id.linDialogKiralikArac);
         linDialogYedekParca = generalView.findViewById(R.id.linDialogYedekParca);
+        linDialogSatilikPlaka = generalView.findViewById(R.id.linDialogSatilikPlaka);
 
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
@@ -152,6 +153,16 @@ public class AddFragment extends Fragment {
                     bundle.putInt("selectedCategory" , selectedCategory);
                     choosePhoto();
 
+                }
+            });
+
+            linDialogSatilikPlaka.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    selectedCategory = 8;
+                    bundle.putInt("selectedCategory" , selectedCategory);
+                    choosePhoto();
                 }
             });
 

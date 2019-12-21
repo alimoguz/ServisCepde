@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
     private IlanDetayFragment ilanDetayFragment;
     private IlanSonFragment ilanSonFragment;
 
-    private LinearLayout linIsimeArac,linAracimaIs,linAracaSofor,linSoforeIs,linSatilikArac,linKiralikArac,linYedekParca;
+    private LinearLayout linIsimeArac,linAracimaIs,linAracaSofor,linSoforeIs,linSatilikArac,linKiralikArac,linYedekParca,linSatilikPlaka;
 
     private LinearLayout linGuncel1,linGuncel2,linGuncel3;
     private ImageView imgIlanGuncel1Photo,imgIlanGuncel2Photo,imgIlanGuncel3Photo;
@@ -116,6 +116,7 @@ public class HomeFragment extends Fragment {
         linSatilikArac = generalView.findViewById(R.id.linSatilikArac);
         linKiralikArac = generalView.findViewById(R.id.linKiralikArac);
         linYedekParca = generalView.findViewById(R.id.linYedekParca);
+        linSatilikPlaka = generalView.findViewById(R.id.linSatilikPlaka);
 
 
         linGuncel1 = generalView.findViewById(R.id.linGuncel1);
@@ -295,6 +296,17 @@ public class HomeFragment extends Fragment {
                 selectedCategory = 7;
                 categoryType.putInt("selectedCategory" , selectedCategory);
                 loadFragmentwithBundle(ilanKategoriFragment, categoryType);
+            }
+        });
+
+        linSatilikPlaka.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                selectedCategory = 8;
+                categoryType.putInt("selectedCategory" , selectedCategory);
+                loadFragmentwithBundle(ilanKategoriFragment , categoryType);
+
             }
         });
 

@@ -41,21 +41,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtYedekParcaGonder"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="İleri"
-            android:fontFamily="@font/myriadpro_regular"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorWhite"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:paddingEnd="@dimen/_15sdp"
-            android:paddingStart="0dp"
-            />
 
     </RelativeLayout>
 
@@ -356,23 +341,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtYedekParcaGonder"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_width="match_parent"
+                android:background="@drawable/background_login"
+                android:layout_height="@dimen/_35sdp"
+                android:text="@string/İleri"
+                android:gravity="center"
+                android:fontFamily="@font/myriadpro_regular"
+                android:textSize="@dimen/_14ssp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:textColor="@color/colorWhite" />
 
 
 

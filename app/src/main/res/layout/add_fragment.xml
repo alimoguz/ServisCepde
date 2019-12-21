@@ -262,7 +262,7 @@
             android:layout_marginEnd="@dimen/_20sdp">
 
             <LinearLayout
-                android:visibility="invisible"
+                android:id="@+id/linDialogSatilikPlaka"
                 android:clickable="true"
                 android:focusable="true"
                 android:layout_width="0dp"
@@ -281,11 +281,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Şoförİş"
+                    android:text="@string/SatılıkPlaka"
                     android:textColor="@color/colorBlack"
                     android:fontFamily="@font/myriadpro_regular"
                     android:textSize="@dimen/_12ssp"
                     android:gravity="center"
+                    android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_5sdp"
                     />
 

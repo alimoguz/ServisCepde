@@ -449,5 +449,14 @@ public class IlanKategoriFragment extends Fragment {
             Log.i("Liste2" , bilgiList.size() + "\t" + category);
 
         }
+
+        if(category == 8)
+        {
+            categoryName = "Satılık Plaka";
+            txtIlanTipi.setText(categoryName);
+            txtIlanSayisi.setText(String.valueOf(bilgiList.size()));
+            Log.i("Liste2" , bilgiList.size() + "\t" + category);
+
+        }
     }
 }

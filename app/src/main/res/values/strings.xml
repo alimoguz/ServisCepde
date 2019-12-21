@@ -65,6 +65,7 @@
     <string name="MarkaBilgileri">Marka Bilgileri</string>
     <string name="Başlık">Başlık*</string>
     <string name="Fiyat">Fiyat</string>
+    <string name="İleri">İleri</string>
     <string name="Açıklama">Açıklama*</string>
     <string name="İl">İl*</string>
     <string name="İlçe">İlçe*</string>
@@ -227,6 +228,10 @@
     <string name="KayıtlıArama">Kayıtlı Aramalarım</string>
     <string name="KullanımŞartları">Kullanım şartlarını okudum kabul ediyorum</string>
     <string name="Okudum">okudum kabul ediyorum</string>
+
+    <string name="SatılıkPlaka">Satılık Plaka</string>
+    <string name="SatılıkPlakaDetay">Aracınız için uygun satılık plakalar</string>
+
 
 
 </resources>
