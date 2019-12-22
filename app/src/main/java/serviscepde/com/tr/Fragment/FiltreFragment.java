@@ -182,6 +182,7 @@ public class FiltreFragment extends Fragment {
         kategoriler.add("Satılık araç");
         kategoriler.add("Kiralık araç");
         kategoriler.add("Yedek parça");
+        kategoriler.add("Satılık plaka");
 
         kategoriAdapter = new ArrayAdapter<>(ctx , R.layout.support_simple_spinner_dropdown_item , kategoriler);
         spinKategoriTip.setAdapter(kategoriAdapter);
@@ -259,6 +260,12 @@ public class FiltreFragment extends Fragment {
                     openEverything();
                     loadYedekParca();
                     spinKategoriTip.setSelection(7);
+                    Log.i("SpinPosition" , " " + spinKategoriTip.getSelectedItemPosition() );
+                }
+                if(categoryFromOut.equals("8"))
+                {
+                    linFiltreler.setVisibility(View.GONE);
+                    spinKategoriTip.setSelection(8);
                     Log.i("SpinPosition" , " " + spinKategoriTip.getSelectedItemPosition() );
                 }
             }
@@ -513,6 +520,11 @@ public class FiltreFragment extends Fragment {
                     openEverything();
                     Glide.with(ctx).load(R.drawable.yedek_parca).into(imgType);
                     loadYedekParca();
+                }
+                if(kategoriID == 8)
+                {
+                    linFiltreler.setVisibility(View.GONE);
+                    Glide.with(ctx).load(R.drawable.satilik_plaka).into(imgType);
                 }
 
             }

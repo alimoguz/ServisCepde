@@ -458,7 +458,7 @@
                     <ImageView
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"
-                        android:src="@drawable/yedek_parca"
+                        android:src="@drawable/satilik_plaka"
                         />
 
 

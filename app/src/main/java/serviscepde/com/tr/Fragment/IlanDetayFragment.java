@@ -772,6 +772,10 @@ public class IlanDetayFragment extends Fragment {
                     {
                         yedekParcaYukle();
                     }
+                    if(ilanKategori.equals("8"))
+                    {
+                        satilikPlakaYukle();
+                    }
 
                     fabIcon.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -796,7 +800,6 @@ public class IlanDetayFragment extends Fragment {
 
                         }
                     });
-
                     fabIconCall.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -807,8 +810,6 @@ public class IlanDetayFragment extends Fragment {
 
                         }
                     });
-
-
                     fabIconMessage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -849,6 +850,54 @@ public class IlanDetayFragment extends Fragment {
         if (interstitialAd != null && interstitialAd.isLoaded()) {
             interstitialAd.show();
         }
+    }
+
+    private void satilikPlakaYukle()
+    {
+        txtIlanDetayBaslik.setText(Baslik);
+        txtIlanNo.setText(IlanNo);
+        txtIlanSahibi.setText(IlanSahibi);
+        txtIlanTarih.setText(IlanTarih);
+        txtIlanTamKonum.setText(Konum);
+        txtIlanDetayAciklama.setText(Aciklama);
+        txtFiyat.setText(Fiyat);
+        txtPlaka.setText(Plaka);
+
+        linMarka.setVisibility(View.GONE);
+        linModel.setVisibility(View.GONE);
+        linAltModel.setVisibility(View.GONE);
+        linYil.setVisibility(View.GONE);
+        linKapasite.setVisibility(View.GONE);
+        linBaslamaSaat.setVisibility(View.GONE);
+        linBitisSaat.setVisibility(View.GONE);
+        linBaslamaKonum.setVisibility(View.GONE);
+        linBitisKonum.setVisibility(View.GONE);
+        linFirmaGiris.setVisibility(View.GONE);
+        linFirmaCikis.setVisibility(View.GONE);
+        linToplamKM.setVisibility(View.GONE);
+        linGunSayisi.setVisibility(View.GONE);
+        linMotorHacim.setVisibility(View.GONE);
+        linMotorGuc.setVisibility(View.GONE);
+        linKimden.setVisibility(View.GONE);
+        linAracDurum.setVisibility(View.GONE);
+        linTecrube.setVisibility(View.GONE);
+        linReferans.setVisibility(View.GONE);
+        linUcretBeklentisi.setVisibility(View.GONE);
+        linKapasiteler.setVisibility(View.GONE);
+        linYas.setVisibility(View.GONE);
+        linEhliyet.setVisibility(View.GONE);
+        linSrc.setVisibility(View.GONE);
+        linAylikFiyat.setVisibility(View.GONE);
+        linHaftalikFiyat.setVisibility(View.GONE);
+        linVitesTipi.setVisibility(View.GONE);
+        linYakitTipi.setVisibility(View.GONE);
+        linKaskoDurum.setVisibility(View.GONE);
+        linAracOzellikleri.setVisibility(View.GONE);
+        linBelgeler.setVisibility(View.GONE);
+        linCikmaYedekParca.setVisibility(View.GONE);
+        linParcaMarkasi.setVisibility(View.GONE);
+        linYedekParcaDurumu.setVisibility(View.GONE);
+
     }
 
     private void iseAracYukle()

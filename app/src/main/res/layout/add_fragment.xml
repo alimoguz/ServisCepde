@@ -274,7 +274,7 @@
                 <ImageView
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:src="@drawable/sofurm_is"
+                    android:src="@drawable/satilik_plaka"
                     android:layout_gravity="center"/>
 
 

@@ -1,7 +1,9 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,13 +50,14 @@ public class FiltreDetayFragment extends Fragment {
     private ImageView imgNoPhoto;
     Context ctx;
     ArrayList<String> photos = new ArrayList<>();
+    private boolean isVisibe = false;
 
     private ExtendedFloatingActionButton fabIcon, fabIconCall, fabIconMessage;
-    private TextView txtIlanDetayAciklama, txtFiyat, txtIlanSahibi, txtIlanTamKonum, txtIlanNo, txtIlanTarih, txtAracMarkasi, txtAracModel, txtAracAltModel, txtAracYil, txtAracKapasite, txtServisBaslamaSaat, txtServisBitisSaat, txtServisBaslamaKonum, txtServisBitisKonum, txtFirmaGirisSaat, txtFirmaCikisSaat, txtToplamKM, txtGunSayisi, txtMotorHacim,
+    private TextView txtIlanDetayBaslik,txtIlanDetayAciklama, txtFiyat, txtIlanSahibi, txtIlanTamKonum, txtIlanNo, txtIlanTarih, txtAracMarkasi, txtAracModel, txtAracAltModel, txtAracYil, txtAracKapasite, txtServisBaslamaSaat, txtServisBitisSaat, txtServisBaslamaKonum, txtServisBitisKonum, txtFirmaGirisSaat, txtFirmaCikisSaat, txtToplamKM, txtGunSayisi, txtMotorHacim,
             txtMotorGuc, txtKimden, txtAracDurumu, txtTecrube, txtPlaka, txtReferans, txtUcretBeklentisi, txtKapasiteler, txtYas, txtEhliyet, txtSrc, txtAylikFiyati, txtHaftalikFiyati,
             txtVitesTipi, txtYakitTipi, txtKaskoDurum, txtParcaMarkasi, txtCikmaYedekParca, txtYedekParcaDurumu, txtAracOzellikler, txtBelgeler;
 
-    private String Aciklama, Fiyat, IlanSahibi, Konum, IlanNo, IlanTarih, AracMarkasi, AracModel, AracAltModel, AracYil, AracKapasite, ServisBaslamaSaat, ServisBitisSaat, ServisBaslamaKonum, ServisBitisKonum, FirmaGirisSaat, FirmaCikisSaat, ToplamKM, GunSayisi, MotorHacim,
+    private String Baslik,Aciklama, Fiyat, IlanSahibi, Konum, IlanNo, IlanTarih, AracMarkasi, AracModel, AracAltModel, AracYil, AracKapasite, ServisBaslamaSaat, ServisBitisSaat, ServisBaslamaKonum, ServisBitisKonum, FirmaGirisSaat, FirmaCikisSaat, ToplamKM, GunSayisi, MotorHacim,
             MotorGuc, Kimden, AracDurumu, Tecrube, Plaka, Referans, UcretBeklentisi, Kapasiteler, Yas, Ehliyet, Src, AylikFiyati, HaftalikFiyati,
             VitesTipi, YakitTipi, KaskoDurum, ParcaMarkasi, CikmaYedekParca, YedekParcaDurumu, Ozellikler, Belgeler;
 
@@ -122,6 +126,7 @@ public class FiltreDetayFragment extends Fragment {
         txtYedekParcaDurumu = generalView.findViewById(R.id.txtYedekParcaDurumu);
         txtAracOzellikler = generalView.findViewById(R.id.txtAracOzellikler);
         txtBelgeler = generalView.findViewById(R.id.txtBelgeler);
+        txtIlanDetayBaslik = generalView.findViewById(R.id.txtIlanDetayBaslik);
 
 
         linMarka = generalView.findViewById(R.id.linMarka);
@@ -198,6 +203,18 @@ public class FiltreDetayFragment extends Fragment {
                     JSONObject ilanDetay = ilan.getJSONObject("OutPutMessage").getJSONObject("Data");
 
                     gsm = ilanDetay.getJSONObject("Users").getString("GSM");
+
+                    if(ilanDetay.has("Baslik"))
+                    {
+                        Baslik = ilanDetay.getString("Baslik");
+                        Log.i("Başlık", Baslik);
+                    }
+                    else
+                    {
+                        Baslik = "-";
+                        Log.i("Baslik" , Baslik);
+
+                    }
 
                     if (ilanDetay.has("ilanAciklamasi")) {
                         Aciklama = ilanDetay.getString("ilanAciklamasi");
@@ -582,77 +599,55 @@ public class FiltreDetayFragment extends Fragment {
                     if (ilanKategori.equals("7")) {
                         yedekParcaYukle();
                     }
+                    if (ilanKategori.equals("8")) {
+                        satilikPlakaYukle();
+                    }
 
                     fabIcon.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            Log.i("FabIcon", "clicked");
-                            Log.i("FabIconCall", "" + fabIconCall.getVisibility() + "\n + fabIconMessage" + fabIconMessage.getVisibility());
+                            Log.i("FabIcon" , "clicked");
+                            Log.i("FabIconCall" , "" + fabIconCall.getVisibility() + "\n + fabIconMessage" +  fabIconMessage.getVisibility());
 
-
-                            if (fabIconCall.getVisibility() == View.GONE && fabIconMessage.getVisibility() == View.GONE) {
-                                Log.i("FabIconCall", "" + fabIconCall.getVisibility() + "\n + fabIconMessage" + fabIconMessage.getVisibility());
+                            if(isVisibe)
+                            {
+                                fabIconCall.setVisibility(View.GONE);
+                                fabIconMessage.setVisibility(View.GONE);
+                            }
+                            if(!isVisibe)
+                            {
                                 fabIconCall.setVisibility(View.VISIBLE);
                                 fabIconMessage.setVisibility(View.VISIBLE);
                             }
 
+                            isVisibe = !isVisibe;
+
+
                         }
                     });
-
-                    /*fabIconCall.setOnClickListener(new View.OnClickListener() {
+                    fabIconCall.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            Intent callIntent = new Intent(Intent.ACTION_CALL);
+                            Intent callIntent = new Intent(Intent.ACTION_DIAL);
                             callIntent.setData(Uri.parse("tel:" + gsm));
                             startActivity(callIntent);
 
                         }
-                    });*/
+                    });
+                    fabIconMessage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            SweetAlertDialog mesajAlert = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                            mesajAlert.setTitleText("Çok yakında hizmetinizde");
+                            mesajAlert.show();
 
 
+                        }
+                    });
 
-
-                    /*Aciklama = ilanDetay.getString("ilanAciklamasi");
-                    Fiyat = ilanDetay.getString("Ucret");
-                    IlanSahibi = ilanDetay.getJSONObject("Users").getString("UserName").concat(" ").concat(ilanDetay.getJSONObject("Users").getString("SurName"));
-                    Konum = ilanDetay.getString("ilanCityText").concat("/").concat(ilanDetay.getString("ilanSemtleriText"));
-                    IlanNo = ilanDetay.getString("ID");
-                    IlanTarih = ilanDetay.getString("create_at");
-                    AracMarkasi = ilanDetay.getString("AracMarkasiText");
-                    AracModel = ilanDetay.getString("AracModeliText");
-                    AracAltModel = ilanDetay.getString("AracSubModeli");
-                    AracYil = ilanDetay.getString("AracYili");
-                    AracKapasite = ilanDetay.getString("AracKapasiteText");
-                    ServisBaslamaSaat = ilanDetay.getString("ServiseBaslamaSaati");
-                    ServisBitisSaat = ilanDetay.getString("ServisBitisSaati");
-                    ServisBaslamaKonum = ilanDetay.getString("ServiseBaslamaCityText").concat("/").concat(ilanDetay.getString("ServiseBaslamaSemtleriText"));
-                    ServisBitisKonum = ilanDetay.getString("ServisBitisCityText").concat("/").concat(ilanDetay.getString("ServisBitisSemtleriText"));
-                    FirmaGirisSaat = ilanDetay.getString("FirmayaGirisSaati");
-                    FirmaCikisSaat = ilanDetay.getString("FirmadanCikisSaati");
-                    ToplamKM = ilanDetay.getString("ToplamKM");
-                    GunSayisi = ilanDetay.getString("CalisilacakGunSayisi");
-                    MotorHacim = ilanDetay.getString("MotorHacmiText");
-                    MotorGuc = ilanDetay.getString("MotorGucuText");
-                    Kimden = ilanDetay.getString("Kimden");
-                    AracDurumu = ilanDetay.getString("AracDurumu");
-                    Tecrube = ilanDetay.getString("Tecrube");
-                    Plaka = ilanDetay.getString("Plaka");
-                    Referans = ilanDetay.getString("Referanslar");
-                    UcretBeklentisi = ilanDetay.getString("UcretBeklentisi");
-                    Kapasiteler = ilanDetay.getString("KullanabildiginizKapasiteler");
-                    Yas = ilanDetay.getString("Yasiniz");
-                    Ehliyet = ilanDetay.getString("Ehliyetiniz");
-                    Src = ilanDetay.getString("SRC");
-                    AylikFiyati = ilanDetay.getString("AylikFiyat");
-                    HaftalikFiyati = ilanDetay.getString("HaftalikFiyat");
-                    VitesTipi = ilanDetay.getString("VitesTipi");
-                    YakitTipi = ilanDetay.getString("YakitTipi");
-                    KaskoDurum = ilanDetay.getString("Kasko");
-                    ParcaMarkasi = ilanDetay.getString("ParcaMarkasi");
-                    CikmaYedekParca = ilanDetay.getString("CikmaYedekParca");
-                    YedekParcaDurumu = ilanDetay.getString("YedekParcaDurum");*/
 
 
                 } catch (JSONException e) {
@@ -674,7 +669,56 @@ public class FiltreDetayFragment extends Fragment {
         return rootView;
     }
 
+    private void satilikPlakaYukle()
+    {
+        txtIlanDetayBaslik.setText(Baslik);
+        txtIlanNo.setText(IlanNo);
+        txtIlanSahibi.setText(IlanSahibi);
+        txtIlanTarih.setText(IlanTarih);
+        txtIlanTamKonum.setText(Konum);
+        txtIlanDetayAciklama.setText(Aciklama);
+        txtFiyat.setText(Fiyat);
+        txtPlaka.setText(Plaka);
+
+        linMarka.setVisibility(View.GONE);
+        linModel.setVisibility(View.GONE);
+        linAltModel.setVisibility(View.GONE);
+        linYil.setVisibility(View.GONE);
+        linKapasite.setVisibility(View.GONE);
+        linBaslamaSaat.setVisibility(View.GONE);
+        linBitisSaat.setVisibility(View.GONE);
+        linBaslamaKonum.setVisibility(View.GONE);
+        linBitisKonum.setVisibility(View.GONE);
+        linFirmaGiris.setVisibility(View.GONE);
+        linFirmaCikis.setVisibility(View.GONE);
+        linToplamKM.setVisibility(View.GONE);
+        linGunSayisi.setVisibility(View.GONE);
+        linMotorHacim.setVisibility(View.GONE);
+        linMotorGuc.setVisibility(View.GONE);
+        linKimden.setVisibility(View.GONE);
+        linAracDurum.setVisibility(View.GONE);
+        linTecrube.setVisibility(View.GONE);
+        linReferans.setVisibility(View.GONE);
+        linUcretBeklentisi.setVisibility(View.GONE);
+        linKapasiteler.setVisibility(View.GONE);
+        linYas.setVisibility(View.GONE);
+        linEhliyet.setVisibility(View.GONE);
+        linSrc.setVisibility(View.GONE);
+        linAylikFiyat.setVisibility(View.GONE);
+        linHaftalikFiyat.setVisibility(View.GONE);
+        linVitesTipi.setVisibility(View.GONE);
+        linYakitTipi.setVisibility(View.GONE);
+        linKaskoDurum.setVisibility(View.GONE);
+        linAracOzellikleri.setVisibility(View.GONE);
+        linBelgeler.setVisibility(View.GONE);
+        linCikmaYedekParca.setVisibility(View.GONE);
+        linParcaMarkasi.setVisibility(View.GONE);
+        linYedekParcaDurumu.setVisibility(View.GONE);
+
+    }
+
     private void iseAracYukle() {
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
@@ -722,6 +766,7 @@ public class FiltreDetayFragment extends Fragment {
     }
 
     private void aracaIsYukle() {
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
@@ -768,7 +813,7 @@ public class FiltreDetayFragment extends Fragment {
     }
 
     private void aracaSoforYukle() {
-
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
@@ -816,6 +861,7 @@ public class FiltreDetayFragment extends Fragment {
     }
 
     private void soforeIsYukle() {
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
@@ -863,6 +909,7 @@ public class FiltreDetayFragment extends Fragment {
     }
 
     private void satilikAracYukle() {
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
@@ -911,6 +958,7 @@ public class FiltreDetayFragment extends Fragment {
     }
 
     private void kiralikAracYukle() {
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
@@ -959,7 +1007,7 @@ public class FiltreDetayFragment extends Fragment {
     }
 
     private void yedekParcaYukle() {
-
+        txtIlanDetayBaslik.setText(Baslik);
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
