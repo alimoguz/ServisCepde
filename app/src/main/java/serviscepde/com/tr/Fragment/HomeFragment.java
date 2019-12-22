@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
     private IlanDetayFragment ilanDetayFragment;
     private IlanSonFragment ilanSonFragment;
 
-    private LinearLayout linIsimeArac,linAracimaIs,linAracaSofor,linSoforeIs,linSatilikArac,linKiralikArac,linYedekParca,linSatilikPlaka;
+    private LinearLayout linIsimeArac,linAracimaIs,linAracaSofor,linSoforeIs,linSatilikArac,linKiralikArac,linYedekParca,linSatilikPlaka,linSonIncelenenler;
 
     private LinearLayout linGuncel1,linGuncel2,linGuncel3;
     private ImageView imgIlanGuncel1Photo,imgIlanGuncel2Photo,imgIlanGuncel3Photo;
@@ -71,6 +71,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout linSon,linSon2,linSon3,linSonIlanlar;
     private ImageView imgSon1,imgSon2,imgSon3;
     private TextView txtSonAciklama1,txtSonKonum1,txtSonFiyat1,txtSonAciklama2,txtSonKonum2,txtSonFiyat2,txtSonAciklama3,txtSonKonum3,txtSonFiyat3,txtSonIlanlar;
+    private View view1,view2;
 
     int selectedCategory;
 
@@ -117,6 +118,7 @@ public class HomeFragment extends Fragment {
         linKiralikArac = generalView.findViewById(R.id.linKiralikArac);
         linYedekParca = generalView.findViewById(R.id.linYedekParca);
         linSatilikPlaka = generalView.findViewById(R.id.linSatilikPlaka);
+        linSonIncelenenler = generalView.findViewById(R.id.linSonIncelenenler);
 
 
         linGuncel1 = generalView.findViewById(R.id.linGuncel1);
@@ -160,6 +162,9 @@ public class HomeFragment extends Fragment {
         txtSonKonum3 = generalView.findViewById(R.id.txtSonKonum3);
         txtSonFiyat3 = generalView.findViewById(R.id.txtSonFiyat3);
         txtSonIlanlar = generalView.findViewById(R.id.txtSonIlanlar);
+
+        view1 = generalView.findViewById(R.id.view1);
+        view2 = generalView.findViewById(R.id.view2);
 
 
 
@@ -645,6 +650,7 @@ public class HomeFragment extends Fragment {
 
                     if(ilanSayisi.equals("0"))
                     {
+                        linSonIncelenenler.setVisibility(View.GONE);
                         linSon.setVisibility(View.GONE);
                         linSon2.setVisibility(View.GONE);
                         linSon3.setVisibility(View.GONE);
@@ -655,10 +661,13 @@ public class HomeFragment extends Fragment {
                     {
                         linSon2.setVisibility(View.GONE);
                         linSon3.setVisibility(View.GONE);
+                        view1.setVisibility(View.GONE);
+                        view2.setVisibility(View.GONE);
                     }
                     if(ilanSayisi.equals("2"))
                     {
                         linSon3.setVisibility(View.GONE);
+                        view2.setVisibility(View.GONE);
                     }
 
 
