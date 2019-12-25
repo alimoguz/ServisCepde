@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager manager = getSupportFragmentManager();
 
-        if(manager.getBackStackEntryCount() > 2)
+        if(manager.getBackStackEntryCount() > 1)
         {
             manager.popBackStackImmediate();
         }

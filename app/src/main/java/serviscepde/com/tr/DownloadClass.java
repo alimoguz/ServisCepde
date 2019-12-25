@@ -37,6 +37,7 @@ public class DownloadClass {
     public static ArrayList<Kapasite> kapasiteList =  new ArrayList<>();
     public static ArrayList<MotorGuc> motorGucList =  new ArrayList<>();
     public static ArrayList<MotorHacim> motorHacimList = new ArrayList<>();
+    public static HashMap<String , String> kullaniciBilgisi = new HashMap<>();
 
     public static void downloadAllVariables() {
         downloadCities();
@@ -46,6 +47,7 @@ public class DownloadClass {
         downloadGuc();
         downloadHacim();
     }
+
 
     private static void downloadHacim() {
 
@@ -352,7 +354,6 @@ public class DownloadClass {
         return "";
     }
 
-
     public static ArrayList<Kapasite> getKapasite()
     {
         return kapasiteList;
@@ -447,7 +448,6 @@ public class DownloadClass {
 
 
     }
-
     public static ArrayList<String> getMarkaNames(){
         ArrayList<String> temp = new ArrayList<>();
         for(MarkaModel markaModel: markaModelsArray){
@@ -484,5 +484,51 @@ public class DownloadClass {
             }
         }
         return  "";
+    }
+
+    public static void setActiveUser(String token)
+    {
+        HashMap<String , String> kullanici = new HashMap<>();
+        kullanici.put("Token" , token);
+        Call<BaseResponse> kullaniciBilgi = App.getApiService().kullaniciBilgileri(kullanici);
+        kullaniciBilgi.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                ResponseDetail detail = response.body().getResponseDetail();
+                String token = detail.getResult();
+
+                JSONObject kullaniciInfo = Utils.jwtToJsonObject(token);
+
+
+                try {
+                    JSONObject tmp = kullaniciInfo.getJSONObject("OutPutMessage").getJSONObject("Data");
+
+                    kullaniciBilgisi.put("UserName" , tmp.getString("UserName"));
+                    kullaniciBilgisi.put("SurName" , tmp.getString("SurName"));
+                    kullaniciBilgisi.put("Email" , tmp.getString("Email"));
+                    kullaniciBilgisi.put("GSM" , tmp.getString("GSM"));
+                    kullaniciBilgisi.put("MeType" , tmp.getString("MeType"));
+                    kullaniciBilgisi.put("CityID" , tmp.getString("CityID"));
+                    kullaniciBilgisi.put("TownID" , tmp.getString("TownID"));
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    public static HashMap<String , String> getActiveUser()
+    {
+        return kullaniciBilgisi;
     }
 }

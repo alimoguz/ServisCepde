@@ -26,6 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import serviscepde.com.tr.App;
+import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.Response.BaseResponse;
 import serviscepde.com.tr.Models.Response.ResponseDetail;
@@ -60,6 +61,8 @@ public class ProfileFragment extends Fragment {
 
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
+
+        DownloadClass.setActiveUser(userToken);
 
 
         ilanlarimFragment = new IlanlarımFragment();

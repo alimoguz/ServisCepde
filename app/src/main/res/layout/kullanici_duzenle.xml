@@ -225,7 +225,7 @@
                 android:typeface="monospace"
                 android:editable="false"
                 mask:allowed_chars="1234567890"
-                mask:mask="0(5##) ### ## ##"
+                mask:mask="#(###) ### ## ##"
                 android:textColor="@color/colorGray"
                 android:textColorHint="@color/colorWhite"
                 app:keep_hint="true"

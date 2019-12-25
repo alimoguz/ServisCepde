@@ -56,9 +56,11 @@ public class KullanıcıDüzenleFragment extends Fragment {
     private Context ctx;
     private String userToken;
     private String [] kullaniciTur = {"Proje Yöneticisi" , "Şoför" , "Araç Sahibi" , "Diğer"};
+    private List<String> tür = new ArrayList<>();
 
     private List<City> sehirler = new ArrayList<>();
     private List<String> cityNames = new ArrayList<>();
+    private ArrayList<String> NewtownNames = new ArrayList<>();
     private SweetAlertDialog dialog;
 
     @Nullable
@@ -86,13 +88,24 @@ public class KullanıcıDüzenleFragment extends Fragment {
         userToken = sharedPref.getString("userToken" , "0");
         Log.i("userToken" ,userToken);
 
+        HashMap<String , String> kullanici = DownloadClass.getActiveUser();
+        Log.i("Test" , " " + kullanici.size());
+
+        loadUserInfo(kullanici);
+
         sehirler = DownloadClass.getCities();
         cityNames = DownloadClass.getCityNames();
 
-        ArrayAdapter<String> Turadapter = new ArrayAdapter<>(ctx, R.layout.dropdown_item, kullaniciTur);
-        aCDuzenleKullaniciTuru.setAdapter(Turadapter);
+        tür.add("Proje Yöneticisi");
+        tür.add("Şoför");
+        tür.add("Araç Sahibi");
+        tür.add("Diğer");
+
+
 
         Utils.setAutoCompleteAdapter(autoCompleteIlDuzenle , cityNames , ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteIlceDuzenle , DownloadClass.getTownNames(kullanici.get("CityID")) , ctx);
+        Utils.setAutoCompleteAdapter(aCDuzenleKullaniciTuru , tür , ctx);
 
         autoCompleteIlDuzenle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,11 +116,11 @@ public class KullanıcıDüzenleFragment extends Fragment {
                 Log.i("SelectedCityId" , cityId);
 
                 townNames = DownloadClass.getTownNames(cityId);
+                autoCompleteIlceDuzenle.setText(townNames.get(0));
                 Utils.setAutoCompleteAdapter(autoCompleteIlceDuzenle , townNames , ctx);
 
             }
         });
-
         autoCompleteIlceDuzenle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -117,7 +130,6 @@ public class KullanıcıDüzenleFragment extends Fragment {
                 Log.i("SelectedIlceId" , townId);
             }
         });
-
         aCDuzenleKullaniciTuru.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -128,44 +140,7 @@ public class KullanıcıDüzenleFragment extends Fragment {
         });
 
 
-        HashMap<String , String> kullanici = new HashMap<>();
-        kullanici.put("Token" , userToken);
-        Call<BaseResponse> kullaniciBilgi = App.getApiService().kullaniciBilgileri(kullanici);
-        kullaniciBilgi.enqueue(new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
 
-                ResponseDetail detail = response.body().getResponseDetail();
-                String token = detail.getResult();
-
-                JSONObject kullaniciInfo = Utils.jwtToJsonObject(token);
-
-
-                try {
-                    JSONObject tmp = kullaniciInfo.getJSONObject("OutPutMessage").getJSONObject("Data");
-
-                    edtDuzenleKayitAd.setText(tmp.getString("UserName"));
-                    edtDuzenleKayitSoyad.setText(tmp.getString("SurName"));
-                    edtKayitEmailDuzenle.setText(tmp.getString("Email"));
-                    edtKayitTelefonDuzenle.setText(tmp.getString("GSM"));
-                    aCDuzenleKullaniciTuru.setText(setKullaniciTur(tmp.getString("MeType")));
-                    autoCompleteIlDuzenle.setText(Utils.getSehirAdi(tmp.getString("CityID")));
-                    autoCompleteIlceDuzenle.setText(DownloadClass.getTownNameWithId(tmp.getString("TownID")));
-
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
-
-            }
-        });
 
         txtDuzenle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,49 +164,86 @@ public class KullanıcıDüzenleFragment extends Fragment {
                     kullaniciAlert.show();
                 }
 
-                hashMap1.put("UserName" , ad);
-                hashMap1.put("SurName" , soyad);
-                hashMap1.put("Email" , email);
+                else
+                {
+                    Log.i("xxxxTür" , aCDuzenleKullaniciTuru.getText().toString());
+                    Log.i("xxxxİl" , autoCompleteIlDuzenle.getText().toString());
+                    Log.i("xxxxİlçe" , autoCompleteIlceDuzenle.getText().toString());
 
-                hashMap1.put("GSM" , telefon);
-                hashMap1.put("CityID" , cityId);
-                hashMap1.put("TownID" , townId);
+                    String NewCityId = DownloadClass.getCityIdWithName(autoCompleteIlDuzenle.getText().toString());
+                    String NewTownId = DownloadClass.getTownIdWithTownName(autoCompleteIlceDuzenle.getText().toString() , NewCityId);
+                    String NewTur = getKullaniciTur(aCDuzenleKullaniciTuru.getText().toString());
 
-                hashMap.put("param" , hashMap1);
-                hashMap.put("Token" , userToken);
+                    hashMap1.put("UserName" , ad);
+                    hashMap1.put("SurName" , soyad);
+                    hashMap1.put("Email" , email);
 
-                Call<BaseResponse> call = App.getApiService().kullaniciDuzenle(hashMap);
-                call.enqueue(new Callback<BaseResponse>() {
-                    @Override
-                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                    hashMap1.put("CityID" , NewCityId);
+                    hashMap1.put("TownID" , NewTownId);
+                    hashMap1.put("GSM" , telefon);
+                    hashMap1.put("MeType" , NewTur);
 
-                    }
+                    hashMap.put("param" , hashMap1);
+                    hashMap.put("Token" , userToken);
 
-                    @Override
-                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+                    Call<BaseResponse> call = App.getApiService().kullaniciDuzenle(hashMap);
+                    call.enqueue(new Callback<BaseResponse>() {
+                        @Override
+                        public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
 
-                    }
-                });
+                            ResponseDetail detail = response.body().getResponseDetail();
+                            String token = detail.getResult();
+                            JSONObject result = Utils.jwtToJsonObject(token);
 
+                            try {
+                                int status = result.getJSONObject("OutPutMessage").getInt("Status");
 
+                                if(status == 200 || status == 500)
+                                {
+                                    dialog = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                                    dialog.setTitleText("Profiliniz başarıyla güncellendi");
+                                    dialog.show();
+                                }
+                                else
+                                {
+                                    dialog = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                                    dialog.setTitleText("Bir hata oluştu daha sonra tekrar deneyiniz");
+                                    dialog.show();
+                                }
 
+                            } catch (JSONException e) {
 
+                                dialog = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                                dialog.setTitleText("Bir hata oluştu daha sonra tekrar deneyiniz");
+                                dialog.show();
+                                e.printStackTrace();
+                            }
 
+                        }
+
+                        @Override
+                        public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+                        }
+                    });
+
+                }
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
         return rootView;
+    }
+
+    private void loadUserInfo(HashMap<String , String> kullanici) {
+
+        edtDuzenleKayitAd.setText(kullanici.get("UserName"));
+        edtDuzenleKayitSoyad.setText(kullanici.get("SurName"));
+        edtKayitEmailDuzenle.setText(kullanici.get("Email"));
+        edtKayitTelefonDuzenle.setText(kullanici.get("GSM"));
+        aCDuzenleKullaniciTuru.setText(setKullaniciTur(kullanici.get("MeType")));
+        autoCompleteIlDuzenle.setText(Utils.getSehirAdi(kullanici.get("CityID")));
+        autoCompleteIlceDuzenle.setText(DownloadClass.getTownNameWithId(kullanici.get("TownID")));
+
     }
 
     private String setKullaniciTur(String MeType)
@@ -246,10 +258,35 @@ public class KullanıcıDüzenleFragment extends Fragment {
         }
         if(MeType.equals("3"))
         {
-            return "Şoför";
+            return "Araç Sahibi";
+        }
+        if(MeType.equals("4"))
+        {
+            return "Diğer";
         }
 
         return "";
+    }
 
+    private String getKullaniciTur(String MeType)
+    {
+        if(MeType.equals("Proje Yöneticisi"))
+        {
+            return "1";
+        }
+        if(MeType.equals("Şoför"))
+        {
+            return "2";
+        }
+        if(MeType.equals("Araç Sahibi"))
+        {
+            return "3";
+        }
+        if(MeType.equals("Diğer"))
+        {
+            return "4";
+        }
+
+        return "";
     }
 }
