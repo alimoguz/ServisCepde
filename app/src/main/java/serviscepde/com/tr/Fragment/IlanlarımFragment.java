@@ -45,6 +45,7 @@ public class IlanlarımFragment extends Fragment {
     private Context ctx;
     private ArrayList<IlanOzetBilgi> ilanlar = new ArrayList<>();
     private String userToken;
+    private static IlanlarımAdapter adapter;
 
     @Nullable
     @Override
@@ -66,6 +67,8 @@ public class IlanlarımFragment extends Fragment {
         txtIlanimSayisi = generalView.findViewById(R.id.txtIlanimSayisi);
         txtIlanBulundu = generalView.findViewById(R.id.txtIlanBulundu);
         rvIlanlarim = generalView.findViewById(R.id.rvIlanlarim);
+
+        clearAdapter();
 
         HashMap<String , Object> hashMap = new HashMap<>();
         HashMap<String , String> hashMap1 = new HashMap<>();
@@ -137,7 +140,7 @@ public class IlanlarımFragment extends Fragment {
 
                         }
 
-                        IlanlarımAdapter adapter = new IlanlarımAdapter(R.layout.row_ilanlarim , ilanlar , userToken);
+                        adapter = new IlanlarımAdapter(R.layout.row_ilanlarim , ilanlar , userToken);
                         adapter.notifyDataSetChanged();
                         rvIlanlarim.setLayoutManager(new LinearLayoutManager(ctx));
                         rvIlanlarim.setItemAnimator(new DefaultItemAnimator());
@@ -163,5 +166,17 @@ public class IlanlarımFragment extends Fragment {
 
 
         return rootView;
+    }
+
+    private void clearAdapter() {
+
+        ilanlar.clear();
+
+        if(adapter != null)
+        {
+            adapter.notifyDataSetChanged();
+        }
+
+
     }
 }

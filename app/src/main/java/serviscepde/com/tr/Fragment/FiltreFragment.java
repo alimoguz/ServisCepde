@@ -175,9 +175,9 @@ public class FiltreFragment extends Fragment {
         txtFiltreUygula = generalView.findViewById(R.id.txtFiltreUygula);
 
         kategoriler.add("Tüm Kategoriler");
-        kategoriler.add("İşime araç arıyorum");
         kategoriler.add("Aracıma iş arıyorum");
         kategoriler.add("Aracıma şoför arıyorum");
+        kategoriler.add("İşime araç arıyorum");
         kategoriler.add("Şoförüm iş arıyorum");
         kategoriler.add("Satılık araç");
         kategoriler.add("Kiralık araç");
@@ -210,7 +210,7 @@ public class FiltreFragment extends Fragment {
                     linFiltreler.setVisibility(View.VISIBLE);
                     openEverything();
                     loadAracaIs();
-                    spinKategoriTip.setSelection(2);
+                    spinKategoriTip.setSelection(1);
                     Log.i("SpinPosition" , " " + spinKategoriTip.getSelectedItemPosition() );
 
                 }
@@ -219,7 +219,7 @@ public class FiltreFragment extends Fragment {
                     linFiltreler.setVisibility(View.VISIBLE);
                     openEverything();
                     loadAracaSofor();
-                    spinKategoriTip.setSelection(3);
+                    spinKategoriTip.setSelection(2);
                     Log.i("SpinPosition" , " " + spinKategoriTip.getSelectedItemPosition() );
                 }
                 if(categoryFromOut.equals("3"))
@@ -227,7 +227,7 @@ public class FiltreFragment extends Fragment {
                     linFiltreler.setVisibility(View.VISIBLE);
                     openEverything();
                     loadIseArac();
-                    spinKategoriTip.setSelection(1);
+                    spinKategoriTip.setSelection(3);
                     Log.i("SpinPosition" , " " + spinKategoriTip.getSelectedItemPosition() );
                 }
                 if(categoryFromOut.equals("4"))
@@ -472,24 +472,24 @@ public class FiltreFragment extends Fragment {
                 {
                     linFiltreler.setVisibility(View.VISIBLE);
                     openEverything();
-                    Glide.with(ctx).load(R.drawable.isime_arac).into(imgType);
-                    loadIseArac();
+                    Glide.with(ctx).load(R.drawable.aracima_is).into(imgType);
+                    loadAracaIs();
 
                 }
                 if(kategoriID == 2)
                 {
                     linFiltreler.setVisibility(View.VISIBLE);
                     openEverything();
-                    Glide.with(ctx).load(R.drawable.aracima_is).into(imgType);
-                    loadAracaIs();
+                    Glide.with(ctx).load(R.drawable.aracima_sofor).into(imgType);
+                    loadAracaSofor();
 
                 }
                 if(kategoriID == 3)
                 {
                     linFiltreler.setVisibility(View.VISIBLE);
                     openEverything();
-                    Glide.with(ctx).load(R.drawable.aracima_sofor).into(imgType);
-                    loadAracaSofor();
+                    Glide.with(ctx).load(R.drawable.isime_arac).into(imgType);
+                    loadIseArac();
 
                 }
                 if(kategoriID == 4)
