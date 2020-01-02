@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -55,11 +56,11 @@ public class FiltreDetayFragment extends Fragment {
     private ExtendedFloatingActionButton fabIcon, fabIconCall, fabIconMessage;
     private TextView txtIlanDetayBaslik,txtIlanDetayAciklama, txtFiyat, txtIlanSahibi, txtIlanTamKonum, txtIlanNo, txtIlanTarih, txtAracMarkasi, txtAracModel, txtAracAltModel, txtAracYil, txtAracKapasite, txtServisBaslamaSaat, txtServisBitisSaat, txtServisBaslamaKonum, txtServisBitisKonum, txtFirmaGirisSaat, txtFirmaCikisSaat, txtToplamKM, txtGunSayisi, txtMotorHacim,
             txtMotorGuc, txtKimden, txtAracDurumu, txtTecrube, txtPlaka, txtReferans, txtUcretBeklentisi, txtKapasiteler, txtYas, txtEhliyet, txtSrc, txtAylikFiyati, txtHaftalikFiyati,
-            txtVitesTipi, txtYakitTipi, txtKaskoDurum, txtParcaMarkasi, txtCikmaYedekParca, txtYedekParcaDurumu, txtAracOzellikler, txtBelgeler;
+            txtVitesTipi, txtYakitTipi, txtKaskoDurum, txtParcaMarkasi, txtCikmaYedekParca, txtYedekParcaDurumu, txtBelgeler;
 
     private String Baslik,Aciklama, Fiyat, IlanSahibi, Konum, IlanNo, IlanTarih, AracMarkasi, AracModel, AracAltModel, AracYil, AracKapasite, ServisBaslamaSaat, ServisBitisSaat, ServisBaslamaKonum, ServisBitisKonum, FirmaGirisSaat, FirmaCikisSaat, ToplamKM, GunSayisi, MotorHacim,
             MotorGuc, Kimden, AracDurumu, Tecrube, Plaka, Referans, UcretBeklentisi, Kapasiteler, Yas, Ehliyet, Src, AylikFiyati, HaftalikFiyati,
-            VitesTipi, YakitTipi, KaskoDurum, ParcaMarkasi, CikmaYedekParca, YedekParcaDurumu, Ozellikler, Belgeler;
+            VitesTipi, YakitTipi, KaskoDurum, ParcaMarkasi, CikmaYedekParca, YedekParcaDurumu, Ozellikler, Belgeler ,ozelliklerID;
 
 
     private LinearLayout linMarka, linModel, linAltModel, linYil, linKapasite, linBaslamaSaat, linBitisSaat, linBaslamaKonum, linBitisKonum, linFirmaGiris, linFirmaCikis, linToplamKM,
@@ -67,6 +68,8 @@ public class FiltreDetayFragment extends Fragment {
             linAylikFiyat, linHaftalikFiyat, linVitesTipi, linYakitTipi, linKaskoDurum, linParcaMarkasi, linCikmaYedekParca, linYedekParcaDurumu, linAracOzellikleri, linBelgeler;
 
     private String userToken, Resimler;
+
+    private Switch sw1,sw2,sw3,sw4,sw5,sw6;
 
     @Nullable
     @Override
@@ -124,7 +127,6 @@ public class FiltreDetayFragment extends Fragment {
         txtParcaMarkasi = generalView.findViewById(R.id.txtParcaMarkasi);
         txtCikmaYedekParca = generalView.findViewById(R.id.txtCikmaYedekParca);
         txtYedekParcaDurumu = generalView.findViewById(R.id.txtYedekParcaDurumu);
-        txtAracOzellikler = generalView.findViewById(R.id.txtAracOzellikler);
         txtBelgeler = generalView.findViewById(R.id.txtBelgeler);
         txtIlanDetayBaslik = generalView.findViewById(R.id.txtIlanDetayBaslik);
 
@@ -164,6 +166,13 @@ public class FiltreDetayFragment extends Fragment {
         linYedekParcaDurumu = generalView.findViewById(R.id.linYedekParcaDurumu);
         linAracOzellikleri = generalView.findViewById(R.id.linAracOzellikleri);
         linBelgeler = generalView.findViewById(R.id.linBelgeler);
+
+        sw1 = generalView.findViewById(R.id.sw1);
+        sw2 = generalView.findViewById(R.id.sw2);
+        sw3 = generalView.findViewById(R.id.sw3);
+        sw4 = generalView.findViewById(R.id.sw4);
+        sw5 = generalView.findViewById(R.id.sw5);
+        sw6 = generalView.findViewById(R.id.sw6);
 
         viewPagerPhotos = generalView.findViewById(R.id.viewPagerPhotos);
         imgNoPhoto = generalView.findViewById(R.id.imgNoPhoto);
@@ -554,6 +563,16 @@ public class FiltreDetayFragment extends Fragment {
                         Log.i("Belgeler", Belgeler);
                     }
 
+                    if(ilanDetay.has("AracOzellikleri"))
+                    {
+                        ozelliklerID = ilanDetay.getString("AracOzellikleri");
+                        Log.i("OzelliklerId" , ozelliklerID);
+                    }
+                    else
+                    {
+
+                    }
+
                     if (ilanDetay.has("Resimler")) {
                         Resimler = ilanDetay.getString("Resimler");
                         Log.i("Resimler", Resimler);
@@ -728,7 +747,6 @@ public class FiltreDetayFragment extends Fragment {
         txtAracModel.setText(AracModel);
         txtAracYil.setText(AracYil);
         txtAracKapasite.setText(AracKapasite);
-        txtAracOzellikler.setText(Ozellikler);
         txtServisBaslamaKonum.setText(ServisBaslamaKonum);
         txtServisBaslamaSaat.setText(ServisBaslamaSaat);
         txtFirmaGirisSaat.setText(FirmaGirisSaat);
@@ -738,6 +756,31 @@ public class FiltreDetayFragment extends Fragment {
         txtToplamKM.setText(ToplamKM);
         txtGunSayisi.setText(GunSayisi);
         txtFiyat.setText(Fiyat);
+
+        if(ozelliklerID.contains("1"))
+        {
+            sw1.setChecked(true);
+        }
+        if(ozelliklerID.contains("2"))
+        {
+            sw2.setChecked(true);
+        }
+        if(ozelliklerID.contains("3"))
+        {
+            sw3.setChecked(true);
+        }
+        if(ozelliklerID.contains("4"))
+        {
+            sw4.setChecked(true);
+        }
+        if(ozelliklerID.contains("5"))
+        {
+            sw5.setChecked(true);
+        }
+        if(ozelliklerID.contains("6"))
+        {
+            sw6.setChecked(true);
+        }
 
         linAltModel.setVisibility(View.GONE);
         linMotorHacim.setVisibility(View.GONE);
@@ -775,7 +818,6 @@ public class FiltreDetayFragment extends Fragment {
         txtAracModel.setText(AracModel);
         txtAracYil.setText(AracYil);
         txtAracKapasite.setText(AracKapasite);
-        txtAracOzellikler.setText(Ozellikler);
         txtServisBaslamaKonum.setText(ServisBaslamaKonum);
         txtServisBaslamaSaat.setText(ServisBaslamaSaat);
         txtServisBitisSaat.setText(ServisBitisSaat);
@@ -787,6 +829,31 @@ public class FiltreDetayFragment extends Fragment {
         txtPlaka.setText(Plaka);
         txtReferans.setText(Referans);
         txtAracDurumu.setText(AracDurumu);
+
+        if(ozelliklerID.contains("1"))
+        {
+            sw1.setChecked(true);
+        }
+        if(ozelliklerID.contains("2"))
+        {
+            sw2.setChecked(true);
+        }
+        if(ozelliklerID.contains("3"))
+        {
+            sw3.setChecked(true);
+        }
+        if(ozelliklerID.contains("4"))
+        {
+            sw4.setChecked(true);
+        }
+        if(ozelliklerID.contains("5"))
+        {
+            sw5.setChecked(true);
+        }
+        if(ozelliklerID.contains("6"))
+        {
+            sw6.setChecked(true);
+        }
 
 
         linYedekParcaDurumu.setVisibility(View.GONE);

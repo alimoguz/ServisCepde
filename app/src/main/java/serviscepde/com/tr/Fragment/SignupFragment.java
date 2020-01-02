@@ -185,13 +185,23 @@ public class SignupFragment extends Fragment {
                 sifreTekrar = edtKayitSifreTekrar.getText().toString();
                 boolean isAccepted = checkBoxKullanim.isChecked();
 
-                if(kullanıcıType.isEmpty() || ad.isEmpty() || soyad.isEmpty() || telefon.isEmpty() || sifre.isEmpty() || !sifre.isEmpty() && sifre.length() < 6)
+                if(kullanıcıType.isEmpty() || ad.isEmpty() || soyad.isEmpty() || telefon.isEmpty() || sifre.isEmpty())
                 {
                     kullaniciAlert = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     kullaniciAlert.setTitleText("* ile belirtilen alanlar boş bırakılamaz");
                     kullaniciAlert.show();
 
                     return;
+                }
+
+                if( sifre.length() < 6)
+                {
+                    kullaniciAlert = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
+                    kullaniciAlert.setTitleText("Şifre en az 6 karakter olmalı");
+                    kullaniciAlert.show();
+
+                    return;
+
                 }
 
                 if(!isAccepted)

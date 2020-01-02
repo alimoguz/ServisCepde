@@ -72,6 +72,7 @@ public class IlanlarımFragment extends Fragment {
 
         hashMap1.put("start" , "0");
         hashMap1.put("UserID" , UserId);
+        hashMap1.put("me" , "1");
 
         hashMap.put("param" , hashMap1);
 
