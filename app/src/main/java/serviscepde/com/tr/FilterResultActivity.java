@@ -26,7 +26,7 @@ public class FilterResultActivity extends AppCompatActivity {
     public static FragmentTransaction fragmentTransaction;
     public static FragmentManager fragmentManager;
 
-    @Override
+    /*@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK ) {
             Intent intent = new Intent(getApplicationContext() , MainActivity.class);
@@ -34,6 +34,22 @@ public class FilterResultActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+*/
+    @Override
+    public void onBackPressed() {
+
+        FragmentManager manager = getSupportFragmentManager();
+
+        if(manager.getBackStackEntryCount() > 1)
+        {
+            manager.popBackStackImmediate();
+        }
+        else
+        {
+            Intent intent = new Intent(getApplicationContext() , MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override

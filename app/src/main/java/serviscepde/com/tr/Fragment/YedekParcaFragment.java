@@ -374,8 +374,7 @@ public class YedekParcaFragment extends Fragment {
                    s = "1";
                 }
 
-                if (baslik.isEmpty()  || aciklama.isEmpty() || marka.isEmpty()
-                        || cityId.isEmpty() || townId.isEmpty() || actvDurum.isEmpty())
+                if (baslik.isEmpty()  || aciklama.isEmpty() || marka.isEmpty() || cityId.isEmpty() || autoCompleteYedekParcailce.getText().toString().isEmpty() || actvDurum.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -390,7 +389,7 @@ public class YedekParcaFragment extends Fragment {
                     hashMap1.put("Tipi" , "7");
                     hashMap1.put("Baslik" , baslik);
                     hashMap1.put("ilanCity" , cityId);
-                    hashMap1.put("ilanSemtleri" , townId);
+                    hashMap1.put("ilanSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteYedekParcailce.getText().toString() , cityId));
                     hashMap1.put("ParcaMarkasi" , marka);
                     hashMap1.put("Ucret" , fiyat);
                     hashMap1.put("file" , imageArray);

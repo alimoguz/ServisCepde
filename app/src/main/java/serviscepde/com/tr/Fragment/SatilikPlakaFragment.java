@@ -301,7 +301,7 @@ public class SatilikPlakaFragment extends Fragment {
 
                 }
 
-                if (baslik.isEmpty() || cityId.isEmpty() || townId.isEmpty() || plaka.isEmpty() || aciklama.isEmpty())
+                if (baslik.isEmpty() || cityId.isEmpty() || autoCompleteSatilikPlakailce.getText().toString().isEmpty() || plaka.isEmpty() || aciklama.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -316,7 +316,7 @@ public class SatilikPlakaFragment extends Fragment {
                     hashMap1.put("Tipi" , "8");
                     hashMap1.put("Baslik" , baslik);
                     hashMap1.put("ilanCity" , cityId);
-                    hashMap1.put("ilanSemtleri" , townId);
+                    hashMap1.put("ilanSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteSatilikPlakailce.getText().toString() , cityId));
                     hashMap1.put("Ucret" , fiyat);
                     hashMap1.put("file" , imageArray);
                     hashMap1.put("ilanAciklamasi" , aciklama);

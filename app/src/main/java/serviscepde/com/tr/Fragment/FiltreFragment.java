@@ -701,79 +701,85 @@ public class FiltreFragment extends Fragment {
                     param.put("YedekParcaDurum" ,acDurum );
                 }
 
-                final DialogFiltreKaydet diaKaydet = new DialogFiltreKaydet(MainActivity.act);
-                diaKaydet.setCancelable(false);
-                diaKaydet.setCanceledOnTouchOutside(false);
-                diaKaydet.show();
+                if(userToken.equals("0"))
+                {
+                    param.put("IsSaved" , 0);
+                    param.put("SavedName" , null);
+                    openFilterResult(param);
+                }
 
-                Switch saveSwitch = diaKaydet.findViewById(R.id.switchFiltre);
-                TextView tamam = diaKaydet.findViewById(R.id.txtFiltreKayitTamam);
+                else
+                {
+                    final DialogFiltreKaydet diaKaydet = new DialogFiltreKaydet(MainActivity.act);
+                    diaKaydet.setCancelable(false);
+                    diaKaydet.setCanceledOnTouchOutside(false);
+                    diaKaydet.show();
 
+                    Switch saveSwitch = diaKaydet.findViewById(R.id.switchFiltre);
+                    TextView tamam = diaKaydet.findViewById(R.id.txtFiltreKayitTamam);
 
-                tamam.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boolean isSaved = saveSwitch.isChecked();
-                        Log.i("switchState" , " " + isSaved);
+                    tamam.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            boolean isSaved = saveSwitch.isChecked();
+                            Log.i("switchState" , " " + isSaved);
 
-                        if(isSaved)
-                        {
-                            diaKaydet.dismiss();
-                            final DialogFiltreAd dialogFiltreAd = new DialogFiltreAd(MainActivity.act);
-                            dialogFiltreAd.setCancelable(false);
-                            dialogFiltreAd.setCanceledOnTouchOutside(false);
-                            dialogFiltreAd.show();
+                            if(isSaved)
+                            {
+                                diaKaydet.dismiss();
+                                final DialogFiltreAd dialogFiltreAd = new DialogFiltreAd(MainActivity.act);
+                                dialogFiltreAd.setCancelable(false);
+                                dialogFiltreAd.setCanceledOnTouchOutside(false);
+                                dialogFiltreAd.show();
 
-                            EditText et = dialogFiltreAd.findViewById(R.id.edtFiltreAd);
-                            TextView tamam = dialogFiltreAd.findViewById(R.id.txtFiltreKayıtAdTamam);
-                            TextView iptal = dialogFiltreAd.findViewById(R.id.txtFiltreKayıtAdIptal);
+                                EditText et = dialogFiltreAd.findViewById(R.id.edtFiltreAd);
+                                TextView tamam = dialogFiltreAd.findViewById(R.id.txtFiltreKayıtAdTamam);
+                                TextView iptal = dialogFiltreAd.findViewById(R.id.txtFiltreKayıtAdIptal);
 
-                            iptal.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
+                                iptal.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
 
-                                    param.put("IsSaved" , 0);
-                                    param.put("SavedName" , null);
-                                    openFilterResult(param);
-                                }
-                            });
-
-                            tamam.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                    String filtreAd = et.getText().toString();
-
-                                    if(filtreAd.isEmpty())
-                                    {
-                                        SweetAlertDialog adAlert;
-                                        adAlert = new SweetAlertDialog(ctx , SweetAlertDialog.WARNING_TYPE);
-                                        adAlert.setTitleText("İsim boş bırakılamaz !");
-                                        adAlert.show();
-                                    }
-                                    else
-                                    {
-                                        param.put("IsSaved" , 1);
-                                        param.put("SavedName" , filtreAd);
+                                        param.put("IsSaved" , 0);
+                                        param.put("SavedName" , null);
                                         openFilterResult(param);
                                     }
+                                });
 
-                                }
-                            });
+                                tamam.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
 
+                                        String filtreAd = et.getText().toString();
+
+                                        if(filtreAd.isEmpty())
+                                        {
+                                            SweetAlertDialog adAlert;
+                                            adAlert = new SweetAlertDialog(ctx , SweetAlertDialog.WARNING_TYPE);
+                                            adAlert.setTitleText("İsim boş bırakılamaz !");
+                                            adAlert.show();
+                                        }
+                                        else
+                                        {
+                                            param.put("IsSaved" , 1);
+                                            param.put("SavedName" , filtreAd);
+                                            openFilterResult(param);
+                                        }
+
+                                    }
+                                });
+
+                            }
+                            else
+                            {
+                                diaKaydet.dismiss();
+                                param.put("IsSaved" , 0);
+                                param.put("SavedName" , null);
+                                openFilterResult(param);
+                            }
                         }
-                        else
-                        {
-                            diaKaydet.dismiss();
-                            param.put("IsSaved" , 0);
-                            param.put("SavedName" , null);
-                            openFilterResult(param);
-                        }
-
-                    }
-                });
-
-
+                    });
+                }
             }
         });
 

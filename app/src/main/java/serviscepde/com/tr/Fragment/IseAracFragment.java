@@ -612,10 +612,7 @@ public class IseAracFragment extends Fragment {
                 }
 
 
-                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty()
-                        || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() || firmaCikisSaati.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() ||
-                        cityId.isEmpty() || townId.isEmpty() || actvIseAracKapasite.isEmpty() || actvIseAracMarka.isEmpty()
-                        || baslamaCityId.isEmpty() || bitisTownId.isEmpty() || bitisCityId.isEmpty() || baslamaTownId.isEmpty())
+                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() || firmaCikisSaati.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || cityId.isEmpty() || autoCompleteIseAracilce.getText().toString().isEmpty() || actvIseAracKapasite.isEmpty() || actvIseAracMarka.isEmpty() || baslamaCityId.isEmpty() || autoCompleteIseAracServisBitisilce.getText().toString().isEmpty() || bitisCityId.isEmpty() || autoCompleteIseAracServiseBaslamailce.getText().toString().isEmpty())
                 {
 
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
@@ -632,20 +629,20 @@ public class IseAracFragment extends Fragment {
                     hashMap1.put("Tipi" , "3");
                     hashMap1.put("Baslik" , baslik);
                     hashMap1.put("ilanCity" , cityId);
-                    hashMap1.put("ilanSemtleri" , townId);
+                    hashMap1.put("ilanSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteIseAracilce.getText().toString() , cityId));
                     hashMap1.put("AracMarkasi" , actvIseAracMarka);
                     hashMap1.put("AracModeli" , actvIseAracModel);
                     hashMap1.put("AracYili" , yil);
                     hashMap1.put("AracKapasitesi" , actvIseAracKapasite);
                     hashMap1.put("AracOzellikleri" , switchStates);
                     hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
-                    hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
+                    hashMap1.put("ServiseBaslamaSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteIseAracServiseBaslamailce.getText().toString() , baslamaCityId));
                     hashMap1.put("ServiseBaslamaSaati" , servisBaslamaSaati);
                     hashMap1.put("FirmayaGirisSaati" , firmaGirisSaati);
                     hashMap1.put("FirmadanCikisSaati" , firmaCikisSaati);
                     hashMap1.put("ServisBitisSaati" , servisBitisSaati);
                     hashMap1.put("ServisBitisCity" , bitisCityId);
-                    hashMap1.put("ServisBitisSemtleri" , bitisTownId);
+                    hashMap1.put("ServisBitisSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteIseAracServisBitisilce.getText().toString() , bitisCityId));
                     hashMap1.put("ToplamKM" , toplamKM);
                     hashMap1.put("CalisilacakGunSayisi" , gunSayisi);
                     hashMap1.put("Ucret" , fiyat);

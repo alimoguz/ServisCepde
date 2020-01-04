@@ -521,9 +521,9 @@ public class AracaIsFragment extends Fragment {
                 gunSayisi = edtAracaIsCalisilacakGunSayisi.getText().toString();
 
 
-                if(baslik.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || tecrube.isEmpty() ||
-                        plaka.isEmpty() || referans.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvMarka.isEmpty() ||
-                        actvKapasite.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || actvAracDurumu.isEmpty())
+
+
+                if(baslik.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || tecrube.isEmpty() || plaka.isEmpty() || referans.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || cityId.isEmpty() || autoCompleteAracaIsilce.getText().toString().isEmpty() || actvMarka.isEmpty() || actvKapasite.isEmpty() || baslamaCityId.isEmpty() || autoCompleteAracaIsServiseBaslamailce.getText().toString().isEmpty() || actvAracDurumu.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -582,14 +582,14 @@ public class AracaIsFragment extends Fragment {
                     hashMap1.put("Tipi" , "1");
                     hashMap1.put("Baslik" , baslik);
                     hashMap1.put("ilanCity" , cityId);
-                    hashMap1.put("ilanSemtleri" , townId);
+                    hashMap1.put("ilanSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteAracaIsilce.getText().toString() , cityId));
                     hashMap1.put("AracMarkasi" , actvMarka);
                     hashMap1.put("AracModeli" , actvModel);
                     hashMap1.put("AracYili" , yil);
                     hashMap1.put("AracKapasitesi" , actvKapasite);
                     hashMap1.put("AracOzellikleri" , switchStates);
                     hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
-                    hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
+                    hashMap1.put("ServiseBaslamaSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteAracaIsServiseBaslamailce.getText().toString() , baslamaCityId));
                     hashMap1.put("ServiseBaslamaSaati" , servisBaslamaSaati);
                     hashMap1.put("ServisBitisSaati" , servisBitisSaati);
                     hashMap1.put("ToplamKM" , toplamKM);

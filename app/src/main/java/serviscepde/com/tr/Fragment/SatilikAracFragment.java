@@ -438,9 +438,7 @@ public class SatilikAracFragment extends Fragment {
                 km = edtSatilikAracKM.getText().toString();
 
 
-                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || km.isEmpty() || cityId.isEmpty() || townId.isEmpty() ||
-                        actvMarka.isEmpty() || actvModel.isEmpty() || actvMotorHacmi.isEmpty() || actvMotorGucu.isEmpty() ||
-                        actvKapasite.isEmpty() || actvKimden.isEmpty())
+                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || km.isEmpty() || cityId.isEmpty() || autoCompleteSatilikAracilce.getText().toString().isEmpty() || actvMarka.isEmpty() || actvModel.isEmpty() || actvMotorHacmi.isEmpty() || actvMotorGucu.isEmpty() || actvKapasite.isEmpty() || actvKimden.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -473,7 +471,7 @@ public class SatilikAracFragment extends Fragment {
                     hashMap1.put("AracYili" , yil);
                     hashMap1.put("ToplamKM" , km);
                     hashMap1.put("ilanCity" , cityId);
-                    hashMap1.put("ilanSemtleri" , townId);
+                    hashMap1.put("ilanSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteSatilikAracilce.getText().toString() , cityId));
                     hashMap1.put("AracMarkasi" , actvMarka);
                     hashMap1.put("AracModeli" , actvModel);
                     hashMap1.put("MotorHacmi" , actvMotorHacmi);

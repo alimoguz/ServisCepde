@@ -73,11 +73,13 @@ public class IlanlarımFragment extends Fragment {
         HashMap<String , Object> hashMap = new HashMap<>();
         HashMap<String , String> hashMap1 = new HashMap<>();
 
-        hashMap1.put("start" , "0");
-        hashMap1.put("UserID" , UserId);
         hashMap1.put("me" , "1");
+        hashMap1.put("start" , "0");
+        hashMap1.put("limit" , "250");
+        hashMap1.put("Approval" , "Me");
 
         hashMap.put("param" , hashMap1);
+        hashMap.put("Token" , userToken);
 
         Call<BaseResponse> kullaniciIlan = App.getApiService().kullanicininIlanlari(hashMap);
         kullaniciIlan.enqueue(new Callback<BaseResponse>() {
