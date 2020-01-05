@@ -44,6 +44,7 @@ public class IlanSonFragment extends Fragment {
     private Context ctx;
     private String userToken;
     ArrayList<IlanOzetBilgi> bilgiList = new ArrayList<>();
+    private static KategorIlanAdapter adapter;
 
     @Nullable
     @Override
@@ -62,6 +63,8 @@ public class IlanSonFragment extends Fragment {
         MainActivity.relHeader.setVisibility(View.GONE);
 
         rvSonIlanlar = generalView.findViewById(R.id.rvSonIlanlar);
+
+        clearAdapter();
 
         HashMap<String , Object> hashMap2 = new HashMap<>();
         HashMap<String , String> hashMap3 = new HashMap<>();
@@ -124,7 +127,7 @@ public class IlanSonFragment extends Fragment {
 
                     Log.i("Liste1" , String.valueOf(bilgiList.size()));
 
-                    KategorIlanAdapter adapter = new KategorIlanAdapter(R.layout.row_ilan , bilgiList ,0);
+                    adapter = new KategorIlanAdapter(R.layout.row_ilan , bilgiList ,0);
                     adapter.notifyDataSetChanged();
                     rvSonIlanlar.setLayoutManager(new LinearLayoutManager(ctx));
                     rvSonIlanlar.setItemAnimator(new DefaultItemAnimator());
@@ -146,5 +149,16 @@ public class IlanSonFragment extends Fragment {
 
 
         return rootView;
+    }
+
+    private void clearAdapter()
+    {
+        bilgiList.clear();
+
+        if(adapter != null)
+        {
+            adapter.notifyDataSetChanged();
+        }
+
     }
 }

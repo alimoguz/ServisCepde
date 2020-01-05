@@ -287,7 +287,7 @@ public class SignupFragment extends Fragment {
                     body.put("Password" , sifre);
                     body.put("GSM" , telefon);
                     body.put("CityID" , SelectedCityId);
-                    body.put("TownID" , SelectedTownId);
+                    body.put("TownID" , DownloadClass.getTownIdWithTownName(autoCompleteIlce.getText().toString() , SelectedCityId));
 
 
                     node.put("param" , body);

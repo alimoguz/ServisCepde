@@ -45,6 +45,7 @@ public class IlanGuncelFragment extends Fragment {
     ArrayList<IlanOzetBilgi> bilgiList = new ArrayList<>();
 
     Context ctx ;
+    private static KategorIlanAdapter adapter;
 
     @Nullable
     @Override
@@ -60,6 +61,8 @@ public class IlanGuncelFragment extends Fragment {
         ctx = generalView.getContext();
 
         rvGuncelIlanlar = generalView.findViewById(R.id.rvGuncelIlanlar);
+
+        clearAdapter();
 
         HashMap<String , HashMap<String , Integer>> hashMap = new HashMap<>();
         HashMap<String , Integer> hashMap1 = new HashMap<>();
@@ -120,7 +123,7 @@ public class IlanGuncelFragment extends Fragment {
 
                     Log.i("Liste1" , String.valueOf(bilgiList.size()));
 
-                    KategorIlanAdapter adapter = new KategorIlanAdapter(R.layout.row_ilan , bilgiList ,0);
+                    adapter = new KategorIlanAdapter(R.layout.row_ilan , bilgiList ,0);
                     adapter.notifyDataSetChanged();
                     rvGuncelIlanlar.setLayoutManager(new LinearLayoutManager(ctx));
                     rvGuncelIlanlar.setItemAnimator(new DefaultItemAnimator());
@@ -143,5 +146,16 @@ public class IlanGuncelFragment extends Fragment {
 
 
         return rootView;
+    }
+
+    private void clearAdapter()
+    {
+        bilgiList.clear();
+
+        if(adapter != null)
+        {
+            adapter.notifyDataSetChanged();
+        }
+
     }
 }
