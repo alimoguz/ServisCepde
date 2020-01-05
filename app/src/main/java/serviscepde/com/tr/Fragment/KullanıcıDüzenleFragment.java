@@ -2,6 +2,7 @@ package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -62,6 +63,7 @@ public class KullanıcıDüzenleFragment extends Fragment {
     private List<String> cityNames = new ArrayList<>();
     private ArrayList<String> NewtownNames = new ArrayList<>();
     private SweetAlertDialog dialog;
+    private SweetAlertDialog pDialog;
 
     @Nullable
     @Override
@@ -83,6 +85,11 @@ public class KullanıcıDüzenleFragment extends Fragment {
         edtKayitEmailDuzenle = generalView.findViewById(R.id.edtKayitEmailDuzenle);
         edtKayitTelefonDuzenle = generalView.findViewById(R.id.edtKayitTelefonDuzenle);
         edtKayitSifreDuzenle = generalView.findViewById(R.id.edtKayitSifreDuzenle);
+
+        pDialog = new SweetAlertDialog(ctx, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#f1a400"));
+        pDialog.setTitleText("Lütfen Bekleyiniz");
+        pDialog.setCancelable(false);
 
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
@@ -146,6 +153,7 @@ public class KullanıcıDüzenleFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+
                 ad = edtDuzenleKayitAd.getText().toString();
                 soyad = edtDuzenleKayitSoyad.getText().toString();
                 email = edtKayitEmailDuzenle.getText().toString();
@@ -166,6 +174,7 @@ public class KullanıcıDüzenleFragment extends Fragment {
 
                 else
                 {
+                    pDialog.show();
                     Log.i("xxxxTür" , aCDuzenleKullaniciTuru.getText().toString());
                     Log.i("xxxxİl" , autoCompleteIlDuzenle.getText().toString());
                     Log.i("xxxxİlçe" , autoCompleteIlceDuzenle.getText().toString());
@@ -200,12 +209,14 @@ public class KullanıcıDüzenleFragment extends Fragment {
 
                                 if(status == 200 || status == 500)
                                 {
+                                    pDialog.dismiss();
                                     dialog = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                     dialog.setTitleText("Profiliniz başarıyla güncellendi");
                                     dialog.show();
                                 }
                                 else
                                 {
+                                    pDialog.dismiss();
                                     dialog = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                     dialog.setTitleText("Bir hata oluştu daha sonra tekrar deneyiniz");
                                     dialog.show();
@@ -213,6 +224,7 @@ public class KullanıcıDüzenleFragment extends Fragment {
 
                             } catch (JSONException e) {
 
+                                pDialog.dismiss();
                                 dialog = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                 dialog.setTitleText("Bir hata oluştu daha sonra tekrar deneyiniz");
                                 dialog.show();
@@ -224,6 +236,7 @@ public class KullanıcıDüzenleFragment extends Fragment {
                         @Override
                         public void onFailure(Call<BaseResponse> call, Throwable t) {
 
+                            pDialog.dismiss();
                         }
                     });
 
@@ -241,8 +254,14 @@ public class KullanıcıDüzenleFragment extends Fragment {
         edtKayitEmailDuzenle.setText(kullanici.get("Email"));
         edtKayitTelefonDuzenle.setText(kullanici.get("GSM"));
         aCDuzenleKullaniciTuru.setText(setKullaniciTur(kullanici.get("MeType")));
-        autoCompleteIlDuzenle.setText(Utils.getSehirAdi(kullanici.get("CityID")));
-        autoCompleteIlceDuzenle.setText(DownloadClass.getTownNameWithId(kullanici.get("TownID")));
+        if(kullanici.containsKey("CityID"))
+        {
+            autoCompleteIlDuzenle.setText(Utils.getSehirAdi(kullanici.get("CityID")));
+        }
+        if(kullanici.containsKey("TownID"))
+        {
+            autoCompleteIlceDuzenle.setText(DownloadClass.getTownNameWithId(kullanici.get("TownID")));
+        }
 
     }
 

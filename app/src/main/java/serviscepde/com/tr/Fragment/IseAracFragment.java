@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -85,8 +86,9 @@ public class IseAracFragment extends Fragment {
 
     public  Context ctx;
     private String [] imageArray;
+    private SweetAlertDialog pDialog;
 
-    private String switchStates;
+    private String switchStates="";
     private String baslik,fiyat,aciklama,yil,servisBaslamaSaati,servisBitisSaati,firmaGirisSaati,firmaCikisSaati,toplamKM,gunSayisi, imageString = null;
     private String actvIseAracMarka,actvIseAracModel,actvIseAracKapasite;
 
@@ -174,6 +176,11 @@ public class IseAracFragment extends Fragment {
 
         linIseAracIptal  = generalView.findViewById(R.id.linIseAracIptal);
         txtIseAracGonder  = generalView.findViewById(R.id.txtIseAracGonder);
+
+        pDialog = new SweetAlertDialog(ctx, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#f1a400"));
+        pDialog.setTitleText("Lütfen Bekleyiniz");
+        pDialog.setCancelable(false);
 
         linIseAracIptal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -555,6 +562,7 @@ public class IseAracFragment extends Fragment {
                     }
                 },3000);
 
+
                 baslik = edtIseAracBaslik.getText().toString();
                 fiyat = edtIseAracFiyat.getText().toString();
                 aciklama = edtIseAracAciklama.getText().toString();
@@ -626,6 +634,8 @@ public class IseAracFragment extends Fragment {
                     HashMap<String , Object> hashMap = new HashMap<>();
                     HashMap<String , Object> hashMap1 = new HashMap<>();
 
+                    pDialog.show();
+
                     hashMap1.put("Tipi" , "3");
                     hashMap1.put("Baslik" , baslik);
                     hashMap1.put("ilanCity" , cityId);
@@ -671,6 +681,7 @@ public class IseAracFragment extends Fragment {
 
                                 if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
                                 {
+                                    pDialog.dismiss();
                                     ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                     ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
                                     ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -686,12 +697,14 @@ public class IseAracFragment extends Fragment {
 
                                 else
                                 {
+                                    pDialog.dismiss();
                                     ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
                                     ilanHata.setTitleText("Bir hata oluştu lütfen daha sonra tekrar deneyin");
                                     ilanHata.show();
                                 }
 
                             } catch (JSONException e) {
+                                pDialog.dismiss();
                                 e.printStackTrace();
                             }
 
@@ -700,6 +713,7 @@ public class IseAracFragment extends Fragment {
                         @Override
                         public void onFailure(Call<EkleResponse> call, Throwable t) {
 
+                            pDialog.dismiss();
                             SweetAlertDialog ilanHata;
                             ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
                             ilanHata.setTitleText("Bir şeyler yanlış gitti lütfen daha sonra tekrar deneyin");
@@ -708,7 +722,7 @@ public class IseAracFragment extends Fragment {
                         }
                     });
 
-                    switchStates = "";
+                    switchStates ="";
                     photos.clear();
 
                 }

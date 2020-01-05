@@ -2,6 +2,7 @@ package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,7 @@ public class BildirimGonderFragment extends Fragment {
 
     private List<City> sehirler = new ArrayList<>();
     private List<String> cityNames = new ArrayList<>();
+    private SweetAlertDialog pDialog;
 
     @Nullable
     @Override
@@ -71,6 +73,11 @@ public class BildirimGonderFragment extends Fragment {
         edtBildirimBaslik = generalView.findViewById(R.id.edtBildirimBaslik);
         edtBildirimMesaj = generalView.findViewById(R.id.edtBildirimMesaj);
         txtBildirimGonderLast = generalView.findViewById(R.id.txtBildirimGonderLast);
+
+        pDialog = new SweetAlertDialog(ctx, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#f1a400"));
+        pDialog.setTitleText("Lütfen Bekleyiniz");
+        pDialog.setCancelable(false);
 
         sehirler = DownloadClass.getCities();
         cityNames = DownloadClass.getCityNames();
@@ -103,6 +110,7 @@ public class BildirimGonderFragment extends Fragment {
 
                 else
                 {
+                    pDialog.show();
                     HashMap<String , String> users = new HashMap<>();
                     users.put("CityID" , cityId);
 
@@ -137,6 +145,7 @@ public class BildirimGonderFragment extends Fragment {
                                 int status = sonuc.getJSONObject("OutPutMessage").getJSONObject("Data").getInt("Status");
                                 if(status == 200)
                                 {
+                                    pDialog.dismiss();
                                     servisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
                                     servisAlert.setTitleText("Bildirim yönetici onayından sonra yayınlanacaktır");
                                     servisAlert.show();
@@ -144,12 +153,14 @@ public class BildirimGonderFragment extends Fragment {
 
                                 else
                                 {
+                                    pDialog.dismiss();
                                     servisAlert = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
                                     servisAlert.setTitleText("Bir hata oluştu lütfen daha sonra tekrar deneyiniz");
                                     servisAlert.show();
                                 }
 
                             } catch (JSONException e) {
+                                pDialog.dismiss();
                                 e.printStackTrace();
                             }
 
@@ -158,6 +169,7 @@ public class BildirimGonderFragment extends Fragment {
 
                         @Override
                         public void onFailure(Call<BaseResponse> call, Throwable t) {
+                            pDialog.dismiss();
 
                         }
                     });

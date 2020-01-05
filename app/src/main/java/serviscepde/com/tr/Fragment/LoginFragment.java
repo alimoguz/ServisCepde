@@ -2,6 +2,7 @@ package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -67,6 +68,7 @@ public class LoginFragment extends Fragment {
 
     SignupFragment signupFragment;
     ForgetPasswordFragment forgetPasswordFragment;
+    SweetAlertDialog pDialog;
 
     @Nullable
     @Override
@@ -75,6 +77,8 @@ public class LoginFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.login_fragment , container , false);
 
         generalView = rootView;
+
+
 
 
 
@@ -90,6 +94,12 @@ public class LoginFragment extends Fragment {
 
         ctx = getContext();
 
+        pDialog = new SweetAlertDialog(ctx, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#f1a400"));
+        pDialog.setTitleText("Giriş yapılıyor");
+        pDialog.setCancelable(false);
+
+
         signupFragment = new SignupFragment();
         forgetPasswordFragment = new ForgetPasswordFragment();
 
@@ -98,16 +108,14 @@ public class LoginFragment extends Fragment {
         String deviceID = Utils.getDeviceID(ctx);
 
 
-
-
-
-
         txtGirisYap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 number = edtCepTelefonu.getText().toString();
                 password = edtSifre.getText().toString();
+
+                pDialog.show();
 
 
                 Log.i("MaskedText" , edtCepTelefonu.getMask() + edtCepTelefonu.getRawText() + edtCepTelefonu.getText().toString());
@@ -154,11 +162,6 @@ public class LoginFragment extends Fragment {
                         Log.i("Giriş Durumu" , " " + userLoginResponseDetail.getStatus());
 
                         String token = userLoginResponseDetail.getResult();
-
-
-
-
-
                         JSONObject jsonObject = Utils.jwtToJsonObject(token);
 
                         Log.i(TAG, "onResponse: " + token);
@@ -185,6 +188,7 @@ public class LoginFragment extends Fragment {
 
                                 if (status == 201)
                                 {
+                                    pDialog.dismiss();
                                     invalidLogin = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                                     invalidLogin.setTitleText(jsonObject.getJSONObject("OutPutMessage").getString("ErrorMessage"));
                                     invalidLogin.show();
@@ -195,6 +199,7 @@ public class LoginFragment extends Fragment {
                                 Log.i(TAG, "onResponse: " + " Json Array Geldi");
 
                                 String error = jsonObject.getJSONArray("errorOther").getString(0);
+                                pDialog.dismiss();
 
                                 invalidLogin = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                                 invalidLogin.setTitleText(error);
@@ -203,6 +208,7 @@ public class LoginFragment extends Fragment {
 
 
                         } catch (JSONException e) {
+                            pDialog.dismiss();
                             e.printStackTrace();
                             Log.e("JsonError", e.getMessage());
                         }
@@ -213,6 +219,7 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onFailure(Call<UserLoginResponse> call, Throwable t) {
 
+                        pDialog.dismiss();
                         Log.e("Hata Durumu" , t.getMessage());
 
                     }

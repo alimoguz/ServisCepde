@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -84,6 +85,7 @@ public class YedekParcaFragment extends Fragment {
     private String townId;
     private ArrayList<String> townNames  = new ArrayList<>();
 
+    private SweetAlertDialog pDialog;
 
     private Context ctx;
 
@@ -127,6 +129,11 @@ public class YedekParcaFragment extends Fragment {
         switchYedekParcaCikmaParca = generalView.findViewById(R.id.switchYedekParcaCikmaParca);
         linYedekParcaIptal = generalView.findViewById(R.id.linYedekParcaIptal);
         txtYedekParcaGonder = generalView.findViewById(R.id.txtYedekParcaGonder);
+
+        pDialog = new SweetAlertDialog(ctx, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#f1a400"));
+        pDialog.setTitleText("Lütfen Bekleyiniz");
+        pDialog.setCancelable(false);
 
         if(photos.size() == 1)
         {
@@ -383,6 +390,7 @@ public class YedekParcaFragment extends Fragment {
 
                 else
                 {
+                    pDialog.show();
                     HashMap<String , Object> hashMap = new HashMap<>();
                     HashMap<String , Object> hashMap1 = new HashMap<>();
 
@@ -424,6 +432,7 @@ public class YedekParcaFragment extends Fragment {
 
                                 if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
                                 {
+                                    pDialog.dismiss();
                                     ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                     ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
                                     ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -441,18 +450,21 @@ public class YedekParcaFragment extends Fragment {
                                 if(ekleResponse.getJSONObject("errorEmpty") != null)
                                 {
 
+                                    pDialog.dismiss();
                                     ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
                                     ilanHata.setTitleText(ekleResponse.getJSONObject("errorEmpty").toString());
                                     ilanHata.show();
                                 }
                                 if(ekleResponse.getJSONObject("errorOther") !=null)
                                 {
+                                    pDialog.dismiss();
                                     ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
                                     ilanHata.setTitleText(ekleResponse.getJSONObject("errorOther").toString());
                                     ilanHata.show();
 
                                 }
                             } catch (JSONException e) {
+                                pDialog.dismiss();
                                 e.printStackTrace();
                             }
 
@@ -463,6 +475,7 @@ public class YedekParcaFragment extends Fragment {
                         @Override
                         public void onFailure(Call<EkleResponse> call, Throwable t) {
 
+                            pDialog.dismiss();
                             Log.i("Failure" , t.getMessage());
 
                         }

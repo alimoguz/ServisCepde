@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -89,6 +90,7 @@ public class KiralikAracFragment extends Fragment {
 
     private List<Kapasite> kapasites = new ArrayList<>();
     private List<String> kapasiteNames = new ArrayList<>();
+    private SweetAlertDialog pDialog;
 
     private Context ctx;
 
@@ -137,6 +139,11 @@ public class KiralikAracFragment extends Fragment {
 
         linKiralikAracIptal = generalView.findViewById(R.id.linKiralikAracIptal);
         txtKiralikAracGonder = generalView.findViewById(R.id.txtKiralikAracGonder);
+
+        pDialog = new SweetAlertDialog(ctx, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#f1a400"));
+        pDialog.setTitleText("Lütfen Bekleyiniz");
+        pDialog.setCancelable(false);
 
 
         if(photos.size() == 1)
@@ -418,7 +425,7 @@ public class KiralikAracFragment extends Fragment {
                 }
                 else
                 {
-
+                    pDialog.show();
                     ArrayList<String> base64Photo = Utils.pathToBase64(photos);
                     imageString = Utils.imageToString(base64Photo);
                     imageString = Utils.trimmer(imageString);
@@ -467,6 +474,7 @@ public class KiralikAracFragment extends Fragment {
 
                                 if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
                                 {
+                                    pDialog.dismiss();
                                     ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                     ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
                                     ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -483,6 +491,7 @@ public class KiralikAracFragment extends Fragment {
 
                                 if(ekleResponse.getJSONObject("errorEmpty") != null)
                                 {
+                                    pDialog.dismiss();
 
                                     ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
                                     ilanHata.setTitleText(ekleResponse.getJSONObject("errorEmpty").toString());
@@ -490,12 +499,14 @@ public class KiralikAracFragment extends Fragment {
                                 }
                                 if(ekleResponse.getJSONObject("errorOther") !=null)
                                 {
+                                    pDialog.dismiss();
                                     ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
                                     ilanHata.setTitleText(ekleResponse.getJSONObject("errorOther").toString());
                                     ilanHata.show();
 
                                 }
                             } catch (JSONException e) {
+                                pDialog.dismiss();
                                 e.printStackTrace();
                             }
 
@@ -505,7 +516,7 @@ public class KiralikAracFragment extends Fragment {
 
                         @Override
                         public void onFailure(Call<EkleResponse> call, Throwable t) {
-
+                            pDialog.dismiss();
                             Log.i("Failure" , t.getMessage());
 
                         }

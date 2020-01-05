@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -85,6 +86,7 @@ public class AracaSoforFragment extends Fragment {
     private String cityId,baslamaCityId,bitisCityId;
     private String townId,baslamaTownId,bitisTownId;
     private ArrayList<String> townNames , baslamaTownNames , bitisTownNames = new ArrayList<>();
+    private SweetAlertDialog pDialog;
 
     @Nullable
     @Override
@@ -135,6 +137,11 @@ public class AracaSoforFragment extends Fragment {
 
         linAracaSoforIptal = generalView.findViewById(R.id.linAracaSoforIptal);
         txtAracaSoforGonder = generalView.findViewById(R.id.txtAracaSoforGonder);
+
+        pDialog = new SweetAlertDialog(ctx, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#f1a400"));
+        pDialog.setTitleText("Lütfen Bekleyiniz");
+        pDialog.setCancelable(false);
 
         if(photos.size() == 1)
         {
@@ -481,6 +488,8 @@ public class AracaSoforFragment extends Fragment {
                    HashMap<String , Object> hashMap = new HashMap<>();
                    HashMap<String , Object> hashMap1 = new HashMap<>();
 
+                   pDialog.show();
+
                    hashMap1.put("Tipi" , "2");
                    hashMap1.put("Baslik" , baslik);
                    hashMap1.put("ilanCity" , cityId);
@@ -529,6 +538,7 @@ public class AracaSoforFragment extends Fragment {
 
                                if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
                                {
+                                   pDialog.dismiss();
                                    ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                    ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
                                    ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -545,11 +555,13 @@ public class AracaSoforFragment extends Fragment {
 
                                else
                                {
+                                   pDialog.dismiss();
                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
                                    ilanHata.setTitleText("Bir hata oluştu lütfen daha sonra tekrar deneyin");
                                    ilanHata.show();
                                }
                            } catch (JSONException e) {
+                               pDialog.dismiss();
                                e.printStackTrace();
                            }
                        }
@@ -557,6 +569,7 @@ public class AracaSoforFragment extends Fragment {
                        @Override
                        public void onFailure(Call<EkleResponse> call, Throwable t) {
 
+                           pDialog.dismiss();
                            Log.i("Failure" , t.getMessage());
 
                        }

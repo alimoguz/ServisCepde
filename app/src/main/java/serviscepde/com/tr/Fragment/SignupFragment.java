@@ -3,6 +3,7 @@ package serviscepde.com.tr.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -103,6 +104,11 @@ public class SignupFragment extends Fragment {
         autoCompleteKullaniciTuru = generalView.findViewById(R.id.autoCompleteKullaniciTuru);
 
         ctx = generalView.getContext();
+
+        SweetAlertDialog pDialog = new SweetAlertDialog(ctx, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#f1a400"));
+        pDialog.setTitleText("Lütfen Bekleyiniz");
+        pDialog.setCancelable(false);
 
 
 
@@ -272,6 +278,7 @@ public class SignupFragment extends Fragment {
 
                     HashMap<String , HashMap<String , String>> node = new HashMap<>();
                     HashMap<String , String> body = new HashMap<>();
+                    pDialog.show();
 
                     body.put("MeType" , kullanıcıType);
                     body.put("UserName" , ad);
@@ -307,6 +314,7 @@ public class SignupFragment extends Fragment {
                                     int status = jsonObject.getJSONObject("OutPutMessage").getInt("Status");
                                     if(status == 200)
                                     {
+                                        pDialog.dismiss();
                                         servisAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.NORMAL_TYPE);
                                         servisAlert.setTitleText(jsonObject.getJSONObject("OutPutMessage").getString("SuccessMessage"));
                                         servisAlert.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -326,6 +334,7 @@ public class SignupFragment extends Fragment {
 
                                 if(jsonObject.get("OutPutMessage") instanceof JSONArray)
                                 {
+                                    pDialog.dismiss();
 
                                     if(jsonObject.getJSONArray("errorOther") != null)
                                     {
@@ -338,6 +347,7 @@ public class SignupFragment extends Fragment {
 
 
                             } catch (JSONException e) {
+                                pDialog.dismiss();
                                 e.printStackTrace();
                             }
 
@@ -346,6 +356,8 @@ public class SignupFragment extends Fragment {
 
                         @Override
                         public void onFailure(Call<UserRegisterResponse> call, Throwable t) {
+
+                            pDialog.dismiss();
 
                         }
                     });

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -85,12 +86,14 @@ public class AracaIsFragment extends Fragment {
     private Context ctx;
     private SweetAlertDialog emptyDialog;
 
-    private String switchStates;
+    private String switchStates="";
     private List<String> aracDurumu = new ArrayList<>();
 
     private final static Calendar takvim = Calendar.getInstance();
     private int saat = takvim.get(Calendar.HOUR_OF_DAY);
     private int dakika = takvim.get(Calendar.MINUTE);
+
+    private SweetAlertDialog pDialog;
 
     private String userToken;
 
@@ -168,6 +171,11 @@ public class AracaIsFragment extends Fragment {
 
         linAracaIsIptal = generalView.findViewById(R.id.linAracaIsIptal);
         txtAracaIsGonder = generalView.findViewById(R.id.txtAracaIsGonder);
+
+        pDialog = new SweetAlertDialog(ctx, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#f1a400"));
+        pDialog.setTitleText("Lütfen Bekleyiniz");
+        pDialog.setCancelable(false);
 
 
         aracDurumu.add("Aracım Tamamen Boşta");
@@ -532,6 +540,7 @@ public class AracaIsFragment extends Fragment {
 
                 else
                 {
+
                     Log.i("YouMadeIt" , "Here");
                     if(switchAracaIsOkulTasiti.isChecked())
                     {
@@ -578,6 +587,8 @@ public class AracaIsFragment extends Fragment {
 
                     HashMap<String , Object> hashMap = new HashMap<>();
                     HashMap<String , Object> hashMap1 = new HashMap<>();
+
+                    pDialog.show();
 
                     hashMap1.put("Tipi" , "1");
                     hashMap1.put("Baslik" , baslik);
@@ -629,6 +640,7 @@ public class AracaIsFragment extends Fragment {
 
                                 if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
                                 {
+                                    pDialog.dismiss();
                                     ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                                     ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
                                     ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -644,6 +656,7 @@ public class AracaIsFragment extends Fragment {
 
                                 else
                                 {
+                                    pDialog.dismiss();
                                     ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
                                     ilanHata.setTitleText("Bir hata oluştu lütfen daha sonra tekrar deneyin");
                                     ilanHata.show();
@@ -651,6 +664,7 @@ public class AracaIsFragment extends Fragment {
 
 
                             } catch (JSONException e) {
+                                pDialog.dismiss();
                                 e.printStackTrace();
                             }
 
@@ -660,7 +674,7 @@ public class AracaIsFragment extends Fragment {
 
                         @Override
                         public void onFailure(Call<EkleResponse> call, Throwable t) {
-
+                            pDialog.dismiss();
                             Log.i("Failure" , t.getMessage());
 
                         }
