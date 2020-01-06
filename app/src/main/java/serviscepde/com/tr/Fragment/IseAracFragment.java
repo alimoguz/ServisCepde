@@ -88,7 +88,7 @@ public class IseAracFragment extends Fragment {
     private String [] imageArray;
     private SweetAlertDialog pDialog;
 
-    private String switchStates="";
+    private String switchStates = null;
     private String baslik,fiyat,aciklama,yil,servisBaslamaSaati,servisBitisSaati,firmaGirisSaati,firmaCikisSaati,toplamKM,gunSayisi, imageString = null;
     private String actvIseAracMarka,actvIseAracModel,actvIseAracKapasite;
 
@@ -575,52 +575,15 @@ public class IseAracFragment extends Fragment {
                 gunSayisi = edtIseAracCalisilacakGunSayisi.getText().toString();
 
 
-                if(switchIseAracOkulTasiti.isChecked())
-                {
-                    switchStates = "1|";
-                }
-                if(switchIseAracTurizmPaketi.isChecked())
-                {
-                    switchStates = switchStates.concat("2").concat("|");
-                }
-                if(switchIseAracKlima.isChecked())
-                {
-                    switchStates = switchStates.concat("3").concat("|");
-                }
-                if(switchIseAracDeriDoseme.isChecked())
-                {
-                    switchStates = switchStates.concat("4").concat("|");
-                }
-                if(switchIseAracTribunTavan.isChecked())
-                {
-                    switchStates = switchStates.concat("5").concat("|");
-                }
-                if(switchIseAracYatarKoltuk.isChecked())
-                {
-                    switchStates = switchStates.concat("6");
-                }
-
-                if(switchStates != null)
-                {
-                    switchStates = Utils.SwitchTrimmer(switchStates);
-                    Log.i("SwitchStates" ,switchStates);
-                }
+                cityId = DownloadClass.getCityIdWithName(autoCompleteIseAracil.getText().toString());
+                townId = DownloadClass.getTownIdWithTownName(autoCompleteIseAracilce.getText().toString() , cityId);
+                baslamaCityId = DownloadClass.getCityIdWithName(autoCompleteIseAracServisBaslamaili.getText().toString());
+                baslamaTownId = DownloadClass.getTownIdWithTownName(autoCompleteIseAracServiseBaslamailce.getText().toString() , baslamaCityId);
+                bitisCityId = DownloadClass.getCityIdWithName(autoCompleteIseAracServisBitisili.getText().toString());
+                bitisTownId = DownloadClass.getTownIdWithTownName(autoCompleteIseAracServisBitisilce.getText().toString() , bitisCityId);
 
 
-                if(photos.size() != 0)
-                {
-                    ArrayList<String> base64Photo = Utils.pathToBase64(photos);
-                    imageArray = new String[base64Photo.size()];
-
-                    for(int i = 0; i < base64Photo.size(); i++)
-                    {
-                        imageArray[i] = base64Photo.get(i);
-                    }
-
-                }
-
-
-                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() || firmaCikisSaati.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || cityId.isEmpty() || autoCompleteIseAracilce.getText().toString().isEmpty() || actvIseAracKapasite.isEmpty() || actvIseAracMarka.isEmpty() || baslamaCityId.isEmpty() || autoCompleteIseAracServisBitisilce.getText().toString().isEmpty() || bitisCityId.isEmpty() || autoCompleteIseAracServiseBaslamailce.getText().toString().isEmpty())
+                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() || firmaCikisSaati.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvIseAracKapasite.isEmpty() || actvIseAracMarka.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || bitisCityId.isEmpty() || bitisTownId.isEmpty())
                 {
 
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
@@ -631,28 +594,112 @@ public class IseAracFragment extends Fragment {
 
                 else
                 {
+
+                    pDialog.show();
+
+                    if(switchIseAracOkulTasiti.isChecked())
+                    {
+                        switchStates = "1|";
+                    }
+                    if(switchIseAracTurizmPaketi.isChecked())
+                    {
+                        if(switchStates !=  null)
+                        {
+                            switchStates = switchStates.concat("2|");
+                        }
+                        else
+                        {
+                            switchStates = "2|";
+                        }
+
+                    }
+                    if(switchIseAracKlima.isChecked())
+                    {
+                        if(switchStates !=  null)
+                        {
+                            switchStates = switchStates.concat("3|");
+                        }
+                        else
+                        {
+                            switchStates = "3|";
+                        }
+
+                    }
+                    if(switchIseAracDeriDoseme.isChecked())
+                    {
+                        if(switchStates !=  null)
+                        {
+                            switchStates = switchStates.concat("4|");
+                        }
+                        else
+                        {
+                            switchStates = "4|";
+                        }
+                    }
+                    if(switchIseAracTribunTavan.isChecked())
+                    {
+                        if(switchStates !=  null)
+                        {
+                            switchStates = switchStates.concat("5|");
+                        }
+                        else
+                        {
+                            switchStates = "5|";
+                        }
+                    }
+                    if(switchIseAracYatarKoltuk.isChecked())
+                    {
+                        if(switchStates !=  null)
+                        {
+                            switchStates = switchStates.concat("6");
+                        }
+                        else
+                        {
+                            switchStates = "6";
+                        }
+                    }
+
+                    if(switchStates != null)
+                    {
+                        switchStates = Utils.SwitchTrimmer(switchStates);
+                        Log.i("SwitchStates" ,switchStates);
+                    }
+
+
+                    if(photos.size() != 0)
+                    {
+                        ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                        imageArray = new String[base64Photo.size()];
+
+                        for(int i = 0; i < base64Photo.size(); i++)
+                        {
+                            imageArray[i] = base64Photo.get(i);
+                        }
+
+                    }
+
                     HashMap<String , Object> hashMap = new HashMap<>();
                     HashMap<String , Object> hashMap1 = new HashMap<>();
 
-                    pDialog.show();
+
 
                     hashMap1.put("Tipi" , "3");
                     hashMap1.put("Baslik" , baslik);
                     hashMap1.put("ilanCity" , cityId);
-                    hashMap1.put("ilanSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteIseAracilce.getText().toString() , cityId));
+                    hashMap1.put("ilanSemtleri" , townId);
                     hashMap1.put("AracMarkasi" , actvIseAracMarka);
                     hashMap1.put("AracModeli" , actvIseAracModel);
                     hashMap1.put("AracYili" , yil);
                     hashMap1.put("AracKapasitesi" , actvIseAracKapasite);
                     hashMap1.put("AracOzellikleri" , switchStates);
                     hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
-                    hashMap1.put("ServiseBaslamaSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteIseAracServiseBaslamailce.getText().toString() , baslamaCityId));
+                    hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
                     hashMap1.put("ServiseBaslamaSaati" , servisBaslamaSaati);
                     hashMap1.put("FirmayaGirisSaati" , firmaGirisSaati);
                     hashMap1.put("FirmadanCikisSaati" , firmaCikisSaati);
                     hashMap1.put("ServisBitisSaati" , servisBitisSaati);
                     hashMap1.put("ServisBitisCity" , bitisCityId);
-                    hashMap1.put("ServisBitisSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteIseAracServisBitisilce.getText().toString() , bitisCityId));
+                    hashMap1.put("ServisBitisSemtleri" , bitisTownId);
                     hashMap1.put("ToplamKM" , toplamKM);
                     hashMap1.put("CalisilacakGunSayisi" , gunSayisi);
                     hashMap1.put("Ucret" , fiyat);
@@ -722,8 +769,9 @@ public class IseAracFragment extends Fragment {
                         }
                     });
 
-                    switchStates ="";
+                    switchStates = null;
                     photos.clear();
+                    imageArray = null;
 
                 }
             }

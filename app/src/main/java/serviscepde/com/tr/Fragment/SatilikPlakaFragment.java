@@ -296,19 +296,10 @@ public class SatilikPlakaFragment extends Fragment {
                 aciklama = edtSatilikPlakaAciklama.getText().toString();
                 plaka = edtSatilikPlakaPlaka.getText().toString();
 
-                if(photos.size() != 0)
-                {
-                    ArrayList<String> base64Photo = Utils.pathToBase64(photos);
-                    imageArray = new String[base64Photo.size()];
+                cityId = DownloadClass.getCityIdWithName(autoCompleteSatilikPlakail.getText().toString());
+                townId = DownloadClass.getTownIdWithTownName(autoCompleteSatilikPlakailce.getText().toString() , cityId);
 
-                    for(int i = 0; i < base64Photo.size(); i++)
-                    {
-                        imageArray[i] = base64Photo.get(i);
-                    }
-
-                }
-
-                if (baslik.isEmpty() || cityId.isEmpty() || autoCompleteSatilikPlakailce.getText().toString().isEmpty() || plaka.isEmpty() || aciklama.isEmpty())
+                if (baslik.isEmpty() || cityId.isEmpty() || townId.isEmpty() || plaka.isEmpty() || aciklama.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -318,13 +309,25 @@ public class SatilikPlakaFragment extends Fragment {
                 else
                 {
                     pDialog.show();
+
+                    if(photos.size() != 0)
+                    {
+                        ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                        imageArray = new String[base64Photo.size()];
+
+                        for(int i = 0; i < base64Photo.size(); i++)
+                        {
+                            imageArray[i] = base64Photo.get(i);
+                        }
+
+                    }
                     HashMap<String , Object> hashMap = new HashMap<>();
                     HashMap<String , Object> hashMap1 = new HashMap<>();
 
                     hashMap1.put("Tipi" , "8");
                     hashMap1.put("Baslik" , baslik);
                     hashMap1.put("ilanCity" , cityId);
-                    hashMap1.put("ilanSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteSatilikPlakailce.getText().toString() , cityId));
+                    hashMap1.put("ilanSemtleri" , townId);
                     hashMap1.put("Ucret" , fiyat);
                     hashMap1.put("file" , imageArray);
                     hashMap1.put("ilanAciklamasi" , aciklama);
@@ -398,6 +401,9 @@ public class SatilikPlakaFragment extends Fragment {
                             Log.i("Failure" , t.getMessage());
                         }
                     });
+
+                    photos.clear();
+                    imageArray = null;
                 }
             }
         });

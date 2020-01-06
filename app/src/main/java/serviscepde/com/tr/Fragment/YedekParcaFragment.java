@@ -362,26 +362,10 @@ public class YedekParcaFragment extends Fragment {
                 aciklama = edtYedekParcaAciklama.getText().toString();
                 marka = edtYedekParcaMarka.getText().toString();
 
-                if(photos.size() != 0)
-                {
-                    ArrayList<String> base64Photo = Utils.pathToBase64(photos);
-                    imageArray = new String[base64Photo.size()];
+                cityId = DownloadClass.getCityIdWithName(autoCompleteYedekParcail.getText().toString());
+                townId = DownloadClass.getTownIdWithTownName(autoCompleteYedekParcailce.getText().toString() , cityId);
 
-                    for(int i = 0; i < base64Photo.size(); i++)
-                    {
-                        imageArray[i] = base64Photo.get(i);
-                    }
-
-                }
-
-                String s = "0";
-
-                if(switchYedekParcaCikmaParca.isChecked())
-                {
-                   s = "1";
-                }
-
-                if (baslik.isEmpty()  || aciklama.isEmpty() || marka.isEmpty() || cityId.isEmpty() || autoCompleteYedekParcailce.getText().toString().isEmpty() || actvDurum.isEmpty())
+                if (baslik.isEmpty()  || aciklama.isEmpty() || marka.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvDurum.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -391,13 +375,32 @@ public class YedekParcaFragment extends Fragment {
                 else
                 {
                     pDialog.show();
+
+                    if(photos.size() != 0)
+                    {
+                        ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                        imageArray = new String[base64Photo.size()];
+
+                        for(int i = 0; i < base64Photo.size(); i++)
+                        {
+                            imageArray[i] = base64Photo.get(i);
+                        }
+
+                    }
+
+                    String s = "0";
+
+                    if(switchYedekParcaCikmaParca.isChecked())
+                    {
+                        s = "1";
+                    }
                     HashMap<String , Object> hashMap = new HashMap<>();
                     HashMap<String , Object> hashMap1 = new HashMap<>();
 
                     hashMap1.put("Tipi" , "7");
                     hashMap1.put("Baslik" , baslik);
                     hashMap1.put("ilanCity" , cityId);
-                    hashMap1.put("ilanSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteYedekParcailce.getText().toString() , cityId));
+                    hashMap1.put("ilanSemtleri" , townId);
                     hashMap1.put("ParcaMarkasi" , marka);
                     hashMap1.put("Ucret" , fiyat);
                     hashMap1.put("file" , imageArray);
@@ -480,6 +483,9 @@ public class YedekParcaFragment extends Fragment {
 
                         }
                     });
+
+                    photos.clear();
+                    imageArray = null;
 
                 }
 

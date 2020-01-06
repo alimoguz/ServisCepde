@@ -461,8 +461,14 @@ public class AracaSoforFragment extends Fragment {
                 tecrube = edtAracaSoforTecrube.getText().toString();
                 gun = edtAracaSoforCalisilacakGunSayisi.getText().toString();
 
+                cityId = DownloadClass.getCityIdWithName(autoCompleteAracaSoforil.getText().toString());
+                townId = DownloadClass.getTownIdWithTownName(autoCompleteAracaSoforilce.getText().toString() , cityId);
+                baslamaCityId = DownloadClass.getCityIdWithName(autoCompleteAracaSoforServisBaslamaili.getText().toString());
+                baslamaTownId = DownloadClass.getTownIdWithTownName(autoCompleteAracaSoforServiseBaslamailce.getText().toString() , baslamaCityId);
+                bitisCityId = DownloadClass.getCityIdWithName(autoCompleteAracaSoforServisBitisili.getText().toString());
+                bitisTownId = DownloadClass.getTownIdWithTownName(autoCompleteAracaSoforServisBitisilce.getText().toString() , bitisCityId);
 
-               if(baslik.isEmpty()  || aciklama.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() || firmadanCikisSaati.isEmpty() || tecrube.isEmpty() || gun.isEmpty() ||  cityId.isEmpty() || autoCompleteAracaSoforilce.getText().toString().isEmpty() || actvKapasite.isEmpty() || baslamaCityId.isEmpty() || autoCompleteAracaSoforServiseBaslamailce.getText().toString().isEmpty() || bitisCityId.isEmpty() || autoCompleteAracaSoforServisBitisilce.getText().toString().isEmpty())
+               if(baslik.isEmpty() || aciklama.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() || firmadanCikisSaati.isEmpty() || tecrube.isEmpty() || gun.isEmpty() ||  cityId.isEmpty() || townId.isEmpty() || actvKapasite.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || bitisCityId.isEmpty() || bitisTownId.isEmpty())
                {
                    emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                    emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -472,6 +478,8 @@ public class AracaSoforFragment extends Fragment {
 
                else
                {
+
+                   pDialog.show();
 
                    if(photos.size() != 0)
                    {
@@ -488,15 +496,15 @@ public class AracaSoforFragment extends Fragment {
                    HashMap<String , Object> hashMap = new HashMap<>();
                    HashMap<String , Object> hashMap1 = new HashMap<>();
 
-                   pDialog.show();
+
 
                    hashMap1.put("Tipi" , "2");
                    hashMap1.put("Baslik" , baslik);
                    hashMap1.put("ilanCity" , cityId);
-                   hashMap1.put("ilanSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteAracaSoforilce.getText().toString() , cityId));
+                   hashMap1.put("ilanSemtleri" , townId);
                    hashMap1.put("AracKapasitesi" , actvKapasite);
                    hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
-                   hashMap1.put("ServiseBaslamaSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteAracaSoforServiseBaslamailce.getText().toString() , baslamaCityId));
+                   hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
                    hashMap1.put("ServiseBaslamaSaati" , servisBaslamaSaati);
                    hashMap1.put("ServisBitisSaati" , servisBitisSaati);
                    hashMap1.put("FirmayaGiriSaati" , firmaGirisSaati);
@@ -507,7 +515,7 @@ public class AracaSoforFragment extends Fragment {
                    hashMap1.put("file" , imageArray);
                    hashMap1.put("Tecrube" , tecrube);
                    hashMap1.put("ServisBitisCity" , bitisCityId);
-                   hashMap1.put("ServisBitisSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteAracaSoforServisBitisilce.getText().toString() , bitisCityId));
+                   hashMap1.put("ServisBitisSemtleri" , bitisTownId);
 
 
                    hashMap.put("Token" , userToken);
@@ -574,6 +582,8 @@ public class AracaSoforFragment extends Fragment {
 
                        }
                    });
+                   photos.clear();
+                   imageArray = null;
                }
             }
         });

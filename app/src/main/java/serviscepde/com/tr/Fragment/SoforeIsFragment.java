@@ -447,8 +447,12 @@ public class SoforeIsFragment extends Fragment {
                 yas = edtSoforeIsYas.getText().toString();
                 belgeler = edtSoforeIsBelgeler.getText().toString();
 
+                cityId = DownloadClass.getCityIdWithName(autoCompleteSoforeIsil.getText().toString());
+                townId = DownloadClass.getTownIdWithTownName(autoCompleteSoforeIsilce.getText().toString() , cityId);
+                baslamaCityId = DownloadClass.getCityIdWithName(autoCompleteSoforeIsServisBaslamaili.getText().toString());
+                baslamaTownId = DownloadClass.getTownIdWithTownName(autoCompleteSoforeIsServiseBaslamailce.getText().toString() , baslamaCityId);
 
-                if( baslik.isEmpty()  || aciklama.isEmpty() || tecrube.isEmpty() || serviseBaslamaSaati.isEmpty() || actvEhliyet.isEmpty() || yas.isEmpty() || belgeler.isEmpty() || cityId.isEmpty() || autoCompleteSoforeIsilce.getText().toString().isEmpty() || baslamaCityId.isEmpty() || autoCompleteSoforeIsServiseBaslamailce.getText().toString().isEmpty() || actvKapasite.isEmpty() )
+                if( baslik.isEmpty()  || aciklama.isEmpty() || tecrube.isEmpty() || serviseBaslamaSaati.isEmpty() || actvEhliyet.isEmpty() || yas.isEmpty() || belgeler.isEmpty() || cityId.isEmpty() || townId.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || actvKapasite.isEmpty() )
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -484,10 +488,10 @@ public class SoforeIsFragment extends Fragment {
                     hashMap1.put("Tipi" , "4");
                     hashMap1.put("Baslik" , baslik);
                     hashMap1.put("ilanCity" , cityId);
-                    hashMap1.put("ilanSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteSoforeIsilce.getText().toString() , cityId));
+                    hashMap1.put("ilanSemtleri" , townId);
                     hashMap1.put("KullanabildiginizKapasiteler" , actvKapasite);
                     hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
-                    hashMap1.put("ServiseBaslamaSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteSoforeIsServiseBaslamailce.getText().toString() , baslamaCityId));
+                    hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
                     hashMap1.put("ServiseBaslamaSaati" , serviseBaslamaSaati);
                     hashMap1.put("Ucret" , fiyat);
                     hashMap1.put("ilanAciklamasi" , aciklama);
@@ -567,6 +571,9 @@ public class SoforeIsFragment extends Fragment {
 
                         }
                     });
+
+                    photos.clear();
+                    imageArray = null;
 
                 }
             }

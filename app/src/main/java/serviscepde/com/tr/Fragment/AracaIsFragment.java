@@ -86,7 +86,7 @@ public class AracaIsFragment extends Fragment {
     private Context ctx;
     private SweetAlertDialog emptyDialog;
 
-    private String switchStates="";
+    private String switchStates=null;
     private List<String> aracDurumu = new ArrayList<>();
 
     private final static Calendar takvim = Calendar.getInstance();
@@ -555,23 +555,60 @@ public class AracaIsFragment extends Fragment {
                     }
                     if(switchAracaIsTurizmPaketi.isChecked())
                     {
-                        switchStates = switchStates.concat("2|");
+                        if(switchStates !=  null)
+                        {
+                            switchStates = switchStates.concat("2|");
+                        }
+                        else
+                        {
+                            switchStates = "2|";
+                        }
+
                     }
                     if(switchAracaIsKlima.isChecked())
                     {
-                        switchStates = switchStates.concat("3|");
+                        if(switchStates !=  null)
+                        {
+                            switchStates = switchStates.concat("3|");
+                        }
+                        else
+                        {
+                            switchStates = "3|";
+                        }
+
                     }
                     if(switchAracaIsDeriDoseme.isChecked())
                     {
-                        switchStates = switchStates.concat("4|");
+                        if(switchStates !=  null)
+                        {
+                            switchStates = switchStates.concat("4|");
+                        }
+                        else
+                        {
+                            switchStates = "4|";
+                        }
                     }
                     if(switchAracaIsTribunTavan.isChecked())
                     {
-                        switchStates = switchStates.concat("5|");
+                        if(switchStates !=  null)
+                        {
+                            switchStates = switchStates.concat("5|");
+                        }
+                        else
+                        {
+                            switchStates = "5|";
+                        }
                     }
                     if(switchAracaIsYatarKoltuk.isChecked())
                     {
-                        switchStates = switchStates.concat("6");
+                        if(switchStates !=  null)
+                        {
+                            switchStates = switchStates.concat("6");
+                        }
+                        else
+                        {
+                            switchStates = "6";
+                        }
                     }
 
                     if(switchStates != null)
@@ -674,32 +711,20 @@ public class AracaIsFragment extends Fragment {
                                 pDialog.dismiss();
                                 e.printStackTrace();
                             }
-
-
-
                         }
 
                         @Override
                         public void onFailure(Call<EkleResponse> call, Throwable t) {
                             pDialog.dismiss();
                             Log.i("Failure" , t.getMessage());
-
                         }
                     });
-
-
-                    switchStates = "";
+                    switchStates = null;
                     photos.clear();
-
-
-
-
-
+                    imageArray = null;
                 }
-
             }
         });
-
 
         return rootView;
     }

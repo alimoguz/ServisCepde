@@ -78,7 +78,9 @@ public class KiralikAracFragment extends Fragment {
     private String baslik,fiyat,aciklama,yil,aylikFiyat,imageString,userToken;
     private String actvKasko,actvKapasite,actvModel,actvMarka;
 
-    private SweetAlertDialog emptyDialog;;
+    private SweetAlertDialog emptyDialog;
+
+    private String [] imageArray;
 
     private List<City> sehirler = new ArrayList<>();
     private List<String> cityNames = new ArrayList<>();
@@ -416,7 +418,10 @@ public class KiralikAracFragment extends Fragment {
                 yil = edtKiralikAracAracYili.getText().toString();
                 aylikFiyat = edtKiralikAracAylikFiyat.getText().toString();
 
-                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || actvKasko.isEmpty() || actvKapasite.isEmpty() || actvModel.isEmpty() || actvMarka.isEmpty() || cityId.isEmpty() || autoCompleteKiralikAracilce.getText().toString().isEmpty())
+                cityId = DownloadClass.getCityIdWithName(autoCompleteKiralikAracil.getText().toString());
+                townId = DownloadClass.getTownIdWithTownName(autoCompleteKiralikAracilce.getText().toString() , cityId);
+
+                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || actvKasko.isEmpty() || actvKapasite.isEmpty() || actvModel.isEmpty() || actvMarka.isEmpty() || cityId.isEmpty() || townId.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -426,23 +431,32 @@ public class KiralikAracFragment extends Fragment {
                 else
                 {
                     pDialog.show();
-                    ArrayList<String> base64Photo = Utils.pathToBase64(photos);
-                    imageString = Utils.imageToString(base64Photo);
-                    imageString = Utils.trimmer(imageString);
+
+                    if(photos.size() != 0)
+                    {
+                        ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                        imageArray = new String[base64Photo.size()];
+
+                        for(int i = 0; i < base64Photo.size(); i++)
+                        {
+                            imageArray[i] = base64Photo.get(i);
+                        }
+                    }
+
 
                     HashMap<String , Object> hashMap = new HashMap<>();
-                    HashMap<String , String> hashMap1 = new HashMap<>();
+                    HashMap<String , Object> hashMap1 = new HashMap<>();
 
                     hashMap1.put("Tipi" , "6");
                     hashMap1.put("Baslik" , baslik);
                     hashMap1.put("ilanCity" , cityId);
-                    hashMap1.put("ilanSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteKiralikAracilce.getText().toString() , cityId));
+                    hashMap1.put("ilanSemtleri" , townId);
                     hashMap1.put("AracMarkasi" , actvMarka);
                     hashMap1.put("AracModeli" , actvModel);
                     hashMap1.put("AracYili" , yil);
                     hashMap1.put("AracKapasitesi" , actvKapasite);
                     hashMap1.put("Ucret" , fiyat);
-                    hashMap1.put("file" , imageString);
+                    hashMap1.put("file" , imageArray);
                     hashMap1.put("AylikFiyat" , aylikFiyat);
                     hashMap1.put("Kasko" , actvKasko);
                     hashMap1.put("ilanAciklamasi" , aciklama);
@@ -521,6 +535,9 @@ public class KiralikAracFragment extends Fragment {
 
                         }
                     });
+
+                    photos.clear();
+                    imageArray = null;
 
                 }
 

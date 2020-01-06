@@ -446,8 +446,11 @@ public class SatilikAracFragment extends Fragment {
                 yil = edtSatilikAracAracYili.getText().toString();
                 km = edtSatilikAracKM.getText().toString();
 
+                cityId = DownloadClass.getCityIdWithName(autoCompleteSatilikAracil.getText().toString());
+                townId = DownloadClass.getTownIdWithTownName(autoCompleteSatilikAracilce.getText().toString() , cityId);
 
-                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || km.isEmpty() || cityId.isEmpty() || autoCompleteSatilikAracilce.getText().toString().isEmpty() || actvMarka.isEmpty() || actvModel.isEmpty() || actvMotorHacmi.isEmpty() || actvMotorGucu.isEmpty() || actvKapasite.isEmpty() || actvKimden.isEmpty())
+
+                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || km.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvMarka.isEmpty() || actvModel.isEmpty() || actvMotorHacmi.isEmpty() || actvMotorGucu.isEmpty() || actvKapasite.isEmpty() || actvKimden.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
@@ -457,6 +460,7 @@ public class SatilikAracFragment extends Fragment {
                 else
                 {
 
+                    pDialog.show();
                     if(photos.size() != 0)
                     {
                         ArrayList<String> base64Photo = Utils.pathToBase64(photos);
@@ -469,7 +473,7 @@ public class SatilikAracFragment extends Fragment {
 
                     }
 
-                    pDialog.show();
+
 
                     HashMap<String , Object> hashMap = new HashMap<>();
                     HashMap<String , Object> hashMap1 = new HashMap<>();
@@ -481,7 +485,7 @@ public class SatilikAracFragment extends Fragment {
                     hashMap1.put("AracYili" , yil);
                     hashMap1.put("ToplamKM" , km);
                     hashMap1.put("ilanCity" , cityId);
-                    hashMap1.put("ilanSemtleri" , DownloadClass.getTownIdWithTownName(autoCompleteSatilikAracilce.getText().toString() , cityId));
+                    hashMap1.put("ilanSemtleri" , townId);
                     hashMap1.put("AracMarkasi" , actvMarka);
                     hashMap1.put("AracModeli" , actvModel);
                     hashMap1.put("MotorHacmi" , actvMotorHacmi);
@@ -557,6 +561,9 @@ public class SatilikAracFragment extends Fragment {
 
                         }
                     });
+
+                    photos.clear();
+                    imageArray = null;
                 }
 
             }
