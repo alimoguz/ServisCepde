@@ -1,5 +1,7 @@
 package serviscepde.com.tr.Fragment;
 
+import android.app.ActivityManager;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +23,8 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,6 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,6 +55,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.ACTIVITY_SERVICE;
 
 
 public class SoforeIsFragment extends Fragment {
@@ -73,6 +80,10 @@ public class SoforeIsFragment extends Fragment {
     private String switchState = "0";
 
     private TextView txtSoforeIsGonder;
+
+    private final static Calendar takvim = Calendar.getInstance();
+    private int saat = takvim.get(Calendar.HOUR_OF_DAY);
+    private int dakika = takvim.get(Calendar.MINUTE);
 
     private ArrayList<String> photos = new ArrayList<>();
 
@@ -430,6 +441,8 @@ public class SoforeIsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                pDialog.show();
+
                 txtSoforeIsGonder.setClickable(false);
 
                 new Handler().postDelayed(new Runnable() {
@@ -452,8 +465,10 @@ public class SoforeIsFragment extends Fragment {
                 baslamaCityId = DownloadClass.getCityIdWithName(autoCompleteSoforeIsServisBaslamaili.getText().toString());
                 baslamaTownId = DownloadClass.getTownIdWithTownName(autoCompleteSoforeIsServiseBaslamailce.getText().toString() , baslamaCityId);
 
+
                 if( baslik.isEmpty()  || aciklama.isEmpty() || tecrube.isEmpty() || serviseBaslamaSaati.isEmpty() || actvEhliyet.isEmpty() || yas.isEmpty() || belgeler.isEmpty() || cityId.isEmpty() || townId.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || actvKapasite.isEmpty() )
                 {
+                    pDialog.dismiss();
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");
                     emptyDialog.show();
@@ -461,7 +476,6 @@ public class SoforeIsFragment extends Fragment {
 
                 else
                 {
-                    pDialog.show();
                     if(switchSoforeIsSrc.isChecked())
                     {
                         switchState = "1";
@@ -469,7 +483,9 @@ public class SoforeIsFragment extends Fragment {
 
                     if(photos.size() != 0)
                     {
-                        ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+
+                        ArrayList<String> base64Photo = Utils.pathToBase64(photos , ctx);
+
                         imageArray = new String[base64Photo.size()];
 
                         for(int i = 0; i < base64Photo.size(); i++)
@@ -478,6 +494,7 @@ public class SoforeIsFragment extends Fragment {
                         }
 
                     }
+
 
                     actvKapasite = Utils.trimmer(actvKapasite);
                     actvEhliyet = Utils.trimmer(actvEhliyet);
@@ -506,6 +523,8 @@ public class SoforeIsFragment extends Fragment {
 
                     Log.i("hashMap" , hashMap.toString());
 
+
+
                     Call<EkleResponse> ilanEkle = App.getApiService().ilanEkle(hashMap);
 
                     ilanEkle.enqueue(new Callback<EkleResponse>() {
@@ -522,6 +541,7 @@ public class SoforeIsFragment extends Fragment {
                             JSONObject ekleResponse = Utils.jwtToJsonObject(token);
                             SweetAlertDialog ilanHata;
                             SweetAlertDialog ilanOnay;
+
 
 
                             photos.clear();
@@ -567,6 +587,8 @@ public class SoforeIsFragment extends Fragment {
                         public void onFailure(Call<EkleResponse> call, Throwable t) {
 
                             pDialog.dismiss();
+                            Toast toast = Toast.makeText(ctx,"Fotoğraflar yüklenemedi",Toast.LENGTH_SHORT);
+                            toast.show();
                             Log.i("Failure" , t.getMessage());
 
                         }
@@ -581,6 +603,7 @@ public class SoforeIsFragment extends Fragment {
 
         return rootView;
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

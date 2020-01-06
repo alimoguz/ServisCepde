@@ -668,7 +668,7 @@ public class IseAracFragment extends Fragment {
 
                     if(photos.size() != 0)
                     {
-                        ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                        ArrayList<String> base64Photo = Utils.pathToBase64(photos , ctx);
                         imageArray = new String[base64Photo.size()];
 
                         for(int i = 0; i < base64Photo.size(); i++)

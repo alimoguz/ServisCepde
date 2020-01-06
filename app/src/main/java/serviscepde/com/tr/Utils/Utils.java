@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.provider.Settings;
 import android.util.Base64;
 import android.widget.ArrayAdapter;
@@ -22,9 +23,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.zip.GZIPOutputStream;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.TextCodec;
@@ -219,9 +227,31 @@ public class Utils {
 
     }
 
-    public static ArrayList<String> pathToBase64(ArrayList<String> photos)
+    public static ArrayList<String> pathToBase64(ArrayList<String> photos , Context context)
     {
+
         ArrayList<String> base64Photo = new ArrayList<>();
+
+        for(int i = 0 ; i < photos.size(); i++)
+        {
+            InputStream imageStream = null;
+            try {
+                imageStream = context.getContentResolver().openInputStream( Uri.fromFile(new File(photos.get(i))));
+                byte[] byteArray = inputStreamToByteArray(imageStream);
+                byteArray = compress(byteArray);
+                String base64ImageSend = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                base64Photo.add(base64ImageSend);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return base64Photo;
+
+        /*ArrayList<String> base64Photo = new ArrayList<>();
 
         for(int i = 0 ; i < photos.size(); i++)
         {
@@ -233,7 +263,84 @@ public class Utils {
             base64Photo.add(encoded);
         }
 
-        return base64Photo;
+        return base64Photo;*/
+
+    }
+
+
+    public static byte[] inputStreamToByteArray(InputStream inputStream) throws IOException {
+        if(inputStream==null) {
+            return null;
+        }
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }
+
+    public static byte[] compress(byte[] data) {
+        ByteArrayInputStream bais = new ByteArrayInputStream(data);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        /*from  ww w.j  av a2  s  . c  om*/
+        compress(bais, baos);
+
+        byte[] output = baos.toByteArray();
+
+        try {
+            baos.flush();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (baos != null) {
+                try {
+                    baos.close();
+                } catch (IOException e) {
+
+                }
+            }
+
+            if (bais != null) {
+                try {
+                    bais.close();
+                } catch (IOException e) {
+
+                }
+            }
+
+        }
+
+        return output;
+    }
+
+    public static void compress(InputStream is, OutputStream os) {
+
+        GZIPOutputStream gos = null;
+        try {
+            gos = new GZIPOutputStream(os);
+            int count;
+            byte data[] = new byte[1024];
+            while ((count = is.read(data, 0, 1024)) != -1) {
+                gos.write(data, 0, count);
+            }
+
+            gos.finish();
+
+            gos.flush();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                gos.close();
+            } catch (IOException e) {
+
+            }
+        }
 
     }
 

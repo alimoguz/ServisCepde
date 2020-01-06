@@ -315,6 +315,7 @@ public class App extends Application {
     public static List<String> durumu = new ArrayList<>();
     public static List<String> getDurumu()
     {
+        durumu = new ArrayList<>();
         durumu.add("Sıfır");
         durumu.add("İkinci el");
 

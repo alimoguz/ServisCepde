@@ -506,11 +506,21 @@ public class DownloadClass {
 
                     kullaniciBilgisi.put("UserName" , tmp.getString("UserName"));
                     kullaniciBilgisi.put("SurName" , tmp.getString("SurName"));
-                    kullaniciBilgisi.put("Email" , tmp.getString("Email"));
                     kullaniciBilgisi.put("GSM" , tmp.getString("GSM"));
                     kullaniciBilgisi.put("MeType" , tmp.getString("MeType"));
-                    kullaniciBilgisi.put("CityID" , tmp.getString("CityID"));
-                    kullaniciBilgisi.put("TownID" , tmp.getString("TownID"));
+                    if(tmp.has("Email"))
+                    {
+                        kullaniciBilgisi.put("Email" , tmp.getString("Email"));
+                    }
+                    if(tmp.has("CityID"))
+                    {
+                        kullaniciBilgisi.put("CityID" , tmp.getString("CityID"));
+                    }
+                    if(tmp.has("TownID"))
+                    {
+                        kullaniciBilgisi.put("TownID" , tmp.getString("TownID"));
+                    }
+
 
 
                 } catch (JSONException e) {

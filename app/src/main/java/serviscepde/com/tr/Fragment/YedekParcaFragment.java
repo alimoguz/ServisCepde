@@ -108,6 +108,7 @@ public class YedekParcaFragment extends Fragment {
         autoCompleteYedekParcaDurumu = generalView.findViewById(R.id.autoCompleteYedekParcaDurumu);
 
 
+
         edtYedekParcaBaslik = generalView.findViewById(R.id.edtYedekParcaBaslik);
         edtYedekParcaFiyat = generalView.findViewById(R.id.edtYedekParcaFiyat);
         edtYedekParcaAciklama = generalView.findViewById(R.id.edtYedekParcaAciklama);
@@ -309,6 +310,7 @@ public class YedekParcaFragment extends Fragment {
 
 
         Utils.setAutoCompleteAdapter(autoCompleteYedekParcail, cityNames , ctx);
+        autoCompleteYedekParcaDurumu.setAdapter(null);
         Utils.setAutoCompleteAdapter(autoCompleteYedekParcaDurumu , App.getDurumu() , ctx);
 
         autoCompleteYedekParcail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -378,7 +380,7 @@ public class YedekParcaFragment extends Fragment {
 
                     if(photos.size() != 0)
                     {
-                        ArrayList<String> base64Photo = Utils.pathToBase64(photos);
+                        ArrayList<String> base64Photo = Utils.pathToBase64(photos , ctx);
                         imageArray = new String[base64Photo.size()];
 
                         for(int i = 0; i < base64Photo.size(); i++)
