@@ -42,6 +42,7 @@ public class KayitliAramaSonucFragment extends Fragment {
     private Context ctx;
     private ArrayList<IlanOzetBilgi> ilanList = new ArrayList<>();
     private static String ID,userToken;
+    private static KategorIlanAdapter adapter;
 
     @Nullable
     @Override
@@ -55,6 +56,8 @@ public class KayitliAramaSonucFragment extends Fragment {
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
         Log.i("userToken" ,userToken);
+
+        clearAdapter();
 
 
         rvKayitliAramaSonuc = generalView.findViewById(R.id.rvKayitliAramaSonuc);
@@ -122,7 +125,7 @@ public class KayitliAramaSonucFragment extends Fragment {
                         ilanList.add(bilgi);
                     }
 
-                    KategorIlanAdapter adapter = new KategorIlanAdapter(R.layout.row_ilan , ilanList , 0);
+                    adapter = new KategorIlanAdapter(R.layout.row_ilan , ilanList , 0);
                     adapter.notifyDataSetChanged();
                     rvKayitliAramaSonuc.setLayoutManager(new LinearLayoutManager(ctx));
                     rvKayitliAramaSonuc.setItemAnimator(new DefaultItemAnimator());
@@ -150,4 +153,15 @@ public class KayitliAramaSonucFragment extends Fragment {
 
         return rootView;
     }
+
+    private void clearAdapter() {
+
+        ilanList.clear();
+
+        if(adapter != null)
+        {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 }

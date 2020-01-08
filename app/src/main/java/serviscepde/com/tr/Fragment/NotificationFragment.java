@@ -75,6 +75,8 @@ public class NotificationFragment extends Fragment {
         rvBildirimler = generalView.findViewById(R.id.rvBildirimler);
         imgBildirimIcon = generalView.findViewById(R.id.imgBildirimIcon);
 
+        clearAdapter();
+
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
         Log.i("userToken" ,userToken);
@@ -187,6 +189,17 @@ public class NotificationFragment extends Fragment {
 
         return null;
 
+
+    }
+
+    private void clearAdapter()
+    {
+        bildirimList.clear();
+
+        if(bildirimAdapter != null)
+        {
+            bildirimAdapter.notifyDataSetChanged();
+        }
 
     }
 }

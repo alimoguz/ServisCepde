@@ -100,6 +100,7 @@ public class BildirimGonderFragment extends Fragment {
 
                 bildirimBaslik = edtBildirimBaslik.getText().toString();
                 bildirimMesaj = edtBildirimMesaj.getText().toString();
+                cityId = DownloadClass.getCityIdWithName(acBildirimIl.getText().toString());
 
                 if(cityId.isEmpty() || bildirimBaslik.isEmpty() || bildirimMesaj.isEmpty())
                 {

@@ -420,6 +420,10 @@ public class KiralikAracFragment extends Fragment {
 
                 cityId = DownloadClass.getCityIdWithName(autoCompleteKiralikAracil.getText().toString());
                 townId = DownloadClass.getTownIdWithTownName(autoCompleteKiralikAracilce.getText().toString() , cityId);
+                actvMarka = DownloadClass.getMarkaIdWithName(autoCompleteKiralikAracMarka.getText().toString());
+                actvModel = DownloadClass.getModelIdWithName(autoCompleteKiralikAracModel.getText().toString());
+                actvKapasite = DownloadClass.getKapasiteIdWithName(autoCompleteKiralikAracKapasite.getText().toString());
+                actvKasko = DownloadClass.getKaskoWithText(autoCompleteKiralikAracKasko.getText().toString());
 
                 if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || actvKasko.isEmpty() || actvKapasite.isEmpty() || actvModel.isEmpty() || actvMarka.isEmpty() || cityId.isEmpty() || townId.isEmpty())
                 {

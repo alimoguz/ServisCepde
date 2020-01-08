@@ -467,6 +467,7 @@ public class AracaSoforFragment extends Fragment {
                 baslamaTownId = DownloadClass.getTownIdWithTownName(autoCompleteAracaSoforServiseBaslamailce.getText().toString() , baslamaCityId);
                 bitisCityId = DownloadClass.getCityIdWithName(autoCompleteAracaSoforServisBitisili.getText().toString());
                 bitisTownId = DownloadClass.getTownIdWithTownName(autoCompleteAracaSoforServisBitisilce.getText().toString() , bitisCityId);
+                actvKapasite = DownloadClass.getKapasiteIdWithName(autoCompleteAracaSoforKapasite.getText().toString());
 
                if(baslik.isEmpty() || aciklama.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() || firmadanCikisSaati.isEmpty() || tecrube.isEmpty() || gun.isEmpty() ||  cityId.isEmpty() || townId.isEmpty() || actvKapasite.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || bitisCityId.isEmpty() || bitisTownId.isEmpty())
                {

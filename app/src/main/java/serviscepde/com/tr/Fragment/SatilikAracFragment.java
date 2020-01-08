@@ -448,6 +448,13 @@ public class SatilikAracFragment extends Fragment {
 
                 cityId = DownloadClass.getCityIdWithName(autoCompleteSatilikAracil.getText().toString());
                 townId = DownloadClass.getTownIdWithTownName(autoCompleteSatilikAracilce.getText().toString() , cityId);
+                actvMarka = DownloadClass.getMarkaIdWithName(autoCompleteSatilikAracMarka.getText().toString());
+                actvModel = DownloadClass.getModelIdWithName(autoCompleteSatilikAracModel.getText().toString());
+                actvMotorHacmi = DownloadClass.getHacimIdWithName(autoCompleteSatilikAracMotorHacmi.getText().toString());
+                actvMotorGucu = DownloadClass.getGucIdWithName(autoCompleteSatilikAracMotorGucu.getText().toString());
+                actvKapasite = DownloadClass.getKapasiteIdWithName(autoCompleteSatilikAracKapasite.getText().toString());
+                actvKimden = DownloadClass.getKimden(autoCompleteSatilikAracKimden.getText().toString());
+
 
 
                 if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || km.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvMarka.isEmpty() || actvModel.isEmpty() || actvMotorHacmi.isEmpty() || actvMotorGucu.isEmpty() || actvKapasite.isEmpty() || actvKimden.isEmpty())

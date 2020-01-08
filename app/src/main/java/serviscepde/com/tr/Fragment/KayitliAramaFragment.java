@@ -45,6 +45,7 @@ public class KayitliAramaFragment extends Fragment {
     private String userToken;
 
     private ArrayList<KayitliArama> aramalarim = new ArrayList<>();
+    private static KayitliAramaAdapter adapter;
 
 
     @Nullable
@@ -61,6 +62,8 @@ public class KayitliAramaFragment extends Fragment {
         Log.i("userToken" ,userToken);
 
         rvKayıtlıAramalarim = generalView.findViewById(R.id.rvKayıtlıAramalarim);
+
+        clearAdapter();
 
         HashMap<String , String> body = new HashMap<>();
 
@@ -98,7 +101,7 @@ public class KayitliAramaFragment extends Fragment {
 
                         Log.i("AramaSize" , " " + aramalarim.size());
 
-                        KayitliAramaAdapter adapter = new KayitliAramaAdapter(R.layout.row_arama , aramalarim , userToken);
+                        adapter = new KayitliAramaAdapter(R.layout.row_arama , aramalarim , userToken);
                         rvKayıtlıAramalarim.setLayoutManager(new LinearLayoutManager(ctx));
                         rvKayıtlıAramalarim.setItemAnimator(new DefaultItemAnimator());
                         rvKayıtlıAramalarim.setAdapter(adapter);
@@ -120,5 +123,15 @@ public class KayitliAramaFragment extends Fragment {
 
 
         return rootView;
+    }
+
+    private void clearAdapter() {
+
+        aramalarim.clear();
+
+        if(adapter != null)
+        {
+            adapter.notifyDataSetChanged();
+        }
     }
 }

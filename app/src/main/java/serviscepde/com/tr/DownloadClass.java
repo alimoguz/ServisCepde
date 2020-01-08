@@ -541,4 +541,86 @@ public class DownloadClass {
     {
         return kullaniciBilgisi;
     }
+
+    public static String getKimden (String kimden)
+    {
+        if(kimden.contains("s"))
+        {
+            return "1";
+
+        }
+
+        if(kimden.contains("r"))
+        {
+            return "2";
+        }
+
+        return null;
+
+    }
+
+    public static String getDurumu (String durum)
+    {
+        if(durum.contains("r"))
+        {
+            return "1";
+
+        }
+
+        if(durum.contains("e"))
+        {
+            return "2";
+        }
+
+        return null;
+
+    }
+
+    public static String getAracDurumuWithText(String aracDurum)
+    {
+        if(aracDurum.contains("T"))
+        {
+            return "1";
+
+        }
+
+        if(aracDurum.contains("k"))
+        {
+            return "2";
+        }
+
+        return null;
+
+
+
+    }
+
+    public static String getKaskoWithText(String kasko)
+    {
+
+        if(kasko.equals("Kaza"))
+        {
+            return  "1";
+        }
+        if(kasko.equals("Bakım Onarım"))
+        {
+            return  "2";
+        }
+
+        if(kasko.equals("Ferdi Kaza"))
+        {
+            return  "3";
+        }
+        if(kasko.equals("Ek Sürücü Sigortası"))
+        {
+            return  "4";
+        }
+        if(kasko.equals("Full Kasko"))
+        {
+            return  "5";
+        }
+
+
+        return null;
+    }
 }

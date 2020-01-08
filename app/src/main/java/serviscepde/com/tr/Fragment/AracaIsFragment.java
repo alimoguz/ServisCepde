@@ -26,8 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.esafirm.imagepicker.features.ImagePicker;
-import com.esafirm.imagepicker.features.ReturnMode;
+
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -36,8 +35,6 @@ import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
 import serviscepde.com.tr.Models.Kapasite;
-import serviscepde.com.tr.Models.Sehirler.SehirResponse;
-import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.R;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
@@ -533,10 +530,14 @@ public class AracaIsFragment extends Fragment {
                 townId = DownloadClass.getTownIdWithTownName(autoCompleteAracaIsilce.getText().toString() , cityId);
                 baslamaCityId = DownloadClass.getCityIdWithName(autoCompleteAracaIsServisBaslamaili.getText().toString());
                 baslamaTownId = DownloadClass.getTownIdWithTownName(autoCompleteAracaIsServiseBaslamailce.getText().toString() , baslamaCityId);
+                actvMarka = DownloadClass.getMarkaIdWithName(autoCompleteAracaIsMarka.getText().toString());
+                actvModel = DownloadClass.getModelIdWithName(autoCompleteAracaIsModel.getText().toString());
+                actvKapasite = DownloadClass.getKapasiteIdWithName(autoCompleteAracaIsKapasite.getText().toString());
+                actvAracDurumu = DownloadClass.getAracDurumuWithText(autoCompleteAracaIsAracDurumu.getText().toString());
 
 
 
-                if(baslik.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || tecrube.isEmpty() || plaka.isEmpty() || referans.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvMarka.isEmpty() || actvKapasite.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || actvAracDurumu.isEmpty())
+                if(baslik.isEmpty() || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || tecrube.isEmpty() || plaka.isEmpty() || referans.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvMarka.isEmpty() || actvModel.isEmpty() ||  actvKapasite.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || actvAracDurumu.isEmpty())
                 {
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                     emptyDialog.setTitleText("* ile belirtilen tüm alanlar doldurulmalıdır");

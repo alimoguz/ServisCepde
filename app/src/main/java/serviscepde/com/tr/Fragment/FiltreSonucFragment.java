@@ -46,6 +46,7 @@ public class FiltreSonucFragment extends Fragment {
     private RecyclerView rvFiltreSonuc;
     private String userToken;
     ArrayList<IlanOzetBilgi> bilgiList = new ArrayList<>();
+    private static FiltreIlanAdapter adapter;
 
     @Nullable
     @Override
@@ -57,6 +58,8 @@ public class FiltreSonucFragment extends Fragment {
         ctx = generalView.getContext();
 
         rvFiltreSonuc = generalView.findViewById(R.id.rvFiltreSonuc);
+
+        clearAdapter();
 
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
@@ -124,7 +127,7 @@ public class FiltreSonucFragment extends Fragment {
 
                     Log.i("Liste1" , String.valueOf(bilgiList.size()));
 
-                    FiltreIlanAdapter adapter = new FiltreIlanAdapter(R.layout.row_ilan , bilgiList , 0);
+                    adapter = new FiltreIlanAdapter(R.layout.row_ilan , bilgiList , 0);
                     adapter.notifyDataSetChanged();
                     rvFiltreSonuc.setLayoutManager(new LinearLayoutManager(ctx));
                     rvFiltreSonuc.setItemAnimator(new DefaultItemAnimator());
@@ -147,5 +150,15 @@ public class FiltreSonucFragment extends Fragment {
 
 
         return rootView;
+    }
+
+    private void clearAdapter() {
+
+        bilgiList.clear();
+
+        if(adapter != null)
+        {
+            adapter.notifyDataSetChanged();
+        }
     }
 }

@@ -581,9 +581,12 @@ public class IseAracFragment extends Fragment {
                 baslamaTownId = DownloadClass.getTownIdWithTownName(autoCompleteIseAracServiseBaslamailce.getText().toString() , baslamaCityId);
                 bitisCityId = DownloadClass.getCityIdWithName(autoCompleteIseAracServisBitisili.getText().toString());
                 bitisTownId = DownloadClass.getTownIdWithTownName(autoCompleteIseAracServisBitisilce.getText().toString() , bitisCityId);
+                actvIseAracMarka = DownloadClass.getMarkaIdWithName(autoCompleteIseAracMarka.getText().toString());
+                actvIseAracModel = DownloadClass.getModelIdWithName(autoCompleteIseAracModel.getText().toString());
+                actvIseAracKapasite = DownloadClass.getKapasiteIdWithName(autoCompleteIseAracKapasite.getText().toString());
 
 
-                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() || firmaCikisSaati.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvIseAracKapasite.isEmpty() || actvIseAracMarka.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || bitisCityId.isEmpty() || bitisTownId.isEmpty())
+                if(baslik.isEmpty()  || aciklama.isEmpty() || yil.isEmpty() || servisBaslamaSaati.isEmpty() || servisBitisSaati.isEmpty() || firmaGirisSaati.isEmpty() || firmaCikisSaati.isEmpty() || toplamKM.isEmpty() || gunSayisi.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvIseAracKapasite.isEmpty() || actvIseAracMarka.isEmpty() || actvIseAracModel.isEmpty() || baslamaCityId.isEmpty() || baslamaTownId.isEmpty() || bitisCityId.isEmpty() || bitisTownId.isEmpty())
                 {
 
                     emptyDialog = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);

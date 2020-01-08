@@ -366,6 +366,7 @@ public class YedekParcaFragment extends Fragment {
 
                 cityId = DownloadClass.getCityIdWithName(autoCompleteYedekParcail.getText().toString());
                 townId = DownloadClass.getTownIdWithTownName(autoCompleteYedekParcailce.getText().toString() , cityId);
+                actvDurum = DownloadClass.getDurumu(autoCompleteYedekParcaDurumu.getText().toString());
 
                 if (baslik.isEmpty()  || aciklama.isEmpty() || marka.isEmpty() || cityId.isEmpty() || townId.isEmpty() || actvDurum.isEmpty())
                 {
