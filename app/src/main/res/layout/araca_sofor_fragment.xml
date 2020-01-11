@@ -225,6 +225,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtAracaSoforFiyat"
+                        android:inputType="number"
                         android:background="@color/colorWhite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -452,6 +453,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtAracaSoforCalisilacakGunSayisi"
+                        android:inputType="number"
                         android:background="@color/colorWhite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

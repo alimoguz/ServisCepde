@@ -101,6 +101,7 @@ public class AracaIsFragment extends Fragment {
     private ArrayList<String> townNames , baslamaTownNames  = new ArrayList<>();
     private List<Kapasite> kapasites = new ArrayList<>();
     private List<String> kapasiteNames = new ArrayList<>();
+    private List<String> emptyList = new ArrayList<>();
 
     private String cityId,baslamaCityId;
     private String townId,baslamaTownId;
@@ -353,7 +354,7 @@ public class AracaIsFragment extends Fragment {
         kapasites = DownloadClass.getKapasite();
         kapasiteNames = DownloadClass.getKapasiteNames();
 
-
+        Utils.setAutoCompleteAdapter(autoCompleteAracaIsAracDurumu , emptyList , ctx);
 
 
         Utils.setAutoCompleteAdapter(autoCompleteAracaIsil , cityNames ,ctx);

@@ -228,6 +228,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtIseAracFiyat"
+                        android:inputType="number"
                         android:background="@color/colorWhite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -338,6 +339,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtIseAracYil"
+                        android:inputType="number"
                         android:background="@color/colorWhite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -482,6 +484,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtIseAracToplamKM"
+                        android:inputType="number"
                         android:background="@color/colorWhite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -496,6 +499,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtIseAracCalisilacakGunSayisi"
+                        android:inputType="number"
                         android:background="@color/colorWhite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

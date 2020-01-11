@@ -62,8 +62,6 @@ public class ProfileFragment extends Fragment {
         SharedPreferences sharedPref = ctx.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
         userToken = sharedPref.getString("userToken" , "0");
 
-        DownloadClass.setActiveUser(userToken);
-
 
         ilanlarimFragment = new IlanlarımFragment();
         kullaniciDuzenleFragment = new KullanıcıDüzenleFragment();
@@ -94,6 +92,7 @@ public class ProfileFragment extends Fragment {
 
         else
         {
+            DownloadClass.setActiveUser(userToken);
             txtKayitliAramalar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
