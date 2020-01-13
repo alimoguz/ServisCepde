@@ -38,6 +38,9 @@ public class DownloadClass {
     public static ArrayList<MotorGuc> motorGucList =  new ArrayList<>();
     public static ArrayList<MotorHacim> motorHacimList = new ArrayList<>();
     public static HashMap<String , String> kullaniciBilgisi = new HashMap<>();
+    public static ArrayList<String> kimdenList = new ArrayList<>();
+    public static ArrayList<String> ehliyetList = new ArrayList<>();
+    public static ArrayList<String> kaskoList = new ArrayList<>();
 
     public static void downloadAllVariables() {
         downloadCities();
@@ -634,5 +637,43 @@ public class DownloadClass {
 
 
         return null;
+    }
+
+    public static ArrayList<String> getKimdenList()
+    {
+        kimdenList = new ArrayList<>();
+        kimdenList.add("Araç sahibinden");
+        kimdenList.add("Galeriden");
+
+        return kimdenList;
+
+    }
+
+    public static ArrayList<String> getEhliyetList()
+    {
+        ehliyetList = new ArrayList<>();
+
+        ehliyetList.add("M");
+        ehliyetList.add("A1");
+        ehliyetList.add("A2");
+        ehliyetList.add("A");
+        ehliyetList.add("B1");
+        ehliyetList.add("B");
+
+        return ehliyetList;
+
+    }
+
+    public static ArrayList<String> getKaskoList()
+    {
+        kaskoList = new ArrayList<>();
+
+        kaskoList.add("Kaza");
+        kaskoList.add("Bakım Onarım");
+        kaskoList.add("Ferdi Kaza");
+        kaskoList.add("Ek Sürücü Sigortası");
+        kaskoList.add("Full Kasko");
+
+        return kaskoList;
     }
 }

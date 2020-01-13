@@ -106,6 +106,7 @@ public class SoforeIsFragment extends Fragment {
     private ArrayList<String> townNames , baslamaTownNames  = new ArrayList<>();
     private List<Kapasite> kapasites = new ArrayList<>();
     private List<String> kapasiteNames = new ArrayList<>();
+    private List<String> ehliyetList = new ArrayList<>();
     private SweetAlertDialog pDialog;
 
 
@@ -329,6 +330,7 @@ public class SoforeIsFragment extends Fragment {
         cityNames = DownloadClass.getCityNames();
         kapasites = DownloadClass.getKapasite();
         kapasiteNames = DownloadClass.getKapasiteNames();
+        ehliyetList = DownloadClass.getEhliyetList();
 
 
 
@@ -387,7 +389,7 @@ public class SoforeIsFragment extends Fragment {
 
 
 
-        ArrayAdapter<String> ehliyet = new ArrayAdapter<>(ctx, R.layout.dropdown_item, App.getEhliyet());
+        ArrayAdapter<String> ehliyet = new ArrayAdapter<>(ctx, R.layout.dropdown_item, ehliyetList);
         autoCompleteSoforeIsEhliyet.setAdapter(ehliyet);
         autoCompleteSoforeIsEhliyet.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         actvEhliyet = "";

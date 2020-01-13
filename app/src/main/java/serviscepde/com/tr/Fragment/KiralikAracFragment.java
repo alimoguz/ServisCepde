@@ -91,6 +91,7 @@ public class KiralikAracFragment extends Fragment {
     private String cityId;
     private String townId;
     private ArrayList<String> townNames = new ArrayList<>();
+    private ArrayList<String> kaskoList = new ArrayList<>();
 
     private List<Kapasite> kapasites = new ArrayList<>();
     private List<String> kapasiteNames = new ArrayList<>();
@@ -324,10 +325,11 @@ public class KiralikAracFragment extends Fragment {
         marka = DownloadClass.getMarkaNames();
         kapasites = DownloadClass.getKapasite();
         kapasiteNames = DownloadClass.getKapasiteNames();
+        kaskoList = DownloadClass.getKaskoList();
 
         Utils.setAutoCompleteAdapter(autoCompleteKiralikAracil , cityNames , ctx );
         Utils.setAutoCompleteAdapter(autoCompleteKiralikAracKapasite , kapasiteNames , ctx);
-        Utils.setAutoCompleteAdapter(autoCompleteKiralikAracKasko, App.getKaskoTuru() , ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteKiralikAracKasko, kaskoList , ctx);
         Utils.setAutoCompleteAdapter(autoCompleteKiralikAracMarka , marka , ctx);
 
 

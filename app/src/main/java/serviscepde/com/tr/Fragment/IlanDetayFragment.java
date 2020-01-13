@@ -834,9 +834,12 @@ public class IlanDetayFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
 
-                            SweetAlertDialog mesajAlert = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                            Intent launchIntent = ctx.getPackageManager().getLaunchIntentForPackage("com.whatsapp");
+                            startActivity(launchIntent);
+
+                            /*SweetAlertDialog mesajAlert = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                             mesajAlert.setTitleText("Çok yakında hizmetinizde");
-                            mesajAlert.show();
+                            mesajAlert.show();*/
 
 
                         }

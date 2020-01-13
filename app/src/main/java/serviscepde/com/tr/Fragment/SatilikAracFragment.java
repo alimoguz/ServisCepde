@@ -94,6 +94,7 @@ public class SatilikAracFragment extends Fragment {
     private String cityId;
     private String townId;
     private ArrayList<String> townNames = new ArrayList<>();
+    private ArrayList<String> kimdenList = new ArrayList<>();
 
     private List<Kapasite> kapasites = new ArrayList<>();
     private List<String> kapasiteNames = new ArrayList<>();
@@ -337,6 +338,7 @@ public class SatilikAracFragment extends Fragment {
         gucNames = DownloadClass.getGucNames();
         hacims = DownloadClass.getMotorHacim();
         hacimNames = DownloadClass.getHacimNames();
+        kimdenList = DownloadClass.getKimdenList();
 
 
 
@@ -344,7 +346,7 @@ public class SatilikAracFragment extends Fragment {
         Utils.setAutoCompleteAdapter(autoCompleteSatilikAracKapasite , kapasiteNames ,ctx);
         Utils.setAutoCompleteAdapter(autoCompleteSatilikAracMotorGucu , gucNames ,ctx);
         Utils.setAutoCompleteAdapter(autoCompleteSatilikAracMotorHacmi , hacimNames ,ctx);
-        Utils.setAutoCompleteAdapter(autoCompleteSatilikAracKimden ,App.getKimden() ,ctx);
+        Utils.setAutoCompleteAdapter(autoCompleteSatilikAracKimden , kimdenList ,ctx);
         Utils.setAutoCompleteAdapter(autoCompleteSatilikAracMarka , marka  , ctx);
 
 
