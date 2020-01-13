@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -834,8 +836,25 @@ public class IlanDetayFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
 
-                            Intent launchIntent = ctx.getPackageManager().getLaunchIntentForPackage("com.whatsapp");
-                            startActivity(launchIntent);
+
+                            String contact = gsm; // use country code with your phone number
+                            String pre = "90";
+                            contact = pre.concat(contact);
+                            Log.i("Telefon" , contact);
+                            String url = "https://api.whatsapp.com/send?phone=" + contact;
+                            try {
+                                PackageManager pm = ctx.getPackageManager();
+                                pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
+                                Intent i = new Intent(Intent.ACTION_VIEW);
+                                i.setData(Uri.parse(url));
+                                startActivity(i);
+                            } catch (PackageManager.NameNotFoundException e) {
+                                Toast.makeText(MainActivity.act, "Whatsapp app not installed in your phone", Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
+                            }
+
+                            /*Intent launchIntent = ctx.getPackageManager().getLaunchIntentForPackage("com.whatsapp");
+                            startActivity(launchIntent);*/
 
                             /*SweetAlertDialog mesajAlert = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
                             mesajAlert.setTitleText("Çok yakında hizmetinizde");
