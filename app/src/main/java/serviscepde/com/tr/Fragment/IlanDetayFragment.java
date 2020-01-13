@@ -499,7 +499,12 @@ public class IlanDetayFragment extends Fragment {
                     if(ilanDetay.has("Kimden"))
                     {
                         Kimden = ilanDetay.getString("Kimden");
-                        Log.i("Kimden" , Kimden);
+                        if(Kimden.equals("1")){
+                            Kimden = "Araç sahibinden";
+                        }
+                        else if(Kimden.equals("2")){
+                            Kimden = "Galeriden";
+                        }
                     }
                     else
                     {

@@ -559,13 +559,13 @@ public class DownloadClass {
 
     public static String getKimden (String kimden)
     {
-        if(kimden.contains("s"))
+        if(kimden.equals("Araç sahibinden"))
         {
             return "1";
 
         }
 
-        if(kimden.contains("r"))
+        if(kimden.equals("Galeriden"))
         {
             return "2";
         }
