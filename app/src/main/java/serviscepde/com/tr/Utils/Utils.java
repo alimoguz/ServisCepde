@@ -6,8 +6,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -227,6 +229,16 @@ public class Utils {
 
     }
 
+    private static String encodeImage(Bitmap bm)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return encImage;
+    }
+
     public static ArrayList<String> pathToBase64(ArrayList<String> photos , Context context)
     {
 
@@ -234,37 +246,24 @@ public class Utils {
 
         for(int i = 0 ; i < photos.size(); i++)
         {
-            InputStream imageStream = null;
+            String filePath = "file://"+ photos.get(i);
+            Uri myUri = Uri.parse(filePath);
             try {
-                imageStream = context.getContentResolver().openInputStream( Uri.fromFile(new File(photos.get(i))));
-                byte[] byteArray = inputStreamToByteArray(imageStream);
-                byteArray = compress(byteArray);
-                String base64ImageSend = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                base64Photo.add(base64ImageSend);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), myUri);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+                byte [] imgBytes = byteArrayOutputStream.toByteArray();
+                String image = Base64.encodeToString(imgBytes, Base64.DEFAULT);
+
+                base64Photo.add(image);
             } catch (IOException e) {
-                e.printStackTrace();
             }
 
         }
 
+
+
         return base64Photo;
-
-        /*ArrayList<String> base64Photo = new ArrayList<>();
-
-        for(int i = 0 ; i < photos.size(); i++)
-        {
-            Bitmap bitmap = BitmapFactory.decodeFile(photos.get(i));
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream .toByteArray();
-            String encoded = Base64.encodeToString(byteArray , Base64.DEFAULT);
-            base64Photo.add(encoded);
-        }
-
-        return base64Photo;*/
-
     }
 
 

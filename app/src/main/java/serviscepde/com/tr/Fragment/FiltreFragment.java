@@ -87,7 +87,7 @@ public class FiltreFragment extends Fragment {
     private String townId,baslamaTownId,bitisTownId = null;
     private ArrayList<String> townNames , baslamaTownNames , bitisTownNames = new ArrayList<>();
     private static String searchText,orderBY;
-    private String [] multipleSearch = {"Baslik" , "ilanAciklamasi"};
+    private String [] multipleSearch = {"ID", "Baslik" , "ilanAciklamasi"};
     private static String categoryFromOut;
 
     private String userToken;

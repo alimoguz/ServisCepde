@@ -79,10 +79,6 @@ public class AddingActivity extends AppCompatActivity {
 
         Log.i("Photos" , "" + imagesPath.size());
 
-
-
-
-
         if(selectedCategory == 1)
         {
             loadFragmentWithPhoto(iseAracFragment ,photoList);

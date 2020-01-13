@@ -37,6 +37,8 @@ import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
 import serviscepde.com.tr.Models.Sehirler.SehirResponse;
 import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.R;
+import serviscepde.com.tr.Utils.ImageCompressor;
+import serviscepde.com.tr.Utils.OnCompressTaskCompleted;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -381,114 +383,23 @@ public class YedekParcaFragment extends Fragment {
 
                     if(photos.size() != 0)
                     {
-                        ArrayList<String> base64Photo = Utils.pathToBase64(photos , ctx);
-                        imageArray = new String[base64Photo.size()];
-
-                        for(int i = 0; i < base64Photo.size(); i++)
-                        {
-                            imageArray[i] = base64Photo.get(i);
-                        }
-
-                    }
-
-                    String s = "0";
-
-                    if(switchYedekParcaCikmaParca.isChecked())
-                    {
-                        s = "1";
-                    }
-                    HashMap<String , Object> hashMap = new HashMap<>();
-                    HashMap<String , Object> hashMap1 = new HashMap<>();
-
-                    hashMap1.put("Tipi" , "7");
-                    hashMap1.put("Baslik" , baslik);
-                    hashMap1.put("ilanCity" , cityId);
-                    hashMap1.put("ilanSemtleri" , townId);
-                    hashMap1.put("ParcaMarkasi" , marka);
-                    hashMap1.put("Ucret" , fiyat);
-                    hashMap1.put("file" , imageArray);
-                    hashMap1.put("ilanAciklamasi" , aciklama);
-                    hashMap1.put("YedekParcaDurum" , actvDurum);
-                    hashMap1.put("CikmaYedekParca" , s);
-
-                    hashMap.put("Token" , userToken);
-                    hashMap.put("param" , hashMap1);
-
-
-                    Call<EkleResponse> ilanEkle = App.getApiService().ilanEkle(hashMap);
-                    ilanEkle.enqueue(new Callback<EkleResponse>() {
-
-                        @Override
-                        public void onResponse(Call<EkleResponse> call, Response<EkleResponse> response) {
-
-                            EkleResponseDetail detail = response.body().getDetail();
-
-                            Log.i("Response" , detail.toString());
-
-                            String token = detail.getResult();
-
-                            JSONObject ekleResponse = Utils.jwtToJsonObject(token);
-                            SweetAlertDialog ilanHata;
-                            SweetAlertDialog ilanOnay;
-
-
-                            photos.clear();
-
-                            try {
-
-                                if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
+                        new ImageCompressor(photos, ctx, new OnCompressTaskCompleted() {
+                            @Override
+                            public void onCompressTaskCompleted(ArrayList<String> base64Photo) {
+                                imageArray = new String[base64Photo.size()];
+                                for(int i = 0; i < base64Photo.size(); i++)
                                 {
-                                    pDialog.dismiss();
-                                    ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
-                                    ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
-                                    ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                        @Override
-                                        public void onDismiss(DialogInterface dialog) {
-                                            Intent main = new Intent(ctx , MainActivity.class);
-                                            startActivity(main);
-                                            getActivity().finish();
-                                        }
-                                    });
-                                    ilanOnay.show();
-
+                                    imageArray[i] = base64Photo.get(i);
                                 }
 
-                                if(ekleResponse.getJSONObject("errorEmpty") != null)
-                                {
+                                load();
 
-                                    pDialog.dismiss();
-                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorEmpty").toString());
-                                    ilanHata.show();
-                                }
-                                if(ekleResponse.getJSONObject("errorOther") !=null)
-                                {
-                                    pDialog.dismiss();
-                                    ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                    ilanHata.setTitleText(ekleResponse.getJSONObject("errorOther").toString());
-                                    ilanHata.show();
-
-                                }
-                            } catch (JSONException e) {
-                                pDialog.dismiss();
-                                e.printStackTrace();
                             }
-
-
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<EkleResponse> call, Throwable t) {
-
-                            pDialog.dismiss();
-                            Log.i("Failure" , t.getMessage());
-
-                        }
-                    });
-
-                    photos.clear();
-                    imageArray = null;
+                        }).execute();
+                    }
+                    else{
+                        load();
+                    }
 
                 }
 
@@ -496,6 +407,107 @@ public class YedekParcaFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void load() {
+        String s = "0";
+
+        if(switchYedekParcaCikmaParca.isChecked())
+        {
+            s = "1";
+        }
+        HashMap<String , Object> hashMap = new HashMap<>();
+        HashMap<String , Object> hashMap1 = new HashMap<>();
+
+        hashMap1.put("Tipi" , "7");
+        hashMap1.put("Baslik" , baslik);
+        hashMap1.put("ilanCity" , cityId);
+        hashMap1.put("ilanSemtleri" , townId);
+        hashMap1.put("ParcaMarkasi" , marka);
+        hashMap1.put("Ucret" , fiyat);
+        hashMap1.put("file" , imageArray);
+        hashMap1.put("ilanAciklamasi" , aciklama);
+        hashMap1.put("YedekParcaDurum" , actvDurum);
+        hashMap1.put("CikmaYedekParca" , s);
+
+        hashMap.put("Token" , userToken);
+        hashMap.put("param" , hashMap1);
+
+
+        Call<EkleResponse> ilanEkle = App.getApiService().ilanEkle(hashMap);
+        ilanEkle.enqueue(new Callback<EkleResponse>() {
+
+            @Override
+            public void onResponse(Call<EkleResponse> call, Response<EkleResponse> response) {
+
+                EkleResponseDetail detail = response.body().getDetail();
+
+                Log.i("Response" , detail.toString());
+
+                String token = detail.getResult();
+
+                JSONObject ekleResponse = Utils.jwtToJsonObject(token);
+                SweetAlertDialog ilanHata;
+                SweetAlertDialog ilanOnay;
+
+
+                photos.clear();
+
+                try {
+
+                    if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
+                    {
+                        pDialog.dismiss();
+                        ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                        ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
+                        ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                Intent main = new Intent(ctx , MainActivity.class);
+                                startActivity(main);
+                                getActivity().finish();
+                            }
+                        });
+                        ilanOnay.show();
+
+                    }
+
+                    if(ekleResponse.getJSONObject("errorEmpty") != null)
+                    {
+
+                        pDialog.dismiss();
+                        ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
+                        ilanHata.setTitleText(ekleResponse.getJSONObject("errorEmpty").toString());
+                        ilanHata.show();
+                    }
+                    if(ekleResponse.getJSONObject("errorOther") !=null)
+                    {
+                        pDialog.dismiss();
+                        ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
+                        ilanHata.setTitleText(ekleResponse.getJSONObject("errorOther").toString());
+                        ilanHata.show();
+
+                    }
+                } catch (JSONException e) {
+                    pDialog.dismiss();
+                    e.printStackTrace();
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<EkleResponse> call, Throwable t) {
+
+                pDialog.dismiss();
+                Log.i("Failure" , t.getMessage());
+
+            }
+        });
+
+        photos.clear();
+        imageArray = null;
     }
 
     @Override

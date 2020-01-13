@@ -61,7 +61,7 @@ public class SearchFragment extends Fragment {
     private ArrayList<IlanOzetBilgi> withTextList = new ArrayList<>();
 
     private FiltreFragment filtreFragment;
-    private String [] multipleSearch = {"Baslik" , "ilanAciklamasi"};
+    private String [] multipleSearch = {"ID", "Baslik" , "ilanAciklamasi"};
     private KategorIlanAdapter withTextAdapter, withoutTextAdapter;
     private static String orderBY = null;
 

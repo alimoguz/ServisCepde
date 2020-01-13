@@ -156,7 +156,6 @@ public class DownloadClass {
                             String id  = temp1.next();
                             String name = object.get(id).toString();
 
-                            Log.i("%%%", "onResponse: %%%"+parentId + "----" + id + "----" + name);
                             MarkaModel a = new MarkaModel(id , name , parentId);
                             markaModelsArray.add(a);
                         }
@@ -384,7 +383,15 @@ public class DownloadClass {
     }
 
     public static ArrayList<City> getCities() {
-        return cities;
+        ArrayList<City> temp = new ArrayList<>();
+        for(City city : cities){
+            if(city.getID().equals("40") || city.getID().equals("52") || city.getID().equals("66") || city.getID().equals("32")
+                    || city.getID().equals("53")|| city.getID().equals("41")|| city.getID().equals("47")|| city.getID().equals("21")
+                    || city.getID().equals("7")){
+                temp.add(city);
+            }
+        }
+        return temp;
     }
 
     public static ArrayList<Ilce> getTowns(String cityId) {
@@ -400,7 +407,11 @@ public class DownloadClass {
     public static ArrayList<String> getCityNames(){
         ArrayList<String> cityNames = new ArrayList<>();
         for(City city: cities){
-            cityNames.add(city.getCityName());
+            if(city.getID().equals("40") || city.getID().equals("52") || city.getID().equals("66") || city.getID().equals("32")
+                    || city.getID().equals("53")|| city.getID().equals("41")|| city.getID().equals("47")|| city.getID().equals("21")
+                    || city.getID().equals("7")){
+                cityNames.add(city.getCityName());
+            }
         }
 
         return cityNames;

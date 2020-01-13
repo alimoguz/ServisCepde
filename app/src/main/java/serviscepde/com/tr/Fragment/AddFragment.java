@@ -182,7 +182,6 @@ public class AddFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.i("%%%%", "onActivityResult: %%%%"+requestCode+"----"+resultCode);
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
             // Get a list of picked images
             List<Image> images = ImagePicker.getImages(data);

@@ -36,13 +36,11 @@ public class MyMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(final RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        Log.i(TAG, "onMessageReceived: %%%%"+remoteMessage.getData());
         id = remoteMessage.getData().get("id");
         title = remoteMessage.getData().get("title");
         body = remoteMessage.getData().get("body");
         link = remoteMessage.getData().get("link");
 
-        Log.i(TAG, "onMessageReceived: "+id+"--"+title+"--"+body+"--"+link+"--");
 
 
         if(remoteMessage.getData().size() > 0){

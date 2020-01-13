@@ -36,6 +36,8 @@ import serviscepde.com.tr.Models.Kapasite;
 import serviscepde.com.tr.Models.Sehirler.SehirResponse;
 import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.R;
+import serviscepde.com.tr.Utils.ImageCompressor;
+import serviscepde.com.tr.Utils.OnCompressTaskCompleted;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -484,111 +486,121 @@ public class AracaSoforFragment extends Fragment {
 
                    if(photos.size() != 0)
                    {
-                       ArrayList<String> base64Photo = Utils.pathToBase64(photos , ctx);
-                       imageArray = new String[base64Photo.size()];
-
-                       for(int i = 0; i < base64Photo.size(); i++)
-                       {
-                           imageArray[i] = base64Photo.get(i);
-                       }
-                   }
-
-
-                   HashMap<String , Object> hashMap = new HashMap<>();
-                   HashMap<String , Object> hashMap1 = new HashMap<>();
-
-
-
-                   hashMap1.put("Tipi" , "2");
-                   hashMap1.put("Baslik" , baslik);
-                   hashMap1.put("ilanCity" , cityId);
-                   hashMap1.put("ilanSemtleri" , townId);
-                   hashMap1.put("AracKapasitesi" , actvKapasite);
-                   hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
-                   hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
-                   hashMap1.put("ServiseBaslamaSaati" , servisBaslamaSaati);
-                   hashMap1.put("ServisBitisSaati" , servisBitisSaati);
-                   hashMap1.put("FirmayaGiriSaati" , firmaGirisSaati);
-                   hashMap1.put("FirmadanCikisSaati" , firmadanCikisSaati);
-                   hashMap1.put("CalisilacakGunSayisi" , gun);
-                   hashMap1.put("Ucret" , fiyat);
-                   hashMap1.put("ilanAciklamasi" , aciklama);
-                   hashMap1.put("file" , imageArray);
-                   hashMap1.put("Tecrube" , tecrube);
-                   hashMap1.put("ServisBitisCity" , bitisCityId);
-                   hashMap1.put("ServisBitisSemtleri" , bitisTownId);
-
-
-                   hashMap.put("Token" , userToken);
-                   hashMap.put("param" , hashMap1);
-
-                   Log.i("hashMap" , hashMap.toString());
-
-                   Call<EkleResponse> ilanEkle = App.getApiService().ilanEkle(hashMap);
-
-                   ilanEkle.enqueue(new Callback<EkleResponse>() {
-
-                       @Override
-                       public void onResponse(Call<EkleResponse> call, Response<EkleResponse> response) {
-
-                           EkleResponseDetail detail = response.body().getDetail();
-
-                           Log.i("Response" , detail.toString());
-
-                           String token = detail.getResult();
-
-                           JSONObject ekleResponse = Utils.jwtToJsonObject(token);
-                           SweetAlertDialog ilanHata;
-                           SweetAlertDialog ilanOnay;
-
-                           photos.clear();
-
-                           try {
-
-                               if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
+                       new ImageCompressor(photos, ctx, new OnCompressTaskCompleted() {
+                           @Override
+                           public void onCompressTaskCompleted(ArrayList<String> base64Photo) {
+                               imageArray = new String[base64Photo.size()];
+                               for(int i = 0; i < base64Photo.size(); i++)
                                {
-                                   pDialog.dismiss();
-                                   ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
-                                   ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
-                                   ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                       @Override
-                                       public void onDismiss(DialogInterface dialog) {
-                                           Intent main = new Intent(ctx , MainActivity.class);
-                                           startActivity(main);
-                                           getActivity().finish();
-                                       }
-                                   });
-                                   ilanOnay.show();
-
+                                   imageArray[i] = base64Photo.get(i);
                                }
 
-                               else
-                               {
-                                   pDialog.dismiss();
-                                   ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
-                                   ilanHata.setTitleText("Bir hata oluştu lütfen daha sonra tekrar deneyin");
-                                   ilanHata.show();
-                               }
-                           } catch (JSONException e) {
-                               pDialog.dismiss();
-                               e.printStackTrace();
+                               load();
+
+
                            }
-                       }
-
-                       @Override
-                       public void onFailure(Call<EkleResponse> call, Throwable t) {
-
-                           pDialog.dismiss();
-                           Log.i("Failure" , t.getMessage());
-
-                       }
-                   });
-                   photos.clear();
-                   imageArray = null;
+                       }).execute();
+                   }
+                   else{
+                       load();
+                   }
                }
             }
         });
         return rootView;
+    }
+
+    private void load() {
+        HashMap<String , Object> hashMap = new HashMap<>();
+        HashMap<String , Object> hashMap1 = new HashMap<>();
+
+
+        hashMap1.put("Tipi" , "2");
+        hashMap1.put("Baslik" , baslik);
+        hashMap1.put("ilanCity" , cityId);
+        hashMap1.put("ilanSemtleri" , townId);
+        hashMap1.put("AracKapasitesi" , actvKapasite);
+        hashMap1.put("ServiseBaslamaCity" , baslamaCityId);
+        hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
+        hashMap1.put("ServiseBaslamaSaati" , servisBaslamaSaati);
+        hashMap1.put("ServisBitisSaati" , servisBitisSaati);
+        hashMap1.put("FirmayaGiriSaati" , firmaGirisSaati);
+        hashMap1.put("FirmadanCikisSaati" , firmadanCikisSaati);
+        hashMap1.put("CalisilacakGunSayisi" , gun);
+        hashMap1.put("Ucret" , fiyat);
+        hashMap1.put("ilanAciklamasi" , aciklama);
+        hashMap1.put("file" , imageArray);
+        hashMap1.put("Tecrube" , tecrube);
+        hashMap1.put("ServisBitisCity" , bitisCityId);
+        hashMap1.put("ServisBitisSemtleri" , bitisTownId);
+
+
+        hashMap.put("Token" , userToken);
+        hashMap.put("param" , hashMap1);
+
+        Log.i("hashMap" , hashMap.toString());
+
+        Call<EkleResponse> ilanEkle = App.getApiService().ilanEkle(hashMap);
+
+        ilanEkle.enqueue(new Callback<EkleResponse>() {
+
+            @Override
+            public void onResponse(Call<EkleResponse> call, Response<EkleResponse> response) {
+
+                EkleResponseDetail detail = response.body().getDetail();
+
+                Log.i("Response" , detail.toString());
+
+                String token = detail.getResult();
+
+                JSONObject ekleResponse = Utils.jwtToJsonObject(token);
+                SweetAlertDialog ilanHata;
+                SweetAlertDialog ilanOnay;
+
+                photos.clear();
+
+                try {
+
+                    if( ekleResponse.getJSONObject("OutPutMessage").getInt("Status") == 200)
+                    {
+                        pDialog.dismiss();
+                        ilanOnay = new SweetAlertDialog(ctx , SweetAlertDialog.NORMAL_TYPE);
+                        ilanOnay.setTitleText(ekleResponse.getJSONObject("OutPutMessage").getString("Message"));
+                        ilanOnay.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                Intent main = new Intent(ctx , MainActivity.class);
+                                startActivity(main);
+                                getActivity().finish();
+                            }
+                        });
+                        ilanOnay.show();
+
+                    }
+
+                    else
+                    {
+                        pDialog.dismiss();
+                        ilanHata = new SweetAlertDialog(ctx , SweetAlertDialog.ERROR_TYPE);
+                        ilanHata.setTitleText("Bir hata oluştu lütfen daha sonra tekrar deneyin");
+                        ilanHata.show();
+                    }
+                } catch (JSONException e) {
+                    pDialog.dismiss();
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EkleResponse> call, Throwable t) {
+
+                pDialog.dismiss();
+                Log.i("Failure" , t.getMessage());
+
+            }
+        });
+        photos.clear();
+        imageArray = null;
     }
 
     @Override
