@@ -42,6 +42,7 @@ import serviscepde.com.tr.Models.Kapasite;
 import serviscepde.com.tr.Models.Sehirler.SehirResponse;
 import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.R;
+import serviscepde.com.tr.Utils.ImageCompression;
 import serviscepde.com.tr.Utils.ImageCompressor;
 import serviscepde.com.tr.Utils.OnCompressTaskCompleted;
 import serviscepde.com.tr.Utils.Utils;
@@ -673,17 +674,21 @@ public class IseAracFragment extends Fragment {
 
                     if(photos.size() != 0)
                     {
-                        new ImageCompressor(photos, ctx, new OnCompressTaskCompleted() {
+                        new ImageCompression(photos, ctx, new OnCompressTaskCompleted() {
                             @Override
-                            public void onCompressTaskCompleted(ArrayList<String> base64Photo) {
-                                imageArray = new String[base64Photo.size()];
-                                for(int i = 0; i < base64Photo.size(); i++)
-                                {
-                                    imageArray[i] = base64Photo.get(i);
-                                }
+                            public void onCompressTaskCompleted(ArrayList<String> compressedUris) {
+                                new ImageCompressor(compressedUris, ctx, new OnCompressTaskCompleted() {
+                                    @Override
+                                    public void onCompressTaskCompleted(ArrayList<String> base64Photo) {
+                                        imageArray = new String[base64Photo.size()];
+                                        for(int i = 0; i < base64Photo.size(); i++)
+                                        {
+                                            imageArray[i] = base64Photo.get(i);
+                                        }
 
-                                load();
-
+                                        load();
+                                    }
+                                }).execute();
                             }
                         }).execute();
                     }
