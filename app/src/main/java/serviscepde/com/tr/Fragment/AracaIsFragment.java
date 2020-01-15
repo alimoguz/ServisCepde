@@ -65,9 +65,9 @@ public class AracaIsFragment extends Fragment {
     private Switch switchAracaIsOkulTasiti,switchAracaIsTurizmPaketi,switchAracaIsKlima,switchAracaIsDeriDoseme,switchAracaIsTribunTavan,switchAracaIsYatarKoltuk;
 
     private TextInputEditText edtAracaIsBaslik,edtAracaIsAciklama,edtAracaIsYil,edtAracaIsServisBaslamaSaati,edtAracaIsServisBitisSaati,
-            edtAracaIsTecrube,edtAracaIsPlaka,edtAracaIsReferans,edtAracaIsToplamKM,edtAracaIsCalisilacakGunSayisi;
+            edtAracaIsTecrube,edtAracaIsPlaka,edtAracaIsReferans,edtAracaIsCalisilacakGunSayisi;
 
-    private CurrencyEditText edtAracaIsFiyat;
+    private CurrencyEditText edtAracaIsFiyat,edtAracaIsToplamKM;
 
 
     private AutoCompleteTextView autoCompleteAracaIsil,autoCompleteAracaIsilce,autoCompleteAracaIsMarka,autoCompleteAracaIsModel,autoCompleteAracaIsKapasite,autoCompleteAracaIsServisBaslamaili,
@@ -139,6 +139,7 @@ public class AracaIsFragment extends Fragment {
         edtAracaIsPlaka = generalView.findViewById(R.id.edtAracaIsPlaka);
         edtAracaIsReferans = generalView.findViewById(R.id.edtAracaIsReferans);
         edtAracaIsToplamKM = generalView.findViewById(R.id.edtAracaIsToplamKM);
+        edtAracaIsToplamKM.setDecimals(false);
         edtAracaIsCalisilacakGunSayisi = generalView.findViewById(R.id.edtAracaIsCalisilacakGunSayisi);
 
 
@@ -539,7 +540,7 @@ public class AracaIsFragment extends Fragment {
                 servisBitisSaati = edtAracaIsServisBitisSaati.getText().toString();
                 tecrube = edtAracaIsTecrube.getText().toString();
                 plaka = edtAracaIsPlaka.getText().toString();
-                referans = edtAracaIsPlaka.getText().toString();
+                referans = edtAracaIsReferans.getText().toString();
                 toplamKM = edtAracaIsToplamKM.getText().toString();
                 gunSayisi = edtAracaIsCalisilacakGunSayisi.getText().toString();
 

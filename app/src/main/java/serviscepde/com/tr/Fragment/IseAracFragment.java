@@ -72,9 +72,9 @@ public class IseAracFragment extends Fragment {
 
 
     private  TextInputEditText edtIseAracBaslik,edtIseAracAciklama,edtIseAracYil,edtIseAracServisBaslamaSaati,edtIseAracServisBitisSaati,
-            edtIseAracFirmaGirisSaati,edtIseAracFirmadanCikisSaati,edtIseAracToplamKM,edtIseAracCalisilacakGunSayisi;
+            edtIseAracFirmaGirisSaati,edtIseAracFirmadanCikisSaati,edtIseAracCalisilacakGunSayisi;
 
-    private CurrencyEditText edtIseAracFiyat;
+    private CurrencyEditText edtIseAracFiyat,edtIseAracToplamKM;
 
     private  AutoCompleteTextView autoCompleteIseAracil,autoCompleteIseAracilce,autoCompleteIseAracMarka,autoCompleteIseAracModel,autoCompleteIseAracKapasite,autoCompleteIseAracServisBaslamaili,
             autoCompleteIseAracServiseBaslamailce,autoCompleteIseAracServisBitisili,autoCompleteIseAracServisBitisilce;
@@ -147,6 +147,7 @@ public class IseAracFragment extends Fragment {
         edtIseAracFirmaGirisSaati = generalView.findViewById(R.id.edtIseAracFirmaGirisSaati);
         edtIseAracFirmadanCikisSaati = generalView.findViewById(R.id.edtIseAracFirmadanCikisSaati);
         edtIseAracToplamKM = generalView.findViewById(R.id.edtIseAracToplamKM);
+        edtIseAracToplamKM.setDecimals(false);
         edtIseAracCalisilacakGunSayisi = generalView.findViewById(R.id.edtIseAracCalisilacakGunSayisi);
 
 
@@ -588,6 +589,7 @@ public class IseAracFragment extends Fragment {
                 firmaGirisSaati = edtIseAracFirmaGirisSaati.getText().toString();
                 firmaCikisSaati = edtIseAracFirmadanCikisSaati.getText().toString();
                 toplamKM = edtIseAracToplamKM.getText().toString();
+                Log.i("ToplamKm" , toplamKM);
                 gunSayisi = edtIseAracCalisilacakGunSayisi.getText().toString();
 
 

@@ -72,9 +72,9 @@ public class SatilikAracFragment extends Fragment {
 
     private ImageView imgSatilikAracFirstPhoto,imgSatilikAracFirstPhotoChange,imgSatilikAracSecondPhoto,imgSatilikAracSecondPhotoChange,imgSatilikAracLastPhoto,imgSatilikAracLastChange;
 
-    private TextInputEditText edtSatilikAracBaslik,edtSatilikAracAciklama,edtSatilikAracAracYili,edtSatilikAracKM;
+    private TextInputEditText edtSatilikAracBaslik,edtSatilikAracAciklama,edtSatilikAracAracYili;
 
-    private CurrencyEditText edtSatilikAracFiyat;
+    private CurrencyEditText edtSatilikAracFiyat,edtSatilikAracKM;
 
     private AutoCompleteTextView autoCompleteSatilikAracil,autoCompleteSatilikAracilce,autoCompleteSatilikAracMarka,autoCompleteSatilikAracModel,autoCompleteSatilikAracAltModel
             ,autoCompleteSatilikAracMotorHacmi,autoCompleteSatilikAracMotorGucu,autoCompleteSatilikAracKapasite,autoCompleteSatilikAracKimden;
@@ -141,6 +141,7 @@ public class SatilikAracFragment extends Fragment {
         edtSatilikAracAciklama = generalView.findViewById(R.id.edtSatilikAracAciklama);
         edtSatilikAracAracYili = generalView.findViewById(R.id.edtSatilikAracAracYili);
         edtSatilikAracKM = generalView.findViewById(R.id.edtSatilikAracKM);
+        edtSatilikAracKM.setDecimals(false);
 
 
         imgSatilikAracFirstPhoto = generalView.findViewById(R.id.imgSatilikAracFirstPhoto);

@@ -479,7 +479,7 @@
                     android:background="@color/colorWhite"
                     android:hint="@string/ToplamKM">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <me.abhinay.input.CurrencyEditText
                         android:id="@+id/edtAracaIsToplamKM"
                         android:inputType="number"
                         android:background="@color/colorWhite"
