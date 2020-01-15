@@ -461,8 +461,17 @@ public class SoforeIsFragment extends Fragment {
                     }
                 },3000);
 
+                boolean isFiyatNull = edtSoforeIsFiyat.getText().toString().isEmpty();
+                if(isFiyatNull)
+                {
+                    fiyat = "0";
+                }
+                else
+                {
+                    fiyat = String.valueOf(edtSoforeIsFiyat.getCleanDoubleValue());
+                }
+
                 baslik = edtSoforeIsBaslik.getText().toString();
-                fiyat = String.valueOf(edtSoforeIsFiyat.getCleanDoubleValue());
                 aciklama = edtSoforeIsAciklama.getText().toString();
                 tecrube = edtSoforeIsTecrube.getText().toString();
                 serviseBaslamaSaati = edtSoforeIsServisBaslamaSaati.getText().toString();

@@ -570,8 +570,17 @@ public class IseAracFragment extends Fragment {
                 },3000);
 
 
+                boolean isFiyatNull = edtIseAracFiyat.getText().toString().isEmpty();
+                if(isFiyatNull)
+                {
+                    fiyat = "0";
+                }
+                else
+                {
+                    fiyat = String.valueOf(edtIseAracFiyat.getCleanDoubleValue());
+                }
+
                 baslik = edtIseAracBaslik.getText().toString();
-                fiyat = String.valueOf(edtIseAracFiyat.getCleanDoubleValue());
                 aciklama = edtIseAracAciklama.getText().toString();
                 yil = edtIseAracYil.getText().toString();
                 servisBaslamaSaati = edtIseAracServisBaslamaSaati.getText().toString();

@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import me.abhinay.input.CurrencyEditText;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,7 +62,8 @@ public class SatilikPlakaFragment extends Fragment {
     private TextView txtSatilikPlakaGonder;
     private RelativeLayout relSatilikPlakaFirstPhoto,relSatilikPlakaSecondPhoto,relSatilikPlakaLastPhoto;
     private ImageView imgSatilikPlakaFirstPhoto,imgSatilikPlakaFirstPhotoChange,imgSatilikPlakaSecondPhoto,imgSatilikPlakaSecondPhotoChange , imgSatilikPlakaLastPhoto , imgSatilikPlakaLastChange ;
-    private TextInputEditText edtSatilikPlakaBaslik,edtSatilikPlakaFiyat,edtSatilikPlakaAciklama,edtSatilikPlakaPlaka;
+    private TextInputEditText edtSatilikPlakaBaslik,edtSatilikPlakaAciklama,edtSatilikPlakaPlaka;
+    private CurrencyEditText edtSatilikPlakaFiyat;
     private AutoCompleteTextView autoCompleteSatilikPlakail,autoCompleteSatilikPlakailce;
 
     private String baslik,aciklama,fiyat,plaka;
@@ -298,8 +300,17 @@ public class SatilikPlakaFragment extends Fragment {
                     }
                 },3000);
 
+                boolean isFiyatNull = edtSatilikPlakaFiyat.getText().toString().isEmpty();
+                if(isFiyatNull)
+                {
+                    fiyat = "0";
+                }
+                else
+                {
+                    fiyat = String.valueOf(edtSatilikPlakaFiyat.getCleanDoubleValue());
+                }
+
                 baslik = edtSatilikPlakaBaslik.getText().toString();
-                fiyat = edtSatilikPlakaFiyat.getText().toString();
                 aciklama = edtSatilikPlakaAciklama.getText().toString();
                 plaka = edtSatilikPlakaPlaka.getText().toString();
 

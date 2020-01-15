@@ -366,8 +366,17 @@ public class YedekParcaFragment extends Fragment {
                     }
                 },3000);
 
+                boolean isFiyatNull = edtYedekParcaFiyat.getText().toString().isEmpty();
+                if(isFiyatNull)
+                {
+                    fiyat = "0";
+                }
+                else
+                {
+                    fiyat = String.valueOf(edtYedekParcaFiyat.getCleanDoubleValue());
+                }
+
                 baslik = edtYedekParcaBaslik.getText().toString();
-                fiyat = String.valueOf(edtYedekParcaFiyat.getCleanDoubleValue());
                 aciklama = edtYedekParcaAciklama.getText().toString();
                 marka = edtYedekParcaMarka.getText().toString();
 

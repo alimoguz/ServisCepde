@@ -421,8 +421,18 @@ public class KiralikAracFragment extends Fragment {
                     }
                 },3000);
 
+
+                boolean isFiyatNull = edtKiralikAracFiyat.getText().toString().isEmpty();
+                if(isFiyatNull)
+                {
+                    fiyat = "0";
+                }
+                else
+                {
+                    fiyat = String.valueOf(edtKiralikAracFiyat.getCleanDoubleValue());
+                }
+
                 baslik = edtKiralikAracBaslik.getText().toString();
-                fiyat = String.valueOf(edtKiralikAracFiyat.getCleanDoubleValue());
                 aciklama = edtKiralikAracAciklama.getText().toString();
                 yil = edtKiralikAracAracYili.getText().toString();
                 aylikFiyat = edtKiralikAracAylikFiyat.getText().toString();

@@ -52,9 +52,11 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String cleanOutput = String.valueOf(etInput.getCleanDoubleValue());
+                boolean test = etInput.getText().toString().isEmpty();
+                Log.i("Bool" , " " + test);
+                /*double cleanOutput = etInput.getCleanDoubleValue();
 
-                Log.i("Value" , " " + cleanOutput);
+                Log.i("Value" , " " + cleanOutput);*/
 
             }
         });

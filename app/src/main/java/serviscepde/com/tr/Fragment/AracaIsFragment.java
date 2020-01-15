@@ -521,8 +521,18 @@ public class AracaIsFragment extends Fragment {
                     }
                 },3000);
 
+
+                boolean isFiyatNull = edtAracaIsFiyat.getText().toString().isEmpty();
+                if(isFiyatNull)
+                {
+                    fiyat = "0";
+                }
+                else
+                {
+                    fiyat = String.valueOf(edtAracaIsFiyat.getCleanDoubleValue());
+                }
+
                 baslik = edtAracaIsBaslik.getText().toString();
-                fiyat = String.valueOf(edtAracaIsFiyat.getCleanDoubleValue());
                 aciklama = edtAracaIsAciklama.getText().toString();
                 yil = edtAracaIsYil.getText().toString();
                 servisBaslamaSaati = edtAracaIsServisBaslamaSaati.getText().toString();

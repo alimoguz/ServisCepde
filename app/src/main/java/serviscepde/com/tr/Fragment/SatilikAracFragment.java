@@ -449,8 +449,17 @@ public class SatilikAracFragment extends Fragment {
                     }
                 },3000);
 
+                boolean isFiyatNull = edtSatilikAracFiyat.getText().toString().isEmpty();
+                if(isFiyatNull)
+                {
+                    fiyat = "0";
+                }
+                else
+                {
+                    fiyat = String.valueOf(edtSatilikAracFiyat.getCleanDoubleValue());
+                }
+
                 baslik = edtSatilikAracBaslik.getText().toString();
-                fiyat = edtSatilikAracFiyat.getText().toString();
                 aciklama = edtSatilikAracAciklama.getText().toString();
                 yil = edtSatilikAracAracYili.getText().toString();
                 km = edtSatilikAracKM.getText().toString();
