@@ -907,7 +907,7 @@ public class IlanDetayFragment extends Fragment {
         txtIlanTarih.setText(IlanTarih);
         txtIlanTamKonum.setText(Konum);
         txtIlanDetayAciklama.setText(Aciklama);
-        txtFiyat.setText(Fiyat);
+        txtFiyat.setText("₺".concat(Fiyat));
         txtPlaka.setText(Plaka);
 
         linMarka.setVisibility(View.GONE);
@@ -967,7 +967,7 @@ public class IlanDetayFragment extends Fragment {
         txtServisBitisKonum.setText(ServisBitisKonum);
         txtToplamKM.setText(ToplamKM);
         txtGunSayisi.setText(GunSayisi);
-        txtFiyat.setText(Fiyat);
+        txtFiyat.setText("₺".concat(Fiyat));
 
         if(ozelliklerID.contains("1"))
         {
@@ -1037,7 +1037,7 @@ public class IlanDetayFragment extends Fragment {
         txtToplamKM.setText(ToplamKM);
         txtGunSayisi.setText(GunSayisi);
         txtIlanDetayAciklama.setText(Aciklama);
-        txtFiyat.setText(Fiyat);
+        txtFiyat.setText("₺".concat(Fiyat));
         txtTecrube.setText(Tecrube);
         txtPlaka.setText(Plaka);
         txtReferans.setText(Referans);
@@ -1109,7 +1109,7 @@ public class IlanDetayFragment extends Fragment {
         txtServisBitisKonum.setText(ServisBitisKonum);
         txtFirmaGirisSaat.setText(FirmaGirisSaat);
         txtFirmaCikisSaat.setText(FirmaCikisSaat);
-        txtFiyat.setText(Fiyat);
+        txtFiyat.setText("₺".concat(Fiyat));
         txtGunSayisi.setText(GunSayisi);
         txtTecrube.setText(Tecrube);
 
@@ -1152,7 +1152,7 @@ public class IlanDetayFragment extends Fragment {
         txtIlanTamKonum.setText(Konum);
         txtIlanDetayAciklama.setText(Aciklama);
         txtYas.setText(Yas);
-        txtFiyat.setText(Fiyat);
+        txtFiyat.setText("₺".concat(Fiyat));
         txtKapasiteler.setText(Kapasiteler);
         txtServisBaslamaKonum.setText(ServisBaslamaKonum);
         txtServisBaslamaSaat.setText(ServisBaslamaSaat);
@@ -1198,7 +1198,7 @@ public class IlanDetayFragment extends Fragment {
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
-        txtFiyat.setText(Fiyat);
+        txtFiyat.setText("₺".concat(Fiyat));
         txtIlanTamKonum.setText(Konum);
         txtIlanDetayAciklama.setText(Aciklama);
         txtAracMarkasi.setText(AracMarkasi);
@@ -1248,7 +1248,7 @@ public class IlanDetayFragment extends Fragment {
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
-        txtFiyat.setText(Fiyat);
+        txtFiyat.setText("₺".concat(Fiyat));
         txtIlanTamKonum.setText(Konum);
         txtIlanDetayAciklama.setText(Aciklama);
         txtAracMarkasi.setText(AracMarkasi);
@@ -1298,7 +1298,7 @@ public class IlanDetayFragment extends Fragment {
         txtIlanNo.setText(IlanNo);
         txtIlanSahibi.setText(IlanSahibi);
         txtIlanTarih.setText(IlanTarih);
-        txtFiyat.setText(Fiyat);
+        txtFiyat.setText("₺".concat(Fiyat));
         txtIlanTamKonum.setText(Konum);
         txtYedekParcaDurumu.setText(YedekParcaDurumu);
         txtParcaMarkasi.setText(ParcaMarkasi);
