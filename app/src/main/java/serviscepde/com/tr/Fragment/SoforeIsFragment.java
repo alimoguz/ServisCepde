@@ -31,6 +31,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+
+import me.abhinay.input.CurrencyEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -73,7 +75,9 @@ public class SoforeIsFragment extends Fragment {
 
     private ImageView imgSoforeIsFirstPhoto,imgSoforeIsFirstPhotoChange,imgSoforeIsSecondPhoto,imgSoforeIsSecondPhotoChange,imgSoforeIsLastPhoto,imgSoforeIsLastChange;
 
-    private TextInputEditText edtSoforeIsBaslik,edtSoforeIsFiyat,edtSoforeIsAciklama,edtSoforeIsTecrube,edtSoforeIsServisBaslamaSaati,edtSoforeIsYas,edtSoforeIsBelgeler;
+    private TextInputEditText edtSoforeIsBaslik,edtSoforeIsAciklama,edtSoforeIsTecrube,edtSoforeIsServisBaslamaSaati,edtSoforeIsYas,edtSoforeIsBelgeler;
+
+    private CurrencyEditText edtSoforeIsFiyat;
 
     private AutoCompleteTextView autoCompleteSoforeIsil,autoCompleteSoforeIsilce,autoCompleteSoforeIsServisBaslamaili,autoCompleteSoforeIsServiseBaslamailce;
 
@@ -458,7 +462,7 @@ public class SoforeIsFragment extends Fragment {
                 },3000);
 
                 baslik = edtSoforeIsBaslik.getText().toString();
-                fiyat = edtSoforeIsFiyat.getText().toString();
+                fiyat = String.valueOf(edtSoforeIsFiyat.getCleanDoubleValue());
                 aciklama = edtSoforeIsAciklama.getText().toString();
                 tecrube = edtSoforeIsTecrube.getText().toString();
                 serviseBaslamaSaati = edtSoforeIsServisBaslamaSaati.getText().toString();

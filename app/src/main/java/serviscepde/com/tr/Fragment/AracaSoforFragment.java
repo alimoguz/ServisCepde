@@ -25,6 +25,8 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
+
+import me.abhinay.input.CurrencyEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -60,8 +62,10 @@ public class AracaSoforFragment extends Fragment {
 
     View generalView;
 
-    private TextInputEditText edtAracaSoforBaslik,edtAracaSoforFiyat,edtAracaSoforAciklama,edtAracaSoforServisBaslamaSaati,edtAracaSoforServisBitisSaati,
+    private TextInputEditText edtAracaSoforBaslik,edtAracaSoforAciklama,edtAracaSoforServisBaslamaSaati,edtAracaSoforServisBitisSaati,
             edtAracaSoforFirmaGirisSaati,edtAracaSoforFirmadanCikisSaati,edtAracaSoforTecrube,edtAracaSoforCalisilacakGunSayisi;
+
+    private CurrencyEditText edtAracaSoforFiyat;
 
     private AutoCompleteTextView autoCompleteAracaSoforil,autoCompleteAracaSoforilce,autoCompleteAracaSoforKapasite,autoCompleteAracaSoforServisBaslamaili,
             autoCompleteAracaSoforServiseBaslamailce,autoCompleteAracaSoforServisBitisili,autoCompleteAracaSoforServisBitisilce;
@@ -455,7 +459,7 @@ public class AracaSoforFragment extends Fragment {
                 },3000);
 
                 baslik = edtAracaSoforBaslik.getText().toString();
-                fiyat = edtAracaSoforFiyat.getText().toString();
+                fiyat = String.valueOf(edtAracaSoforFiyat.getCleanDoubleValue());
                 aciklama = edtAracaSoforAciklama.getText().toString();
                 servisBaslamaSaati = edtAracaSoforServisBaslamaSaati.getText().toString();
                 servisBitisSaati = edtAracaSoforServisBitisSaati.getText().toString();

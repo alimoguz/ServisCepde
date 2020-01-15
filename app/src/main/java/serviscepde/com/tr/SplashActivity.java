@@ -72,6 +72,13 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
 
+        if (isTesting) {
+            Intent test = new Intent(this, TestActivity.class);
+            startActivity(test);
+        }
+
+
+
         Bundle quit = this.getIntent().getExtras();
         if (quit != null)
         {
@@ -109,10 +116,6 @@ public class SplashActivity extends AppCompatActivity {
         ilces = new ArrayList<>();
 
 
-        if (isTesting) {
-            Intent test = new Intent(this, TestActivity.class);
-            startActivity(test);
-        }
 
 
 

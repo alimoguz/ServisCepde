@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 
+import me.abhinay.input.CurrencyEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -63,8 +64,10 @@ public class AracaIsFragment extends Fragment {
 
     private Switch switchAracaIsOkulTasiti,switchAracaIsTurizmPaketi,switchAracaIsKlima,switchAracaIsDeriDoseme,switchAracaIsTribunTavan,switchAracaIsYatarKoltuk;
 
-    private TextInputEditText edtAracaIsBaslik,edtAracaIsFiyat,edtAracaIsAciklama,edtAracaIsYil,edtAracaIsServisBaslamaSaati,edtAracaIsServisBitisSaati,
+    private TextInputEditText edtAracaIsBaslik,edtAracaIsAciklama,edtAracaIsYil,edtAracaIsServisBaslamaSaati,edtAracaIsServisBitisSaati,
             edtAracaIsTecrube,edtAracaIsPlaka,edtAracaIsReferans,edtAracaIsToplamKM,edtAracaIsCalisilacakGunSayisi;
+
+    private CurrencyEditText edtAracaIsFiyat;
 
 
     private AutoCompleteTextView autoCompleteAracaIsil,autoCompleteAracaIsilce,autoCompleteAracaIsMarka,autoCompleteAracaIsModel,autoCompleteAracaIsKapasite,autoCompleteAracaIsServisBaslamaili,
@@ -137,6 +140,7 @@ public class AracaIsFragment extends Fragment {
         edtAracaIsReferans = generalView.findViewById(R.id.edtAracaIsReferans);
         edtAracaIsToplamKM = generalView.findViewById(R.id.edtAracaIsToplamKM);
         edtAracaIsCalisilacakGunSayisi = generalView.findViewById(R.id.edtAracaIsCalisilacakGunSayisi);
+
 
 
         autoCompleteAracaIsil = generalView.findViewById(R.id.autoCompleteAracaIsil);
@@ -518,7 +522,7 @@ public class AracaIsFragment extends Fragment {
                 },3000);
 
                 baslik = edtAracaIsBaslik.getText().toString();
-                fiyat = edtAracaIsFiyat.getText().toString();
+                fiyat = String.valueOf(edtAracaIsFiyat.getCleanDoubleValue());
                 aciklama = edtAracaIsAciklama.getText().toString();
                 yil = edtAracaIsYil.getText().toString();
                 servisBaslamaSaati = edtAracaIsServisBaslamaSaati.getText().toString();

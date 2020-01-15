@@ -25,6 +25,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import me.abhinay.input.CurrencyEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -70,7 +72,9 @@ public class SatilikAracFragment extends Fragment {
 
     private ImageView imgSatilikAracFirstPhoto,imgSatilikAracFirstPhotoChange,imgSatilikAracSecondPhoto,imgSatilikAracSecondPhotoChange,imgSatilikAracLastPhoto,imgSatilikAracLastChange;
 
-    private TextInputEditText edtSatilikAracBaslik,edtSatilikAracFiyat,edtSatilikAracAciklama,edtSatilikAracAracYili,edtSatilikAracKM;
+    private TextInputEditText edtSatilikAracBaslik,edtSatilikAracAciklama,edtSatilikAracAracYili,edtSatilikAracKM;
+
+    private CurrencyEditText edtSatilikAracFiyat;
 
     private AutoCompleteTextView autoCompleteSatilikAracil,autoCompleteSatilikAracilce,autoCompleteSatilikAracMarka,autoCompleteSatilikAracModel,autoCompleteSatilikAracAltModel
             ,autoCompleteSatilikAracMotorHacmi,autoCompleteSatilikAracMotorGucu,autoCompleteSatilikAracKapasite,autoCompleteSatilikAracKimden;

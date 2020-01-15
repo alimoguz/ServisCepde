@@ -26,6 +26,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
+
+import me.abhinay.input.CurrencyEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -68,7 +70,9 @@ public class KiralikAracFragment extends Fragment {
 
     private ImageView imgKiralikAracLastChange,imgKiralikAracLastPhoto,imgKiralikAracSecondPhotoChange,imgKiralikAracSecondPhoto,imgKiralikAracFirstPhotoChange,imgKiralikAracFirstPhoto;
 
-    private TextInputEditText edtKiralikAracAylikFiyat,edtKiralikAracHaftalikFiyat,edtKiralikAracAracYili,edtKiralikAracAciklama,edtKiralikAracFiyat,edtKiralikAracBaslik;
+    private TextInputEditText edtKiralikAracAylikFiyat,edtKiralikAracHaftalikFiyat,edtKiralikAracAracYili,edtKiralikAracAciklama,edtKiralikAracBaslik;
+
+    private CurrencyEditText edtKiralikAracFiyat;
 
     private AutoCompleteTextView autoCompleteKiralikAracKasko,autoCompleteKiralikAracKapasite,autoCompleteKiralikAracYakitTipi,autoCompleteKiralikAracVitesTipi,
             autoCompleteKiralikAracModel,autoCompleteKiralikAracMarka,autoCompleteKiralikAracilce,autoCompleteKiralikAracil;
@@ -418,7 +422,7 @@ public class KiralikAracFragment extends Fragment {
                 },3000);
 
                 baslik = edtKiralikAracBaslik.getText().toString();
-                fiyat = edtKiralikAracFiyat.getText().toString();
+                fiyat = String.valueOf(edtKiralikAracFiyat.getCleanDoubleValue());
                 aciklama = edtKiralikAracAciklama.getText().toString();
                 yil = edtKiralikAracAracYili.getText().toString();
                 aylikFiyat = edtKiralikAracAylikFiyat.getText().toString();

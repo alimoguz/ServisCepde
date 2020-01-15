@@ -355,7 +355,7 @@
                     android:background="@color/colorWhite"
                     android:hint="@string/AylıkFiyat">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <me.abhinay.input.CurrencyEditText
                         android:id="@+id/edtKiralikAracAylikFiyat"
                         android:inputType="number"
                         android:background="@color/colorWhite"

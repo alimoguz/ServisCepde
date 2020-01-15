@@ -356,7 +356,7 @@ public class SatilikPlakaFragment extends Fragment {
         hashMap1.put("Baslik" , baslik);
         hashMap1.put("ilanCity" , cityId);
         hashMap1.put("ilanSemtleri" , townId);
-        hashMap1.put("Ucret" , fiyat);
+        hashMap1.put("Fiyat" , fiyat);
         hashMap1.put("file" , imageArray);
         hashMap1.put("ilanAciklamasi" , aciklama);
         hashMap1.put("Plaka" , plaka);

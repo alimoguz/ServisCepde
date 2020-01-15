@@ -224,12 +224,13 @@
                     android:background="@color/colorWhite"
                     android:hint="@string/Fiyat">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <me.abhinay.input.CurrencyEditText
                         android:id="@+id/edtAracaIsFiyat"
-                        android:background="@color/colorWhite"
-                        android:inputType="number"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorWhite"
+                        android:inputType="number" />
+
 
                 </com.google.android.material.textfield.TextInputLayout>
 

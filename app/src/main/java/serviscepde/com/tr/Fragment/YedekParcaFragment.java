@@ -27,6 +27,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
+
+import me.abhinay.input.CurrencyEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -67,7 +69,9 @@ public class YedekParcaFragment extends Fragment {
 
     private ImageView imgYedekParcaFirstPhoto,imgYedekParcaFirstPhotoChange,imgYedekParcaSecondPhoto,imgYedekParcaSecondPhotoChange,imgYedekParcaLastPhoto,imgYedekParcaLastChange;
 
-    private TextInputEditText edtYedekParcaBaslik,edtYedekParcaFiyat,edtYedekParcaAciklama,edtYedekParcaMarka;
+    private TextInputEditText edtYedekParcaBaslik,edtYedekParcaAciklama,edtYedekParcaMarka;
+
+    private CurrencyEditText edtYedekParcaFiyat;
 
     private AutoCompleteTextView autoCompleteYedekParcail,autoCompleteYedekParcailce,autoCompleteYedekParcaDurumu;
 
@@ -363,7 +367,7 @@ public class YedekParcaFragment extends Fragment {
                 },3000);
 
                 baslik = edtYedekParcaBaslik.getText().toString();
-                fiyat = edtYedekParcaFiyat.getText().toString();
+                fiyat = String.valueOf(edtYedekParcaFiyat.getCleanDoubleValue());
                 aciklama = edtYedekParcaAciklama.getText().toString();
                 marka = edtYedekParcaMarka.getText().toString();
 

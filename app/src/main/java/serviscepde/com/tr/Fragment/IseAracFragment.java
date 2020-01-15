@@ -30,6 +30,8 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
+
+import me.abhinay.input.CurrencyEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -69,8 +71,10 @@ public class IseAracFragment extends Fragment {
     View generalView;
 
 
-    private  TextInputEditText edtIseAracBaslik,edtIseAracFiyat,edtIseAracAciklama,edtIseAracYil,edtIseAracServisBaslamaSaati,edtIseAracServisBitisSaati,
+    private  TextInputEditText edtIseAracBaslik,edtIseAracAciklama,edtIseAracYil,edtIseAracServisBaslamaSaati,edtIseAracServisBitisSaati,
             edtIseAracFirmaGirisSaati,edtIseAracFirmadanCikisSaati,edtIseAracToplamKM,edtIseAracCalisilacakGunSayisi;
+
+    private CurrencyEditText edtIseAracFiyat;
 
     private  AutoCompleteTextView autoCompleteIseAracil,autoCompleteIseAracilce,autoCompleteIseAracMarka,autoCompleteIseAracModel,autoCompleteIseAracKapasite,autoCompleteIseAracServisBaslamaili,
             autoCompleteIseAracServiseBaslamailce,autoCompleteIseAracServisBitisili,autoCompleteIseAracServisBitisilce;
@@ -567,7 +571,7 @@ public class IseAracFragment extends Fragment {
 
 
                 baslik = edtIseAracBaslik.getText().toString();
-                fiyat = edtIseAracFiyat.getText().toString();
+                fiyat = String.valueOf(edtIseAracFiyat.getCleanDoubleValue());
                 aciklama = edtIseAracAciklama.getText().toString();
                 yil = edtIseAracYil.getText().toString();
                 servisBaslamaSaati = edtIseAracServisBaslamaSaati.getText().toString();
