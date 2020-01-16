@@ -29,6 +29,7 @@ import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 
 import me.abhinay.input.CurrencyEditText;
+import me.abhinay.input.CurrencySymbols;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -118,6 +119,7 @@ public class YedekParcaFragment extends Fragment {
 
         edtYedekParcaBaslik = generalView.findViewById(R.id.edtYedekParcaBaslik);
         edtYedekParcaFiyat = generalView.findViewById(R.id.edtYedekParcaFiyat);
+        edtYedekParcaFiyat.setCurrency(CurrencySymbols.NONE);
         edtYedekParcaAciklama = generalView.findViewById(R.id.edtYedekParcaAciklama);
         edtYedekParcaMarka = generalView.findViewById(R.id.edtYedekParcaMarka);
 

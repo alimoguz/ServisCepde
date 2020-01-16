@@ -87,10 +87,8 @@ public class BildirimGonderFragment extends Fragment {
         acBildirimIl.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 cityId = parent.getItemAtPosition(position).toString();
                 cityId = DownloadClass.getCityIdWithName(cityId);
-
             }
         });
 
@@ -164,27 +162,16 @@ public class BildirimGonderFragment extends Fragment {
                                 pDialog.dismiss();
                                 e.printStackTrace();
                             }
-
-
                         }
 
                         @Override
                         public void onFailure(Call<BaseResponse> call, Throwable t) {
                             pDialog.dismiss();
-
                         }
                     });
-
-
-
                 }
-
             }
         });
-
-
-
-
         return rootView;
     }
 }

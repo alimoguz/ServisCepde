@@ -271,9 +271,6 @@ public class FiltreFragment extends Fragment {
             }
         }
 
-
-
-
         sehirler = DownloadClass.getCities();
         cityNames = DownloadClass.getCityNames();
         marka = DownloadClass.getMarkaNames();
@@ -283,7 +280,6 @@ public class FiltreFragment extends Fragment {
         gucNames = DownloadClass.getGucNames();
         hacims = DownloadClass.getMotorHacim();
         hacimNames = DownloadClass.getHacimNames();
-
 
         Utils.setAutoCompleteAdapter(acFiltreIl , cityNames ,ctx);
         Utils.setAutoCompleteAdapter(acFiltreServisBaslamaIl , cityNames ,ctx);
@@ -526,7 +522,6 @@ public class FiltreFragment extends Fragment {
                     linFiltreler.setVisibility(View.GONE);
                     Glide.with(ctx).load(R.drawable.satilik_plaka).into(imgType);
                 }
-
             }
 
             @Override
@@ -739,7 +734,6 @@ public class FiltreFragment extends Fragment {
                                 iptal.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-
                                         param.put("IsSaved" , 0);
                                         param.put("SavedName" , null);
                                         openFilterResult(param);
@@ -765,10 +759,8 @@ public class FiltreFragment extends Fragment {
                                             param.put("SavedName" , filtreAd);
                                             openFilterResult(param);
                                         }
-
                                     }
                                 });
-
                             }
                             else
                             {
@@ -783,17 +775,13 @@ public class FiltreFragment extends Fragment {
             }
         });
 
-
         return rootView;
     }
 
     private void openFilterResult(HashMap param) {
-
         Intent filterResult = new Intent(ctx , FilterResultActivity.class);
         filterResult.putExtra("paramHash" , param);
         startActivity(filterResult);
-
-
     }
 
     private void loadYedekParca() {

@@ -28,6 +28,7 @@ import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 
 import me.abhinay.input.CurrencyEditText;
+import me.abhinay.input.CurrencySymbols;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -132,6 +133,7 @@ public class KiralikAracFragment extends Fragment {
         edtKiralikAracAracYili = generalView.findViewById(R.id.edtKiralikAracAracYili);
         edtKiralikAracAciklama = generalView.findViewById(R.id.edtKiralikAracAciklama);
         edtKiralikAracFiyat = generalView.findViewById(R.id.edtKiralikAracFiyat);
+        edtKiralikAracFiyat.setCurrency(CurrencySymbols.NONE);
         edtKiralikAracBaslik = generalView.findViewById(R.id.edtKiralikAracBaslik);
 
 

@@ -33,6 +33,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 
 import me.abhinay.input.CurrencyEditText;
+import me.abhinay.input.CurrencySymbols;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -133,6 +134,7 @@ public class SoforeIsFragment extends Fragment {
 
         edtSoforeIsBaslik = generalView.findViewById(R.id.edtSoforeIsBaslik);
         edtSoforeIsFiyat = generalView.findViewById(R.id.edtSoforeIsFiyat);
+        edtSoforeIsFiyat.setCurrency(CurrencySymbols.NONE);
         edtSoforeIsAciklama = generalView.findViewById(R.id.edtSoforeIsAciklama);
         edtSoforeIsTecrube = generalView.findViewById(R.id.edtSoforeIsTecrube);
         edtSoforeIsServisBaslamaSaati = generalView.findViewById(R.id.edtSoforeIsServisBaslamaSaati);

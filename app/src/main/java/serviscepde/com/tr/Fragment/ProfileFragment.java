@@ -96,7 +96,6 @@ public class ProfileFragment extends Fragment {
             txtKayitliAramalar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     loadFragment(kayitliAramaFragment);
                 }
             });
@@ -104,18 +103,14 @@ public class ProfileFragment extends Fragment {
             txtProfiliDuzenle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     loadFragment(kullaniciDuzenleFragment);
-
                 }
             });
 
             txtBildirimGonder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     loadFragment(bildirimGonderFragment);
-
                 }
             });
 
@@ -174,32 +169,23 @@ public class ProfileFragment extends Fragment {
                                 transaction.replace(R.id.fragMain , ilanlarimFragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();
-
                             }
                         });
-
-
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
                 }
 
                 @Override
                 public void onFailure(Call<BaseResponse> call, Throwable t) {
-
                     Log.i("Başarısız" , t.getMessage());
-
                 }
             });
             return rootView;
-
         }
 
         return null;
-
 
     }
 
@@ -209,7 +195,5 @@ public class ProfileFragment extends Fragment {
         transaction.replace(R.id.fragMain , fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
-
     }
 }

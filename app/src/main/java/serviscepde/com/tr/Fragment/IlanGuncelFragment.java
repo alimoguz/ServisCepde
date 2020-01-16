@@ -129,13 +129,9 @@ public class IlanGuncelFragment extends Fragment {
                     rvGuncelIlanlar.setItemAnimator(new DefaultItemAnimator());
                     rvGuncelIlanlar.setAdapter(adapter);
 
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override

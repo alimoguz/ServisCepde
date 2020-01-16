@@ -36,6 +36,7 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import me.abhinay.input.CurrencyEditText;
+import me.abhinay.input.CurrencySymbols;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -112,6 +113,7 @@ public class SatilikPlakaFragment extends Fragment {
 
         edtSatilikPlakaBaslik = generalView.findViewById(R.id.edtSatilikPlakaBaslik);
         edtSatilikPlakaFiyat = generalView.findViewById(R.id.edtSatilikPlakaFiyat);
+        edtSatilikPlakaFiyat.setCurrency(CurrencySymbols.NONE);
         edtSatilikPlakaAciklama = generalView.findViewById(R.id.edtSatilikPlakaAciklama);
         edtSatilikPlakaPlaka = generalView.findViewById(R.id.edtSatilikPlakaPlaka);
 

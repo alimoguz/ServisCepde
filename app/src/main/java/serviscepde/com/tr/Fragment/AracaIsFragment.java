@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 
 import me.abhinay.input.CurrencyEditText;
+import me.abhinay.input.CurrencySymbols;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -48,6 +49,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 
@@ -131,6 +133,7 @@ public class AracaIsFragment extends Fragment {
 
         edtAracaIsBaslik = generalView.findViewById(R.id.edtAracaIsBaslik);
         edtAracaIsFiyat = generalView.findViewById(R.id.edtAracaIsFiyat);
+        edtAracaIsFiyat.setCurrency(CurrencySymbols.NONE);
         edtAracaIsAciklama = generalView.findViewById(R.id.edtAracaIsAciklama);
         edtAracaIsYil = generalView.findViewById(R.id.edtAracaIsYil);
         edtAracaIsServisBaslamaSaati = generalView.findViewById(R.id.edtAracaIsServisBaslamaSaati);

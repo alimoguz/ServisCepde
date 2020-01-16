@@ -1,5 +1,6 @@
 package serviscepde.com.tr.Adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,11 +111,13 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
                     hashMap.put("param" , hashMap1);
                     hashMap.put("Token" , userToken);
 
+                    Log.i("BildirimClick--" , bildirim.getStatus());
                     Call<BaseResponse> call = App.getApiService().bildirimOku(hashMap);
                     call.enqueue(new Callback<BaseResponse>() {
                         @Override
                         public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
 
+                            Log.i("BildirimClick++" , bildirim.getStatus());
                             if(bildirim.getStatus().equals("0"))
                             {
                                 Glide.with(itemView).clear(imgBildirimDurum);

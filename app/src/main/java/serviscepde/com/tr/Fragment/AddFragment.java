@@ -168,9 +168,7 @@ public class AddFragment extends Fragment {
 
             return rootView;
         }
-
         return rootView;
-
     }
 
     private void choosePhoto()

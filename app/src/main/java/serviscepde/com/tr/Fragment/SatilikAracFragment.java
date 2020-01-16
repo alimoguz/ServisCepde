@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import me.abhinay.input.CurrencyEditText;
+import me.abhinay.input.CurrencySymbols;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -138,6 +139,7 @@ public class SatilikAracFragment extends Fragment {
 
         edtSatilikAracBaslik = generalView.findViewById(R.id.edtSatilikAracBaslik);
         edtSatilikAracFiyat = generalView.findViewById(R.id.edtSatilikAracFiyat);
+        edtSatilikAracFiyat.setCurrency(CurrencySymbols.NONE);
         edtSatilikAracAciklama = generalView.findViewById(R.id.edtSatilikAracAciklama);
         edtSatilikAracAracYili = generalView.findViewById(R.id.edtSatilikAracAracYili);
         edtSatilikAracKM = generalView.findViewById(R.id.edtSatilikAracKM);

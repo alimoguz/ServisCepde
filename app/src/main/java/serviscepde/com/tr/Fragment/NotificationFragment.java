@@ -19,6 +19,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,6 +78,12 @@ public class NotificationFragment extends Fragment {
         txt = generalView.findViewById(R.id.txt);
         rvBildirimler = generalView.findViewById(R.id.rvBildirimler);
         imgBildirimIcon = generalView.findViewById(R.id.imgBildirimIcon);
+
+        MobileAds.initialize(ctx ,"ca-app-pub-3940256099942544/6300978111");
+
+        AdView adViewBildirim = generalView.findViewById(R.id.adViewBildirim);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adViewBildirim.loadAd(adRequest);
 
         clearAdapter();
 

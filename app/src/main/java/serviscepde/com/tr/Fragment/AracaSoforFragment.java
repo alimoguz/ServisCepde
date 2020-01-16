@@ -27,6 +27,7 @@ import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 
 import me.abhinay.input.CurrencyEditText;
+import me.abhinay.input.CurrencySymbols;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -111,6 +112,7 @@ public class AracaSoforFragment extends Fragment {
 
         edtAracaSoforBaslik = generalView.findViewById(R.id.edtAracaSoforBaslik);
         edtAracaSoforFiyat = generalView.findViewById(R.id.edtAracaSoforFiyat);
+        edtAracaSoforFiyat.setCurrency(CurrencySymbols.NONE);
         edtAracaSoforAciklama = generalView.findViewById(R.id.edtAracaSoforAciklama);
         edtAracaSoforServisBaslamaSaati = generalView.findViewById(R.id.edtAracaSoforServisBaslamaSaati);
         edtAracaSoforServisBitisSaati = generalView.findViewById(R.id.edtAracaSoforServisBitisSaati);

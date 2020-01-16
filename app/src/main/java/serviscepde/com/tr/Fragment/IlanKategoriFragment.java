@@ -255,14 +255,9 @@ public class IlanKategoriFragment extends Fragment {
 
                     decideCategorySetAdapter(orderList , selectedCategory);
 
-
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
@@ -270,10 +265,6 @@ public class IlanKategoriFragment extends Fragment {
 
             }
         });
-
-
-
-
         return rootView;
     }
 
@@ -381,7 +372,6 @@ public class IlanKategoriFragment extends Fragment {
 
     public void decideCategorySetAdapter(ArrayList<IlanOzetBilgi> bilgiList , int category)
     {
-
         orderAdapter = new KategorIlanAdapter(R.layout.row_ilan , bilgiList ,category);
         orderAdapter.notifyDataSetChanged();
         rvIlanlar.setLayoutManager(new LinearLayoutManager(ctx));
@@ -402,7 +392,6 @@ public class IlanKategoriFragment extends Fragment {
             txtIlanTipi.setText(categoryName);
             txtIlanSayisi.setText(String.valueOf(bilgiList.size()));
             Log.i("Liste2" , bilgiList.size() + "\t" + category);
-
         }
 
         if(category == 3)
@@ -411,7 +400,6 @@ public class IlanKategoriFragment extends Fragment {
             txtIlanTipi.setText(categoryName);
             txtIlanSayisi.setText(String.valueOf(bilgiList.size()));
             Log.i("Liste2" , bilgiList.size() + "\t" + category);
-
         }
 
         if(category == 4)
@@ -420,7 +408,6 @@ public class IlanKategoriFragment extends Fragment {
             txtIlanTipi.setText(categoryName);
             txtIlanSayisi.setText(String.valueOf(bilgiList.size()));
             Log.i("Liste2" , bilgiList.size() + "\t" + category);
-
         }
 
         if(category == 5)
@@ -429,7 +416,6 @@ public class IlanKategoriFragment extends Fragment {
             txtIlanTipi.setText(categoryName);
             txtIlanSayisi.setText(String.valueOf(bilgiList.size()));
             Log.i("Liste2" , bilgiList.size() + "\t" + category);
-
         }
 
         if(category == 6)
@@ -438,7 +424,6 @@ public class IlanKategoriFragment extends Fragment {
             txtIlanTipi.setText(categoryName);
             txtIlanSayisi.setText(String.valueOf(bilgiList.size()));
             Log.i("Liste2" , bilgiList.size() + "\t" + category);
-
         }
 
         if(category == 7)
@@ -447,7 +432,6 @@ public class IlanKategoriFragment extends Fragment {
             txtIlanTipi.setText(categoryName);
             txtIlanSayisi.setText(String.valueOf(bilgiList.size()));
             Log.i("Liste2" , bilgiList.size() + "\t" + category);
-
         }
 
         if(category == 8)
@@ -456,7 +440,6 @@ public class IlanKategoriFragment extends Fragment {
             txtIlanTipi.setText(categoryName);
             txtIlanSayisi.setText(String.valueOf(bilgiList.size()));
             Log.i("Liste2" , bilgiList.size() + "\t" + category);
-
         }
     }
 }

@@ -133,8 +133,6 @@ public class IlanSonFragment extends Fragment {
                     rvSonIlanlar.setItemAnimator(new DefaultItemAnimator());
                     rvSonIlanlar.setAdapter(adapter);
 
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -146,7 +144,6 @@ public class IlanSonFragment extends Fragment {
 
             }
         });
-
 
         return rootView;
     }

@@ -139,7 +139,6 @@ public class IlanlarımFragment extends Fragment {
 
                             IlanOzetBilgi bilgi = new IlanOzetBilgi(ID,ilanCity,Baslik,Ucret,Resimler);
                             ilanlar.add(bilgi);
-
                         }
 
                         adapter = new IlanlarımAdapter(R.layout.row_ilanlarim , ilanlar , userToken);
@@ -147,26 +146,18 @@ public class IlanlarımFragment extends Fragment {
                         rvIlanlarim.setLayoutManager(new LinearLayoutManager(ctx));
                         rvIlanlarim.setItemAnimator(new DefaultItemAnimator());
                         rvIlanlarim.setAdapter(adapter);
-
                     }
-
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
             public void onFailure(Call<BaseResponse> call, Throwable t) {
 
                 Log.i("Başarısız" , t.getMessage());
-
             }
         });
-
-
         return rootView;
     }
 

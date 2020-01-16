@@ -108,7 +108,6 @@ public class ForgetPasswordFragment extends Fragment {
                                 transaction.replace(R.id.fragSplash , loginFragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();
-
                             }
 
                             if(status == 201)
@@ -117,15 +116,12 @@ public class ForgetPasswordFragment extends Fragment {
                                 alertNumara = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
                                 alertNumara.setTitleText(msg);
                                 alertNumara.show();
-
                             }
 
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
 
 
@@ -134,20 +130,10 @@ public class ForgetPasswordFragment extends Fragment {
 
                     }
                 });
-
-
-
-
-
-
-
-
             }
         });
 
-
         return  rootView;
-
 
     }
 }
