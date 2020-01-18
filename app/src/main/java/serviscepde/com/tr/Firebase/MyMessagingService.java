@@ -36,7 +36,7 @@ public class MyMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(final RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        MainActivity.setBadgeCount(++MainActivity.count);
+
         id = remoteMessage.getData().get("id");
         title = remoteMessage.getData().get("title");
         body = remoteMessage.getData().get("body");

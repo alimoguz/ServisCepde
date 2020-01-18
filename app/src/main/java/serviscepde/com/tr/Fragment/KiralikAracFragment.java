@@ -71,9 +71,9 @@ public class KiralikAracFragment extends Fragment {
 
     private ImageView imgKiralikAracLastChange,imgKiralikAracLastPhoto,imgKiralikAracSecondPhotoChange,imgKiralikAracSecondPhoto,imgKiralikAracFirstPhotoChange,imgKiralikAracFirstPhoto;
 
-    private TextInputEditText edtKiralikAracAylikFiyat,edtKiralikAracHaftalikFiyat,edtKiralikAracAracYili,edtKiralikAracAciklama,edtKiralikAracBaslik;
+    private TextInputEditText edtKiralikAracHaftalikFiyat,edtKiralikAracAracYili,edtKiralikAracAciklama,edtKiralikAracBaslik;
 
-    private CurrencyEditText edtKiralikAracFiyat;
+    private CurrencyEditText edtKiralikAracFiyat,edtKiralikAracAylikFiyat;
 
     private AutoCompleteTextView autoCompleteKiralikAracKasko,autoCompleteKiralikAracKapasite,autoCompleteKiralikAracYakitTipi,autoCompleteKiralikAracVitesTipi,
             autoCompleteKiralikAracModel,autoCompleteKiralikAracMarka,autoCompleteKiralikAracilce,autoCompleteKiralikAracil;
@@ -434,10 +434,20 @@ public class KiralikAracFragment extends Fragment {
                     fiyat = String.valueOf(edtKiralikAracFiyat.getCleanDoubleValue());
                 }
 
+
+                boolean isAylikNull = edtKiralikAracAylikFiyat.getText().toString().isEmpty();
+                if(isAylikNull)
+                {
+                    aylikFiyat = "0";
+                }
+                else
+                {
+                    aylikFiyat = String.valueOf(edtKiralikAracAylikFiyat.getCleanDoubleValue());
+                }
+
                 baslik = edtKiralikAracBaslik.getText().toString();
                 aciklama = edtKiralikAracAciklama.getText().toString();
                 yil = edtKiralikAracAracYili.getText().toString();
-                aylikFiyat = edtKiralikAracAylikFiyat.getText().toString();
 
                 cityId = DownloadClass.getCityIdWithName(autoCompleteKiralikAracil.getText().toString());
                 townId = DownloadClass.getTownIdWithTownName(autoCompleteKiralikAracilce.getText().toString() , cityId);
