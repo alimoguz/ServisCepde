@@ -41,4 +41,28 @@ public class Bildirim {
     public String getCreate_at() {
         return create_at;
     }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public void setBildirimID(String bildirimID) {
+        BildirimID = bildirimID;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
+    }
+
+    public void setMessage(String message) {
+        Message = message;
+    }
+
+    public void setCreate_at(String create_at) {
+        this.create_at = create_at;
+    }
 }

@@ -21,6 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.Fragment.NotificationFragment;
+import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.Bildirim;
 import serviscepde.com.tr.Models.Response.BaseResponse;
 import serviscepde.com.tr.R;
@@ -104,6 +105,7 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
 
+
                     HashMap<String , Object> hashMap = new HashMap<>();
                     HashMap<String , String> hashMap1 = new HashMap<>();
 
@@ -122,8 +124,14 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
                             {
                                 Glide.with(itemView).clear(imgBildirimDurum);
                                 Glide.with(itemView).load(R.drawable.icon_notification_read).into(imgBildirimDurum);
+                                bildirim.setStatus("1");
                                 NotificationFragment.bildirimAdapter.notifyDataSetChanged();
+                                NotificationFragment.setBildirimSayi();
+                                MainActivity.setBadgeCount(--MainActivity.count);
                             }
+
+                            /*Glide.with(itemView).load(R.drawable.icon_notification_read).into(imgBildirimDurum);
+                            NotificationFragment.bildirimAdapter.notifyDataSetChanged();*/
 
                             bildirimAlert = new SweetAlertDialog(itemView.getContext() , SweetAlertDialog.NORMAL_TYPE);
                             bildirimAlert.setTitleText(bildirim.getTitle());

@@ -52,12 +52,12 @@ public class NotificationFragment extends Fragment {
 
 
     View generalView;
-    private TextView txtBildirimSayisi,txt;
+    private static TextView txtBildirimSayisi,txt;
     public static RecyclerView rvBildirimler;
-    private ImageView imgBildirimIcon;
+    private static ImageView imgBildirimIcon;
     private Context ctx;
     private String userToken;
-    private int count = 0;
+    private static int  count = 0;
     public static BildirimAdapter bildirimAdapter;
 
     private ArrayList<Bildirim> bildirimList = new ArrayList<>();
@@ -152,6 +152,7 @@ public class NotificationFragment extends Fragment {
 
                             }
 
+
                             if(count == 0)
                             {
                                 txtBildirimSayisi.setVisibility(View.GONE);
@@ -169,8 +170,6 @@ public class NotificationFragment extends Fragment {
                             rvBildirimler.setLayoutManager(new LinearLayoutManager(ctx));
                             rvBildirimler.setItemAnimator(new DefaultItemAnimator());
                             rvBildirimler.setAdapter(bildirimAdapter);
-
-
 
                         }
 
@@ -202,9 +201,27 @@ public class NotificationFragment extends Fragment {
 
     }
 
+    public static void setBildirimSayi() {
+
+        --count;
+
+        if(count == 0)
+        {
+            txtBildirimSayisi.setVisibility(View.GONE);
+            txt.setText("Hiç bildirim yok");
+            imgBildirimIcon.setVisibility(View.GONE);
+
+        }
+        if(count != 0)
+        {
+            txtBildirimSayisi.setText(String.valueOf(count));
+        }
+    }
+
     private void clearAdapter()
     {
         bildirimList.clear();
+        count = 0;
 
         if(bildirimAdapter != null)
         {

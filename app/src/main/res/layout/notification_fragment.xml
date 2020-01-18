@@ -71,8 +71,7 @@
         android:id="@+id/adViewBildirim"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-9098556749113718/7887445686"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </com.google.android.gms.ads.AdView>

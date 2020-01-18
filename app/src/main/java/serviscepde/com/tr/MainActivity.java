@@ -4,28 +4,53 @@ import android.app.Activity;
 import androidx.annotation.NonNull;
 
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import serviscepde.com.tr.Adapter.BildirimAdapter;
 import serviscepde.com.tr.Fragment.AddFragment;
 import serviscepde.com.tr.Fragment.HomeFragment;
 import serviscepde.com.tr.Fragment.NotificationFragment;
 import serviscepde.com.tr.Fragment.ProfileFragment;
 import serviscepde.com.tr.Fragment.SearchFragment;
 import serviscepde.com.tr.Fragment.İletisimFragment;
+import serviscepde.com.tr.Models.Bildirim;
+import serviscepde.com.tr.Models.Response.BaseResponse;
+import serviscepde.com.tr.Models.Response.ResponseDetail;
+import serviscepde.com.tr.Utils.Utils;
+
+import static serviscepde.com.tr.App.TAG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,11 +65,14 @@ public class MainActivity extends AppCompatActivity {
     private ProfileFragment profileFragment;
     private İletisimFragment iletisimFragment;
     public static Activity act;
+    private String userToken;
 
     private ImageView imgIconIletisim;
 
     public static FragmentTransaction fragmentTransaction;
     public static FragmentManager fragmentManager;
+    public static int count = 0;
+    private static TextView badgeText;
 
     @Override
     public void onBackPressed() {
@@ -86,6 +114,75 @@ public class MainActivity extends AppCompatActivity {
         relHeader.setVisibility(View.VISIBLE);
         bottomNav.setVisibility(View.VISIBLE);
 
+        BottomNavigationMenuView bottomNavigationMenuView = (BottomNavigationMenuView) bottomNav.getChildAt(0);
+        View view = bottomNavigationMenuView.getChildAt(3);
+        BottomNavigationItemView itemView = (BottomNavigationItemView) view;
+
+        View badge = LayoutInflater.from(getApplicationContext()).inflate(R.layout.badge, itemView, true);
+        badgeText = badge.findViewById(R.id.notification_badge);
+
+        SharedPreferences sharedPref = this.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
+        userToken = sharedPref.getString("userToken" , "0");
+        Log.i("userToken" ,userToken);
+
+        HashMap<String , String> hashMap = new HashMap<>();
+
+        hashMap.put("Token" , userToken);
+
+        Call<BaseResponse> call = App.getApiService().getBildirimler(hashMap);
+
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+
+                ResponseDetail responseDetail = response.body().getResponseDetail();
+                String token = responseDetail.getResult();
+                JSONObject jsonObject = Utils.jwtToJsonObject(token);
+
+                try {
+                    if(jsonObject.get("OutPutMessage") instanceof  JSONObject)
+                    {
+                        Log.i(TAG, "onResponse: " + " Json Object Geldi");
+
+
+                        for (int i = 0; i < jsonObject.getJSONObject("OutPutMessage").getJSONArray("Data").length(); i++){
+
+                            JSONObject tmp = jsonObject.getJSONObject("OutPutMessage").getJSONArray("Data").getJSONObject(i);
+                            int x;
+
+                            String Status = tmp.getString("Status");
+
+                            x = Integer.parseInt(Status);
+
+                            if(x == 0)
+                            {
+                                ++count;
+                            }
+                        }
+
+                        if(count != 0)
+                        {
+                            setBadgeCount(count);
+                        }
+                    }
+
+                    if(jsonObject.get("OutPutMessage") instanceof JSONArray)
+                    {
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+
+            }
+        });
+
+
+
         loadFragment(new HomeFragment());
 
         iletisimFragment = new İletisimFragment();
@@ -101,6 +198,8 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -161,6 +260,15 @@ public class MainActivity extends AppCompatActivity {
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
+
+    public static void setBadgeCount(int count) {
+
+        String notification = Integer.toString(count);
+        badgeText.setText(notification);
+
+    }
+
+
 
 
 
