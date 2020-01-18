@@ -160,16 +160,10 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
 
-                        if(count != 0)
-                        {
-                            badge.setVisibility(View.VISIBLE);
-                            setBadgeCount(count);
-                        }
 
-                        if(count == 0)
-                        {
-                            badge.setVisibility(View.GONE);
-                        }
+                        setBadgeCount(count);
+
+
                     }
 
                     if(jsonObject.get("OutPutMessage") instanceof JSONArray)
