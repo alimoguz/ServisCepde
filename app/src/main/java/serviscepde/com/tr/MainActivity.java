@@ -264,8 +264,14 @@ public class MainActivity extends AppCompatActivity {
     public static void setBadgeCount(int count) {
 
         String notification = Integer.toString(count);
-        badgeText.setText(notification);
-
+        if(count == 0 || count < 0)
+        {
+            badgeText.setText(0);
+        }
+        else
+        {
+            badgeText.setText(notification);
+        }
     }
 
 
