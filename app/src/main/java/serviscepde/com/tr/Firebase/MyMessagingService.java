@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
@@ -17,6 +18,9 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.HashMap;
+
+import serviscepde.com.tr.Fragment.NotificationFragment;
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.R;
 
@@ -35,6 +39,16 @@ public class MyMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(final RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+
+        SharedPreferences sharedPref = this.getSharedPreferences("prefs" , Context.MODE_PRIVATE);
+        String userToken = sharedPref.getString("userToken" , "0");
+        Log.i("userToken" ,userToken);
+
+        HashMap<String , String> hashMap = new HashMap<>();
+
+        hashMap.put("Token" , userToken);
+
+        MainActivity.getNotifications(hashMap);
 
 
         id = remoteMessage.getData().get("id");
@@ -71,7 +85,14 @@ public class MyMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(this, CHANNEL);
         notifBuilder.setContentTitle(title);
+        Log.i(TAG, "sendNotification: %%%%"+ title);
+        if(title == null || title == ""){
+            notifBuilder.setContentTitle("Yeni bildiriminiz var");
+        }
         notifBuilder.setContentText(this.body);
+        if(this.body == null){
+            notifBuilder.setContentText("Görüntülemek için tıklayınız.");
+        }
         Uri sounduri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         notifBuilder.setSound(sounduri);
         notifBuilder.setSmallIcon(R.drawable.servis_logo);

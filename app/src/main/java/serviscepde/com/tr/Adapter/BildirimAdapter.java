@@ -12,8 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -73,6 +77,7 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
 
         public TextView txtBildirimBaslik,txtBildirimMetin,txtBildirimZaman;
         public ImageView imgBildirimDurum;
+        public TextView notification_item_date;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -82,6 +87,7 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
             txtBildirimMetin =itemView.findViewById(R.id.txtBildirimMetin);
             txtBildirimZaman =itemView.findViewById(R.id.txtBildirimZaman);
             imgBildirimDurum =itemView.findViewById(R.id.imgBildirimDurum);
+            notification_item_date = itemView.findViewById(R.id.notification_item_date);
 
 
         }
@@ -100,6 +106,7 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
 
             txtBildirimBaslik.setText(bildirim.getTitle());
             txtBildirimMetin.setText(bildirim.getMessage());
+            notification_item_date.setText(getDateBeforeText(bildirim.getCreate_at()));
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -153,5 +160,60 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
 
 
         }
+    }
+
+    private String getDateBeforeText(String create_at) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date past = null;
+        try {
+            past = format.parse(create_at);
+            Date now = new Date();
+            long seconds= TimeUnit.MILLISECONDS.toSeconds(now.getTime() - past.getTime());
+            long minutes=TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime());
+            long hours=TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime());
+            long days=TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime());
+
+            if(seconds<60)
+            {
+                return seconds+" saniye önce";
+            }
+            else if(minutes<60)
+            {
+                return minutes+" dakika önce";
+            }
+            else if(hours<24)
+            {
+                return hours+" saat önce";
+            }
+            if(days >= 1 && days < 2){
+                return "Dün";
+            }
+            else if(days >= 2 && days < 7){
+                return days + " gün önce";
+            }
+            else if(days >= 7 && days < 14){
+                return "1 hafta önce";
+            }
+            else if(days >= 14){
+                return days/7 + " hafta önce";
+            }
+            else if(days >= 30 && days < 60){
+                return "1 ay önce";
+            }
+            else if(days >= 60){
+                return days/30 + " ay önce";
+            }
+            else if(days >= 365 && days < 730){
+                return "1 yıl önce";
+            }
+            else if(days >= 730){
+                return days/365 + " yıl önce";
+            }
+
+        } catch (ParseException e) {
+            Log.i("%%%%", "getDateBeforeText: %%%%"+e.getMessage());
+        }
+        return "";
+
     }
 }
