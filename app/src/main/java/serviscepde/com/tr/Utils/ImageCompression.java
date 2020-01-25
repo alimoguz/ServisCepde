@@ -38,11 +38,9 @@ public class ImageCompression extends AsyncTask<String, Void, ArrayList<String>>
     protected ArrayList<String> doInBackground(String... strings) {
         ArrayList<String> base64Photo = new ArrayList<>();
         for(String uri: uris){
-            Log.i("%%%%%", "doInBackground: "+ uri);
             String  result = compressImage(uri);
             base64Photo.add(result);
         }
-        Log.i("%%%%%", "-------------------");
 
         return base64Photo;
     }

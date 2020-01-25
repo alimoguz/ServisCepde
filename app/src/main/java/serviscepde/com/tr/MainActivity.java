@@ -12,8 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -38,14 +36,12 @@ import java.util.HashMap;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import serviscepde.com.tr.Adapter.BildirimAdapter;
 import serviscepde.com.tr.Fragment.AddFragment;
 import serviscepde.com.tr.Fragment.HomeFragment;
 import serviscepde.com.tr.Fragment.NotificationFragment;
 import serviscepde.com.tr.Fragment.ProfileFragment;
 import serviscepde.com.tr.Fragment.SearchFragment;
 import serviscepde.com.tr.Fragment.İletisimFragment;
-import serviscepde.com.tr.Models.Bildirim;
 import serviscepde.com.tr.Models.Response.BaseResponse;
 import serviscepde.com.tr.Models.Response.ResponseDetail;
 import serviscepde.com.tr.Utils.Utils;
@@ -129,6 +125,28 @@ public class MainActivity extends AppCompatActivity {
 
         hashMap.put("Token" , userToken);
 
+        getNotifications(hashMap);
+
+
+
+        loadFragment(new HomeFragment());
+
+        iletisimFragment = new İletisimFragment();
+
+        imgIconIletisim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                loadFragment(iletisimFragment);
+            }
+        });
+
+        bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
+    }
+
+    public static void getNotifications(HashMap<String , String> hashMap) {
         Call<BaseResponse> call = App.getApiService().getBildirimler(hashMap);
 
         call.enqueue(new Callback<BaseResponse>() {
@@ -181,25 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-        loadFragment(new HomeFragment());
-
-        iletisimFragment = new İletisimFragment();
-
-        imgIconIletisim.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                loadFragment(iletisimFragment);
-            }
-        });
-
-        bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
     }
-
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -267,16 +267,12 @@ public class MainActivity extends AppCompatActivity {
         String notification = Integer.toString(count);
         if(count == 0 || count < 0)
         {
-            badgeText.setText(0);
+            badgeText.setVisibility(View.GONE);
         }
         else
         {
+            badgeText.setVisibility(View.VISIBLE);
             badgeText.setText(notification);
         }
     }
-
-
-
-
-
 }
