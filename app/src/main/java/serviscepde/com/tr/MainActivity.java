@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.i(TAG, "onResponse: " + " Json Object Geldi");
 
 
+                        count = 0;
                         for (int i = 0; i < jsonObject.getJSONObject("OutPutMessage").getJSONArray("Data").length(); i++){
 
                             JSONObject tmp = jsonObject.getJSONObject("OutPutMessage").getJSONArray("Data").getJSONObject(i);
