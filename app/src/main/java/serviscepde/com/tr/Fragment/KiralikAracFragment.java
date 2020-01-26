@@ -27,8 +27,7 @@ import com.bumptech.glide.Glide;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 
-import me.abhinay.input.CurrencyEditText;
-import me.abhinay.input.CurrencySymbols;
+
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -45,6 +44,7 @@ import serviscepde.com.tr.Utils.ImageCompressor;
 import serviscepde.com.tr.Utils.OnCompressTaskCompleted;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
+import com.yigitserin.currencyedittext.CurrencyEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -130,10 +131,16 @@ public class KiralikAracFragment extends Fragment {
 
 
         edtKiralikAracAylikFiyat = generalView.findViewById(R.id.edtKiralikAracAylikFiyat);
+        edtKiralikAracAylikFiyat.setLocale(new Locale("tr","TR"));
+        edtKiralikAracAylikFiyat.setDecimalDigits(2);
+        edtKiralikAracAylikFiyat.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+
         edtKiralikAracAracYili = generalView.findViewById(R.id.edtKiralikAracAracYili);
         edtKiralikAracAciklama = generalView.findViewById(R.id.edtKiralikAracAciklama);
         edtKiralikAracFiyat = generalView.findViewById(R.id.edtKiralikAracFiyat);
-        edtKiralikAracFiyat.setCurrency(CurrencySymbols.NONE);
+        edtKiralikAracFiyat.setLocale(new Locale("tr","TR"));
+        edtKiralikAracFiyat.setDecimalDigits(2);
+        edtKiralikAracFiyat.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         edtKiralikAracBaslik = generalView.findViewById(R.id.edtKiralikAracBaslik);
 
 
@@ -431,7 +438,21 @@ public class KiralikAracFragment extends Fragment {
                 }
                 else
                 {
-                    fiyat = String.valueOf(edtKiralikAracFiyat.getCleanDoubleValue());
+                    fiyat = edtKiralikAracFiyat.getText().toString();
+
+                    if(fiyat.contains(","))
+                    {
+                        String newFiyat = fiyat.substring(fiyat.indexOf(","));
+
+                        if(newFiyat.length() == 2)
+                        {
+                            fiyat = fiyat.concat("0");
+                        }
+                    }
+                    if(!fiyat.contains(","))
+                    {
+                        fiyat = fiyat.concat(",00");
+                    }
                 }
 
 
@@ -442,7 +463,21 @@ public class KiralikAracFragment extends Fragment {
                 }
                 else
                 {
-                    aylikFiyat = String.valueOf(edtKiralikAracAylikFiyat.getCleanDoubleValue());
+                    aylikFiyat = edtKiralikAracAylikFiyat.getText().toString();
+
+                    if(aylikFiyat.contains(","))
+                    {
+                        String newAyFiyat = aylikFiyat.substring(aylikFiyat.indexOf(","));
+
+                        if(newAyFiyat.length() == 2)
+                        {
+                            aylikFiyat = aylikFiyat.concat("0");
+                        }
+                    }
+                    if(!aylikFiyat.contains(","))
+                    {
+                        aylikFiyat = aylikFiyat.concat(",00");
+                    }
                 }
 
                 baslik = edtKiralikAracBaslik.getText().toString();

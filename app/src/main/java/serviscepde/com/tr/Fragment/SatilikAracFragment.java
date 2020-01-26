@@ -26,8 +26,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import me.abhinay.input.CurrencyEditText;
-import me.abhinay.input.CurrencySymbols;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -47,6 +45,7 @@ import serviscepde.com.tr.Utils.ImageCompressor;
 import serviscepde.com.tr.Utils.OnCompressTaskCompleted;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
+import com.yigitserin.currencyedittext.CurrencyEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,6 +54,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -139,11 +139,15 @@ public class SatilikAracFragment extends Fragment {
 
         edtSatilikAracBaslik = generalView.findViewById(R.id.edtSatilikAracBaslik);
         edtSatilikAracFiyat = generalView.findViewById(R.id.edtSatilikAracFiyat);
-        edtSatilikAracFiyat.setCurrency(CurrencySymbols.NONE);
+        edtSatilikAracFiyat.setLocale(new Locale("tr","TR"));
+        edtSatilikAracFiyat.setDecimalDigits(2);
+        edtSatilikAracFiyat.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         edtSatilikAracAciklama = generalView.findViewById(R.id.edtSatilikAracAciklama);
         edtSatilikAracAracYili = generalView.findViewById(R.id.edtSatilikAracAracYili);
         edtSatilikAracKM = generalView.findViewById(R.id.edtSatilikAracKM);
-        edtSatilikAracKM.setDecimals(false);
+        edtSatilikAracKM.setLocale(new Locale("tr","TR"));
+        edtSatilikAracKM.setDecimalDigits(0);
+        edtSatilikAracKM.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
 
 
         imgSatilikAracFirstPhoto = generalView.findViewById(R.id.imgSatilikAracFirstPhoto);
@@ -459,13 +463,32 @@ public class SatilikAracFragment extends Fragment {
                 }
                 else
                 {
-                    fiyat = String.valueOf(edtSatilikAracFiyat.getCleanDoubleValue());
+                    fiyat = edtSatilikAracFiyat.getText().toString();
+
+                    if(fiyat.contains(","))
+                    {
+                        String newFiyat = fiyat.substring(fiyat.indexOf(","));
+
+                        if(newFiyat.length() == 2)
+                        {
+                            fiyat = fiyat.concat("0");
+                        }
+                    }
+                    if(!fiyat.contains(","))
+                    {
+                        fiyat = fiyat.concat(",00");
+                    }
                 }
 
                 baslik = edtSatilikAracBaslik.getText().toString();
                 aciklama = edtSatilikAracAciklama.getText().toString();
                 yil = edtSatilikAracAracYili.getText().toString();
                 km = edtSatilikAracKM.getText().toString();
+
+                if(km.contains(","))
+                {
+                    km = km.replace("," , "");
+                }
 
                 cityId = DownloadClass.getCityIdWithName(autoCompleteSatilikAracil.getText().toString());
                 townId = DownloadClass.getTownIdWithTownName(autoCompleteSatilikAracilce.getText().toString() , cityId);

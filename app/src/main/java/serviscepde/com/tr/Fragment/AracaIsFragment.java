@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +28,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 
-import me.abhinay.input.CurrencyEditText;
-import me.abhinay.input.CurrencySymbols;
+
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -43,15 +43,16 @@ import serviscepde.com.tr.Utils.ImageCompressor;
 import serviscepde.com.tr.Utils.OnCompressTaskCompleted;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
+import com.yigitserin.currencyedittext.CurrencyEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -133,7 +134,9 @@ public class AracaIsFragment extends Fragment {
 
         edtAracaIsBaslik = generalView.findViewById(R.id.edtAracaIsBaslik);
         edtAracaIsFiyat = generalView.findViewById(R.id.edtAracaIsFiyat);
-        edtAracaIsFiyat.setCurrency(CurrencySymbols.NONE);
+        edtAracaIsFiyat.setLocale(new Locale("tr","TR"));
+        edtAracaIsFiyat.setDecimalDigits(2);
+        edtAracaIsFiyat.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         edtAracaIsAciklama = generalView.findViewById(R.id.edtAracaIsAciklama);
         edtAracaIsYil = generalView.findViewById(R.id.edtAracaIsYil);
         edtAracaIsServisBaslamaSaati = generalView.findViewById(R.id.edtAracaIsServisBaslamaSaati);
@@ -142,7 +145,9 @@ public class AracaIsFragment extends Fragment {
         edtAracaIsPlaka = generalView.findViewById(R.id.edtAracaIsPlaka);
         edtAracaIsReferans = generalView.findViewById(R.id.edtAracaIsReferans);
         edtAracaIsToplamKM = generalView.findViewById(R.id.edtAracaIsToplamKM);
-        edtAracaIsToplamKM.setDecimals(false);
+        edtAracaIsToplamKM.setLocale(new Locale("tr","TR"));
+        edtAracaIsToplamKM.setDecimalDigits(0);
+        edtAracaIsToplamKM.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         edtAracaIsCalisilacakGunSayisi = generalView.findViewById(R.id.edtAracaIsCalisilacakGunSayisi);
 
 
@@ -533,8 +538,24 @@ public class AracaIsFragment extends Fragment {
                 }
                 else
                 {
-                    fiyat = String.valueOf(edtAracaIsFiyat.getCleanDoubleValue());
+                    fiyat = edtAracaIsFiyat.getText().toString();
+                    if(fiyat.contains(","))
+                    {
+                        String newFiyat = fiyat.substring(fiyat.indexOf(","));
+
+                        if(newFiyat.length() == 2)
+                        {
+                            fiyat = fiyat.concat("0");
+                        }
+                    }
+                    if(!fiyat.contains(","))
+                    {
+                        fiyat = fiyat.concat(",00");
+                    }
+
                 }
+
+                Log.i("Fiyat" , fiyat);
 
                 baslik = edtAracaIsBaslik.getText().toString();
                 aciklama = edtAracaIsAciklama.getText().toString();
@@ -545,6 +566,10 @@ public class AracaIsFragment extends Fragment {
                 plaka = edtAracaIsPlaka.getText().toString();
                 referans = edtAracaIsReferans.getText().toString();
                 toplamKM = edtAracaIsToplamKM.getText().toString();
+                if(toplamKM.contains(","))
+                {
+                    toplamKM = toplamKM.replace("," , "");
+                }
                 gunSayisi = edtAracaIsCalisilacakGunSayisi.getText().toString();
 
 

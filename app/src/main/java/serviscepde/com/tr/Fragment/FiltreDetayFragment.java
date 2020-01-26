@@ -244,6 +244,21 @@ public class FiltreDetayFragment extends Fragment {
                         Log.i("Fiyat", Fiyat);
                     }
 
+                    if(ilanDetay.has("Fiyat"))
+                    {
+                        Fiyat = ilanDetay.getString("Fiyat");
+                        if(Fiyat.equals("0"))
+                        {
+                            Fiyat = "Belirtilmedi";
+                        }
+                        Log.i("Fiyat" , Fiyat);
+                    }
+                    else
+                    {
+                        Fiyat = "-";
+                        Log.i("Fiyat" , Fiyat);
+                    }
+
                     if (ilanDetay.getJSONObject("Users").has("UserName") && ilanDetay.getJSONObject("Users").has("SurName")) {
                         IlanSahibi = ilanDetay.getJSONObject("Users").getString("UserName").concat(" ").concat(ilanDetay.getJSONObject("Users").getString("SurName"));
                         Log.i("IlanSahibi", IlanSahibi);

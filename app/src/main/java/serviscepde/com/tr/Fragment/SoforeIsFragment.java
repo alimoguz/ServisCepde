@@ -32,8 +32,6 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 
-import me.abhinay.input.CurrencyEditText;
-import me.abhinay.input.CurrencySymbols;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -48,6 +46,7 @@ import serviscepde.com.tr.Utils.ImageCompressor;
 import serviscepde.com.tr.Utils.OnCompressTaskCompleted;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
+import com.yigitserin.currencyedittext.CurrencyEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -134,7 +134,9 @@ public class SoforeIsFragment extends Fragment {
 
         edtSoforeIsBaslik = generalView.findViewById(R.id.edtSoforeIsBaslik);
         edtSoforeIsFiyat = generalView.findViewById(R.id.edtSoforeIsFiyat);
-        edtSoforeIsFiyat.setCurrency(CurrencySymbols.NONE);
+        edtSoforeIsFiyat.setLocale(new Locale("tr","TR"));
+        edtSoforeIsFiyat.setDecimalDigits(2);
+        edtSoforeIsFiyat.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         edtSoforeIsAciklama = generalView.findViewById(R.id.edtSoforeIsAciklama);
         edtSoforeIsTecrube = generalView.findViewById(R.id.edtSoforeIsTecrube);
         edtSoforeIsServisBaslamaSaati = generalView.findViewById(R.id.edtSoforeIsServisBaslamaSaati);
@@ -470,7 +472,21 @@ public class SoforeIsFragment extends Fragment {
                 }
                 else
                 {
-                    fiyat = String.valueOf(edtSoforeIsFiyat.getCleanDoubleValue());
+                    fiyat = edtSoforeIsFiyat.getText().toString();
+
+                    if(fiyat.contains(","))
+                    {
+                        String newFiyat = fiyat.substring(fiyat.indexOf(","));
+
+                        if(newFiyat.length() == 2)
+                        {
+                            fiyat = fiyat.concat("0");
+                        }
+                    }
+                    if(!fiyat.contains(","))
+                    {
+                        fiyat = fiyat.concat(",00");
+                    }
                 }
 
                 baslik = edtSoforeIsBaslik.getText().toString();

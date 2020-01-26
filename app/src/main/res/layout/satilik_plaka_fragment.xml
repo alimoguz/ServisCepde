@@ -223,7 +223,7 @@
                     android:background="@color/colorWhite"
                     android:hint="@string/Fiyat">
 
-                    <me.abhinay.input.CurrencyEditText
+                    <com.yigitserin.currencyedittext.CurrencyEditText
                         android:id="@+id/edtSatilikPlakaFiyat"
                         android:inputType="number"
                         android:background="@color/colorWhite"

@@ -28,8 +28,6 @@ import com.bumptech.glide.Glide;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 
-import me.abhinay.input.CurrencyEditText;
-import me.abhinay.input.CurrencySymbols;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -45,6 +43,7 @@ import serviscepde.com.tr.Utils.ImageCompressor;
 import serviscepde.com.tr.Utils.OnCompressTaskCompleted;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
+import com.yigitserin.currencyedittext.CurrencyEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +51,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -119,7 +119,9 @@ public class YedekParcaFragment extends Fragment {
 
         edtYedekParcaBaslik = generalView.findViewById(R.id.edtYedekParcaBaslik);
         edtYedekParcaFiyat = generalView.findViewById(R.id.edtYedekParcaFiyat);
-        edtYedekParcaFiyat.setCurrency(CurrencySymbols.NONE);
+        edtYedekParcaFiyat.setLocale(new Locale("tr","TR"));
+        edtYedekParcaFiyat.setDecimalDigits(2);
+        edtYedekParcaFiyat.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         edtYedekParcaAciklama = generalView.findViewById(R.id.edtYedekParcaAciklama);
         edtYedekParcaMarka = generalView.findViewById(R.id.edtYedekParcaMarka);
 
@@ -375,7 +377,21 @@ public class YedekParcaFragment extends Fragment {
                 }
                 else
                 {
-                    fiyat = String.valueOf(edtYedekParcaFiyat.getCleanDoubleValue());
+                    fiyat = edtYedekParcaFiyat.getText().toString();
+
+                    if(fiyat.contains(","))
+                    {
+                        String newFiyat = fiyat.substring(fiyat.indexOf(","));
+
+                        if(newFiyat.length() == 2)
+                        {
+                            fiyat = fiyat.concat("0");
+                        }
+                    }
+                    if(!fiyat.contains(","))
+                    {
+                        fiyat = fiyat.concat(",00");
+                    }
                 }
 
                 baslik = edtYedekParcaBaslik.getText().toString();

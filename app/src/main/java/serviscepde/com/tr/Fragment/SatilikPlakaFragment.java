@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
+import com.yigitserin.currencyedittext.CurrencyEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,10 +34,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import me.abhinay.input.CurrencyEditText;
-import me.abhinay.input.CurrencySymbols;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -113,7 +113,9 @@ public class SatilikPlakaFragment extends Fragment {
 
         edtSatilikPlakaBaslik = generalView.findViewById(R.id.edtSatilikPlakaBaslik);
         edtSatilikPlakaFiyat = generalView.findViewById(R.id.edtSatilikPlakaFiyat);
-        edtSatilikPlakaFiyat.setCurrency(CurrencySymbols.NONE);
+        edtSatilikPlakaFiyat.setLocale(new Locale("tr","TR"));
+        edtSatilikPlakaFiyat.setDecimalDigits(2);
+        edtSatilikPlakaFiyat.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         edtSatilikPlakaAciklama = generalView.findViewById(R.id.edtSatilikPlakaAciklama);
         edtSatilikPlakaPlaka = generalView.findViewById(R.id.edtSatilikPlakaPlaka);
 
@@ -309,7 +311,21 @@ public class SatilikPlakaFragment extends Fragment {
                 }
                 else
                 {
-                    fiyat = String.valueOf(edtSatilikPlakaFiyat.getCleanDoubleValue());
+                    fiyat = edtSatilikPlakaFiyat.getText().toString();
+
+                    if(fiyat.contains(","))
+                    {
+                        String newFiyat = fiyat.substring(fiyat.indexOf(","));
+
+                        if(newFiyat.length() == 2)
+                        {
+                            fiyat = fiyat.concat("0");
+                        }
+                    }
+                    if(!fiyat.contains(","))
+                    {
+                        fiyat = fiyat.concat(",00");
+                    }
                 }
 
                 baslik = edtSatilikPlakaBaslik.getText().toString();

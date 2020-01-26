@@ -26,8 +26,6 @@ import com.bumptech.glide.Glide;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 
-import me.abhinay.input.CurrencyEditText;
-import me.abhinay.input.CurrencySymbols;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -36,14 +34,13 @@ import serviscepde.com.tr.Models.City;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponse;
 import serviscepde.com.tr.Models.IlanEkle.EkleResponseDetail;
 import serviscepde.com.tr.Models.Kapasite;
-import serviscepde.com.tr.Models.Sehirler.SehirResponse;
-import serviscepde.com.tr.Models.Sehirler.SehirResponseDetail;
 import serviscepde.com.tr.R;
 import serviscepde.com.tr.Utils.ImageCompression;
 import serviscepde.com.tr.Utils.ImageCompressor;
 import serviscepde.com.tr.Utils.OnCompressTaskCompleted;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
+import com.yigitserin.currencyedittext.CurrencyEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +48,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -112,7 +110,9 @@ public class AracaSoforFragment extends Fragment {
 
         edtAracaSoforBaslik = generalView.findViewById(R.id.edtAracaSoforBaslik);
         edtAracaSoforFiyat = generalView.findViewById(R.id.edtAracaSoforFiyat);
-        edtAracaSoforFiyat.setCurrency(CurrencySymbols.NONE);
+        edtAracaSoforFiyat.setLocale(new Locale("tr","TR"));
+        edtAracaSoforFiyat.setDecimalDigits(2);
+        edtAracaSoforFiyat.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         edtAracaSoforAciklama = generalView.findViewById(R.id.edtAracaSoforAciklama);
         edtAracaSoforServisBaslamaSaati = generalView.findViewById(R.id.edtAracaSoforServisBaslamaSaati);
         edtAracaSoforServisBitisSaati = generalView.findViewById(R.id.edtAracaSoforServisBitisSaati);
@@ -468,7 +468,21 @@ public class AracaSoforFragment extends Fragment {
                 }
                 else
                 {
-                    fiyat = String.valueOf(edtAracaSoforFiyat.getCleanDoubleValue());
+                    fiyat = edtAracaSoforFiyat.getText().toString();
+
+                    if(fiyat.contains(","))
+                    {
+                        String newFiyat = fiyat.substring(fiyat.indexOf(","));
+
+                        if(newFiyat.length() == 2)
+                        {
+                            fiyat = fiyat.concat("0");
+                        }
+                    }
+                    if(!fiyat.contains(","))
+                    {
+                        fiyat = fiyat.concat(",00");
+                    }
                 }
 
                 baslik = edtAracaSoforBaslik.getText().toString();
@@ -544,7 +558,7 @@ public class AracaSoforFragment extends Fragment {
         hashMap1.put("ServiseBaslamaSemtleri" , baslamaTownId);
         hashMap1.put("ServiseBaslamaSaati" , servisBaslamaSaati);
         hashMap1.put("ServisBitisSaati" , servisBitisSaati);
-        hashMap1.put("FirmayaGiriSaati" , firmaGirisSaati);
+        hashMap1.put("FirmayaGirisSaati" , firmaGirisSaati);
         hashMap1.put("FirmadanCikisSaati" , firmadanCikisSaati);
         hashMap1.put("CalisilacakGunSayisi" , gun);
         hashMap1.put("Ucret" , fiyat);

@@ -224,12 +224,11 @@
                     android:background="@color/colorWhite"
                     android:hint="@string/Fiyat">
 
-                    <me.abhinay.input.CurrencyEditText
+                    <com.yigitserin.currencyedittext.CurrencyEditText
                         android:id="@+id/edtAracaIsFiyat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorWhite"
-                        android:inputType="number" />
+                        android:background="@color/colorWhite" />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -479,7 +478,7 @@
                     android:background="@color/colorWhite"
                     android:hint="@string/ToplamKM">
 
-                    <me.abhinay.input.CurrencyEditText
+                    <com.yigitserin.currencyedittext.CurrencyEditText
                         android:id="@+id/edtAracaIsToplamKM"
                         android:inputType="number"
                         android:background="@color/colorWhite"

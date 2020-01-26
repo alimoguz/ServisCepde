@@ -225,7 +225,7 @@
                     android:background="@color/colorWhite"
                     android:hint="@string/Fiyat">
 
-                    <me.abhinay.input.CurrencyEditText
+                    <com.yigitserin.currencyedittext.CurrencyEditText
                         android:id="@+id/edtKiralikAracFiyat"
                         android:inputType="number"
                         android:background="@color/colorWhite"
@@ -355,7 +355,7 @@
                     android:background="@color/colorWhite"
                     android:hint="@string/AylıkFiyat">
 
-                    <me.abhinay.input.CurrencyEditText
+                    <com.yigitserin.currencyedittext.CurrencyEditText
                         android:id="@+id/edtKiralikAracAylikFiyat"
                         android:inputType="number"
                         android:background="@color/colorWhite"

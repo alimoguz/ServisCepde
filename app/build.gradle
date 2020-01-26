@@ -62,7 +62,11 @@ dependencies {
     //implementation 'com.google.firebase:firebase-ads:18.3.0'
     implementation 'com.google.android.gms:play-services-ads:17.0.0'
 
-    implementation 'me.abhinay.input:currency-edittext:1.1'
+
+    /*implementation 'com.github.BlacKCaT27:CurrencyEditText:2.0.2'
+    implementation 'me.abhinay.input:currency-edittext:1.1'*/
+
+    implementation 'com.yigitserin.currencyedittext:CurrencyEditText:0.3'
 
 
 }

@@ -31,8 +31,6 @@ import com.bumptech.glide.Glide;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 
-import me.abhinay.input.CurrencyEditText;
-import me.abhinay.input.CurrencySymbols;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.GalleryActivity;
@@ -50,6 +48,7 @@ import serviscepde.com.tr.Utils.ImageCompressor;
 import serviscepde.com.tr.Utils.OnCompressTaskCompleted;
 import serviscepde.com.tr.Utils.Utils;
 import com.google.android.material.textfield.TextInputEditText;
+import com.yigitserin.currencyedittext.CurrencyEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,6 +58,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -141,7 +141,9 @@ public class IseAracFragment extends Fragment {
 
         edtIseAracBaslik = generalView.findViewById(R.id.edtIseAracBaslik);
         edtIseAracFiyat = generalView.findViewById(R.id.edtIseAracFiyat);
-        edtIseAracFiyat.setCurrency(CurrencySymbols.NONE);
+        edtIseAracFiyat.setLocale(new Locale("tr","TR"));
+        edtIseAracFiyat.setDecimalDigits(2);
+        edtIseAracFiyat.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         edtIseAracAciklama = generalView.findViewById(R.id.edtIseAracAciklama);
         edtIseAracYil = generalView.findViewById(R.id.edtIseAracYil);
         edtIseAracServisBaslamaSaati = generalView.findViewById(R.id.edtIseAracServisBaslamaSaati);
@@ -149,7 +151,9 @@ public class IseAracFragment extends Fragment {
         edtIseAracFirmaGirisSaati = generalView.findViewById(R.id.edtIseAracFirmaGirisSaati);
         edtIseAracFirmadanCikisSaati = generalView.findViewById(R.id.edtIseAracFirmadanCikisSaati);
         edtIseAracToplamKM = generalView.findViewById(R.id.edtIseAracToplamKM);
-        edtIseAracToplamKM.setDecimals(false);
+        edtIseAracToplamKM.setLocale(new Locale("tr","TR"));
+        edtIseAracToplamKM.setDecimalDigits(0);
+        edtIseAracToplamKM.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
         edtIseAracCalisilacakGunSayisi = generalView.findViewById(R.id.edtIseAracCalisilacakGunSayisi);
 
 
@@ -580,7 +584,21 @@ public class IseAracFragment extends Fragment {
                 }
                 else
                 {
-                    fiyat = String.valueOf(edtIseAracFiyat.getCleanDoubleValue());
+                    fiyat = edtIseAracFiyat.getText().toString();
+
+                    if(fiyat.contains(","))
+                    {
+                        String newFiyat = fiyat.substring(fiyat.indexOf(","));
+
+                        if(newFiyat.length() == 2)
+                        {
+                            fiyat = fiyat.concat("0");
+                        }
+                    }
+                    if(!fiyat.contains(","))
+                    {
+                        fiyat = fiyat.concat(",00");
+                    }
                 }
 
                 baslik = edtIseAracBaslik.getText().toString();
@@ -591,6 +609,10 @@ public class IseAracFragment extends Fragment {
                 firmaGirisSaati = edtIseAracFirmaGirisSaati.getText().toString();
                 firmaCikisSaati = edtIseAracFirmadanCikisSaati.getText().toString();
                 toplamKM = edtIseAracToplamKM.getText().toString();
+                if(toplamKM.contains(","))
+                {
+                    toplamKM = toplamKM.replace("," , "");
+                }
                 Log.i("ToplamKm" , toplamKM);
                 gunSayisi = edtIseAracCalisilacakGunSayisi.getText().toString();
 
