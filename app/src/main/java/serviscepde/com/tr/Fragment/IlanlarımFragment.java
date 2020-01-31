@@ -124,6 +124,10 @@ public class IlanlarımFragment extends Fragment {
                             {
                                 Ucret = ilan.getString("Ucret");
                             }
+                            if(ilan.has("Fiyat"))
+                            {
+                                Ucret = ilan.getString("Fiyat");
+                            }
                             else
                             {
                                 Log.i("Ilan Özet Bilgi" ,  "UcretYok");

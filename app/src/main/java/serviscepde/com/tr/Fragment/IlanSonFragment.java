@@ -104,6 +104,10 @@ public class IlanSonFragment extends Fragment {
                         {
                             Ucret = tmp.getString("Ucret");
                         }
+                        if(tmp.has("Fiyat"))
+                        {
+                            Ucret = tmp.getString("Fiyat");
+                        }
                         else
                         {
                             Log.i("Ilan Özet Bilgi" ,  "UcretYok");
