@@ -125,9 +125,14 @@ public class MainActivity extends AppCompatActivity {
 
         hashMap.put("Token" , userToken);
 
-        getNotifications(hashMap);
+        if(userToken.equals("0"))
+        {
 
-
+        }
+        else
+        {
+            getNotifications(hashMap);
+        }
 
         loadFragment(new HomeFragment());
 

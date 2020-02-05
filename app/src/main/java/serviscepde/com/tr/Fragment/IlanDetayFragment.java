@@ -285,22 +285,23 @@ public class IlanDetayFragment extends Fragment {
                         Log.i("Fiyat" , Fiyat);
                     }
 
-                    if(ilanDetay.has("Fiyat"))
+                    if(!ilanDetay.has("Ucret"))
                     {
-                        Fiyat = ilanDetay.getString("Fiyat");
-                        if(Fiyat.equals("0"))
+                        if(ilanDetay.has("Fiyat"))
                         {
-                            Fiyat = "Belirtilmedi";
+                            Fiyat = ilanDetay.getString("Fiyat");
+                            if(Fiyat.equals("0"))
+                            {
+                                Fiyat = "Belirtilmedi";
+                            }
+                            Log.i("Fiyat" , Fiyat);
                         }
-                        Log.i("Fiyat" , Fiyat);
+                        else
+                        {
+                            Fiyat = "-";
+                            Log.i("Fiyat" , Fiyat);
+                        }
                     }
-                    else
-                    {
-                        Fiyat = "-";
-                        Log.i("Fiyat" , Fiyat);
-                    }
-
-
 
                     if(ilanDetay.getJSONObject("Users").has("UserName") && ilanDetay.getJSONObject("Users").has("SurName"))
                     {

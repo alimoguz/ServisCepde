@@ -236,17 +236,9 @@ public class FiltreDetayFragment extends Fragment {
                         Log.i("Açıklama", Aciklama);
                     }
 
-                    if (ilanDetay.has("Ucret")) {
-                        Fiyat = ilanDetay.getString("Ucret");
-                        Log.i("Fiyat", Fiyat);
-                    } else {
-                        Fiyat = "-";
-                        Log.i("Fiyat", Fiyat);
-                    }
-
-                    if(ilanDetay.has("Fiyat"))
+                    if(ilanDetay.has("Ucret"))
                     {
-                        Fiyat = ilanDetay.getString("Fiyat");
+                        Fiyat = ilanDetay.getString("Ucret");
                         if(Fiyat.equals("0"))
                         {
                             Fiyat = "Belirtilmedi";
@@ -257,6 +249,24 @@ public class FiltreDetayFragment extends Fragment {
                     {
                         Fiyat = "-";
                         Log.i("Fiyat" , Fiyat);
+                    }
+
+                    if(!ilanDetay.has("Ucret"))
+                    {
+                        if(ilanDetay.has("Fiyat"))
+                        {
+                            Fiyat = ilanDetay.getString("Fiyat");
+                            if(Fiyat.equals("0"))
+                            {
+                                Fiyat = "Belirtilmedi";
+                            }
+                            Log.i("Fiyat" , Fiyat);
+                        }
+                        else
+                        {
+                            Fiyat = "-";
+                            Log.i("Fiyat" , Fiyat);
+                        }
                     }
 
                     if (ilanDetay.getJSONObject("Users").has("UserName") && ilanDetay.getJSONObject("Users").has("SurName")) {

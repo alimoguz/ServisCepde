@@ -373,10 +373,23 @@ public class HomeFragment extends Fragment {
                             if(tmp.has("Ucret"))
                             {
                                 Ucret = tmp.getString("Ucret");
+                                Log.i("Ucret" , Ucret);
+                                if(Ucret.equals("0,00") || Ucret.isEmpty())
+                                {
+                                    if(tmp.has("Fiyat"))
+                                    {
+                                        Ucret = tmp.getString("Fiyat");
+                                        Log.i("Fiyat" , Ucret);
+                                    }
+                                }
                             }
-                            if(tmp.has("Fiyat"))
+                            if(!tmp.has("Ucret"))
                             {
-                                Ucret = tmp.getString("Fiyat");
+                                if(tmp.has("Fiyat"))
+                                {
+                                    Ucret = tmp.getString("Fiyat");
+                                    Log.i("Fiyat" , Ucret);
+                                }
                             }
                             else
                             {
@@ -460,10 +473,23 @@ public class HomeFragment extends Fragment {
                             if(tmp.has("Ucret"))
                             {
                                 Ucret = tmp.getString("Ucret");
+                                Log.i("Ucret" , Ucret);
+                                if(Ucret.equals("0,00") || Ucret.isEmpty())
+                                {
+                                    if(tmp.has("Fiyat"))
+                                    {
+                                        Ucret = tmp.getString("Fiyat");
+                                        Log.i("Fiyat" , Ucret);
+                                    }
+                                }
                             }
-                            if(tmp.has("Fiyat"))
+                            if(!tmp.has("Ucret"))
                             {
-                                Ucret = tmp.getString("Fiyat");
+                                if(tmp.has("Fiyat"))
+                                {
+                                    Ucret = tmp.getString("Fiyat");
+                                    Log.i("Fiyat" , Ucret);
+                                }
                             }
                             else
                             {
@@ -545,10 +571,23 @@ public class HomeFragment extends Fragment {
                             if(tmp.has("Ucret"))
                             {
                                 Ucret = tmp.getString("Ucret");
+                                Log.i("Ucret" , Ucret);
+                                if(Ucret.equals("0,00") || Ucret.isEmpty())
+                                {
+                                    if(tmp.has("Fiyat"))
+                                    {
+                                        Ucret = tmp.getString("Fiyat");
+                                        Log.i("Fiyat" , Ucret);
+                                    }
+                                }
                             }
-                            if(tmp.has("Fiyat"))
+                            if(!tmp.has("Ucret"))
                             {
-                                Ucret = tmp.getString("Fiyat");
+                                if(tmp.has("Fiyat"))
+                                {
+                                    Ucret = tmp.getString("Fiyat");
+                                    Log.i("Fiyat" , Ucret);
+                                }
                             }
                             else
                             {
@@ -699,13 +738,26 @@ public class HomeFragment extends Fragment {
                             String Ucret = null;
                             String Resimler = null;
 
-                            if (tmp.has("Ucret"))
+                            if(tmp.has("Ucret"))
                             {
                                 Ucret = tmp.getString("Ucret");
+                                Log.i("Ucret" , Ucret);
+                                if(Ucret.equals("0,00") || Ucret.isEmpty())
+                                {
+                                    if(tmp.has("Fiyat"))
+                                    {
+                                        Ucret = tmp.getString("Fiyat");
+                                        Log.i("Fiyat" , Ucret);
+                                    }
+                                }
                             }
-                            if (tmp.has("Fiyat"))
+                            if(!tmp.has("Ucret"))
                             {
-                                Ucret = tmp.getString("Fiyat");
+                                if(tmp.has("Fiyat"))
+                                {
+                                    Ucret = tmp.getString("Fiyat");
+                                    Log.i("Fiyat" , Ucret);
+                                }
                             }
 
                             else
@@ -778,13 +830,26 @@ public class HomeFragment extends Fragment {
                             String Ucret = null;
                             String Resimler = null;
 
-                            if (tmp.has("Ucret"))
+                            if(tmp.has("Ucret"))
                             {
                                 Ucret = tmp.getString("Ucret");
+                                Log.i("Ucret" , Ucret);
+                                if(Ucret.equals("0,00") || Ucret.isEmpty())
+                                {
+                                    if(tmp.has("Fiyat"))
+                                    {
+                                        Ucret = tmp.getString("Fiyat");
+                                        Log.i("Fiyat" , Ucret);
+                                    }
+                                }
                             }
-                            if (tmp.has("Fiyat"))
+                            if(!tmp.has("Ucret"))
                             {
-                                Ucret = tmp.getString("Fiyat");
+                                if(tmp.has("Fiyat"))
+                                {
+                                    Ucret = tmp.getString("Fiyat");
+                                    Log.i("Fiyat" , Ucret);
+                                }
                             }
 
                             else
@@ -857,13 +922,26 @@ public class HomeFragment extends Fragment {
                             String Ucret = null;
                             String Resimler = null;
 
-                            if (tmp.has("Ucret"))
+                            if(tmp.has("Ucret"))
                             {
                                 Ucret = tmp.getString("Ucret");
+                                Log.i("Ucret" , Ucret);
+                                if(Ucret.equals("0,00") || Ucret.isEmpty())
+                                {
+                                    if(tmp.has("Fiyat"))
+                                    {
+                                        Ucret = tmp.getString("Fiyat");
+                                        Log.i("Fiyat" , Ucret);
+                                    }
+                                }
                             }
-                            if (tmp.has("Fiyat"))
+                            if(!tmp.has("Ucret"))
                             {
-                                Ucret = tmp.getString("Fiyat");
+                                if(tmp.has("Fiyat"))
+                                {
+                                    Ucret = tmp.getString("Fiyat");
+                                    Log.i("Fiyat" , Ucret);
+                                }
                             }
                             else
                             {

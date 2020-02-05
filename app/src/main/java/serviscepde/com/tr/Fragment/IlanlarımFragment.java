@@ -120,13 +120,26 @@ public class IlanlarımFragment extends Fragment {
                             String Ucret = null;
                             String Resimler = null;
 
-                            if(ilan.has("Ucret"))
+                            if(tmp.has("Ucret"))
                             {
-                                Ucret = ilan.getString("Ucret");
+                                Ucret = tmp.getString("Ucret");
+                                Log.i("Ucret" , Ucret);
+                                if(Ucret.equals("0,00") || Ucret.isEmpty())
+                                {
+                                    if(tmp.has("Fiyat"))
+                                    {
+                                        Ucret = tmp.getString("Fiyat");
+                                        Log.i("Fiyat" , Ucret);
+                                    }
+                                }
                             }
-                            if(ilan.has("Fiyat"))
+                            if(!tmp.has("Ucret"))
                             {
-                                Ucret = ilan.getString("Fiyat");
+                                if(tmp.has("Fiyat"))
+                                {
+                                    Ucret = tmp.getString("Fiyat");
+                                    Log.i("Fiyat" , Ucret);
+                                }
                             }
                             else
                             {

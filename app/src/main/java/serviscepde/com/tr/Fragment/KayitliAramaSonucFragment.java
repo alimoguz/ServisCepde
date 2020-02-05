@@ -104,11 +104,25 @@ public class KayitliAramaSonucFragment extends Fragment {
                         if(tmp.has("Ucret"))
                         {
                             Ucret = tmp.getString("Ucret");
+                            Log.i("Ucret" , Ucret);
+                            if(Ucret.equals("0,00") || Ucret.isEmpty())
+                            {
+                                if(tmp.has("Fiyat"))
+                                {
+                                    Ucret = tmp.getString("Fiyat");
+                                    Log.i("Fiyat" , Ucret);
+                                }
+                            }
                         }
-                        if(tmp.has("Fiyat"))
+                        if(!tmp.has("Ucret"))
                         {
-                            Ucret = tmp.getString("Fiyat");
+                            if(tmp.has("Fiyat"))
+                            {
+                                Ucret = tmp.getString("Fiyat");
+                                Log.i("Fiyat" , Ucret);
+                            }
                         }
+
                         else
                         {
                             Log.i("Ilan Özet Bilgi" ,  "UcretYok");
