@@ -4,6 +4,7 @@ import android.app.Activity;
 import androidx.annotation.NonNull;
 
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -46,6 +47,9 @@ import serviscepde.com.tr.Models.Response.BaseResponse;
 import serviscepde.com.tr.Models.Response.ResponseDetail;
 import serviscepde.com.tr.Utils.Utils;
 
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.AdRequest;
+
 import static serviscepde.com.tr.App.TAG;
 
 public class MainActivity extends AppCompatActivity {
@@ -69,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     public static FragmentManager fragmentManager;
     public static int count = 0;
     private static TextView badgeText;
+    public static InterstitialAd interstitialAd;
+    public static boolean adShown = false;
 
     @Override
     public void onBackPressed() {
@@ -147,6 +153,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        interstitialAd = new InterstitialAd(MainActivity.this);
+        interstitialAd.setAdUnitId("ca-app-pub-9098556749113718/6566705672");
+        AdRequest adRequest = new AdRequest.Builder().build();
+        interstitialAd.loadAd(adRequest);
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                // Load the next interstitial.
+                interstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+
+        });
 
 
     }

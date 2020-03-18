@@ -237,13 +237,30 @@ public class DownloadClass {
 
                 try {
 
+                    cities.add(new City("40", "İSTANBUL"));
+                    cities.add(new City("7", "ANKARA"));
+                    cities.add(new City("52", "KOCAELİ"));
+
                     for(int i = 1; i <= jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").length(); i++)
                     {
                         String ID = String.valueOf(i);
                         String cityName = jsonObjectIl.getJSONObject("OutPutMessage").getJSONObject("Data").getString(String.valueOf(i));
 
                         City city = new City(ID,cityName);
-                        cities.add(city);
+                        if(ID.equals("40")){
+                            //cities.add(0, city);
+                        }
+                        else if(ID.equals("7")){
+                            //cities.add(1, city);
+                        }
+                        else if(ID.equals("52")){
+                            //cities.add(2, city);
+                        }
+                        else{
+                            cities.add(city);
+                        }
+
+
 
                     }
                 } catch (JSONException e) {
@@ -394,7 +411,7 @@ public class DownloadClass {
                 temp.add(city);
             }
         }
-        return temp;
+        return cities;
     }
 
     public static ArrayList<Ilce> getTowns(String cityId) {
@@ -410,11 +427,12 @@ public class DownloadClass {
     public static ArrayList<String> getCityNames(){
         ArrayList<String> cityNames = new ArrayList<>();
         for(City city: cities){
-            if(city.getID().equals("40") || city.getID().equals("52") || city.getID().equals("66") || city.getID().equals("32")
+            cityNames.add(city.getCityName());
+            /*if(city.getID().equals("40") || city.getID().equals("52") || city.getID().equals("66") || city.getID().equals("32")
                     || city.getID().equals("53")|| city.getID().equals("41")|| city.getID().equals("47")|| city.getID().equals("21")
                     || city.getID().equals("7")){
                 cityNames.add(city.getCityName());
-            }
+            }*/
         }
 
         return cityNames;

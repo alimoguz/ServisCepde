@@ -61,10 +61,24 @@ public class NotificationFragment extends Fragment {
     public static BildirimAdapter bildirimAdapter;
 
     private ArrayList<Bildirim> bildirimList = new ArrayList<>();
+    private boolean adShown = false;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (MainActivity.interstitialAd.isLoaded() && !MainActivity.adShown) {
+            MainActivity.adShown = true;
+            MainActivity.interstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        adShown = false;
 
         View rootView = inflater.inflate(R.layout.notification_fragment, container, false);
         MainActivity.bottomNav.setVisibility(View.VISIBLE);

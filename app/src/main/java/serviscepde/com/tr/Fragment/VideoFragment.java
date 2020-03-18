@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.MediaController;
@@ -34,6 +35,7 @@ public class VideoFragment extends Fragment implements MediaPlayer.OnCompletionL
     Context context;
 
     private static String isLogged;
+    private boolean clicked = false;
 
     @Nullable
     @Override
@@ -59,6 +61,16 @@ public class VideoFragment extends Fragment implements MediaPlayer.OnCompletionL
         videoOpening.setVideoURI(u);
         videoOpening.start();
         videoOpening.setOnCompletionListener(VideoFragment.this);
+        videoOpening.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(!clicked){
+                    clicked = true;
+                    startLogin();
+                }
+                return false;
+            }
+        });
 
 
         return  rootView;
@@ -68,6 +80,24 @@ public class VideoFragment extends Fragment implements MediaPlayer.OnCompletionL
     @Override
     public void onCompletion(MediaPlayer mp) {
 
+        if(!clicked){
+            startLogin();
+        }
+
+
+
+
+        /*loginFragment = new LoginFragment();
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragSplash , loginFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();*/
+
+    }
+
+    private void startLogin() {
         if(!isLogged.equals("0"))
         {
             Intent intentMain = new Intent(context , MainActivity.class);
@@ -83,14 +113,7 @@ public class VideoFragment extends Fragment implements MediaPlayer.OnCompletionL
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commitAllowingStateLoss();
         }
-
-        /*loginFragment = new LoginFragment();
-
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragSplash , loginFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();*/
-
     }
+
+
 }
