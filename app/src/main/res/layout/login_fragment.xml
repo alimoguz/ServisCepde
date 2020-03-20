@@ -134,6 +134,7 @@
                 android:layout_centerInParent="true"
                 android:text="@string/login_with_facebook"
                 android:paddingBottom="10dp"
+                android:background="@drawable/background_register"
                 android:paddingTop="10dp" />
 
 
