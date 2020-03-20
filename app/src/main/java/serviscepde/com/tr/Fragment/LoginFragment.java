@@ -19,7 +19,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -46,6 +53,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static serviscepde.com.tr.App.TAG;
 
 public class LoginFragment extends Fragment {
@@ -53,6 +61,7 @@ public class LoginFragment extends Fragment {
     View generalView;
 
     TextView txtKayitOl,txtGirisYap,txtUyeOlmadanDevam;
+    LoginButton txtFacebookLogin;
     EditText edtSifre;
     ImageView imgBanner;
     RelativeLayout relSifremiUnuttum;
@@ -70,6 +79,8 @@ public class LoginFragment extends Fragment {
     ForgetPasswordFragment forgetPasswordFragment;
     SweetAlertDialog pDialog;
 
+    private CallbackManager callbackManager;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,10 +88,6 @@ public class LoginFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.login_fragment , container , false);
 
         generalView = rootView;
-
-
-
-
 
         imgBanner = generalView.findViewById(R.id.imgBanner);
 
@@ -91,6 +98,7 @@ public class LoginFragment extends Fragment {
         txtKayitOl = generalView.findViewById(R.id.txtKayitOl);
         txtGirisYap = generalView.findViewById(R.id.txtGirisYap);
         txtUyeOlmadanDevam = generalView.findViewById(R.id.txtUyeOlmadanDevam);
+        txtFacebookLogin = generalView.findViewById(R.id.txtFacebookLogin);
 
         ctx = getContext();
 
@@ -106,6 +114,24 @@ public class LoginFragment extends Fragment {
         getFireBaseToken();
 
         String deviceID = Utils.getDeviceID(ctx);
+
+        callbackManager = CallbackManager.Factory.create();
+        txtFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Toast.makeText(getApplicationContext(), "Başarılı", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), "İptal edildi", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(getApplicationContext(), "Facebook login hata oluştu", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         txtGirisYap.setOnClickListener(new View.OnClickListener() {

@@ -44,7 +44,6 @@
                 android:fontFamily="@font/myriadpro_regular"
                 />
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,9 +66,6 @@
                 app:keep_hint="true"
                 />
 
-
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,7 +75,6 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:fontFamily="@font/myriadpro_regular"
                 />
-
 
             <EditText
                 android:id="@+id/edtSifre"
@@ -91,11 +86,6 @@
                 android:inputType="textPassword"
                 android:textColorHint="@color/colorWhite"/>
 
-
-
-
-
-
             <TextView
                 android:id="@+id/txtGirisYap"
                 android:layout_width="match_parent"
@@ -105,11 +95,11 @@
                 android:text="@string/Giriş"
                 android:background="@drawable/background_login"
                 android:gravity="center"
+                android:foreground="@drawable/riplle_click_rounded"
                 android:textColor="@color/colorWhite"
                 android:fontFamily="@font/myriadpro_regular"
                 android:textSize="@dimen/_16ssp"
                 android:layout_marginTop="@dimen/_30sdp" />
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -121,7 +111,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
-
             <TextView
                 android:id="@+id/txtKayitOl"
                 android:layout_width="match_parent"
@@ -129,6 +118,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/Kayıt"
+                android:foreground="@drawable/riplle_click_rounded"
                 android:background="@drawable/background_register"
                 android:gravity="center"
                 android:textColor="@color/colorWhite"
@@ -136,13 +126,21 @@
                 android:textSize="@dimen/_16ssp"
                 android:layout_marginTop="@dimen/_15sdp" />
 
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/txtFacebookLogin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_centerInParent="true"
+                android:text="@string/login_with_facebook"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" />
+
 
 
 
         </LinearLayout>
     </LinearLayout>
-    
-
 
     <RelativeLayout
         android:id="@+id/relSifremiUnuttum"
@@ -191,14 +189,4 @@
 
 
     </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
 </LinearLayout>

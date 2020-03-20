@@ -4,6 +4,7 @@ import android.app.Activity;
 import androidx.annotation.NonNull;
 
 
+import com.facebook.FacebookSdk;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         act = this;
