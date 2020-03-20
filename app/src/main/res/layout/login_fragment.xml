@@ -132,8 +132,13 @@
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_centerInParent="true"
+                android:paddingLeft="@dimen/_40sdp"
+                android:paddingRight="@dimen/_40sdp"
+                android:foreground="@drawable/riplle_click_rounded"
                 android:text="@string/login_with_facebook"
+                android:fontFamily="@font/myriadpro_regular"
                 android:paddingBottom="10dp"
+                style="@style/FacebookLoginButton"
                 android:background="@drawable/background_register"
                 android:paddingTop="10dp" />
 
