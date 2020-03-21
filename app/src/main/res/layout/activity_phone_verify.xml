@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/appColor"
+    android:layout_height="match_parent"
+    tools:context=".phoneEntryAndVerifyActivities.PhoneVerifyActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Telefon numarası doğrulama"
+        android:textColor="@color/colorWhite"
+        android:fontFamily="@font/myriadpro_regular"
+        android:textSize="@dimen/_18ssp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_20sdp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lütfen telefonunuza gelen 6 haneli doğrulama kodunu giriniz."
+        android:textColor="@color/colorWhite"
+        android:fontFamily="@font/myriadpro_regular"
+        android:textSize="@dimen/_13ssp"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        />
+
+    <br.com.sapereaude.maskedEditText.MaskedEditText
+        android:id="@+id/edtCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:typeface="monospace"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        app:allowed_chars="1234567890"
+        app:mask="######"
+        android:hint="******"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        app:keep_hint="true"
+        />
+
+    <TextView
+        android:id="@+id/txtNextButton"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/riplle_click_rounded"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/background_login"
+        android:text="@string/dogrula"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_14ssp"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_40sdp"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/resend_full_view"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:text="Doğrulama kodu almadınız mı?"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/myriadpro_regular"
+            android:textSize="@dimen/_13ssp"></TextView>
+
+        <LinearLayout
+        android:id="@+id/resend_button"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:clickable="true"
+        android:layout_gravity="center"
+        android:foreground="@drawable/ripple_click"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tekrar Gönder"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/myriadpro_regular"
+            android:textSize="@dimen/_14ssp"></TextView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/ef_white"
+            android:src="@drawable/ic_sync_black_24dp"/>
+
+    </LinearLayout>
+
+
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/resend_timer_layout"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Tekrar göndermek için kalan süre"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/myriadpro_regular"
+            android:textSize="@dimen/_13ssp"
+            android:gravity="left
+"
+            />
+
+        <TextView
+            android:id="@+id/timer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="03:00"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/myriadpro_regular"
+            android:textSize="@dimen/_13ssp"
+            android:gravity="center"
+            />
+
+
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

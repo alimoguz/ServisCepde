@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.facebook.login.LoginManager;
+
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.R;
 
@@ -106,6 +108,7 @@ public class VideoFragment extends Fragment implements MediaPlayer.OnCompletionL
 
         if(isLogged.equals("0"))
         {
+            LoginManager.getInstance().logOut();
             loginFragment = new LoginFragment();
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

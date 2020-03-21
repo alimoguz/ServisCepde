@@ -21,10 +21,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +42,8 @@ import br.com.sapereaude.maskedEditText.MaskedEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.MainActivity;
 
+import serviscepde.com.tr.Models.TempUser;
+import serviscepde.com.tr.Models.UserLogin.UserLogin;
 import serviscepde.com.tr.Models.UserLogin.UserLoginResponse;
 import serviscepde.com.tr.Models.UserLogin.UserLoginResponseDetail;
 import serviscepde.com.tr.R;
@@ -46,15 +54,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import serviscepde.com.tr.phoneEntryAndVerifyActivities.PhoneEntryActivity;
+import serviscepde.com.tr.phoneEntryAndVerifyActivities.PhoneVerifyActivity;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static serviscepde.com.tr.App.TAG;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 
 public class LoginFragment extends Fragment {
 
@@ -80,6 +94,11 @@ public class LoginFragment extends Fragment {
     SweetAlertDialog pDialog;
 
     private CallbackManager callbackManager;
+
+    private String user_fb_id;
+    private String user_fb_name;
+    private String user_fb_surname;
+    private String user_fb_email;
 
     @Nullable
     @Override
@@ -114,24 +133,9 @@ public class LoginFragment extends Fragment {
         getFireBaseToken();
 
         String deviceID = Utils.getDeviceID(ctx);
+        TempUser.setDeviceID(deviceID);
 
-        callbackManager = CallbackManager.Factory.create();
-        txtFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(getApplicationContext(), "Başarılı", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(getApplicationContext(), "İptal edildi", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(getApplicationContext(), "Facebook login hata oluştu", Toast.LENGTH_SHORT).show();
-            }
-        });
+        setFacebookButton();
 
 
         txtGirisYap.setOnClickListener(new View.OnClickListener() {
@@ -298,6 +302,233 @@ public class LoginFragment extends Fragment {
 
     }
 
+    private void setFacebookButton() {
+        callbackManager = CallbackManager.Factory.create();
+        txtFacebookLogin.setFragment(LoginFragment.this);
+        txtFacebookLogin.setPermissions(Arrays.asList(
+                "public_profile", "email"));
+
+        txtFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+                Log.v("LoginActivity", "cancel");
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+                Log.v("LoginActivity", exception.getCause().toString());
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+        @Override
+        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+            if(currentAccessToken == null){
+                //Toast.makeText(ctx, "Başarıyla çıkış yaptınız.", Toast.LENGTH_LONG).show();
+            }
+            else{
+                loadProfile(currentAccessToken);
+            }
+        }
+    };
+
+    private void loadProfile(AccessToken accessToken){
+        GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+                try {
+                    Log.i(TAG, "onCompleted: %%%" + object);
+                    user_fb_name = object.getString("first_name");
+                    user_fb_surname = object.getString("last_name");
+                    user_fb_email = object.getString("email");
+                    user_fb_id = object.getString("id");
+
+                    TempUser.setFacebookID(user_fb_id);
+                    TempUser.setUserName(user_fb_name);
+                    TempUser.setSurName(user_fb_surname);
+                    TempUser.setEmail(user_fb_email);
+                    TempUser.setMeType("4");
+                    TempUser.setPassword(user_fb_id);
+
+                    controlForLogin();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "first_name, last_name, email, id");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
+    private void controlForLogin() {
+        pDialog.show();
+        HashMap<String , HashMap<String , String>> hashMap = new HashMap<>();
+        HashMap<String , String> hashMap1 = new HashMap<>();
+        hashMap1.put("FacebookID" , user_fb_id);
+        hashMap.put("param" , hashMap1);
+
+        Call<UserLoginResponse> fb_id_control_call = App.getApiService().controlFBId(hashMap);
+
+        fb_id_control_call.enqueue(new Callback<UserLoginResponse>() {
+            @Override
+            public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
+
+                UserLoginResponseDetail userLoginResponseDetail = response.body().getUserLoginResponseDetail();
+                String token = userLoginResponseDetail.getResult();
+                JSONObject jsonObject = Utils.jwtToJsonObject(token);
+
+
+                Log.i(TAG, "onResponse: %%% " + jsonObject);
+
+                try {
+                    if(jsonObject.get("errorOther") instanceof JSONArray){
+
+                        if(jsonObject.getJSONArray("errorOther").length() > 0){
+                            String error = jsonObject.getJSONArray("errorOther").getString(0);
+
+                            if(error.equals("404")){
+                                pDialog.dismiss();
+                                //Bu arkadaş daha önce hiç giriş yapmamış. Kayıt olacak ama kayıttan önce telefon numarası iste.
+                                askPhoneNumber();
+                            }
+                            else if(error.equals("402")){
+                                pDialog.dismiss();
+                                String GSM = jsonObject.getJSONObject("OutPutMessage").getJSONObject("Data").getString("GSM");
+                                String UserID = jsonObject.getJSONObject("OutPutMessage").getJSONObject("Data").getString("ID");
+                                TempUser.setGSM(GSM);
+                                TempUser.setID(UserID);
+
+                                Intent intent = new Intent(getApplicationContext(), PhoneVerifyActivity.class);
+                                intent.putExtra("startWithSend", true);
+                                startActivity(intent);
+                            }
+                        }
+                        else{
+                            HashMap<String , HashMap<String , String>> hashMap = new HashMap<>();
+                            HashMap<String , String> hashMap1 = new HashMap<>();
+
+                            String GSM = jsonObject.getJSONObject("OutPutMessage").getJSONObject("Data").getString("GSM");
+
+                            hashMap1.put("GSM" , GSM);
+                            hashMap1.put("Password" , TempUser.getPassword());
+                            hashMap1.put("FirebaseToken" , TempUser.getFBToken());
+                            hashMap1.put("DeviceID" , TempUser.getDeviceID());
+                            hashMap1.put("DeviceType" , "1");
+                            hashMap.put("param" , hashMap1);
+
+                            Call<UserLoginResponse> userLoginResponseCall = App.getApiService().getLogin(hashMap);
+
+                            userLoginResponseCall.enqueue(new Callback<UserLoginResponse>() {
+                                @Override
+                                public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
+
+                                    Log.i("Response", response.toString());
+
+                                    UserLoginResponseDetail userLoginResponseDetail = response.body().getUserLoginResponseDetail();
+
+                                    Log.i("Request", call.request().body().toString());
+                                    Log.i("Giriş Durumu" , " " + userLoginResponseDetail.getStatus());
+
+                                    String token = userLoginResponseDetail.getResult();
+                                    JSONObject jsonObject = Utils.jwtToJsonObject(token);
+
+                                    Log.i(TAG, "onResponse: " + token);
+
+
+                                    try {
+
+                                        if(jsonObject.get("OutPutMessage") instanceof  JSONObject)
+                                        {
+                                            Log.i(TAG, "onResponse: " + " Json Object Geldi");
+
+                                            int status = jsonObject.getJSONObject("OutPutMessage").getInt("Status");
+
+                                            if (status == 200)
+                                            {
+                                                String loggedIn = jsonObject.getJSONObject("OutPutMessage").getJSONObject("Data").getString("Loggedin");
+                                                Log.i("Loggedin" , loggedIn);
+                                                SplashActivity.editor.putString("userToken" , token);
+                                                SplashActivity.editor.putString("Loggedin" , loggedIn);
+                                                SplashActivity.editor.apply();
+                                                Intent intent = new Intent(getApplicationContext() , MainActivity.class);
+                                                startActivity(intent);
+                                            }
+                                            else{
+                                                pDialog.dismiss();
+                                                Toast.makeText(ctx, "Şifrenizi değiştirdiğiniz için. Facebook ile giriş yapamazsınız.", Toast.LENGTH_LONG).show();
+                                                LoginManager.getInstance().logOut();
+                                            }
+                                        }
+                                        if(jsonObject.get("OutPutMessage") instanceof JSONArray)
+                                        {
+                                            Log.i(TAG, "onResponse: " + " Json Array Geldi");
+
+                                            String error = jsonObject.getJSONArray("errorOther").getString(0);
+                                            pDialog.dismiss();
+
+                                            invalidLogin = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
+                                            invalidLogin.setTitleText(error);
+                                            invalidLogin.show();
+                                        }
+
+
+                                    } catch (JSONException e) {
+                                        pDialog.dismiss();
+                                        e.printStackTrace();
+                                        Log.e("JsonError", e.getMessage());
+                                    }
+
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<UserLoginResponse> call, Throwable t) {
+
+                                    pDialog.dismiss();
+                                    Log.e("Hata Durumu" , t.getMessage());
+
+                                }
+                            });
+                        }
+
+                    }
+                }
+                catch (JSONException e) {
+                    pDialog.dismiss();
+                    Log.e("%%% JsonError", e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserLoginResponse> call, Throwable t) {
+                pDialog.dismiss();
+                Log.e("Hata Durumu" , t.getMessage());
+            }
+        });
+    }
+
+    private void askPhoneNumber() {
+        Intent intent = new Intent(ctx, PhoneEntryActivity.class);
+        startActivity(intent);
+    }
+
     private void getFireBaseToken() {
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
@@ -308,8 +539,8 @@ public class LoginFragment extends Fragment {
                     Log.w("FIREBASE", task.getException());
                 }
 
-
                 token = task.getResult().getToken();
+                TempUser.setFBToken(token);
                 Log.i("Token" , token);
 
 

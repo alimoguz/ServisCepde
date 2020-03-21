@@ -23,6 +23,14 @@ public interface ApiInterface {
     @POST("index.php?func=Users&file=LoginControl&ReturnType=1")
     Call<UserLoginResponse> getLogin(@Body HashMap userLogin);
 
+    @POST("index.php?func=Users&file=FacebookFindID&ReturnType=1")
+    Call<UserLoginResponse> controlFBId(@Body HashMap userLogin);
+
+    @POST("index.php?func=Users&file=GSMCodeReSend&ReturnType=1")
+    Call<UserLoginResponse> resendCode(@Body HashMap userLogin);
+
+    @POST("index.php?func=Users&file=GSMApproval&ReturnType=1")
+    Call<UserLoginResponse> verifyCode(@Body HashMap userLogin);
 
     @POST("index.php?func=Users&file=UsersAdd&ReturnType=1")
     Call<UserRegisterResponse> getRegister(@Body HashMap userRegister);
