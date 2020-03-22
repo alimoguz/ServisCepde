@@ -16,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,7 @@ import br.com.sapereaude.maskedEditText.MaskedEditText;
 import serviscepde.com.tr.App;
 import serviscepde.com.tr.DownloadClass;
 import serviscepde.com.tr.Models.City;
+import serviscepde.com.tr.Models.TempUser;
 import serviscepde.com.tr.Models.UserRegister.UserRegisterResponse;
 import serviscepde.com.tr.Models.UserRegister.UserRegisterResponseDetail;
 import serviscepde.com.tr.R;
@@ -45,7 +47,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import serviscepde.com.tr.phoneEntryAndVerifyActivities.PhoneVerifyActivity;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static serviscepde.com.tr.App.TAG;
 
 public class SignupFragment extends Fragment {
@@ -281,6 +285,7 @@ public class SignupFragment extends Fragment {
                     pDialog.show();
 
                     body.put("MeType" , kullanıcıType);
+                    body.put("Version" , "v1.0");
                     body.put("UserName" , ad);
                     body.put("SurName" , soyad);
                     body.put("Email" , email);
@@ -316,17 +321,28 @@ public class SignupFragment extends Fragment {
                                     {
                                         pDialog.dismiss();
                                         servisAlert = new SweetAlertDialog(generalView.getContext(), SweetAlertDialog.NORMAL_TYPE);
-                                        servisAlert.setTitleText(jsonObject.getJSONObject("OutPutMessage").getString("SuccessMessage"));
+                                        servisAlert.setTitleText("Kayıt Başarılı");
+                                        servisAlert.setContentText("Telefon numaranızı doğrulamak için tıklayınız.");
+                                        servisAlert.setCancelable(false);
                                         servisAlert.setOnDismissListener(new DialogInterface.OnDismissListener() {
                                             @Override
                                             public void onDismiss(DialogInterface dialog) {
+                                                try {
+                                                    String userID = jsonObject.getJSONObject("OutPutMessage").getString("Data");
+                                                    String GSM = telefon;
 
-                                                FragmentManager manager = getFragmentManager();
-                                                manager.popBackStackImmediate();
+                                                    TempUser.setID(userID);
+                                                    TempUser.setGSM(GSM);
+                                                    TempUser.setPassword(sifre);
 
+                                                    Intent intent = new Intent(getApplicationContext(), PhoneVerifyActivity.class);
+                                                    intent.putExtra("NOBACK", true);
+                                                    startActivity(intent);
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
                                         });
-
 
                                         servisAlert.show();
                                     }

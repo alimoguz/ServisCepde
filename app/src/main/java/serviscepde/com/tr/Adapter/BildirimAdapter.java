@@ -1,11 +1,17 @@
 package serviscepde.com.tr.Adapter;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +21,7 @@ import com.bumptech.glide.Glide;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +35,7 @@ import serviscepde.com.tr.Fragment.NotificationFragment;
 import serviscepde.com.tr.MainActivity;
 import serviscepde.com.tr.Models.Bildirim;
 import serviscepde.com.tr.Models.Response.BaseResponse;
+import serviscepde.com.tr.NotificationDetailActivity;
 import serviscepde.com.tr.R;
 
 
@@ -104,8 +112,10 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
                 Glide.with(itemView).load(R.drawable.icon_notification_read).into(imgBildirimDurum);
             }
 
+            String content = bildirim.getMessage().replace("<br />", "");
+
             txtBildirimBaslik.setText(bildirim.getTitle());
-            txtBildirimMetin.setText(bildirim.getMessage());
+            txtBildirimMetin.setText(content);
             notification_item_date.setText(getDateBeforeText(bildirim.getCreate_at()));
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -140,12 +150,12 @@ public class BildirimAdapter extends RecyclerView.Adapter<BildirimAdapter.ViewHo
                             /*Glide.with(itemView).load(R.drawable.icon_notification_read).into(imgBildirimDurum);
                             NotificationFragment.bildirimAdapter.notifyDataSetChanged();*/
 
-                            bildirimAlert = new SweetAlertDialog(itemView.getContext() , SweetAlertDialog.NORMAL_TYPE);
-                            bildirimAlert.setTitleText(bildirim.getTitle());
-                            bildirimAlert.setContentText(bildirim.getMessage());
-                            bildirimAlert.show();
+                            String content = bildirim.getMessage().replace("<br />", "");
 
-
+                            Intent intent = new Intent(itemView.getContext(), NotificationDetailActivity.class);
+                            intent.putExtra("title", bildirim.getTitle());
+                            intent.putExtra("message", content);
+                            itemView.getContext().startActivity(intent);
                         }
 
                         @Override

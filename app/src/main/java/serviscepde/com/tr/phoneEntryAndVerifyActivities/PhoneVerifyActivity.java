@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -56,6 +57,9 @@ public class PhoneVerifyActivity extends AppCompatActivity {
 
     SweetAlertDialog pDialog;
 
+    boolean NOBACK;
+    int back_press_counter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +68,7 @@ public class PhoneVerifyActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             boolean sendFirst = bundle.getBoolean("startWithSend", false);
+            NOBACK = bundle.getBoolean("NOBACK", false);
 
             if(sendFirst){
                 sendNewMessageCode();
@@ -175,8 +180,13 @@ public class PhoneVerifyActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        LoginManager.getInstance().logOut();
+        if(NOBACK){
+            Toast.makeText(PhoneVerifyActivity.this, "Lütfen telefon numaranızı doğrulayınız.", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            super.onBackPressed();
+            LoginManager.getInstance().logOut();
+        }
     }
 
     private void FastLogin() {

@@ -142,8 +142,6 @@ public class HomeFragment extends Fragment {
         txtEnSon = generalView.findViewById(R.id.txtEnSon);
         edtSearchIlan = generalView.findViewById(R.id.edtSearchIlan);
 
-
-
         linSon = generalView.findViewById(R.id.linSon);
         linSon2 = generalView.findViewById(R.id.linSon2);
         linSon3 = generalView.findViewById(R.id.linSon3);
@@ -183,9 +181,6 @@ public class HomeFragment extends Fragment {
         AdView adView = generalView.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
-
-
-
 
         imgFind.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -22,9 +22,13 @@
         android:theme="@style/Theme.MaterialComponents"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
-        <activity android:name=".phoneEntryAndVerifyActivities.PhoneVerifyActivity"
+        <activity android:name=".NotificationDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen"></activity>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen" ></activity>
+        <activity
+            android:name=".phoneEntryAndVerifyActivities.PhoneVerifyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.FullScreen" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

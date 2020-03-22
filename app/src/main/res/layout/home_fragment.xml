@@ -532,11 +532,7 @@
                         android:textSize="@dimen/_12ssp"
                         />
 
-
                 </LinearLayout>
-
-
-
 
                 <LinearLayout
                     android:id="@+id/linGuncel1"
@@ -884,9 +880,6 @@
                     android:layout_marginEnd="@dimen/_3sdp"
                     />
 
-
-
-
                 <TextView
                     android:id="@+id/txtTumIlanlariGor"
                     android:clickable="true"
@@ -905,7 +898,6 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_12ssp"
                     />
-
 
             </LinearLayout>
 

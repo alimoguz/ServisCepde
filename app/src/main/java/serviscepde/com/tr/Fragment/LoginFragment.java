@@ -1,6 +1,7 @@
 package serviscepde.com.tr.Fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -223,6 +224,31 @@ public class LoginFragment extends Fragment {
                                     invalidLogin.setTitleText(jsonObject.getJSONObject("OutPutMessage").getString("ErrorMessage"));
                                     invalidLogin.show();
                                 }
+
+                                if (status == 202)
+                                {
+                                    pDialog.dismiss();
+                                    String error = jsonObject.getJSONArray("errorOther").getString(0);
+
+                                    TempUser.setID(jsonObject.getJSONObject("OutPutMessage").getString("UserID"));
+                                    TempUser.setPassword(password);
+                                    TempUser.setFBToken(token);
+                                    TempUser.setDeviceID(deviceID);
+                                    TempUser.setGSM(number);
+
+                                    invalidLogin = new SweetAlertDialog(generalView.getContext() , SweetAlertDialog.ERROR_TYPE);
+                                    invalidLogin.setTitleText(error);
+                                    invalidLogin.setCancelable(false);
+                                    invalidLogin.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss(DialogInterface dialog) {
+                                            Intent intent = new Intent(getApplicationContext(), PhoneVerifyActivity.class);
+                                            intent.putExtra("startWithSend", true);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                    invalidLogin.show();
+                                }
                             }
                             if(jsonObject.get("OutPutMessage") instanceof JSONArray)
                             {
@@ -240,7 +266,7 @@ public class LoginFragment extends Fragment {
                         } catch (JSONException e) {
                             pDialog.dismiss();
                             e.printStackTrace();
-                            Log.e("JsonError", e.getMessage());
+                            Log.e("%%%JsonError", e.getMessage());
                         }
 
 
